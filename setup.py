@@ -28,10 +28,10 @@ setup(
     author_email='circuitpython@adafruit.com',
     python_requires='>=3.4.0',
     url='https://github.com/adafruit/Adafruit_Python_PlatformDetect',
-    package_dir={'': 'src'},
-    packages=find_packages("src"),
+
     # If your package is a single module, use this instead of 'packages':
     py_modules=['adafruit_platformdetect'],
+
     install_requires=[],
     license='MIT',
     classifiers=[
