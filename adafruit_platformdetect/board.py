@@ -1,39 +1,5 @@
-# Pi revision codes:
-# 0002   | B              | 1.0 | 256 MB          | Egoman
-# 0003   | B              | 1.0 | 256 MB          | Egoman
-# 0004   | B              | 2.0 | 256 MB          | Sony UK
-# 0005   | B              | 2.0 | 256 MB          | Qisda
-# 0006   | B              | 2.0 | 256 MB          | Egoman
-# 0007   | A              | 2.0 | 256 MB          | Egoman
-# 0008   | A              | 2.0 | 256 MB          | Sony UK
-# 0009   | A              | 2.0 | 256 MB          | Qisda
-# 000d   | B              | 2.0 | 512 MB          | Egoman
-# 000e   | B              | 2.0 | 512 MB          | Sony UK
-# 000f   | B              | 2.0 | 512 MB          | Egoman
-# 0010   | B+             | 1.0 | 512 MB          | Sony UK
-# 0011   | CM1            | 1.0 | 512 MB          | Sony UK
-# 0012   | A+             | 1.1 | 256 MB          | Sony UK
-# 0013   | B+             | 1.2 | 512 MB          | Embest
-# 0014   | CM1            | 1.0 | 512 MB          | Embest
-# 0015   | A+             | 1.1 | 256 MB / 512 MB | Embest
-# 900021 | A+             | 1.1 | 512 MB          | Sony UK
-# 900032 | B+             | 1.2 | 512 MB          | Sony UK
-# 900092 | Zero           | 1.2 | 512 MB          | Sony UK
-# 920092 | Zero           | 1.2 | 512 MB          | Embest
-# 900093 | Zero           | 1.3 | 512 MB          | Sony UK
-# 9000c1 | Zero W         | 1.1 | 512 MB          | Sony UK
-# 920093 | Zero           | 1.3 | 512 MB          | Embest
-# a01040 | 2B             | 1.0 | 1 GB            | Sony UK
-# a01041 | 2B             | 1.1 | 1 GB            | Sony UK
-# a02082 | 3B             | 1.2 | 1 GB            | Sony UK
-# a020a0 | CM3            | 1.0 | 1 GB            | Sony UK
-# a21041 | 2B             | 1.1 | 1 GB            | Embest
-# a22042 | 2B (w/BCM2837) | 1.2 | 1 GB            | Embest
-# a22082 | 3B             | 1.2 | 1 GB            | Embest
-# a32082 | 3B             | 1.2 | 1 GB            | Sony Japan
-# a52082 | 3B             | 1.2 | 1 GB            | Stadium
-# a020d3 | 3B+            | 1.3 | 1 GB            | Sony UK
-# 9020e0 | 3A+            | 1.0 | 512 MB          | Sony UK
+# Pi revision codes from:
+#   https://www.raspberrypi.org/documentation/hardware/raspberrypi/revision-codes/README.md
 
 RASPBERRY_PI_B = "raspberry_pi_b"
 RASPBERRY_PI_B_PLUS = "raspberry_pi_b_plus"
@@ -71,17 +37,20 @@ class Board:
         # Check Raspberry Pi values:
         if attr in _PI_REV_CODES:
             return self.pi_rev_code in _PI_REV_CODES[attr]
+
         raise AttributeError(attr + " is not a defined board")
 
     @property
     def name(self):
-        pi_rev_code = self.pi_rev_code
         name = None
+
+        pi_rev_code = self.pi_rev_code
         if pi_rev_code:
-            for model, codes in _PI_REV_CODES:
+            for model, codes in _PI_REV_CODES.items():
                 if pi_rev_code in codes:
                     name = model
                     break
+
         return name
 
     @property
@@ -98,4 +67,4 @@ class Board:
         if self.detect.cpuinfo_field('Hardware') not in ('BCM2708', 'BCM2709', 'BCM2835'):
             # Something else, not a Pi.
             return None
-        return self.cpuinfo_field('Revision')
+        return self.detect.cpuinfo_field('Revision')

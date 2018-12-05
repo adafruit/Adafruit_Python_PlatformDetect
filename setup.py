@@ -30,7 +30,7 @@ setup(
     url='https://github.com/adafruit/Adafruit_Python_PlatformDetect',
 
     # If your package is a single module, use this instead of 'packages':
-    py_modules=['adafruit_platformdetect'],
+    packages=['adafruit_platformdetect'],
 
     install_requires=[],
     license='MIT',
