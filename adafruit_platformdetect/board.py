@@ -1,5 +1,12 @@
+import platform
+import sys
+
 # Pi revision codes from:
 #   https://www.raspberrypi.org/documentation/hardware/raspberrypi/revision-codes/README.md
+
+BEAGLEBONE_BLACK = "beaglebone_black"
+
+MINNOWBOARD_MAX = "minnowboard_max"
 
 RASPBERRY_PI_B = "raspberry_pi_b"
 RASPBERRY_PI_B_PLUS = "raspberry_pi_b_plus"
@@ -30,28 +37,86 @@ _PI_REV_CODES = {
 }
 
 class Board:
+    """
+    Attempt to detect specific boards.
+    """
     def __init__(self, detect):
         self.detect = detect
 
     def __getattr__(self, attr):
+        """
+        Detect whether the given attribute is the current board.  Currently
+        handles Raspberry Pi models.
+        """
         # Check Raspberry Pi values:
         if attr in _PI_REV_CODES:
+            if sys.platform != "linux":
+                return False
             return self.pi_rev_code in _PI_REV_CODES[attr]
 
         raise AttributeError(attr + " is not a defined board")
 
     @property
     def name(self):
+        """Return a human-readable name for the detected board, if any."""
         name = None
+        if sys.platform == "linux":
+            name = self._linux_computer_name()
+        return name
 
+    def _linux_computer_name(self):
+        """Try to detect name of a Linux SBC."""
+        # Check for Pi boards:
         pi_rev_code = self.pi_rev_code
         if pi_rev_code:
             for model, codes in _PI_REV_CODES.items():
                 if pi_rev_code in codes:
-                    name = model
-                    break
+                    return model
 
-        return name
+        # Check for BBB:
+        if self.beaglebone_black:
+            return BEAGLEBONE_BLACK
+
+        # Check for Minnowboard - assumption is that mraa is installed:
+        try:
+            import mraa
+            if mraa.getPlatformName()=='MinnowBoard MAX':
+                return MINNOWBOARD_MAX
+        except ImportError:
+            pass
+
+        # Finally, let's see if we're on an armbian board (currently a
+        # terrible hack):
+        try:
+            for line in open("/etc/armbian-release", 'r'):
+                # print(line)
+                match = re.search('BOARD=(.*)', line)
+                if match:
+                    # TODO: This should be more discerning and return a constant.
+                    return match.group(1)
+        except:
+            pass
+
+        return None
+
+    @property
+    def beaglebone_black(self):
+        """Check whether the current board is a Beaglebone Black."""
+        if sys.platform != "linux" or self.any_raspberry_pi:
+            return False
+
+        # TODO: Check the Beaglebone Black /proc/cpuinfo value instead of first
+        # looking for a Raspberry Pi and then falling back to platform.
+
+        plat = platform.platform().lower()
+        if plat.find('armv7l-with-debian') > -1:
+            return True
+        elif plat.find('armv7l-with-ubuntu') > -1:
+            return True
+        elif plat.find('armv7l-with-glibc2.4') > -1:
+            return True
+
+        return False
 
     @property
     def any_raspberry_pi(self):

@@ -11,3 +11,6 @@ print("Board name: ", detect.board.name)
 if detect.board.any_raspberry_pi:
     print("Raspberry Pi detected.")
     print("Revision code: ", detect.board.pi_rev_code)
+
+if detect.board.beaglebone_black:
+    print("BBB detected")
