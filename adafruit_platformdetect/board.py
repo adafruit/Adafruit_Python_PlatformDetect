@@ -1,10 +1,13 @@
 import platform
 import sys
+import re
 
 # Pi revision codes from:
 #   https://www.raspberrypi.org/documentation/hardware/raspberrypi/revision-codes/README.md
 
 BEAGLEBONE_BLACK = "beaglebone_black"
+
+ORANGEPI_PC = "orangepipc"
 
 RASPBERRY_PI_B = "raspberry_pi_b"
 RASPBERRY_PI_B_PLUS = "raspberry_pi_b_plus"
@@ -41,19 +44,6 @@ class Board:
     def __init__(self, detect):
         self.detect = detect
 
-    def __getattr__(self, attr):
-        """
-        Detect whether the given attribute is the current board.  Currently
-        handles Raspberry Pi models.
-        """
-        # Check Raspberry Pi values:
-        if attr in _PI_REV_CODES:
-            if sys.platform != "linux":
-                return False
-            return self.pi_rev_code in _PI_REV_CODES[attr]
-
-        raise AttributeError(attr + " is not a defined board")
-
     @property
     def name(self):
         """Return a human-readable name for the detected board, if any."""
@@ -75,19 +65,26 @@ class Board:
         if self.beaglebone_black:
             return BEAGLEBONE_BLACK
 
-        # Finally, let's see if we're on an armbian board (currently a
-        # terrible hack):
-        try:
-            for line in open("/etc/armbian-release", 'r'):
-                # print(line)
-                match = re.search('BOARD=(.*)', line)
-                if match:
-                    # TODO: This should be more discerning and return a constant.
-                    return match.group(1)
-        except:
-            pass
+        # Check for OrangePiPC
+        if self.orangepi_pc:
+            return ORANGEPI_PC
 
         return None
+
+    @property
+    def orangepi_pc(self):
+        if self.detect.chip.name != "sun8i":
+            return False
+        try:
+            with open("/etc/armbian-release", 'r') as f:
+                armbian = f.read().split('\n')
+                for line in armbian:
+                    match = re.search('^BOARD=(.*)', line)
+                    if match:
+                        return match.group(1) == "orangepipc"
+        except FileNotFoundError:
+            return False
+        return False
 
     @property
     def beaglebone_black(self):
@@ -128,3 +125,17 @@ class Board:
             # Something else, not a Pi.
             return None
         return self.detect.cpuinfo_field('Revision')
+
+
+    def __getattr__(self, attr):
+        """
+        Detect whether the given attribute is the current board.  Currently
+        handles Raspberry Pi models.
+        """
+        # Check Raspberry Pi values:
+        if attr in _PI_REV_CODES:
+            if sys.platform != "linux":
+                return False
+            return self.pi_rev_code in _PI_REV_CODES[attr]
+
+        raise AttributeError(attr + " is not a defined board")
