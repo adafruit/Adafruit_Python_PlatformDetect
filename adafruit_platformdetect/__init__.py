@@ -40,13 +40,12 @@ class PlatformDetect:
         otherwise None.
         """
         with open('/proc/cpuinfo', 'r') as infile:
-            cpuinfo = infile.read()
-
-        # Match a line like 'Hardware   : BCM2709':
-        pattern = r'^' + field + r'\s+:\s+(\w+)$'
-
-        match = re.search(pattern, cpuinfo, flags=re.MULTILINE | re.IGNORECASE)
-        if match:
-            return match.group(1)
+            cpuinfo = infile.read().split('\n')
+            for line in cpuinfo:
+                # Match a line like 'Hardware   : BCM2709':
+                pattern = r'^' + field + r'\s+:\s+(.*)$'
+                match = re.search(pattern, line, flags=re.IGNORECASE)
+                if match:
+                    return match.group(1)
 
         return None
