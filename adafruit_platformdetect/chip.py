@@ -23,6 +23,12 @@ class Chip:
             elif platform == "linux":
                 # XXX: Here is where some work to detect ARM / x86 stuff for
                 # real needs to happen.
-                name = self.detect.cpuinfo_field("Hardware")
+                hardwarename = self.detect.cpuinfo_field("Hardware")
+                if not hardwarename:
+                    return None
+                if "sun8i" in hardwarename:
+                    name = "sun8i"
+                else:
+                    name = hardwarename
 
         return name
