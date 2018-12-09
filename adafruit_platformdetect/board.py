@@ -6,8 +6,6 @@ import sys
 
 BEAGLEBONE_BLACK = "beaglebone_black"
 
-MINNOWBOARD_MAX = "minnowboard_max"
-
 RASPBERRY_PI_B = "raspberry_pi_b"
 RASPBERRY_PI_B_PLUS = "raspberry_pi_b_plus"
 RASPBERRY_PI_A = "raspberry_pi_a"
@@ -77,14 +75,6 @@ class Board:
         if self.beaglebone_black:
             return BEAGLEBONE_BLACK
 
-        # Check for Minnowboard - assumption is that mraa is installed:
-        try:
-            import mraa
-            if mraa.getPlatformName()=='MinnowBoard MAX':
-                return MINNOWBOARD_MAX
-        except ImportError:
-            pass
-
         # Finally, let's see if we're on an armbian board (currently a
         # terrible hack):
         try:
@@ -104,6 +94,11 @@ class Board:
         """Check whether the current board is a Beaglebone Black."""
         if sys.platform != "linux" or self.any_raspberry_pi:
             return False
+
+        # TODO: beaglebone_black detection is too sloppy, needs to be more specific
+        # before we can detect it
+        return False
+
 
         # TODO: Check the Beaglebone Black /proc/cpuinfo value instead of first
         # looking for a Raspberry Pi and then falling back to platform.
