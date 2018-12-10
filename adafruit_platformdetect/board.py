@@ -6,7 +6,9 @@ import re
 #   https://www.raspberrypi.org/documentation/hardware/raspberrypi/revision-codes/README.md
 
 BEAGLEBONE_BLACK = "beaglebone_black"
-
+FEATHER_HUZZAH="feather_huzzah"
+FEATHER_M0_EXPRESS="feather_m0_express"
+PYBOARD = "pyboard"
 ORANGEPI_PC = "orangepipc"
 
 RASPBERRY_PI_B = "raspberry_pi_b"
@@ -50,6 +52,13 @@ class Board:
         name = None
         if sys.platform == "linux":
             name = self._linux_computer_name()
+        elif sys_platform == "esp8266":  # TODO more conservative board-guessing
+            return FEATHER_HUZZAH
+        elif sys_platform == "samd21":
+            return FEATHER_M0_EXPRESS
+        elif sys_platform == "pyboard":
+            return PYBOARD
+
         return name
 
     def _linux_computer_name(self):
@@ -73,6 +82,7 @@ class Board:
 
     @property
     def orangepi_pc(self):
+        """Check whether the current board is an OrangePi PC."""
         if self.detect.chip.name != "sun8i":
             return False
         try:
