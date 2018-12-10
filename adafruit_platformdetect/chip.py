@@ -1,8 +1,9 @@
 import sys
 
-ESP8266 = "esp8266",
-SAMD21 = "samd21",
-STM32 = "stm32",
+ESP8266 = "esp8266"
+SAMD21 = "samd21"
+STM32 = "stm32"
+SUN8I = "sun8i"
 
 class Chip:
     def __init__(self, detect):
@@ -27,7 +28,7 @@ class Chip:
                 if not hardwarename:
                     return None
                 if "sun8i" in hardwarename:
-                    name = "sun8i"
+                    name = SUN8I
                 else:
                     name = hardwarename
 

@@ -9,6 +9,7 @@ BEAGLEBONE_BLACK = "beaglebone_black"
 FEATHER_HUZZAH="feather_huzzah"
 FEATHER_M0_EXPRESS="feather_m0_express"
 PYBOARD = "pyboard"
+NODEMCU = "nodemcu"
 ORANGEPI_PC = "orangepipc"
 
 RASPBERRY_PI_B = "raspberry_pi_b"
@@ -23,6 +24,13 @@ RASPBERRY_PI_3B = "raspberry_pi_3b"
 RASPBERRY_PI_3B_PLUS = "raspberry_pi_3b_plus"
 RASPBERRY_PI_CM3 = "raspberry_pi_cm3"
 RASPBERRY_PI_3A_PLUS = "raspberry_pi_3a_plus"
+
+# TODO: Should this include RASPBERRY_PI_3A_PLUS or any other models?
+ANY_RASPBERRY_PI_2_OR_3 = (
+    RASPBERRY_PI_2B,
+    RASPBERRY_PI_3B,
+    RASPBERRY_PI_3B_PLUS
+)
 
 _PI_REV_CODES = {
     RASPBERRY_PI_B: ('0002', '0003', '0004', '0005', '0006', '000d', '000e', '000f'),
@@ -123,6 +131,10 @@ class Board:
     @property
     def any_raspberry_pi(self):
         return self.pi_rev_code is not None
+
+    @property
+    def any_raspberry_pi_2_or_3(self):
+        return self.name in ANY_RASPBERRY_PI_2_OR_3
 
     @property
     def pi_rev_code(self):
