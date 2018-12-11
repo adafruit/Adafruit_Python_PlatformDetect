@@ -39,3 +39,12 @@ class Chip:
             id = SUN8I
 
         return id
+
+    def __getattr__(self, attr):
+        """
+        Detect whether the given attribute is the currently-detected chip.  See
+        list of constants at the top of this module for available options.
+        """
+        if self.id == attr:
+            return True
+        return False
