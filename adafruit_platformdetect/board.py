@@ -126,9 +126,8 @@ class Board:
 
     def __getattr__(self, attr):
         """
-        Detect whether the given attribute is the current board.  Currently
-        handles Raspberry Pi models; other board properties are handled by
-        individual methods for the time being.
+        Detect whether the given attribute is the currently-detected board.  See list
+        of constants at the top of this module for available options.
         """
         if self.id == attr:
             return True
