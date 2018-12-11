@@ -1,35 +1,41 @@
 import sys
 
-ESP8266 = "esp8266"
-SAMD21 = "samd21"
-STM32 = "stm32"
-SUN8I = "sun8i"
+AM33XX = "AM33XX"
+BCM2XXX = "BCM2XXX"
+ESP8266 = "ESP8266"
+SAMD21 = "SAMD21"
+STM32 = "STM32"
+SUN8I = "SUN8I"
 
 class Chip:
+    """Attempt detection of current chip / CPU."""
     def __init__(self, detect):
         self.detect = detect
 
     @property
-    def name(self):
-        name = None
-
+    def id(self):
         platform = sys.platform
-        if platform is not None:
-            if platform == "esp8266":
-                name = ESP8266
-            elif platform == "samd21":
-                name = SAMD21
-            elif platform == "pyboard":
-                name = STM32
-            elif platform == "linux":
-                # XXX: Here is where some work to detect ARM / x86 stuff for
-                # real needs to happen.
-                hardwarename = self.detect.cpuinfo_field("Hardware")
-                if not hardwarename:
-                    return None
-                if "sun8i" in hardwarename:
-                    name = SUN8I
-                else:
-                    name = hardwarename
+        if platform == "linux":
+            return self._linux_id()
+        elif platform == "esp8266":
+            return ESP8266
+        elif platform == "samd21":
+            return SAMD21
+        elif platform == "pyboard":
+            return STM32
+        else:
+            return None
 
-        return name
+    def _linux_id(self):
+        """Attempt to detect the CPU on a computer running the Linux kernel."""
+        id = None
+
+        hardware = self.detect.get_cpuinfo_field("Hardware")
+        if hardware in ('BCM2708', 'BCM2708', 'BCM2835'):
+            id = BCM2XXX
+        elif "AM33XX" in hardwarename:
+            id = AM33XX
+        elif "sun8i" in hardwarename:
+            id = SUN8I
+
+        return id

@@ -1,3 +1,4 @@
+import adafruit_platformdetect.chip as ap_chip
 import platform
 import sys
 import re
@@ -5,25 +6,25 @@ import re
 # Pi revision codes from:
 #   https://www.raspberrypi.org/documentation/hardware/raspberrypi/revision-codes/README.md
 
-BEAGLEBONE_BLACK = "beaglebone_black"
-FEATHER_HUZZAH="feather_huzzah"
-FEATHER_M0_EXPRESS="feather_m0_express"
-PYBOARD = "pyboard"
-NODEMCU = "nodemcu"
-ORANGEPI_PC = "orangepipc"
+BEAGLEBONE_BLACK = "BEAGLEBONE_BLACK"
+FEATHER_HUZZAH = "FEATHER_HUZZAH"
+FEATHER_M0_EXPRESS="FEATHER_M0_EXPRESS"
+PYBOARD = "PYBOARD"
+NODEMCU = "NODEMCU"
+ORANGE_PI_PC = "ORANGE_PI_PC"
 
-RASPBERRY_PI_B = "raspberry_pi_b"
-RASPBERRY_PI_B_PLUS = "raspberry_pi_b_plus"
-RASPBERRY_PI_A = "raspberry_pi_a"
-RASPBERRY_PI_A_PLUS = "raspberry_pi_a_plus"
-RASPBERRY_PI_CM1 = "raspberry_pi_cm1"
-RASPBERRY_PI_ZERO = "raspberry_pi_zero"
-RASPBERRY_PI_ZERO_W = "raspberry_pi_zero_w"
-RASPBERRY_PI_2B = "raspberry_pi_2b"
-RASPBERRY_PI_3B = "raspberry_pi_3b"
-RASPBERRY_PI_3B_PLUS = "raspberry_pi_3b_plus"
-RASPBERRY_PI_CM3 = "raspberry_pi_cm3"
-RASPBERRY_PI_3A_PLUS = "raspberry_pi_3a_plus"
+RASPBERRY_PI_B = "RASPBERRY_PI_B"
+RASPBERRY_PI_B_PLUS = "RASPBERRY_PI_B_PLUS"
+RASPBERRY_PI_A = "RASPBERRY_PI_A"
+RASPBERRY_PI_A_PLUS = "RASPBERRY_PI_A_PLUS"
+RASPBERRY_PI_CM1 = "RASPBERRY_PI_CM1"
+RASPBERRY_PI_ZERO = "RASPBERRY_PI_ZERO"
+RASPBERRY_PI_ZERO_W = "RASPBERRY_PI_ZERO_W"
+RASPBERRY_PI_2B = "RASPBERRY_PI_2B"
+RASPBERRY_PI_3B = "RASPBERRY_PI_3B"
+RASPBERRY_PI_3B_PLUS = "RASPBERRY_PI_3B_PLUS"
+RASPBERRY_PI_CM3 = "RASPBERRY_PI_CM3"
+RASPBERRY_PI_3A_PLUS = "RASPBERRY_PI_3A_PLUS"
 
 # TODO: Should this include RASPBERRY_PI_3A_PLUS or any other models?
 ANY_RASPBERRY_PI_2_OR_3 = (
@@ -55,109 +56,81 @@ class Board:
         self.detect = detect
 
     @property
-    def name(self):
-        """Return a human-readable name for the detected board, if any."""
-        name = None
-        if sys.platform == "linux":
-            name = self._linux_computer_name()
-        elif sys_platform == "esp8266":  # TODO more conservative board-guessing
+    def id(self):
+        """Return a unique id for the detected board, if any."""
+
+        chip_id = self.detect.chip.id
+
+        if chip_id == ap_chip.BCM2XXX:
+            return self._pi_id()
+        elif chip_id == ap_chip.AM33XX:
+            return BEAGLEBONE_BLACK
+        elif chip_id == ap_chip.SUN8I:
+            return self._armbian_id()
+        elif chip_id == ap_chip.ESP8266:
             return FEATHER_HUZZAH
-        elif sys_platform == "samd21":
+        elif chip_id == ap_chip.SAMD21:
             return FEATHER_M0_EXPRESS
-        elif sys_platform == "pyboard":
+        elif chip_id == ap_chip.STM32:
             return PYBOARD
 
-        return name
+        return None
 
-    def _linux_computer_name(self):
-        """Try to detect name of a Linux SBC."""
+    def _pi_id(self):
+        """Try to detect id of a Raspberry Pi."""
         # Check for Pi boards:
-        pi_rev_code = self.pi_rev_code
+        pi_rev_code = self._pi_rev_code()
         if pi_rev_code:
             for model, codes in _PI_REV_CODES.items():
                 if pi_rev_code in codes:
                     return model
-
-        # Check for BBB:
-        if self.beaglebone_black:
-            return BEAGLEBONE_BLACK
-
-        # Check for OrangePiPC
-        if self.orangepi_pc:
-            return ORANGEPI_PC
-
         return None
 
-    @property
-    def orangepi_pc(self):
-        """Check whether the current board is an OrangePi PC."""
-        if self.detect.chip.name != "sun8i":
-            return False
-        try:
-            with open("/etc/armbian-release", 'r') as f:
-                armbian = f.read().split('\n')
-                for line in armbian:
-                    match = re.search('^BOARD=(.*)', line)
-                    if match:
-                        return match.group(1) == "orangepipc"
-        except FileNotFoundError:
-            return False
-        return False
-
-    @property
-    def beaglebone_black(self):
-        """Check whether the current board is a Beaglebone Black."""
-        if sys.platform != "linux" or self.any_raspberry_pi:
-            return False
-
-        # TODO: beaglebone_black detection is too sloppy, needs to be more specific
-        # before we can detect it
-        return False
-
-
-        # TODO: Check the Beaglebone Black /proc/cpuinfo value instead of first
-        # looking for a Raspberry Pi and then falling back to platform.
-
-        plat = platform.platform().lower()
-        if plat.find('armv7l-with-debian') > -1:
-            return True
-        elif plat.find('armv7l-with-ubuntu') > -1:
-            return True
-        elif plat.find('armv7l-with-glibc2.4') > -1:
-            return True
-
-        return False
-
-    @property
-    def any_raspberry_pi(self):
-        return self.pi_rev_code is not None
-
-    @property
-    def any_raspberry_pi_2_or_3(self):
-        return self.name in ANY_RASPBERRY_PI_2_OR_3
-
-    @property
-    def pi_rev_code(self):
+    def _pi_rev_code(self):
+        """Attempt to find a Raspberry Pi revision code for this board."""
         # 2708 is Pi 1
         # 2709 is Pi 2
         # 2835 is Pi 3 (or greater) on 4.9.x kernel
         # Anything else is not a Pi.
-
-        if self.detect.cpuinfo_field('Hardware') not in ('BCM2708', 'BCM2709', 'BCM2835'):
+        if self.detect.chip.id != ap_chip.BCM2XXX:
             # Something else, not a Pi.
             return None
-        return self.detect.cpuinfo_field('Revision')
+        return self.detect.get_cpuinfo_field('Revision')
 
+    @property
+    def _armbian_id(self):
+        """Check whether the current board is an OrangePi PC."""
+        board_value = self.detect.get_armbian_release_field('BOARD')
+        if board_value == "orangepipc":
+            return ORANGE_PI_PC
+        return None
+
+    @property
+    def beaglebone_black(self):
+        """Check whether the current board is a Beaglebone Black."""
+        return self.id == BEAGLEBONE_BLACK
+
+    @property
+    def orange_pi_pc(self):
+        """Check whether the current board is an Orange Pi PC."""
+        return self.id == ORANGE_PI_PC
+
+    @property
+    def any_raspberry_pi(self):
+        """Check whether the current board is any Raspberry Pi."""
+        return self._pi_rev_code() is not None
+
+    @property
+    def any_raspberry_pi_2_or_3(self):
+        return self.id in ANY_RASPBERRY_PI_2_OR_3
 
     def __getattr__(self, attr):
         """
         Detect whether the given attribute is the current board.  Currently
-        handles Raspberry Pi models.
+        handles Raspberry Pi models; other board properties are handled by
+        individual methods for the time being.
         """
-        # Check Raspberry Pi values:
-        if attr in _PI_REV_CODES:
-            if sys.platform != "linux":
-                return False
-            return self.pi_rev_code in _PI_REV_CODES[attr]
-
-        raise AttributeError(attr + " is not a defined board")
+        if self.id == attr:
+            return True
+        else:
+            return False

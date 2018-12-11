@@ -34,18 +34,39 @@ class PlatformDetect:
         self.board = Board(self)
         self.chip = Chip(self)
 
-    def cpuinfo_field(self, field):
+    def get_cpuinfo_field(self, field):
         """
         Search /proc/cpuinfo for a field and return its value, if found,
         otherwise None.
         """
+        # Match a line like 'Hardware   : BCM2709':
+        pattern = r'^' + field + r'\s+:\s+(.*)$'
+
         with open('/proc/cpuinfo', 'r') as infile:
             cpuinfo = infile.read().split('\n')
             for line in cpuinfo:
-                # Match a line like 'Hardware   : BCM2709':
-                pattern = r'^' + field + r'\s+:\s+(.*)$'
                 match = re.search(pattern, line, flags=re.IGNORECASE)
                 if match:
                     return match.group(1)
 
         return None
+
+    def get_armbian_release_field(self, field):
+        """
+        Search /etc/armbian-release, if it exists, for a field and return its
+        value, if found, otherwise None.
+        """
+        field_value = None
+        pattern = r'^' + field + r'=(.*)'
+        try:
+            with open("/etc/armbian-release", 'r') as f:
+                armbian = f.read().split('\n')
+                for line in armbian:
+                    match = re.search(pattern, line)
+                    if match:
+                        field_value = match.group(1)
+        except FileNotFoundError:
+            pass
+
+        return field_value
+
