@@ -69,4 +69,3 @@ class PlatformDetect:
             pass
 
         return field_value
-

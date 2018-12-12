@@ -3,28 +3,40 @@ import platform
 import sys
 import re
 
-# Pi revision codes from:
-#   https://www.raspberrypi.org/documentation/hardware/raspberrypi/revision-codes/README.md
+BEAGLEBONE                  = 'BEAGLEBONE'
+BEAGLEBONE_BLACK            = 'BEAGLEBONE_BLACK'
+BEAGLEBONE_BLUE             = 'BEAGLEBONE_BLUE'
+BEAGLEBONE_BLACK_WIRELESS   = 'BEAGLEBONE_BLACK_WIRELESS'
+BEAGLEBONE_POCKETBEAGLE     = 'BEAGLEBONE_POCKETBEAGLE'
+BEAGLEBONE_GREEN            = 'BEAGLEBONE_GREEN'
+BEAGLEBONE_GREEN_WIRELESS   = 'BEAGLEBONE_GREEN_WIRELESS'
+BEAGLEBONE_BLACK_INDUSTRIAL = 'BEAGLEBONE_BLACK_INDUSTRIAL'
+BEAGLEBONE_ENHANCED         = 'BEAGLEBONE_ENHANCED'
+BEAGLEBONE_USOMIQ           = 'BEAGLEBONE_USOMIQ'
+BEAGLEBONE_AIR              = 'BEAGLEBONE_AIR'
+BEAGLEBONE_POCKETBONE       = 'BEAGLEBONE_POCKETBONE'
+BEAGLELOGIC_STANDALONE      = 'BEAGLELOGIC_STANDALONE'
+OSD3358_DEV_BOARD           = 'OSD3358_DEV_BOARD'
+OSD3358_SM_RED              = 'OSD3358_SM_RED'
 
-BEAGLEBONE_BLACK = "BEAGLEBONE_BLACK"
-FEATHER_HUZZAH = "FEATHER_HUZZAH"
-FEATHER_M0_EXPRESS="FEATHER_M0_EXPRESS"
-PYBOARD = "PYBOARD"
-NODEMCU = "NODEMCU"
-ORANGE_PI_PC = "ORANGE_PI_PC"
+FEATHER_HUZZAH              = "FEATHER_HUZZAH"
+FEATHER_M0_EXPRESS          = "FEATHER_M0_EXPRESS"
+PYBOARD                     = "PYBOARD"
+NODEMCU                     = "NODEMCU"
+ORANGE_PI_PC                = "ORANGE_PI_PC"
 
-RASPBERRY_PI_B = "RASPBERRY_PI_B"
-RASPBERRY_PI_B_PLUS = "RASPBERRY_PI_B_PLUS"
-RASPBERRY_PI_A = "RASPBERRY_PI_A"
-RASPBERRY_PI_A_PLUS = "RASPBERRY_PI_A_PLUS"
-RASPBERRY_PI_CM1 = "RASPBERRY_PI_CM1"
-RASPBERRY_PI_ZERO = "RASPBERRY_PI_ZERO"
-RASPBERRY_PI_ZERO_W = "RASPBERRY_PI_ZERO_W"
-RASPBERRY_PI_2B = "RASPBERRY_PI_2B"
-RASPBERRY_PI_3B = "RASPBERRY_PI_3B"
-RASPBERRY_PI_3B_PLUS = "RASPBERRY_PI_3B_PLUS"
-RASPBERRY_PI_CM3 = "RASPBERRY_PI_CM3"
-RASPBERRY_PI_3A_PLUS = "RASPBERRY_PI_3A_PLUS"
+RASPBERRY_PI_B              = "RASPBERRY_PI_B"
+RASPBERRY_PI_B_PLUS         = "RASPBERRY_PI_B_PLUS"
+RASPBERRY_PI_A              = "RASPBERRY_PI_A"
+RASPBERRY_PI_A_PLUS         = "RASPBERRY_PI_A_PLUS"
+RASPBERRY_PI_CM1            = "RASPBERRY_PI_CM1"
+RASPBERRY_PI_ZERO           = "RASPBERRY_PI_ZERO"
+RASPBERRY_PI_ZERO_W         = "RASPBERRY_PI_ZERO_W"
+RASPBERRY_PI_2B             = "RASPBERRY_PI_2B"
+RASPBERRY_PI_3B             = "RASPBERRY_PI_3B"
+RASPBERRY_PI_3B_PLUS        = "RASPBERRY_PI_3B_PLUS"
+RASPBERRY_PI_CM3            = "RASPBERRY_PI_CM3"
+RASPBERRY_PI_3A_PLUS        = "RASPBERRY_PI_3A_PLUS"
 
 # TODO: Should this include RASPBERRY_PI_3A_PLUS or any other models?
 ANY_RASPBERRY_PI_2_OR_3 = (
@@ -32,6 +44,75 @@ ANY_RASPBERRY_PI_2_OR_3 = (
     RASPBERRY_PI_3B,
     RASPBERRY_PI_3B_PLUS
 )
+
+# BeagleBone eeprom board ids from:
+#   https://github.com/beagleboard/image-builder
+# Thanks to zmatt on freenode #beagle for pointers.
+_BEAGLEBONE_BOARD_IDS = {
+    # Original bone/white:
+    BEAGLEBONE: (
+        ('A4', '.U3.A335BONE00A4'),
+        ('A5', '.U3.A335BONE00A5'),
+        ('A6', '.U3.A335BONE00A6'),
+        ('A6A', '.U3.A335BONE0A6A'),
+        ('A6B', '.U3.A335BONE0A6B'),
+        ('B', '.U3.A335BONE000B'),
+    ),
+    BEAGLEBONE_BLACK: (
+        ('A5', '.U3.A335BNLT00A5'),
+        ('A5A', '.U3.A335BNLT0A5A'),
+        ('A5B', '.U3.A335BNLT0A5B'),
+        ('A5C', '.U3.A335BNLT0A5C'),
+        ('A6', '.U3.A335BNLT00A6'),
+        ('C', '.U3.A335BNLT000C'),
+        ('C', '.U3.A335BNLT00C0'),
+    ),
+    BEAGLEBONE_BLUE: (
+        ('A2', '.U3.A335BNLTBLA2'),
+    ),
+    BEAGLEBONE_BLACK_WIRELESS: (
+        ('A5', '.U3.A335BNLTBWA5'),
+    ),
+    BEAGLEBONE_POCKETBEAGLE: (
+        ('A2', '.U3.A335PBGL00A2'),
+    ),
+    BEAGLEBONE_GREEN: (
+        ('1A', '.U3.A335BNLT....'),
+        ('UNKNOWN', '.U3.A335BNLTBBG1'),
+    ),
+    BEAGLEBONE_GREEN_WIRELESS: (
+        ('W1A', '.U3.A335BNLTGW1A'),
+    ),
+    BEAGLEBONE_BLACK_INDUSTRIAL: (
+        ('A0', '.U3.A335BNLTAIA0'), # Arrow
+        ('A0', '.U3.A335BNLTEIA0'), # Element14
+    ),
+    BEAGLEBONE_ENHANCED: (
+        ('A', '.U3.A335BNLTSE0A'),
+    ),
+    BEAGLEBONE_USOMIQ: (
+        ('6', '.U3.A335BNLTME06'),
+    ),
+    BEAGLEBONE_AIR: (
+        ('A0', '.U3.A335BNLTNAD0'),
+    ),
+    # TODO: Does this differ meaningfully from the PocketBeagle?
+    BEAGLEBONE_POCKETBONE: (
+        ('0', '.U3.A335BNLTBP00'),
+    ),
+    OSD3358_DEV_BOARD: (
+        ('0.1', '.U3.A335BNLTGH01'),
+    ),
+    OSD3358_SM_RED: (
+        ('0', '.U3.A335BNLTOS00'),
+    ),
+    BEAGLELOGIC_STANDALONE: (
+        ('A', '.U3.A335BLGC000A'),
+    )
+}
+
+# Pi revision codes from:
+#   https://www.raspberrypi.org/documentation/hardware/raspberrypi/revision-codes/README.md
 
 _PI_REV_CODES = {
     RASPBERRY_PI_B: ('0002', '0003', '0004', '0005', '0006', '000d', '000e', '000f'),
@@ -47,6 +128,7 @@ _PI_REV_CODES = {
     RASPBERRY_PI_CM3: ('a020a0',),
     RASPBERRY_PI_3A_PLUS: ('9020e0',),
 }
+
 
 class Board:
     """
@@ -106,16 +188,6 @@ class Board:
         return None
 
     @property
-    def beaglebone_black(self):
-        """Check whether the current board is a Beaglebone Black."""
-        return self.id == BEAGLEBONE_BLACK
-
-    @property
-    def orange_pi_pc(self):
-        """Check whether the current board is an Orange Pi PC."""
-        return self.id == ORANGE_PI_PC
-
-    @property
     def any_raspberry_pi(self):
         """Check whether the current board is any Raspberry Pi."""
         return self._pi_rev_code() is not None
@@ -131,5 +203,4 @@ class Board:
         """
         if self.id == attr:
             return True
-        else:
-            return False
+        return False
