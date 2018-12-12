@@ -15,5 +15,5 @@ if detector.board.any_raspberry_pi:
     print("Raspberry Pi detected.")
     print("Revision code: ", detector.board._pi_rev_code())
 
-if detector.board.beaglebone_black:
+if detector.board.BEAGLEBONE_BLACK:
     print("BBB detected")

@@ -33,9 +33,9 @@ class Chip:
         hardware = self.detector.get_cpuinfo_field("Hardware")
         if hardware in ('BCM2708', 'BCM2708', 'BCM2835'):
             id = BCM2XXX
-        elif "AM33XX" in hardwarename:
+        elif "AM33XX" in hardware:
             id = AM33XX
-        elif "sun8i" in hardwarename:
+        elif "sun8i" in hardware:
             id = SUN8I
 
         return id
