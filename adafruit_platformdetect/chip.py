@@ -9,8 +9,8 @@ SUN8I = "SUN8I"
 
 class Chip:
     """Attempt detection of current chip / CPU."""
-    def __init__(self, detect):
-        self.detect = detect
+    def __init__(self, detector):
+        self.detector = detector
 
     @property
     def id(self):
@@ -30,7 +30,7 @@ class Chip:
         """Attempt to detect the CPU on a computer running the Linux kernel."""
         id = None
 
-        hardware = self.detect.get_cpuinfo_field("Hardware")
+        hardware = self.detector.get_cpuinfo_field("Hardware")
         if hardware in ('BCM2708', 'BCM2708', 'BCM2835'):
             id = BCM2XXX
         elif "AM33XX" in hardwarename:

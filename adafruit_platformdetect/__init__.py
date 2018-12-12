@@ -28,7 +28,7 @@ import re
 from adafruit_platformdetect.board import Board
 from adafruit_platformdetect.chip import Chip
 
-class PlatformDetect:
+class PlatformDetector:
 
     def __init__(self):
         self.board = Board(self)

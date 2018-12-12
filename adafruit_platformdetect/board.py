@@ -51,63 +51,63 @@ ANY_RASPBERRY_PI_2_OR_3 = (
 _BEAGLEBONE_BOARD_IDS = {
     # Original bone/white:
     BEAGLEBONE: (
-        ('A4', '.U3.A335BONE00A4'),
-        ('A5', '.U3.A335BONE00A5'),
-        ('A6', '.U3.A335BONE00A6'),
-        ('A6A', '.U3.A335BONE0A6A'),
-        ('A6B', '.U3.A335BONE0A6B'),
-        ('B', '.U3.A335BONE000B'),
+        ('A4', 'A335BONE00A4'),
+        ('A5', 'A335BONE00A5'),
+        ('A6', 'A335BONE00A6'),
+        ('A6A', 'A335BONE0A6A'),
+        ('A6B', 'A335BONE0A6B'),
+        ('B', 'A335BONE000B'),
     ),
     BEAGLEBONE_BLACK: (
-        ('A5', '.U3.A335BNLT00A5'),
-        ('A5A', '.U3.A335BNLT0A5A'),
-        ('A5B', '.U3.A335BNLT0A5B'),
-        ('A5C', '.U3.A335BNLT0A5C'),
-        ('A6', '.U3.A335BNLT00A6'),
-        ('C', '.U3.A335BNLT000C'),
-        ('C', '.U3.A335BNLT00C0'),
+        ('A5', 'A335BNLT00A5'),
+        ('A5A', 'A335BNLT0A5A'),
+        ('A5B', 'A335BNLT0A5B'),
+        ('A5C', 'A335BNLT0A5C'),
+        ('A6', 'A335BNLT00A6'),
+        ('C', 'A335BNLT000C'),
+        ('C', 'A335BNLT00C0'),
     ),
     BEAGLEBONE_BLUE: (
-        ('A2', '.U3.A335BNLTBLA2'),
+        ('A2', 'A335BNLTBLA2'),
     ),
     BEAGLEBONE_BLACK_WIRELESS: (
-        ('A5', '.U3.A335BNLTBWA5'),
+        ('A5', 'A335BNLTBWA5'),
     ),
     BEAGLEBONE_POCKETBEAGLE: (
-        ('A2', '.U3.A335PBGL00A2'),
+        ('A2', 'A335PBGL00A2'),
     ),
     BEAGLEBONE_GREEN: (
-        ('1A', '.U3.A335BNLT....'),
-        ('UNKNOWN', '.U3.A335BNLTBBG1'),
+        ('1A', 'A335BNLT....'),
+        ('UNKNOWN', 'A335BNLTBBG1'),
     ),
     BEAGLEBONE_GREEN_WIRELESS: (
-        ('W1A', '.U3.A335BNLTGW1A'),
+        ('W1A', 'A335BNLTGW1A'),
     ),
     BEAGLEBONE_BLACK_INDUSTRIAL: (
-        ('A0', '.U3.A335BNLTAIA0'), # Arrow
-        ('A0', '.U3.A335BNLTEIA0'), # Element14
+        ('A0', 'A335BNLTAIA0'), # Arrow
+        ('A0', 'A335BNLTEIA0'), # Element14
     ),
     BEAGLEBONE_ENHANCED: (
-        ('A', '.U3.A335BNLTSE0A'),
+        ('A', 'A335BNLTSE0A'),
     ),
     BEAGLEBONE_USOMIQ: (
-        ('6', '.U3.A335BNLTME06'),
+        ('6', 'A335BNLTME06'),
     ),
     BEAGLEBONE_AIR: (
-        ('A0', '.U3.A335BNLTNAD0'),
+        ('A0', 'A335BNLTNAD0'),
     ),
     # TODO: Does this differ meaningfully from the PocketBeagle?
     BEAGLEBONE_POCKETBONE: (
-        ('0', '.U3.A335BNLTBP00'),
+        ('0', 'A335BNLTBP00'),
     ),
     OSD3358_DEV_BOARD: (
-        ('0.1', '.U3.A335BNLTGH01'),
+        ('0.1', 'A335BNLTGH01'),
     ),
     OSD3358_SM_RED: (
-        ('0', '.U3.A335BNLTOS00'),
+        ('0', 'A335BNLTOS00'),
     ),
     BEAGLELOGIC_STANDALONE: (
-        ('A', '.U3.A335BLGC000A'),
+        ('A', 'A335BLGC000A'),
     )
 }
 
@@ -129,24 +129,23 @@ _PI_REV_CODES = {
     RASPBERRY_PI_3A_PLUS: ('9020e0',),
 }
 
-
 class Board:
     """
     Attempt to detect specific boards.
     """
-    def __init__(self, detect):
-        self.detect = detect
+    def __init__(self, detector):
+        self.detector = detector
 
     @property
     def id(self):
         """Return a unique id for the detected board, if any."""
 
-        chip_id = self.detect.chip.id
+        chip_id = self.detector.chip.id
 
         if chip_id == ap_chip.BCM2XXX:
             return self._pi_id()
         elif chip_id == ap_chip.AM33XX:
-            return BEAGLEBONE_BLACK
+            return self._beaglebone_id()
         elif chip_id == ap_chip.SUN8I:
             return self._armbian_id()
         elif chip_id == ap_chip.ESP8266:
@@ -174,15 +173,35 @@ class Board:
         # 2709 is Pi 2
         # 2835 is Pi 3 (or greater) on 4.9.x kernel
         # Anything else is not a Pi.
-        if self.detect.chip.id != ap_chip.BCM2XXX:
+        if self.detector.chip.id != ap_chip.BCM2XXX:
             # Something else, not a Pi.
             return None
-        return self.detect.get_cpuinfo_field('Revision')
+        return self.detector.get_cpuinfo_field('Revision')
+
+    @property
+    def _beaglebone_id(self):
+        """Try to detect id of a Beaglebone."""
+        try:
+            with open("/sys/bus/nvmem/devices/0-00500/nvmem", "rb") as eeprom:
+                eeprom_bytes = eeprom.read(16)
+        except:
+            return None
+
+        if eeprom_bytes[:4] != b'\xaaU3\xee':
+            return None
+
+        id_string = str(eeprom_bytes[4:])
+        for model, ids in _BEAGLEBONE_BOARD_IDS.items():
+            for id in ids:
+                if id_string == id[1]:
+                    return model
+
+        return None
 
     @property
     def _armbian_id(self):
         """Check whether the current board is an OrangePi PC."""
-        board_value = self.detect.get_armbian_release_field('BOARD')
+        board_value = self.detector.get_armbian_release_field('BOARD')
         if board_value == "orangepipc":
             return ORANGE_PI_PC
         return None
