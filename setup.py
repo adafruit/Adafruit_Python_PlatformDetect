@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Note: To use the 'upload' functionality of this file, you must:
@@ -6,7 +6,6 @@
 
 import io
 import os
-import sys
 
 from setuptools import setup, find_packages
 

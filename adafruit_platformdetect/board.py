@@ -1,8 +1,8 @@
+"""Detect boards."""
 import adafruit_platformdetect.chip as ap_chip
-import platform
-import sys
-import re
 
+# Allow for aligned constant definitions:
+# pylint: disable=bad-whitespace
 BEAGLEBONE                  = 'BEAGLEBONE'
 BEAGLEBONE_BLACK            = 'BEAGLEBONE_BLACK'
 BEAGLEBONE_BLUE             = 'BEAGLEBONE_BLUE'
@@ -21,6 +21,7 @@ OSD3358_SM_RED              = 'OSD3358_SM_RED'
 
 FEATHER_HUZZAH              = "FEATHER_HUZZAH"
 FEATHER_M0_EXPRESS          = "FEATHER_M0_EXPRESS"
+GENERIC_LINUX_PC            = "GENERIC_LINUX_PC"
 PYBOARD                     = "PYBOARD"
 NODEMCU                     = "NODEMCU"
 ORANGE_PI_PC                = "ORANGE_PI_PC"
@@ -37,8 +38,8 @@ RASPBERRY_PI_3B             = "RASPBERRY_PI_3B"
 RASPBERRY_PI_3B_PLUS        = "RASPBERRY_PI_3B_PLUS"
 RASPBERRY_PI_CM3            = "RASPBERRY_PI_CM3"
 RASPBERRY_PI_3A_PLUS        = "RASPBERRY_PI_3A_PLUS"
+# pylint: enable=bad-whitespace
 
-# TODO: Should this include RASPBERRY_PI_3A_PLUS or any other models?
 ANY_RASPBERRY_PI_2_OR_3 = (
     RASPBERRY_PI_2B,
     RASPBERRY_PI_3B,
@@ -96,7 +97,6 @@ _BEAGLEBONE_BOARD_IDS = {
     BEAGLEBONE_AIR: (
         ('A0', 'A335BNLTNAD0'),
     ),
-    # TODO: Does this differ meaningfully from the PocketBeagle?
     BEAGLEBONE_POCKETBONE: (
         ('0', 'A335BNLTBP00'),
     ),
@@ -130,32 +130,35 @@ _PI_REV_CODES = {
 }
 
 class Board:
-    """
-    Attempt to detect specific boards.
-    """
+    """Attempt to detect specific boards."""
     def __init__(self, detector):
         self.detector = detector
 
+    # pylint: disable=invalid-name
     @property
     def id(self):
         """Return a unique id for the detected board, if any."""
 
         chip_id = self.detector.chip.id
+        board_id = None
 
         if chip_id == ap_chip.BCM2XXX:
-            return self._pi_id()
+            board_id = self._pi_id()
         elif chip_id == ap_chip.AM33XX:
-            return self._beaglebone_id()
+            board_id = self._beaglebone_id()
+        elif chip_id == ap_chip.GENERIC_X86:
+            board_id = GENERIC_LINUX_PC
         elif chip_id == ap_chip.SUN8I:
-            return self._armbian_id()
+            board_id = self._armbian_id()
         elif chip_id == ap_chip.ESP8266:
-            return FEATHER_HUZZAH
+            board_id = FEATHER_HUZZAH
         elif chip_id == ap_chip.SAMD21:
-            return FEATHER_M0_EXPRESS
+            board_id = FEATHER_M0_EXPRESS
         elif chip_id == ap_chip.STM32:
-            return PYBOARD
+            board_id = PYBOARD
 
-        return None
+        return board_id
+    # pylint: enable=invalid-name
 
     def _pi_id(self):
         """Try to detect id of a Raspberry Pi."""
@@ -178,6 +181,7 @@ class Board:
             return None
         return self.detector.get_cpuinfo_field('Revision')
 
+    # pylint: disable=no-self-use
     def _beaglebone_id(self):
         """Try to detect id of a Beaglebone."""
         try:
@@ -190,14 +194,14 @@ class Board:
             return None
 
         id_string = eeprom_bytes[4:].decode("ascii")
-        for model, ids in _BEAGLEBONE_BOARD_IDS.items():
-            for id in ids:
-                if id_string == id[1]:
+        for model, bb_ids in _BEAGLEBONE_BOARD_IDS.items():
+            for bb_id in bb_ids:
+                if id_string == bb_id[1]:
                     return model
 
         return None
+    # pylint: enable=no-self-use
 
-    @property
     def _armbian_id(self):
         """Check whether the current board is an OrangePi PC."""
         board_value = self.detector.get_armbian_release_field('BOARD')
@@ -212,6 +216,7 @@ class Board:
 
     @property
     def any_raspberry_pi_2_or_3(self):
+        """Check whether the current board is any Raspberry Pi 2 or 3."""
         return self.id in ANY_RASPBERRY_PI_2_OR_3
 
     def __getattr__(self, attr):

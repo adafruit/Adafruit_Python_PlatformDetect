@@ -1,3 +1,4 @@
+"""Attempt detection of current chip / CPU."""
 import sys
 
 AM33XX = "AM33XX"
@@ -6,6 +7,7 @@ ESP8266 = "ESP8266"
 SAMD21 = "SAMD21"
 STM32 = "STM32"
 SUN8I = "SUN8I"
+GENERIC_X86 = "GENERIC_X86"
 
 class Chip:
     """Attempt detection of current chip / CPU."""
@@ -13,32 +15,39 @@ class Chip:
         self.detector = detector
 
     @property
+    # pylint: disable=invalid-name
     def id(self):
+        """Return a unique id for the detected chip, if any."""
         platform = sys.platform
         if platform == "linux":
             return self._linux_id()
-        elif platform == "esp8266":
+        if platform == "esp8266":
             return ESP8266
-        elif platform == "samd21":
+        if platform == "samd21":
             return SAMD21
-        elif platform == "pyboard":
+        if platform == "pyboard":
             return STM32
-        else:
-            return None
+        return None
+    # pylint: enable=invalid-name
 
     def _linux_id(self):
         """Attempt to detect the CPU on a computer running the Linux kernel."""
-        id = None
+        linux_id = None
 
         hardware = self.detector.get_cpuinfo_field("Hardware")
-        if hardware in ('BCM2708', 'BCM2708', 'BCM2835'):
-            id = BCM2XXX
-        elif "AM33XX" in hardware:
-            id = AM33XX
-        elif "sun8i" in hardware:
-            id = SUN8I
 
-        return id
+        if hardware is None:
+            vendor_id = self.detector.get_cpuinfo_field("vendor_id")
+            if vendor_id in ("GenuineIntel", "AuthenticAMD"):
+                linux_id = GENERIC_X86
+        elif hardware in ("BCM2708", "BCM2708", "BCM2835"):
+            linux_id = BCM2XXX
+        elif "AM33XX" in hardware:
+            linux_id = AM33XX
+        elif "sun8i" in hardware:
+            linux_id = SUN8I
+
+        return linux_id
 
     def __getattr__(self, attr):
         """

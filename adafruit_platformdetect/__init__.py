@@ -28,7 +28,11 @@ import re
 from adafruit_platformdetect.board import Board
 from adafruit_platformdetect.chip import Chip
 
-class PlatformDetector:
+# Various methods here may retain state in future, so tell pylint not to worry
+# that they don't use self right now:
+# pylint: disable=no-self-use
+class Detector:
+    """Wrap various platform detection functions."""
 
     def __init__(self):
         self.board = Board(self)
@@ -59,8 +63,8 @@ class PlatformDetector:
         field_value = None
         pattern = r'^' + field + r'=(.*)'
         try:
-            with open("/etc/armbian-release", 'r') as f:
-                armbian = f.read().split('\n')
+            with open("/etc/armbian-release", 'r') as release_file:
+                armbian = release_file.read().split('\n')
                 for line in armbian:
                     match = re.search(pattern, line)
                     if match:
