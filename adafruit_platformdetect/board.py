@@ -38,6 +38,8 @@ RASPBERRY_PI_3B             = "RASPBERRY_PI_3B"
 RASPBERRY_PI_3B_PLUS        = "RASPBERRY_PI_3B_PLUS"
 RASPBERRY_PI_CM3            = "RASPBERRY_PI_CM3"
 RASPBERRY_PI_3A_PLUS        = "RASPBERRY_PI_3A_PLUS"
+
+_96BOARDS                   = "96BOARDS"
 # pylint: enable=bad-whitespace
 
 ANY_RASPBERRY_PI_2_OR_3 = (
@@ -156,6 +158,7 @@ class Board:
             board_id = FEATHER_M0_EXPRESS
         elif chip_id == ap_chip.STM32:
             board_id = PYBOARD
+        else board_id = self._is_96boards()
 
         return board_id
     # pylint: enable=invalid-name
@@ -201,6 +204,11 @@ class Board:
 
         return None
     # pylint: enable=no-self-use
+
+    def _is_96Boards(self):
+        if self.detector.get_dt_compatible_field("qcom,apq8016-sbc") or self.detector.get_dt_compatible_field("hisilicon,hi3660-hikey960") or self.detector.get_dt_compatible_field("hisilicon,hi6220-hikey"):
+            return _96BOARDS
+        return None
 
     def _armbian_id(self):
         """Check whether the current board is an OrangePi PC."""

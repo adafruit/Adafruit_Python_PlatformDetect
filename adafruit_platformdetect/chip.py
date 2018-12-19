@@ -7,6 +7,7 @@ ESP8266 = "ESP8266"
 SAMD21 = "SAMD21"
 STM32 = "STM32"
 SUN8I = "SUN8I"
+APQ8016 = "APQ8016"
 GENERIC_X86 = "GENERIC_X86"
 
 class Chip:
@@ -36,10 +37,14 @@ class Chip:
 
         hardware = self.detector.get_cpuinfo_field("Hardware")
 
+        if self.detector.get_dt_compatible_field("qcom,apq8016"):
+            linux_id = APQ8016
+            return linux_id
+
         if hardware is None:
-            vendor_id = self.detector.get_cpuinfo_field("vendor_id")
-            if vendor_id in ("GenuineIntel", "AuthenticAMD"):
-                linux_id = GENERIC_X86
+            if vendor_id == self.detector.get_cpuinfo_field("vendor_id"):
+                if vendor_id in ("GenuineIntel", "AuthenticAMD"):
+                   linux_id = GENERIC_X86
         elif hardware in ("BCM2708", "BCM2708", "BCM2835"):
             linux_id = BCM2XXX
         elif "AM33XX" in hardware:
