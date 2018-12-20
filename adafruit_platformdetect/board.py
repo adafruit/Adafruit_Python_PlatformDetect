@@ -252,10 +252,7 @@ class Board:
 
     @property
     def any_linux(self):
-        return self.any_raspberry_pi
-               or self.any_beaglebone
-               or self.any_orange_pi
-               or self.GENERIC_LINUX_PC
+        return self.any_raspberry_pi or self.any_beaglebone or self.any_orange_pi or self.GENERIC_LINUX_PC
 
     def __getattr__(self, attr):
         """
