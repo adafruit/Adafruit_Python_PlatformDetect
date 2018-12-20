@@ -46,6 +46,17 @@ ANY_RASPBERRY_PI_2_OR_3 = (
     RASPBERRY_PI_3B_PLUS
 )
 
+ANY_RASPBERRY_PI_40PIN = (
+    RASPBERRY_PI_B_PLUS,
+    RASPBERRY_PI_A_PLUS,
+    RASPBERRY_PI_ZERO,
+    RASPBERRY_PI_ZERO_W,
+    RASPBERRY_PI_2B,
+    RASPBERRY_PI_3B,
+    RASPBERRY_PI_3B_PLUS,
+    RASPBERRY_PI_3A_PLUS
+)
+
 # BeagleBone eeprom board ids from:
 #   https://github.com/beagleboard/image-builder
 # Thanks to zmatt on freenode #beagle for pointers.
@@ -218,6 +229,11 @@ class Board:
     def any_raspberry_pi_2_or_3(self):
         """Check whether the current board is any Raspberry Pi 2 or 3."""
         return self.id in ANY_RASPBERRY_PI_2_OR_3
+
+    @property
+    def any_raspberry_pi_40pin(self):
+        """Check whether the current board is any 40-pin Raspberry Pi."""
+        return self.id in ANY_RASPBERRY_PI_40PIN
 
     def __getattr__(self, attr):
         """
