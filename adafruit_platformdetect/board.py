@@ -40,13 +40,25 @@ RASPBERRY_PI_CM3            = "RASPBERRY_PI_CM3"
 RASPBERRY_PI_3A_PLUS        = "RASPBERRY_PI_3A_PLUS"
 # pylint: enable=bad-whitespace
 
-ANY_RASPBERRY_PI_2_OR_3 = (
-    RASPBERRY_PI_2B,
-    RASPBERRY_PI_3B,
-    RASPBERRY_PI_3B_PLUS
+_BEAGLEBONE_IDS = (
+    BEAGLEBONE,
+    BEAGLEBONE_BLACK,
+    BEAGLEBONE_BLUE,
+    BEAGLEBONE_BLACK_WIRELESS,
+    BEAGLEBONE_POCKETBEAGLE,
+    BEAGLEBONE_GREEN,
+    BEAGLEBONE_GREEN_WIRELESS,
+    BEAGLEBONE_BLACK_INDUSTRIAL,
+    BEAGLEBONE_ENHANCED,
+    BEAGLEBONE_USOMIQ,
+    BEAGLEBONE_AIR,
+    BEAGLEBONE_POCKETBONE,
+    BEAGLELOGIC_STANDALONE,
+    OSD3358_DEV_BOARD,
+    OSD3358_SM_RED,
 )
 
-ANY_RASPBERRY_PI_40PIN = (
+_RASPBERRY_PI_40_PIN_IDS = (
     RASPBERRY_PI_B_PLUS,
     RASPBERRY_PI_A_PLUS,
     RASPBERRY_PI_ZERO,
@@ -226,14 +238,24 @@ class Board:
         return self._pi_rev_code() is not None
 
     @property
-    def any_raspberry_pi_2_or_3(self):
-        """Check whether the current board is any Raspberry Pi 2 or 3."""
-        return self.id in ANY_RASPBERRY_PI_2_OR_3
+    def any_raspberry_pi_40_pin(self):
+        """Check whether the current board is any 40-pin Raspberry Pi."""
+        return self.id in _RASPBERRY_PI_40_PIN_IDS
 
     @property
-    def any_raspberry_pi_40pin(self):
-        """Check whether the current board is any 40-pin Raspberry Pi."""
-        return self.id in ANY_RASPBERRY_PI_40PIN
+    def any_beaglebone(self):
+        return self.id in _BEAGLEBONE_IDS
+
+    @property
+    def any_orange_pi(self):
+        return self.ORANGE_PI_PC
+
+    @property
+    def any_linux(self):
+        return self.any_raspberry_pi
+               or self.any_beaglebone
+               or self.any_orange_pi
+               or self.GENERIC_LINUX_PC
 
     def __getattr__(self, attr):
         """
