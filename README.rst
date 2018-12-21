@@ -2,9 +2,21 @@ Introduction
 ============
 
 This library provides best-guess platform detection for a range of single-board
-computers and (potentially) other platforms.  It's intended for use in
-`Adafruit_Blinka <https://github.com/adafruit/Adafruit_Blinka>`_, but may be
+computers and (potentially) other platforms.  It was written primarily for use
+in `Adafruit_Blinka <https://github.com/adafruit/Adafruit_Blinka>`_, but may be
 useful in other contexts.
+
+Platform detection is divided into "chip" and "board" detection, with the latter
+generally dependent on the former.  Platform info is gathered from:
+
+  - Python's `sys.platform`
+
+  - The `/proc/cpuinfo` file on Linux systems (for processor info, Raspberry Pi
+    hardware revisions, etc.)
+
+  - Beaglebone EEPROM board IDs
+
+  - Distribution-specific files such as `/etc/armbian-release`.
 
 The API is currently unstable and may change drastically in future releases.
 
