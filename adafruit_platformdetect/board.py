@@ -246,14 +246,17 @@ class Board:
 
     @property
     def any_beaglebone(self):
+        """Check whether the current board is any Beaglebone-family system."""
         return self.id in _BEAGLEBONE_IDS
 
     @property
     def any_orange_pi(self):
+        """Check whether the current board is any defined Orange Pi."""
         return self.ORANGE_PI_PC
 
     @property
     def any_embedded_linux(self):
+        """Check whether the current board is any embedded Linux device."""
         return self.any_raspberry_pi or self.any_beaglebone or self.any_orange_pi
 
     def __getattr__(self, attr):

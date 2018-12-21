@@ -1,0 +1,27 @@
+dist: trusty
+sudo: false
+language: python
+python:
+    - "3.6"
+
+cache:
+    pip: true
+
+deploy:
+  - provider: pypi
+    user: adafruit-travis
+    password:
+      secure:
+        "cuXaREGKMzcM6684fDp5CeHOANcay4Lylfl3g3tU5Pcx2bxqj7oOZ+N/GMEG2KhJPofPcXky75tyBh8PVVcwrpkUeZgmb3Cyny4SdnKOoazdyhFI8wwqeMh2KLXcZXbC49Bg6iFDxr+PPzWkzqCsGa3XKIxdCmGDwdElBSuMpcTA+/GR588R/7F4UDGaNqdhpKk1csNYQ94gP6Hil4op9Ouw0hy5rKMBo79UvnoFdoMQiYQvZFlRSUvNbfcoECPoJnoNjPCwwDl5GVR1+ohU1xPkPFUj1aaj/rUaH1AXWlHYtHtwUsc54UP4VpSNV4qgQ3+AtHe0rhos9ZoPq/+f5LTlQ4bjAUbqWJCr3bIooTIBMc3c5sWxTBQIduMrJ5MkAs0m4ZS5KBu8ReiczP3v9XoI60hcZSZ1Uq63L9O8/LyTe484et9/CgmU5uN8dJdpTp+017GzgP8dT7xoWnxxgnBqdRlJ0rjhrPTk4T6d9OYzCJguitgmZOYx9GVLE2E8/c+r0ybxutcG0w3EI2+TZzWBxS+kUgQhCFL07PTZ5jMCBcJlvzzhphN+7IuUlecQJKHgRd450TxS3qcj+CQtWvCr/SvfhC6HJWE7uEqviJxV7kBvYxoUX0XQYeOzC6Ah4WH09fKccXbdhOoV5APWpb7Pa74XJWZrcKZuHuYtvlc="
+    on:
+      tags: true
+
+install:
+  - pip install -r requirements.txt
+  - pip install --force-reinstall pylint==1.9.2
+  - pip install circuitpython-build-tools Sphinx sphinx-rtd-theme
+
+script:
+  - pylint adafruit_platformdetect/**.py
+  - ([[ ! -d "examples" ]] || pylint --disable=missing-docstring,invalid-name,bad-whitespace examples/*.py)
+# - cd docs && sphinx-build -E -W -b html . _build/html && cd ..
