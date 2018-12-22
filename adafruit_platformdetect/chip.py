@@ -7,6 +7,8 @@ ESP8266 = "ESP8266"
 SAMD21 = "SAMD21"
 STM32 = "STM32"
 SUN8I = "SUN8I"
+S805 = "S805"
+S905 = "S905"
 GENERIC_X86 = "GENERIC_X86"
 
 class Chip:
@@ -46,6 +48,10 @@ class Chip:
             linux_id = AM33XX
         elif "sun8i" in hardware:
             linux_id = SUN8I
+        elif "ODROIDC" in hardware:
+            linux_id = S805
+        elif "ODROID-C2" in hardware:
+            linux_id = S905
 
         return linux_id
 
