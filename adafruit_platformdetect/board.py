@@ -39,6 +39,10 @@ RASPBERRY_PI_3B             = "RASPBERRY_PI_3B"
 RASPBERRY_PI_3B_PLUS        = "RASPBERRY_PI_3B_PLUS"
 RASPBERRY_PI_CM3            = "RASPBERRY_PI_CM3"
 RASPBERRY_PI_3A_PLUS        = "RASPBERRY_PI_3A_PLUS"
+
+ODROID_C1                   = "ODROID_C1"
+ODROID_C1_PLUS              = "ODROID_C1_PLUS"
+ODROID_C2                   = "ODROID_C2"
 # pylint: enable=bad-whitespace
 
 _RASPBERRY_PI_40_PIN_IDS = (
@@ -50,6 +54,12 @@ _RASPBERRY_PI_40_PIN_IDS = (
     RASPBERRY_PI_3B,
     RASPBERRY_PI_3B_PLUS,
     RASPBERRY_PI_3A_PLUS
+)
+
+_ODROID_40_PIN_IDS = (
+    ODROID_C1,
+    ODROID_C1_PLUS,
+    ODROID_C2
 )
 
 _BEAGLEBONE_IDS = (
@@ -181,6 +191,10 @@ class Board:
             board_id = FEATHER_M0_EXPRESS
         elif chip_id == ap_chip.STM32:
             board_id = PYBOARD
+        elif chip_id == ap_chip.S805:
+            board_id = ODROID_C1
+        elif chip_id == ap_chip.S905:
+            board_id = ODROID_C2
 
         return board_id
     # pylint: enable=invalid-name
