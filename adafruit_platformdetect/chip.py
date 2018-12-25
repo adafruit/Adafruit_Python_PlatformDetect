@@ -1,5 +1,6 @@
 """Attempt detection of current chip / CPU."""
 import sys
+import os
 
 AM33XX = "AM33XX"
 BCM2XXX = "BCM2XXX"
@@ -10,6 +11,7 @@ SUN8I = "SUN8I"
 S805 = "S805"
 S905 = "S905"
 GENERIC_X86 = "GENERIC_X86"
+FT232H = "FT232H"
 
 class Chip:
     """Attempt detection of current chip / CPU."""
@@ -29,6 +31,30 @@ class Chip:
             return SAMD21
         if platform == "pyboard":
             return STM32
+        # Special case, if we have an environment var set, we could use FT232H
+        try:
+            if os.environ['BLINKA_FT232H']:
+                import ftdi1 as ftdi
+                try:
+                    ctx = None
+                    device_list = None
+                    ctx = ftdi.new()  # Create a libftdi context.
+                    # Enumerate FTDI devices.
+                    count, device_list = ftdi.usb_find_all(ctx, 0, 0)
+                    if count < 0:
+                        raise RuntimeError('ftdi_usb_find_all returned error %d : %s' %
+                                           count, ftdi.get_error_string(self._ctx))
+                    if count == 0:
+                        raise RuntimeError('BLINKA_FT232H environment variable set, but no FT232H device found')
+                finally:
+                    # Make sure to clean up list and context when done.
+                    if ctx is not None:
+                        ftdi.free(ctx)
+            return FT232H
+        except KeyError: # no FT232H environment var
+            pass
+
+        # nothing found!
         return None
     # pylint: enable=invalid-name
 
