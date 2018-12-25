@@ -39,7 +39,6 @@ class Chip:
                 import ftdi1 as ftdi # pylint: disable=import-error
                 try:
                     ctx = None
-                    device_list = None
                     ctx = ftdi.new()  # Create a libftdi context.
                     # Enumerate FTDI devices.
                     count, _ = ftdi.usb_find_all(ctx, 0, 0)
