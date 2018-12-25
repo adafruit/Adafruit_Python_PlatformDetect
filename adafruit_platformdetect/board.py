@@ -1,4 +1,5 @@
 """Detect boards."""
+import os
 import adafruit_platformdetect.chip as ap_chip
 
 # Allow for aligned constant definitions:
@@ -175,6 +176,12 @@ class Board:
     @property
     def id(self):
         """Return a unique id for the detected board, if any."""
+        # There are some times we want to trick the platform detection
+        # say if a raspberry pi doesn't have the right ID, or for testing
+        try:
+            return os.environ['BLINKA_FORCEBOARD']
+        except KeyError: # no forced board, continue with testing!
+            pass
 
         chip_id = self.detector.chip.id
         board_id = None

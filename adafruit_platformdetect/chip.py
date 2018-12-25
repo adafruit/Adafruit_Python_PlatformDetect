@@ -19,9 +19,15 @@ class Chip:
         self.detector = detector
 
     @property
-    # pylint: disable=invalid-name
-    def id(self):
+    def id(self): # pylint: disable=invalid-name,too-many-branches,too-many-return-statements
         """Return a unique id for the detected chip, if any."""
+        # There are some times we want to trick the platform detection
+        # say if a raspberry pi doesn't have the right ID, or for testing
+        try:
+            return os.environ['BLINKA_FORCECHIP']
+        except KeyError: # no forced chip, continue with testing!
+            pass
+
         platform = sys.platform
         if platform == "linux":
             return self._linux_id()
