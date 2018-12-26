@@ -76,7 +76,7 @@ class Chip:
             vendor_id = self.detector.get_cpuinfo_field("vendor_id")
             if vendor_id in ("GenuineIntel", "AuthenticAMD"):
                 linux_id = GENERIC_X86
-        elif hardware in ("BCM2708", "BCM2708", "BCM2835"):
+        elif hardware in ("BCM2708", "BCM2708", "BCM2709", "BCM2835"):
             linux_id = BCM2XXX
         elif "AM33XX" in hardware:
             linux_id = AM33XX
