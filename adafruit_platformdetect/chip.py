@@ -28,15 +28,6 @@ class Chip:
         except KeyError: # no forced chip, continue with testing!
             pass
 
-        platform = sys.platform
-        if platform == "linux":
-            return self._linux_id()
-        if platform == "esp8266":
-            return ESP8266
-        if platform == "samd21":
-            return SAMD21
-        if platform == "pyboard":
-            return STM32
         # Special case, if we have an environment var set, we could use FT232H
         try:
             if os.environ['BLINKA_FT232H']:
@@ -62,6 +53,15 @@ class Chip:
         except KeyError: # no FT232H environment var
             pass
 
+        platform = sys.platform
+        if platform == "linux":
+            return self._linux_id()
+        if platform == "esp8266":
+            return ESP8266
+        if platform == "samd21":
+            return SAMD21
+        if platform == "pyboard":
+            return STM32
         # nothing found!
         return None
     # pylint: enable=invalid-name
@@ -76,7 +76,7 @@ class Chip:
             vendor_id = self.detector.get_cpuinfo_field("vendor_id")
             if vendor_id in ("GenuineIntel", "AuthenticAMD"):
                 linux_id = GENERIC_X86
-        elif hardware in ("BCM2708", "BCM2708", "BCM2709", "BCM2835"):
+        elif hardware in ("BCM2708", "BCM2709", "BCM2835"):
             linux_id = BCM2XXX
         elif "AM33XX" in hardware:
             linux_id = AM33XX
