@@ -1,4 +1,5 @@
 """Detect boards."""
+import os
 import adafruit_platformdetect.chip as ap_chip
 
 # Allow for aligned constant definitions:
@@ -43,6 +44,8 @@ RASPBERRY_PI_3A_PLUS        = "RASPBERRY_PI_3A_PLUS"
 ODROID_C1                   = "ODROID_C1"
 ODROID_C1_PLUS              = "ODROID_C1_PLUS"
 ODROID_C2                   = "ODROID_C2"
+
+FTDI_FT232H                 = "FT232H"
 # pylint: enable=bad-whitespace
 
 _RASPBERRY_PI_40_PIN_IDS = (
@@ -173,6 +176,12 @@ class Board:
     @property
     def id(self):
         """Return a unique id for the detected board, if any."""
+        # There are some times we want to trick the platform detection
+        # say if a raspberry pi doesn't have the right ID, or for testing
+        try:
+            return os.environ['BLINKA_FORCEBOARD']
+        except KeyError: # no forced board, continue with testing!
+            pass
 
         chip_id = self.detector.chip.id
         board_id = None
@@ -195,7 +204,8 @@ class Board:
             board_id = ODROID_C1
         elif chip_id == ap_chip.S905:
             board_id = ODROID_C2
-
+        elif chip_id == ap_chip.FT232H:
+            board_id = FTDI_FT232H
         return board_id
     # pylint: enable=invalid-name
 
