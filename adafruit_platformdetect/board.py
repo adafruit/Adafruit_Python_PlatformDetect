@@ -151,20 +151,67 @@ _BEAGLEBONE_BOARD_IDS = {
 # Pi revision codes from:
 #   https://www.raspberrypi.org/documentation/hardware/raspberrypi/revision-codes/README.md
 
+# Each tuple here contains both the base codes, and the versions that indicate
+# the Pi is overvolted / overclocked - for 4-digit codes, this will be prefixed
+# with 1000, and for 6-digit codes it'll be prefixed with 1.  These are placed
+# on separate lines.
+
 _PI_REV_CODES = {
-    RASPBERRY_PI_B_REV1: ('0002', '0003'),
-    RASPBERRY_PI_B_REV2: ('0005', '0006', '000d', '000e', '000f'),
-    RASPBERRY_PI_B_PLUS: ('0010', '0013', '900032'),
-    RASPBERRY_PI_A: ('0007', '0008', '0009'),
-    RASPBERRY_PI_A_PLUS: ('0012', '0015', '900021'),
-    RASPBERRY_PI_CM1: ('0011', '0014'),
-    RASPBERRY_PI_ZERO: ('900092', '920092', '900093', '920093'),
-    RASPBERRY_PI_ZERO_W: ('9000c1',),
-    RASPBERRY_PI_2B: ('a01040', 'a01041', 'a21041', 'a22042'),
-    RASPBERRY_PI_3B: ('a02082', 'a22082', 'a32082', 'a52082'),
-    RASPBERRY_PI_3B_PLUS: ('a020d3',),
-    RASPBERRY_PI_CM3: ('a020a0',),
-    RASPBERRY_PI_3A_PLUS: ('9020e0',),
+    RASPBERRY_PI_B_REV1: (
+        # Regular codes:
+        '0002', '0003',
+
+        # Overvolted/clocked versions:
+        '10000002', '10000003',
+    ),
+    RASPBERRY_PI_B_REV2: (
+        '0005', '0006', '000d', '000e', '000f',
+        '10000005', '10000006', '1000000d', '1000000e', '1000000f',
+    ),
+    RASPBERRY_PI_B_PLUS: (
+        '0010', '0013', '900032',
+        '10000010', '10000013', '1900032',
+    ),
+    RASPBERRY_PI_A: (
+        '0007', '0008', '0009',
+        '10000007', '10000008', '10000009',
+    ),
+    RASPBERRY_PI_A_PLUS: (
+        '0012', '0015', '900021',
+        '10000012', '10000015', '1900021',
+    ),
+    RASPBERRY_PI_CM1: (
+        '0011', '0014',
+        '10000011', '10000014',
+    ),
+    RASPBERRY_PI_ZERO: (
+        '900092', '920092', '900093', '920093'
+        '1900092', '1920092', '1900093', '1920093',
+    ),
+    RASPBERRY_PI_ZERO_W: (
+        '9000c1',
+        '19000c1',
+    ),
+    RASPBERRY_PI_2B: (
+        'a01040', 'a01041', 'a21041', 'a22042',
+        '1a01040', '1a01041', '1a21041', '1a22042',
+    ),
+    RASPBERRY_PI_3B: (
+        'a02082', 'a22082', 'a32082', 'a52082',
+        '1a02082', '1a22082', '1a32082', '1a52082',
+    ),
+    RASPBERRY_PI_3B_PLUS: (
+        'a020d3',
+        '1a020d3',
+    ),
+    RASPBERRY_PI_CM3: (
+        'a020a0',
+        '1a020a0',
+    ),
+    RASPBERRY_PI_3A_PLUS: (
+        '9020e0',
+        '19020e0',
+    ),
 }
 
 class Board:
