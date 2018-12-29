@@ -46,6 +46,8 @@ ODROID_C1_PLUS              = "ODROID_C1_PLUS"
 ODROID_C2                   = "ODROID_C2"
 
 FTDI_FT232H                 = "FT232H"
+# XXX: naming
+_96BOARDS                   = "96BOARDS"
 # pylint: enable=bad-whitespace
 
 _RASPBERRY_PI_40_PIN_IDS = (
@@ -253,6 +255,9 @@ class Board:
             board_id = ODROID_C2
         elif chip_id == ap_chip.FT232H:
             board_id = FTDI_FT232H
+        else:
+            board_id = self._is_96boards()
+
         return board_id
     # pylint: enable=invalid-name
 
@@ -297,6 +302,11 @@ class Board:
 
         return None
     # pylint: enable=no-self-use
+
+    def _is_96Boards(self):
+        if self.detector.get_dt_compatible_field("qcom,apq8016-sbc") or self.detector.get_dt_compatible_field("hisilicon,hi3660-hikey960") or self.detector.get_dt_compatible_field("hisilicon,hi6220-hikey"):
+            return _96BOARDS
+        return None
 
     def _armbian_id(self):
         """Check whether the current board is an OrangePi PC."""
