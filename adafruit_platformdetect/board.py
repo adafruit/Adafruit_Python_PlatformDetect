@@ -315,9 +315,9 @@ class Board:
     def any_96boards(self):
         """Check if the current board is any 96Boards-family board."""
         return (
-           self.detector.check_dt_compatible_value("qcom,apq8016-sbc")
-           or self.detector.check_dt_compatible_value("hisilicon,hi3660-hikey960")
-           or self.detector.check_dt_compatible_value("hisilicon,hi6220-hikey")
+            self.detector.check_dt_compatible_value("qcom,apq8016-sbc")
+            or self.detector.check_dt_compatible_value("hisilicon,hi3660-hikey960")
+            or self.detector.check_dt_compatible_value("hisilicon,hi6220-hikey")
         )
 
     @property

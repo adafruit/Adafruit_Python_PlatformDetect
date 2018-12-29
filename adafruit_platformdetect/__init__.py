@@ -62,7 +62,7 @@ class Detector:
         """
         # Match a value like 'qcom,apq8016-sbc':
         if value in open('/proc/device-tree/compatible').read():
-             return True
+            return True
 
         return False
 

@@ -91,7 +91,7 @@ class Chip:
         elif "ODROID-C2" in hardware:
             linux_id = S905
 
-        return None
+        return linux_id
 
     def __getattr__(self, attr):
         """
