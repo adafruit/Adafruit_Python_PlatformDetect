@@ -55,14 +55,14 @@ class Detector:
 
         return None
 
-    def get_dt_compatible_field(self, field):
+    def check_dt_compatible_value(self, value):
         """
-        Search /proc/device-tree/compatible for a field and return True, if found,
+        Search /proc/device-tree/compatible for a value and return True, if found,
         otherwise False.
         """
         # Match a value like 'qcom,apq8016-sbc':
-        if field in open('/proc/device-tree/compatible').read():
-                 return True
+        if value in open('/proc/device-tree/compatible').read():
+             return True
 
         return False
 

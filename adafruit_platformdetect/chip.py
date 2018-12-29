@@ -69,13 +69,12 @@ class Chip:
 
     def _linux_id(self):
         """Attempt to detect the CPU on a computer running the Linux kernel."""
+
+        if self.detector.check_dt_compatible_value("qcom,apq8016"):
+            return APQ8016
+
         linux_id = None
-
         hardware = self.detector.get_cpuinfo_field("Hardware")
-
-        if self.detector.get_dt_compatible_field("qcom,apq8016"):
-            linux_id = APQ8016
-            return linux_id
 
         if hardware is None:
             vendor_id = self.detector.get_cpuinfo_field("vendor_id")
@@ -92,7 +91,7 @@ class Chip:
         elif "ODROID-C2" in hardware:
             linux_id = S905
 
-        return linux_id
+        return None
 
     def __getattr__(self, attr):
         """

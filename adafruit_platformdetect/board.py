@@ -46,8 +46,7 @@ ODROID_C1_PLUS              = "ODROID_C1_PLUS"
 ODROID_C2                   = "ODROID_C2"
 
 FTDI_FT232H                 = "FT232H"
-# XXX: naming
-_96BOARDS                   = "96BOARDS"
+LINARO_96BOARDS             = "LINARO_96BOARDS"
 # pylint: enable=bad-whitespace
 
 _RASPBERRY_PI_40_PIN_IDS = (
@@ -255,8 +254,10 @@ class Board:
             board_id = ODROID_C2
         elif chip_id == ap_chip.FT232H:
             board_id = FTDI_FT232H
-        else:
-            board_id = self._is_96boards()
+        # TODO do we want to check chip ID at all for 96Boards?
+        # elif chip_id == APQ8016:
+        elif self.any_96boards:
+            board_id = LINARO_96BOARDS
 
         return board_id
     # pylint: enable=invalid-name
@@ -303,17 +304,21 @@ class Board:
         return None
     # pylint: enable=no-self-use
 
-    def _is_96Boards(self):
-        if self.detector.get_dt_compatible_field("qcom,apq8016-sbc") or self.detector.get_dt_compatible_field("hisilicon,hi3660-hikey960") or self.detector.get_dt_compatible_field("hisilicon,hi6220-hikey"):
-            return _96BOARDS
-        return None
-
     def _armbian_id(self):
-        """Check whether the current board is an OrangePi PC."""
+        """Find a board id for an OrangePi PC."""
         board_value = self.detector.get_armbian_release_field('BOARD')
         if board_value == "orangepipc":
             return ORANGE_PI_PC
         return None
+
+    @property
+    def any_96boards(self):
+        """Check if the current board is any 96Boards-family board."""
+        return (
+           self.detector.check_dt_compatible_value("qcom,apq8016-sbc")
+           or self.detector.check_dt_compatible_value("hisilicon,hi3660-hikey960")
+           or self.detector.check_dt_compatible_value("hisilicon,hi6220-hikey")
+        )
 
     @property
     def any_raspberry_pi(self):

@@ -11,8 +11,11 @@ generally dependent on the former.  Platform info is gathered from:
 
   - Python's `sys.platform`
 
-  - The `/proc/cpuinfo` file on Linux systems (for processor info, Raspberry Pi
-    hardware revisions, etc.)
+  - Various files on Linux systems:
+
+    - `/proc/cpuinfo` (for processor info, Raspberry Pi hardware revisions, etc.)
+
+    - `/proc/device-tree/compatible` (for 96Boards info)
 
   - Beaglebone EEPROM board IDs
 
