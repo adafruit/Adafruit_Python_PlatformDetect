@@ -191,7 +191,7 @@ _PI_REV_CODES = {
     ),
     RASPBERRY_PI_ZERO_W: (
         '9000c1',
-        '19000c1',
+        '19000c1', '29000c1', # warranty bits
     ),
     RASPBERRY_PI_2B: (
         'a01040', 'a01041', 'a21041', 'a22042',
