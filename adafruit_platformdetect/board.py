@@ -26,6 +26,7 @@ GENERIC_LINUX_PC            = "GENERIC_LINUX_PC"
 PYBOARD                     = "PYBOARD"
 NODEMCU                     = "NODEMCU"
 ORANGE_PI_PC                = "ORANGE_PI_PC"
+GIANT_BOARD                 = "GIANT_BOARD"
 
 RASPBERRY_PI_B_REV1         = "RASPBERRY_PI_B_REV1"
 RASPBERRY_PI_B_REV2         = "RASPBERRY_PI_B_REV2"
@@ -244,6 +245,8 @@ class Board:
             board_id = GENERIC_LINUX_PC
         elif chip_id == ap_chip.SUN8I:
             board_id = self._armbian_id()
+        elif chip_id == ap_chip.SAMA5:
+            board_id = self._sama5_id()
         elif chip_id == ap_chip.ESP8266:
             board_id = FEATHER_HUZZAH
         elif chip_id == ap_chip.SAMD21:
@@ -308,6 +311,13 @@ class Board:
             return ORANGE_PI_PC
         return None
 
+    def _sama5_id(self):
+        """Check what type sama5 board."""
+        board_value = self.detector.get_device_model()
+        if "Giant Board" in board_value:
+            return GIANT_BOARD
+        return None
+
     @property
     def any_raspberry_pi(self):
         """Check whether the current board is any Raspberry Pi."""
@@ -329,9 +339,15 @@ class Board:
         return self.ORANGE_PI_PC
 
     @property
+    def any_giant_board(self):
+        """Check whether the current board is any defined Giant Board."""
+        return self.GIANT_BOARD
+
+    @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
-        return self.any_raspberry_pi or self.any_beaglebone or self.any_orange_pi
+        return self.any_raspberry_pi or self.any_beaglebone or \
+         self.any_orange_pi or self.any_giant_board
 
     def __getattr__(self, attr):
         """
