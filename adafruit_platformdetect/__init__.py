@@ -73,3 +73,14 @@ class Detector:
             pass
 
         return field_value
+        
+    def get_device_model(self):
+        """
+        otherwise None.
+        """
+        try:
+	        with open('/proc/device-tree/model', 'r') as model_file:
+		        model = model_file.read()
+		    return model
+        except FileNotFoundError:
+	        pass
