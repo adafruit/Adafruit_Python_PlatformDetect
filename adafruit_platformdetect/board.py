@@ -311,7 +311,7 @@ class Board:
             return ORANGE_PI_PC
         return None
         
-	def _sama5_id(self):
+    def _sama5_id(self):
         """Check what type sama5 board."""
         board_value = self.detector.get_device_model()
         if "Giant Board" in board_value:
