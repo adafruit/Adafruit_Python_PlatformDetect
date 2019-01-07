@@ -338,7 +338,7 @@ class Board:
         """Check whether the current board is any defined Orange Pi."""
         return self.ORANGE_PI_PC
         
-	@property
+    @property
     def any_giant_board(self):
         return self.GIANT_BOARD
 
