@@ -340,7 +340,7 @@ class Board:
 
     @property
     def any_giant_board(self):
-		"""Check whether the current board is any defined Giant Board."""
+        """Check whether the current board is any defined Giant Board."""
         return self.GIANT_BOARD
 
     @property
