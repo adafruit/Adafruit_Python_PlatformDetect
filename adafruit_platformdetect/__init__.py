@@ -76,11 +76,12 @@ class Detector:
         
     def get_device_model(self):
         """
+        Search /proc/device-tree/model for the device model and return its value, if found,
         otherwise None.
         """
         try:
 	        with open('/proc/device-tree/model', 'r') as model_file:
 		        model = model_file.read()
-		    return model
+		        return model
         except FileNotFoundError:
 	        pass
