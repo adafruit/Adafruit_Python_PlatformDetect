@@ -18,3 +18,6 @@ print("Is this a generic Linux PC?", detector.board.GENERIC_LINUX_PC)
 
 if detector.board.any_raspberry_pi:
     print("Raspberry Pi detected.")
+
+if detector.board.any_jetson_board:
+    print("Jetson platform detected.")
