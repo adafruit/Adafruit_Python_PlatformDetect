@@ -235,7 +235,7 @@ class Board:
     def __init__(self, detector):
         self.detector = detector
 
-    # pylint: disable=invalid-name
+    # pylint: disable=invalid-name, too-many-branches
     @property
     def id(self):
         """Return a unique id for the detected board, if any."""
@@ -373,6 +373,7 @@ class Board:
 
     @property
     def any_jetson_board(self):
+        """Check whether the current board is any defined Jetson Board."""
         return self.id in _JETSON_IDS
 
     @property
