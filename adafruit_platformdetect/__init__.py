@@ -85,3 +85,14 @@ class Detector:
                 return model
         except FileNotFoundError:
             pass
+
+    def get_device_compatible(self):
+        """
+        Search /proc/device-tree/compatible for the compatible chip name.
+        """
+        try:
+            with open('/proc/device-tree/compatible', 'r') as model_file:
+                model = model_file.read()
+                return model
+        except FileNotFoundError:
+            pass

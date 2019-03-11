@@ -11,6 +11,7 @@ SUN8I = "SUN8I"
 S805 = "S805"
 S905 = "S905"
 SAMA5 = "SAMA5"
+TEGRAXXX = "TEGRAXXX"
 GENERIC_X86 = "GENERIC_X86"
 FT232H = "FT232H"
 
@@ -55,7 +56,7 @@ class Chip:
             pass
 
         platform = sys.platform
-        if platform == "linux":
+        if platform == "linux" or platform == "linux2":
             return self._linux_id()
         if platform == "esp8266":
             return ESP8266
@@ -77,6 +78,10 @@ class Chip:
             vendor_id = self.detector.get_cpuinfo_field("vendor_id")
             if vendor_id in ("GenuineIntel", "AuthenticAMD"):
                 linux_id = GENERIC_X86
+
+            compatible = self.detector.get_device_compatible()
+            if 'tegra' in compatible:
+                linux_id = TEGRAXXX
         elif hardware in ("BCM2708", "BCM2709", "BCM2835"):
             linux_id = BCM2XXX
         elif "AM33XX" in hardware:

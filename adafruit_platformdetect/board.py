@@ -28,6 +28,11 @@ NODEMCU                     = "NODEMCU"
 ORANGE_PI_PC                = "ORANGE_PI_PC"
 GIANT_BOARD                 = "GIANT_BOARD"
 
+JETSON_TX1                  = 'JETSON_TX1'
+JETSON_TX2                  = 'JETSON_TX2'
+JETSON_XAVIER               = 'JETSON_XAVIER'
+JETSON_TXX                  = 'JETSON_TXX'
+
 RASPBERRY_PI_B_REV1         = "RASPBERRY_PI_B_REV1"
 RASPBERRY_PI_B_REV2         = "RASPBERRY_PI_B_REV2"
 RASPBERRY_PI_B_PLUS         = "RASPBERRY_PI_B_PLUS"
@@ -48,6 +53,13 @@ ODROID_C2                   = "ODROID_C2"
 
 FTDI_FT232H                 = "FT232H"
 # pylint: enable=bad-whitespace
+
+_JETSON_IDS = (
+    JETSON_TX1,
+    JETSON_TX2,
+    JETSON_XAVIER,
+    JETSON_TXX
+)
 
 _RASPBERRY_PI_40_PIN_IDS = (
     RASPBERRY_PI_B_PLUS,
@@ -223,7 +235,7 @@ class Board:
     def __init__(self, detector):
         self.detector = detector
 
-    # pylint: disable=invalid-name
+    # pylint: disable=invalid-name, too-many-branches
     @property
     def id(self):
         """Return a unique id for the detected board, if any."""
@@ -259,6 +271,9 @@ class Board:
             board_id = ODROID_C2
         elif chip_id == ap_chip.FT232H:
             board_id = FTDI_FT232H
+        elif chip_id == ap_chip.TEGRAXXX:
+            board_id = self._tegra_id()
+
         return board_id
     # pylint: enable=invalid-name
 
@@ -318,6 +333,19 @@ class Board:
             return GIANT_BOARD
         return None
 
+    def _tegra_id(self):
+        """Try to detect the id of aarch64 board."""
+        board_value = self.detector.get_device_model()
+        if 'tx1' in board_value:
+            return JETSON_TX1
+        elif 'quill' in board_value:
+            return JETSON_TX2
+        elif 'xavier' in board_value:
+            return JETSON_XAVIER
+        elif 'txx' in board_value:
+            return JETSON_TXX
+        return None
+
     @property
     def any_raspberry_pi(self):
         """Check whether the current board is any Raspberry Pi."""
@@ -344,10 +372,15 @@ class Board:
         return self.GIANT_BOARD
 
     @property
+    def any_jetson_board(self):
+        """Check whether the current board is any defined Jetson Board."""
+        return self.id in _JETSON_IDS
+
+    @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
         return self.any_raspberry_pi or self.any_beaglebone or \
-         self.any_orange_pi or self.any_giant_board
+         self.any_orange_pi or self.any_giant_board or self.any_jetson_board
 
     def __getattr__(self, attr):
         """
