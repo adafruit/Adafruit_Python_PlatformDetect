@@ -80,7 +80,7 @@ class Chip:
                 linux_id = GENERIC_X86
 
             compatible = self.detector.get_device_compatible()
-            if 'tegra' in compatible:
+            if compatible and 'tegra' in compatible:
                 linux_id = TEGRAXXX
         elif hardware in ("BCM2708", "BCM2709", "BCM2835"):
             linux_id = BCM2XXX
