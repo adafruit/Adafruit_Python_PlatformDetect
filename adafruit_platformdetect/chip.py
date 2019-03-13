@@ -11,7 +11,9 @@ SUN8I = "SUN8I"
 S805 = "S805"
 S905 = "S905"
 SAMA5 = "SAMA5"
-TEGRAXXX = "TEGRAXXX"
+T210 = "T210"
+T186 = "T186"
+T194 = "T194"
 GENERIC_X86 = "GENERIC_X86"
 FT232H = "FT232H"
 
@@ -81,7 +83,12 @@ class Chip:
 
             compatible = self.detector.get_device_compatible()
             if 'tegra' in compatible:
-                linux_id = TEGRAXXX
+                if 'cv' in compatible or 'txx' in compatible:
+                    linux_id = T210
+                elif 'quill' in compatible:
+                    linux_id = T186
+                elif 'xavier' in compatible:
+                    linux_id = T194
         elif hardware in ("BCM2708", "BCM2709", "BCM2835"):
             linux_id = BCM2XXX
         elif "AM33XX" in hardware:
