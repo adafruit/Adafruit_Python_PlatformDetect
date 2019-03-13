@@ -271,9 +271,8 @@ class Board:
             board_id = ODROID_C2
         elif chip_id == ap_chip.FT232H:
             board_id = FTDI_FT232H
-        elif chip_id == ap_chip.TEGRAXXX:
+        elif chip_id in (ap_chip.T210, ap_chip.T186, ap_chip.T194):
             board_id = self._tegra_id()
-
         return board_id
     # pylint: enable=invalid-name
 
