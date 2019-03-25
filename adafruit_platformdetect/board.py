@@ -31,7 +31,7 @@ GIANT_BOARD                 = "GIANT_BOARD"
 JETSON_TX1                  = 'JETSON_TX1'
 JETSON_TX2                  = 'JETSON_TX2'
 JETSON_XAVIER               = 'JETSON_XAVIER'
-JETSON_TXX                  = 'JETSON_TXX'
+JETSON_NANO                 = 'JETSON_NANO'
 
 RASPBERRY_PI_B_REV1         = "RASPBERRY_PI_B_REV1"
 RASPBERRY_PI_B_REV2         = "RASPBERRY_PI_B_REV2"
@@ -58,7 +58,7 @@ _JETSON_IDS = (
     JETSON_TX1,
     JETSON_TX2,
     JETSON_XAVIER,
-    JETSON_TXX
+    JETSON_NANO
 )
 
 _RASPBERRY_PI_40_PIN_IDS = (
@@ -341,8 +341,8 @@ class Board:
             return JETSON_TX2
         elif 'xavier' in board_value:
             return JETSON_XAVIER
-        elif 'txx' in board_value:
-            return JETSON_TXX
+        elif 'nano' in board_value:
+            return JETSON_NANO
         return None
 
     @property
