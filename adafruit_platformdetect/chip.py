@@ -83,7 +83,7 @@ class Chip:
 
             compatible = self.detector.get_device_compatible()
             if compatible and 'tegra' in compatible:
-                if 'cv' in compatible or 'txx' in compatible:
+                if 'cv' in compatible or 'nano' in compatible:
                     linux_id = T210
                 elif 'quill' in compatible:
                     linux_id = T186
