@@ -60,3 +60,5 @@ Usage
     print("BBB? ", detector.board.BEAGLEBONE_BLACK)
     print("Orange Pi PC? ", detector.board.ORANGE_PI_PC)
     print("generic Linux PC? ", detector.board.GENERIC_LINUX_PC)
+
+See https://github.com/adafruit/Adafruit_Python_PlatformDetect/blob/master/bin/detect.py for more possible detectable boards
