@@ -384,6 +384,11 @@ class Board:
         return self.ORANGE_PI_PC
 
     @property
+    def any_coral_board(self):
+        """Check whether the current board is any defined Coral."""
+        return self.CORAL_EDGE_TPU_DEV
+
+    @property
     def any_giant_board(self):
         """Check whether the current board is any defined Giant Board."""
         return self.GIANT_BOARD
@@ -397,7 +402,8 @@ class Board:
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
         return self.any_raspberry_pi or self.any_beaglebone or \
-         self.any_orange_pi or self.any_giant_board or self.any_jetson_board
+         self.any_orange_pi or self.any_giant_board or self.any_jetson_board or \
+         self.any_coral_board
 
     def __getattr__(self, attr):
         """
