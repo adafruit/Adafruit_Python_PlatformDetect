@@ -3,6 +3,7 @@ import sys
 import os
 
 AM33XX = "AM33XX"
+IMX8MX = "IMX8MX"
 BCM2XXX = "BCM2XXX"
 ESP8266 = "ESP8266"
 SAMD21 = "SAMD21"
@@ -89,6 +90,9 @@ class Chip:
                     linux_id = T186
                 elif 'xavier' in compatible:
                     linux_id = T194
+            if compatible and 'imx8m' in compatible:
+                linux_id = IMX8MX
+
         elif hardware in ("BCM2708", "BCM2709", "BCM2835"):
             linux_id = BCM2XXX
         elif "AM33XX" in hardware:
