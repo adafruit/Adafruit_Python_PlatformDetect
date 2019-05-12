@@ -28,11 +28,16 @@ NODEMCU                     = "NODEMCU"
 ORANGE_PI_PC                = "ORANGE_PI_PC"
 GIANT_BOARD                 = "GIANT_BOARD"
 
+# NVIDIA Jetson boards
 JETSON_TX1                  = 'JETSON_TX1'
 JETSON_TX2                  = 'JETSON_TX2'
 JETSON_XAVIER               = 'JETSON_XAVIER'
 JETSON_NANO                 = 'JETSON_NANO'
 
+# Google Coral dev board
+CORAL_EDGE_TPU_DEV          = "CORAL_EDGE_TPU_DEV"
+
+# Various Raspberry Pi models
 RASPBERRY_PI_B_REV1         = "RASPBERRY_PI_B_REV1"
 RASPBERRY_PI_B_REV2         = "RASPBERRY_PI_B_REV2"
 RASPBERRY_PI_B_PLUS         = "RASPBERRY_PI_B_PLUS"
@@ -53,6 +58,10 @@ ODROID_C2                   = "ODROID_C2"
 
 FTDI_FT232H                 = "FT232H"
 # pylint: enable=bad-whitespace
+
+_CORAL_IDS = (
+    CORAL_EDGE_TPU_DEV,
+)
 
 _JETSON_IDS = (
     JETSON_TX1,
@@ -259,6 +268,8 @@ class Board:
             board_id = self._armbian_id()
         elif chip_id == ap_chip.SAMA5:
             board_id = self._sama5_id()
+        elif chip_id == ap_chip.IMX8MX:
+            board_id = self._imx8mx_id()
         elif chip_id == ap_chip.ESP8266:
             board_id = FEATHER_HUZZAH
         elif chip_id == ap_chip.SAMD21:
@@ -330,6 +341,13 @@ class Board:
         board_value = self.detector.get_device_model()
         if "Giant Board" in board_value:
             return GIANT_BOARD
+        return None
+
+    def _imx8mx_id(self):
+        """Check what type iMX8M board."""
+        board_value = self.detector.get_device_model()
+        if "Phanbell" in board_value:
+            return CORAL_EDGE_TPU_DEV
         return None
 
     def _tegra_id(self):
