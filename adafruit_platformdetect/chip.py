@@ -71,7 +71,7 @@ class Chip:
         return None
     # pylint: enable=invalid-name
 
-    def _linux_id(self):
+    def _linux_id(self): # pylint: disable=too-many-branches
         """Attempt to detect the CPU on a computer running the Linux kernel."""
         linux_id = None
 
