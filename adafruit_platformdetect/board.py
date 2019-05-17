@@ -335,15 +335,9 @@ class Board:
         board_value = self.detector.get_armbian_release_field('BOARD')
         if board_value == "orangepipc":
             return ORANGE_PI_PC
-        return None
-
-    def _armbian_id(self):
-        """Check whether the current board is an OrangePi R1."""
-        board_value = self.detector.get_armbian_release_field('BOARD')
-        if board_value == "orangepi-r1":
+	if board_value == "orangepi-r1":
             return ORANGE_PI_R1
         return None
-
 
     def _sama5_id(self):
         """Check what type sama5 board."""
