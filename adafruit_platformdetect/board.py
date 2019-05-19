@@ -25,6 +25,8 @@ FEATHER_M0_EXPRESS          = "FEATHER_M0_EXPRESS"
 GENERIC_LINUX_PC            = "GENERIC_LINUX_PC"
 PYBOARD                     = "PYBOARD"
 NODEMCU                     = "NODEMCU"
+ORANGE_PI_PC                = "ORANGE_PI_PC"
+ORANGE_PI_R1                = "ORANGE_PI_R1"
 GIANT_BOARD                 = "GIANT_BOARD"
 
 # NVIDIA Jetson boards
@@ -388,7 +390,7 @@ class Board:
     @property
     def any_orange_pi(self):
         """Check whether the current board is any defined Orange Pi."""
-        return self.ORANGE_PI_IDS
+        return self.id in _ORANGE_PI_IDS
 
     @property
     def any_coral_board(self):
