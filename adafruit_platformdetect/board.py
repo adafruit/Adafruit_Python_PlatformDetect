@@ -25,8 +25,6 @@ FEATHER_M0_EXPRESS          = "FEATHER_M0_EXPRESS"
 GENERIC_LINUX_PC            = "GENERIC_LINUX_PC"
 PYBOARD                     = "PYBOARD"
 NODEMCU                     = "NODEMCU"
-ORANGE_PI_PC                = "ORANGE_PI_PC"
-ORANGE_PI_R1		    = "ORANGE_PI_R1"
 GIANT_BOARD                 = "GIANT_BOARD"
 
 # NVIDIA Jetson boards
@@ -59,6 +57,12 @@ ODROID_C2                   = "ODROID_C2"
 
 FTDI_FT232H                 = "FT232H"
 # pylint: enable=bad-whitespace
+
+#OrangePI
+_ORANGE_PI_IDS = (
+    ORANGE_PI_PC,
+    ORANGE_PI_R1
+)
 
 _CORAL_IDS = (
     CORAL_EDGE_TPU_DEV,
@@ -331,11 +335,11 @@ class Board:
     # pylint: enable=no-self-use
 
     def _armbian_id(self):
-        """Check whether the current board is an OrangePi PC."""
+        """Check whether the current board is an OrangePi PC or OrangePI R1."""
         board_value = self.detector.get_armbian_release_field('BOARD')
         if board_value == "orangepipc":
             return ORANGE_PI_PC
-	if board_value == "orangepi-r1":
+        if board_value == "orangepi-r1":
             return ORANGE_PI_R1
         return None
 
@@ -384,7 +388,7 @@ class Board:
     @property
     def any_orange_pi(self):
         """Check whether the current board is any defined Orange Pi."""
-        return self.ORANGE_PI_PC
+        return self.ORANGE_PI_IDS
 
     @property
     def any_coral_board(self):
