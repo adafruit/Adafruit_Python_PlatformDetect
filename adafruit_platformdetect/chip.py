@@ -92,6 +92,8 @@ class Chip:
                     linux_id = T194
             if compatible and 'imx8m' in compatible:
                 linux_id = IMX8MX
+            if compatible and 'odroid-c2' in compatible:
+                linux_id = S905
 
         elif hardware in ("BCM2708", "BCM2709", "BCM2835"):
             linux_id = BCM2XXX

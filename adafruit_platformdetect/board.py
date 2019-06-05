@@ -403,6 +403,11 @@ class Board:
         return self.GIANT_BOARD
 
     @property
+    def any_odroid_40_pin(self):
+        """Check whether the current board is any defined 40-pin Odroid."""
+        return self.id in _ODROID_40_PIN_IDS
+
+    @property
     def any_jetson_board(self):
         """Check whether the current board is any defined Jetson Board."""
         return self.id in _JETSON_IDS
@@ -412,7 +417,7 @@ class Board:
         """Check whether the current board is any embedded Linux device."""
         return self.any_raspberry_pi or self.any_beaglebone or \
          self.any_orange_pi or self.any_giant_board or self.any_jetson_board or \
-         self.any_coral_board
+         self.any_coral_board or self.any_odroid_40_pin
 
     def __getattr__(self, attr):
         """
