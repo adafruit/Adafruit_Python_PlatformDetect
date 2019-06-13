@@ -15,6 +15,7 @@ SAMA5 = "SAMA5"
 T210 = "T210"
 T186 = "T186"
 T194 = "T194"
+APQ8016 = "APQ8016"
 GENERIC_X86 = "GENERIC_X86"
 FT232H = "FT232H"
 
@@ -73,8 +74,11 @@ class Chip:
 
     def _linux_id(self): # pylint: disable=too-many-branches
         """Attempt to detect the CPU on a computer running the Linux kernel."""
-        linux_id = None
 
+        if self.detector.check_dt_compatible_value("qcom,apq8016"):
+            return APQ8016
+
+        linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
 
         if hardware is None:

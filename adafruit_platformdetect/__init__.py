@@ -55,6 +55,17 @@ class Detector:
 
         return None
 
+    def check_dt_compatible_value(self, value):
+        """
+        Search /proc/device-tree/compatible for a value and return True, if found,
+        otherwise False.
+        """
+        # Match a value like 'qcom,apq8016-sbc':
+        if value in open('/proc/device-tree/compatible').read():
+            return True
+
+        return False
+
     def get_armbian_release_field(self, field):
         """
         Search /etc/armbian-release, if it exists, for a field and return its

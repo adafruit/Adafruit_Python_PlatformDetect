@@ -58,6 +58,7 @@ ODROID_C1_PLUS              = "ODROID_C1_PLUS"
 ODROID_C2                   = "ODROID_C2"
 
 FTDI_FT232H                 = "FT232H"
+LINARO_96BOARDS             = "LINARO_96BOARDS"
 # pylint: enable=bad-whitespace
 
 #OrangePI
@@ -289,6 +290,10 @@ class Board:
             board_id = ODROID_C2
         elif chip_id == ap_chip.FT232H:
             board_id = FTDI_FT232H
+        # TODO do we want to check chip ID at all for 96Boards?
+        # elif chip_id == APQ8016:
+        elif self.any_96boards:
+          board_id = LINARO_96BOARDS
         elif chip_id in (ap_chip.T210, ap_chip.T186, ap_chip.T194):
             board_id = self._tegra_id()
         return board_id
@@ -371,6 +376,15 @@ class Board:
         elif 'nano' in board_value:
             return JETSON_NANO
         return None
+
+    @property
+    def any_96boards(self):
+        """Check if the current board is any 96Boards-family board."""
+        return (
+                self.detector.check_dt_compatible_value("qcom,apq8016-sbc")
+                or self.detector.check_dt_compatible_value("hisilicon,hi3660-hikey960")
+                or self.detector.check_dt_compatible_value("hisilicon,hi6220-hikey")
+                )
 
     @property
     def any_raspberry_pi(self):
