@@ -382,6 +382,7 @@ class Board:
 
     @property
     def any_96boards(self):
+        """Check whether the current board is any 96boards board."""
         return self.id in _LINARO_96BOARDS_IDS
 
     @property
