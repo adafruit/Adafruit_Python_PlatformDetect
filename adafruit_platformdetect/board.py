@@ -58,7 +58,7 @@ ODROID_C1_PLUS              = "ODROID_C1_PLUS"
 ODROID_C2                   = "ODROID_C2"
 
 FTDI_FT232H                 = "FT232H"
-LINARO_96BOARDS             = "LINARO_96BOARDS"
+DRAGONBOARD_410C            = "DRAGONBOARD_410C"
 # pylint: enable=bad-whitespace
 
 #OrangePI
@@ -111,6 +111,10 @@ _BEAGLEBONE_IDS = (
     BEAGLELOGIC_STANDALONE,
     OSD3358_DEV_BOARD,
     OSD3358_SM_RED,
+)
+
+_LINARO_96BOARDS_IDS = (
+    DRAGONBOARD_410C,
 )
 
 # BeagleBone eeprom board ids from:
@@ -291,7 +295,7 @@ class Board:
         elif chip_id == ap_chip.FT232H:
             board_id = FTDI_FT232H
         elif chip_id == ap_chip.APQ8016:
-            board_id = LINARO_96BOARDS
+            board_id = DRAGONBOARD_410C
         elif chip_id in (ap_chip.T210, ap_chip.T186, ap_chip.T194):
             board_id = self._tegra_id()
         return board_id
@@ -378,12 +382,7 @@ class Board:
 
     @property
     def any_96boards(self):
-        """Check if the current board is any 96Boards-family board."""
-        return (
-            self.detector.check_dt_compatible_value("qcom,apq8016-sbc")
-            or self.detector.check_dt_compatible_value("hisilicon,hi3660-hikey960")
-            or self.detector.check_dt_compatible_value("hisilicon,hi6220-hikey")
-            )
+        return self.id in _LINARO_96BOARDS_IDS
 
     @property
     def any_raspberry_pi(self):
