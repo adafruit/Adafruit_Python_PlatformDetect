@@ -430,7 +430,7 @@ class Board:
         """Check whether the current board is any embedded Linux device."""
         return self.any_raspberry_pi or self.any_beaglebone or \
          self.any_orange_pi or self.any_giant_board or self.any_jetson_board or \
-         self.any_coral_board or self.any_odroid_40_pin
+         self.any_coral_board or self.any_odroid_40_pin or self.any_96boards
 
     def __getattr__(self, attr):
         """
