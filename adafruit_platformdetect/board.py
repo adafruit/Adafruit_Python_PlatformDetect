@@ -52,6 +52,7 @@ RASPBERRY_PI_3B             = "RASPBERRY_PI_3B"
 RASPBERRY_PI_3B_PLUS        = "RASPBERRY_PI_3B_PLUS"
 RASPBERRY_PI_CM3            = "RASPBERRY_PI_CM3"
 RASPBERRY_PI_3A_PLUS        = "RASPBERRY_PI_3A_PLUS"
+RASPBERRY_PI_4B             = "RASPBERRY_PI_4B"
 
 ODROID_C1                   = "ODROID_C1"
 ODROID_C1_PLUS              = "ODROID_C1_PLUS"
@@ -86,7 +87,8 @@ _RASPBERRY_PI_40_PIN_IDS = (
     RASPBERRY_PI_2B,
     RASPBERRY_PI_3B,
     RASPBERRY_PI_3B_PLUS,
-    RASPBERRY_PI_3A_PLUS
+    RASPBERRY_PI_3A_PLUS,
+    RASPBERRY_PI_4B
 )
 
 _ODROID_40_PIN_IDS = (
@@ -248,6 +250,10 @@ _PI_REV_CODES = {
     RASPBERRY_PI_3A_PLUS: (
         '9020e0',
         '19020e0', '29020e0', # warranty bits
+    ),
+    RASPBERRY_PI_4B: (
+        'c03111',
+        '1c03111', '2c03111', # warranty bits
     ),
 }
 

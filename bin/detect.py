@@ -10,6 +10,7 @@ print("Board id: ", detector.board.id)
 
 print("Is this a DragonBoard 410c?", detector.board.DRAGONBOARD_410C)
 print("Is this a Pi 3B+?", detector.board.RASPBERRY_PI_3B_PLUS)
+print("Is this a Pi 4B?", detector.board.RASPBERRY_PI_4B)
 print("Is this a 40-pin Raspberry Pi?", detector.board.any_raspberry_pi_40_pin)
 print("Is this a BBB?", detector.board.BEAGLEBONE_BLACK)
 print("Is this a Giant Board?", detector.board.GIANT_BOARD)
