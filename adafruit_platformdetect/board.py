@@ -252,8 +252,9 @@ _PI_REV_CODES = {
         '19020e0', '29020e0', # warranty bits
     ),
     RASPBERRY_PI_4B: (
-        'c03111',
-        '1c03111', '2c03111', # warranty bits
+        'a03111', 'b03111', 'c03111',
+        '1a03111', '2a03111', '1b03111', '2b03111', # warranty bits
+        '1c03111', '2c03111',
     ),
 }
 
