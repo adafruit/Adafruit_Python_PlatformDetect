@@ -18,6 +18,7 @@ T194 = "T194"
 APQ8016 = "APQ8016"
 GENERIC_X86 = "GENERIC_X86"
 FT232H = "FT232H"
+HFU540 = "HFU540"
 
 class Chip:
     """Attempt detection of current chip / CPU."""
@@ -77,6 +78,9 @@ class Chip:
 
         if self.detector.check_dt_compatible_value("qcom,apq8016"):
             return APQ8016
+
+        if self.detector.check_dt_compatible_value("fu500"):
+            return HFU540
 
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")

@@ -60,6 +60,9 @@ ODROID_C2                   = "ODROID_C2"
 
 FTDI_FT232H                 = "FT232H"
 DRAGONBOARD_410C            = "DRAGONBOARD_410C"
+
+SIFIVE_UNLEASHED                = "SIFIVE_UNLEASHED"
+
 # pylint: enable=bad-whitespace
 
 #OrangePI
@@ -117,6 +120,11 @@ _BEAGLEBONE_IDS = (
 
 _LINARO_96BOARDS_IDS = (
     DRAGONBOARD_410C,
+)
+
+
+_SIFIVE_IDS = (
+    SIFIVE_UNLEASHED,
 )
 
 # BeagleBone eeprom board ids from:
@@ -305,6 +313,8 @@ class Board:
             board_id = DRAGONBOARD_410C
         elif chip_id in (ap_chip.T210, ap_chip.T186, ap_chip.T194):
             board_id = self._tegra_id()
+        elif chip_id == ap_chip.HFU540:
+            board_id = self._sifive_id()
         return board_id
     # pylint: enable=invalid-name
 
@@ -387,6 +397,13 @@ class Board:
             board = JETSON_NANO
         return board
 
+    def _sifive_id(self):
+        """Try to detect the id for Sifive RISCV64 board."""
+        board_value = self.detector.get_device_model()
+        if 'hifive-unleashed-a00' in board_value:
+            return SIFIVE_UNLEASHED
+        return None
+
     @property
     def any_96boards(self):
         """Check whether the current board is any 96boards board."""
@@ -433,11 +450,17 @@ class Board:
         return self.id in _JETSON_IDS
 
     @property
+    def any_sifive_board(self):
+        """Check whether the current board is any defined Jetson Board."""
+        return self.id in _SIFIVE_IDS
+
+    @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
         return self.any_raspberry_pi or self.any_beaglebone or \
          self.any_orange_pi or self.any_giant_board or self.any_jetson_board or \
-         self.any_coral_board or self.any_odroid_40_pin or self.any_96boards
+         self.any_coral_board or self.any_odroid_40_pin or self.any_96boards or \
+         self.any_sifive_board
 
     def __getattr__(self, attr):
         """
