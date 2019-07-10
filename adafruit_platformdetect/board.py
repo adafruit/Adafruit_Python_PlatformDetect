@@ -402,7 +402,7 @@ class Board:
         board_value = self.detector.get_device_model()
         if 'hifive-unleashed-a00' in board_value:
             return SIFIVE_UNLEASHED
-	return None
+        return None
 
     @property
     def any_96boards(self):
