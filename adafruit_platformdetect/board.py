@@ -61,7 +61,7 @@ ODROID_C2                   = "ODROID_C2"
 FTDI_FT232H                 = "FT232H"
 DRAGONBOARD_410C            = "DRAGONBOARD_410C"
 
-SIFIVEHFUA00                = "SIFIVEHFUA00"
+SIFIVE_UNLEASHED                = "SIFIVE_UNLEASHED"
 
 # pylint: enable=bad-whitespace
 
@@ -124,7 +124,7 @@ _LINARO_96BOARDS_IDS = (
 
 
 _SIFIVE_IDS = (
-    SIFIVEHFUA00,
+    SIFIVE_UNLEASHED,
 )
 
 # BeagleBone eeprom board ids from:
@@ -401,7 +401,8 @@ class Board:
         """Try to detect the id for Sifive RISCV64 board."""
         board_value = self.detector.get_device_model()
         if 'hifive-unleashed-a00' in board_value:
-            return SIFIVEHFUA00
+            return SIFIVE_UNLEASHED
+	return None
 
     @property
     def any_96boards(self):
