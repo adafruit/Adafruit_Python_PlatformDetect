@@ -267,9 +267,9 @@ _PI_REV_CODES = {
         '19020e0', '29020e0', # warranty bits
     ),
     RASPBERRY_PI_CM3_PLUS: (
-       'a02100',
-       '1a02100', '2a02100', # warranty bits
-   ),
+        'a02100',
+        '1a02100', '2a02100', # warranty bits
+    ),
     RASPBERRY_PI_4B: (
         'a03111', 'b03111', 'c03111',
         '1a03111', '2a03111', '1b03111', '2b03111', # warranty bits
@@ -434,7 +434,7 @@ class Board:
     def any_raspberry_pi_cm(self):
         """Check whether the current board is any Compute Module Raspberry Pi."""
         return self.id in _RASPBERRY_PI_CM_IDS
-    
+
     @property
     def any_beaglebone(self):
         """Check whether the current board is any Beaglebone-family system."""
