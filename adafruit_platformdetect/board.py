@@ -52,6 +52,7 @@ RASPBERRY_PI_3B             = "RASPBERRY_PI_3B"
 RASPBERRY_PI_3B_PLUS        = "RASPBERRY_PI_3B_PLUS"
 RASPBERRY_PI_CM3            = "RASPBERRY_PI_CM3"
 RASPBERRY_PI_3A_PLUS        = "RASPBERRY_PI_3A_PLUS"
+RASPBERRY_PI_CM3_PLUS       = "RASPBERRY_PI_CM3_PLUS"
 RASPBERRY_PI_4B             = "RASPBERRY_PI_4B"
 
 ODROID_C1                   = "ODROID_C1"
@@ -61,7 +62,7 @@ ODROID_C2                   = "ODROID_C2"
 FTDI_FT232H                 = "FT232H"
 DRAGONBOARD_410C            = "DRAGONBOARD_410C"
 
-SIFIVE_UNLEASHED                = "SIFIVE_UNLEASHED"
+SIFIVE_UNLEASHED            = "SIFIVE_UNLEASHED"
 
 # pylint: enable=bad-whitespace
 
@@ -92,6 +93,12 @@ _RASPBERRY_PI_40_PIN_IDS = (
     RASPBERRY_PI_3B_PLUS,
     RASPBERRY_PI_3A_PLUS,
     RASPBERRY_PI_4B
+)
+
+_RASPBERRY_PI_CM_IDS = (
+    RASPBERRY_PI_CM1,
+    RASPBERRY_PI_CM3,
+    RASPBERRY_PI_CM3_PLUS
 )
 
 _ODROID_40_PIN_IDS = (
@@ -259,6 +266,10 @@ _PI_REV_CODES = {
         '9020e0',
         '19020e0', '29020e0', # warranty bits
     ),
+    RASPBERRY_PI_CM3_PLUS: (
+        'a02100',
+        '1a02100', '2a02100', # warranty bits
+    ),
     RASPBERRY_PI_4B: (
         'a03111', 'b03111', 'c03111',
         '1a03111', '2a03111', '1b03111', '2b03111', # warranty bits
@@ -418,6 +429,11 @@ class Board:
     def any_raspberry_pi_40_pin(self):
         """Check whether the current board is any 40-pin Raspberry Pi."""
         return self.id in _RASPBERRY_PI_40_PIN_IDS
+
+    @property
+    def any_raspberry_pi_cm(self):
+        """Check whether the current board is any Compute Module Raspberry Pi."""
+        return self.id in _RASPBERRY_PI_CM_IDS
 
     @property
     def any_beaglebone(self):
