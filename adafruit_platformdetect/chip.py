@@ -11,6 +11,7 @@ STM32 = "STM32"
 SUN8I = "SUN8I"
 S805 = "S805"
 S905 = "S905"
+S922X = "S922X"
 SAMA5 = "SAMA5"
 T210 = "T210"
 T186 = "T186"
@@ -113,6 +114,8 @@ class Chip:
             linux_id = S805
         elif "ODROID-C2" in hardware:
             linux_id = S905
+        elif "ODROID-N2" in hardware:
+            linux_id = S922X
         elif "SAMA5" in hardware:
             linux_id = SAMA5
 
