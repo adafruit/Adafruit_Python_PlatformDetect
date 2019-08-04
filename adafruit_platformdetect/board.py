@@ -321,8 +321,8 @@ class Board:
             board_id = ODROID_C1
         elif chip_id == ap_chip.S905:
             board_id = ODROID_C2
-#        elif chip_id == ap_chip.S922X:
-#            board_id = ODROID_N2
+        elif chip_id == ap_chip.S922X:
+            board_id = ODROID_N2
         elif chip_id == ap_chip.FT232H:
             board_id = FTDI_FT232H
         elif chip_id == ap_chip.APQ8016:
