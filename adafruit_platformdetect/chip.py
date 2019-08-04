@@ -11,7 +11,7 @@ STM32 = "STM32"
 SUN8I = "SUN8I"
 S805 = "S805"
 S905 = "S905"
-#S922X = "S922X"
+S922X = "S922X"
 SAMA5 = "SAMA5"
 T210 = "T210"
 T186 = "T186"
@@ -103,8 +103,8 @@ class Chip:
                 linux_id = IMX8MX
             if compatible and 'odroid-c2' in compatible:
                 linux_id = S905
-#            if compatible and 'odroid-n2' in compatible:
-#                linux_id = S922X
+            if compatible and 'amlogic, g12broot' in compatible:
+                linux_id = S922X
 
         elif hardware in ("BCM2708", "BCM2709", "BCM2835"):
             linux_id = BCM2XXX
@@ -116,8 +116,8 @@ class Chip:
             linux_id = S805
         elif "ODROID-C2" in hardware:
             linux_id = S905
-#        elif "ODROID-N2" in hardware:
-#            linux_id = S922X
+        elif "Hardkernel ODROID-N2" in hardware:
+            linux_id = S922X
         elif "SAMA5" in hardware:
             linux_id = SAMA5
 
