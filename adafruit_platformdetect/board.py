@@ -405,7 +405,7 @@ class Board:
             board = JETSON_TX2
         elif 'xavier' in board_value:
             board = JETSON_XAVIER
-        elif 'nano' in board_value:
+        elif 'nano' in board_value or "Nano" in board_value:
             board = JETSON_NANO
         return board
 
