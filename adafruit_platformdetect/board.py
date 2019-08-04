@@ -58,7 +58,7 @@ RASPBERRY_PI_4B             = "RASPBERRY_PI_4B"
 ODROID_C1                   = "ODROID_C1"
 ODROID_C1_PLUS              = "ODROID_C1_PLUS"
 ODROID_C2                   = "ODROID_C2"
-ODROID_N2                   = "Hardkernel ODROID_N2"
+#ODROID_N2                   = "Hardkernel ODROID-N2"
 
 FTDI_FT232H                 = "FT232H"
 DRAGONBOARD_410C            = "DRAGONBOARD_410C"
@@ -105,8 +105,8 @@ _RASPBERRY_PI_CM_IDS = (
 _ODROID_40_PIN_IDS = (
     ODROID_C1,
     ODROID_C1_PLUS,
-    ODROID_C2,
-    ODROID_N2
+    ODROID_C2 #,
+#    ODROID-N2
 )
 
 _BEAGLEBONE_IDS = (
