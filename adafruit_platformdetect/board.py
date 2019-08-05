@@ -57,7 +57,7 @@ RASPBERRY_PI_4B             = "RASPBERRY_PI_4B"
 
 ODROID_C1                   = "ODROID_C1"
 ODROID_C1_PLUS              = "ODROID_C1_PLUS"
-#ODROID_C2                   = "ODROID_C2"
+ODROID_C2                   = "ODROID_C2"
 ODROID_N2                   = "Hardkernel ODROID-N2"
 
 FTDI_FT232H                 = "FT232H"
@@ -104,10 +104,10 @@ _RASPBERRY_PI_CM_IDS = (
 
 _ODROID_40_PIN_IDS = (
     ODROID_C1,
-    ODROID_C1_PLUS
+    ODROID_C1_PLUS,
+    ODROID_C2,
+    ODROID_N2
 )
-#    ODROID_C2
-#    ODROID-N2
 
 _BEAGLEBONE_IDS = (
     BEAGLEBONE,
@@ -319,8 +319,8 @@ class Board:
             board_id = PYBOARD
         elif chip_id == ap_chip.S805:
             board_id = ODROID_C1
-#        elif chip_id == ap_chip.S905:
-#            board_id = ODROID_C2
+        elif chip_id == ap_chip.S905:
+            board_id = ODROID_C2
         elif chip_id == ap_chip.S922X:
             board_id = ODROID_N2
         elif chip_id == ap_chip.FT232H:
