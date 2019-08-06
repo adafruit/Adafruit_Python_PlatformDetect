@@ -116,7 +116,7 @@ class Chip:
             linux_id = S805
         elif "ODROID-C2" in hardware:
             linux_id = S905
-        elif "Hardkernel ODROID-N2" in hardware:
+        elif "ODROID-N2" in hardware:
             linux_id = S922X
         elif "SAMA5" in hardware:
             linux_id = SAMA5
