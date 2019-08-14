@@ -407,7 +407,7 @@ class Board:
             board = JETSON_TX1
         elif 'quill' in board_value or "storm" in board_value or "lightning" in board_value:
             board = JETSON_TX2
-        elif 'xavier' in board_value.lower():
+        elif 'xavier' in board_value.lower() or 'agx' in board_value.lower():
             board = JETSON_XAVIER
         elif 'nano' in board_value.lower():
             board = JETSON_NANO
