@@ -27,6 +27,7 @@ PYBOARD                     = "PYBOARD"
 NODEMCU                     = "NODEMCU"
 ORANGE_PI_PC                = "ORANGE_PI_PC"
 ORANGE_PI_R1                = "ORANGE_PI_R1"
+ORANGE_PI_ZERO              = "ORANGE_PI_ZERO"
 GIANT_BOARD                 = "GIANT_BOARD"
 
 # NVIDIA Jetson boards
@@ -70,7 +71,8 @@ SIFIVE_UNLEASHED            = "SIFIVE_UNLEASHED"
 #OrangePI
 _ORANGE_PI_IDS = (
     ORANGE_PI_PC,
-    ORANGE_PI_R1
+    ORANGE_PI_R1,
+    ORANGE_PI_ZERO
 )
 
 _CORAL_IDS = (
@@ -383,6 +385,8 @@ class Board:
             return ORANGE_PI_PC
         if board_value == "orangepi-r1":
             return ORANGE_PI_R1
+        if board_value == "orangepizero":
+            return ORANGE_PI_ZERO
         return None
 
     def _sama5_id(self):
