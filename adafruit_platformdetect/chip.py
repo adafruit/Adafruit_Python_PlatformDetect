@@ -39,8 +39,9 @@ class Chip:
         # Special case, if we have an environment var set, we could use FT232H
         try:
             if os.environ['BLINKA_FT232H']:
-                from pyftdi.usbtools import UsbTools
-                count = len( UsbTools.find_all([(0x0403, 0x6014)]) )
+                from pyftdi.usbtools import UsbTools # pylint: disable=import-error
+                # look for it based on PID/VID
+                count = len(UsbTools.find_all([(0x0403, 0x6014)]))
                 if count == 0:
                     raise RuntimeError('BLINKA_FT232H environment variable' + \
                                        'set, but no FT232H device found')
