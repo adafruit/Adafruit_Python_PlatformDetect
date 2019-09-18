@@ -39,25 +39,13 @@ class Chip:
         # Special case, if we have an environment var set, we could use FT232H
         try:
             if os.environ['BLINKA_FT232H']:
-                # we can't have ftdi1 as a dependency cause its wierd
-                # to install, sigh.
-                import ftdi1 as ftdi # pylint: disable=import-error
-                try:
-                    ctx = None
-                    ctx = ftdi.new()  # Create a libftdi context.
-                    # Enumerate FTDI devices.
-                    count, _ = ftdi.usb_find_all(ctx, 0, 0)
-                    if count < 0:
-                        raise RuntimeError('ftdi_usb_find_all returned error %d : %s' %
-                                           count, ftdi.get_error_string(self._ctx))
-                    if count == 0:
-                        raise RuntimeError('BLINKA_FT232H environment variable' + \
-                                           'set, but no FT232H device found')
-                finally:
-                    # Make sure to clean up list and context when done.
-                    if ctx is not None:
-                        ftdi.free(ctx)
-            return FT232H
+                from pyftdi.usbtools import UsbTools # pylint: disable=import-error
+                # look for it based on PID/VID
+                count = len(UsbTools.find_all([(0x0403, 0x6014)]))
+                if count == 0:
+                    raise RuntimeError('BLINKA_FT232H environment variable' + \
+                                       'set, but no FT232H device found')
+                return FT232H
         except KeyError: # no FT232H environment var
             pass
 

@@ -487,6 +487,11 @@ class Board:
          self.any_coral_board or self.any_odroid_40_pin or self.any_96boards or \
          self.any_sifive_board
 
+    @property
+    def ftdi_ft232h(self):
+        """Check whether the current board is an FTDI FT232H."""
+        return self.id == FTDI_FT232H
+
     def __getattr__(self, attr):
         """
         Detect whether the given attribute is the currently-detected board.  See list
