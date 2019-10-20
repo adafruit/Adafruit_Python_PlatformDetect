@@ -21,6 +21,9 @@ GENERIC_X86 = 'GENERIC_X86'
 FT232H = 'FT232H'
 HFU540 = 'HFU540'
 
+BCM_RANGE = {'BCM2708', 'BCM2709', 'BCM2835', 'BCM2837', 'bcm2708', 'bcm2709',
+             'bcm2835', 'bcm2837'}
+
 class Chip:
     """Attempt detection of current chip / CPU."""
     def __init__(self, detector):
@@ -94,20 +97,29 @@ class Chip:
             if compatible and 'amlogic, g12b' in compatible:
                 linux_id = S922X
 
-        elif hardware in ("BCM2708", "BCM2709", "BCM2835"):
-            linux_id = BCM2XXX
-        elif "AM33XX" in hardware:
-            linux_id = AM33XX
-        elif "sun8i" in hardware:
-            linux_id = SUN8I
-        elif "ODROIDC" in hardware:
-            linux_id = S805
-        elif "ODROID-C2" in hardware:
-            linux_id = S905
-        elif "ODROID-N2" in hardware:
-            linux_id = S922X
-        elif "SAMA5" in hardware:
-            linux_id = SAMA5
+            # we still haven't identified the hardware, so
+            # convert it to a list and let the remaining
+            # conditions attempt.
+            if not linux_id:
+                hardware = [
+                    entry.replace("\x00", "") for entry in compatible.split(",")
+                ]
+
+        if not linux_id:
+            if set(hardware) & BCM_RANGE:
+                linux_id = BCM2XXX
+            elif 'AM33XX' in hardware:
+                linux_id = AM33XX
+            elif 'sun8i' in hardware:
+                linux_id = SUN8I
+            elif 'ODROIDC' in hardware:
+                linux_id = S805
+            elif 'ODROID-C2' in hardware:
+                linux_id = S905
+            elif 'ODROID-N2' in hardware:
+                linux_id = S922X
+            elif 'SAMA5' in hardware:
+                linux_id = SAMA5
 
         return linux_id
 
