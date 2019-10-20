@@ -2,24 +2,24 @@
 import sys
 import os
 
-AM33XX = "AM33XX"
-IMX8MX = "IMX8MX"
-BCM2XXX = "BCM2XXX"
-ESP8266 = "ESP8266"
-SAMD21 = "SAMD21"
-STM32 = "STM32"
-SUN8I = "SUN8I"
-S805 = "S805"
-S905 = "S905"
-S922X = "S922X"
-SAMA5 = "SAMA5"
-T210 = "T210"
-T186 = "T186"
-T194 = "T194"
-APQ8016 = "APQ8016"
-GENERIC_X86 = "GENERIC_X86"
-FT232H = "FT232H"
-HFU540 = "HFU540"
+AM33XX = 'AM33XX'
+IMX8MX = 'IMX8MX'
+BCM2XXX = 'BCM2XXX'
+ESP8266 = 'ESP8266'
+SAMD21 = 'SAMD21'
+STM32 = 'STM32'
+SUN8I = 'SUN8I'
+S805 = 'S805'
+S905 = 'S905'
+S922X = 'S922X'
+SAMA5 = 'SAMA5'
+T210 = 'T210'
+T186 = 'T186'
+T194 = 'T194'
+APQ8016 = 'APQ8016'
+GENERIC_X86 = 'GENERIC_X86'
+FT232H = 'FT232H'
+HFU540 = 'HFU540'
 
 class Chip:
     """Attempt detection of current chip / CPU."""
@@ -50,13 +50,13 @@ class Chip:
             pass
 
         platform = sys.platform
-        if platform == "linux" or platform == "linux2":
+        if platform in ('linux', 'linux2'):
             return self._linux_id()
-        if platform == "esp8266":
+        if platform == 'esp8266':
             return ESP8266
-        if platform == "samd21":
+        if platform == 'samd21':
             return SAMD21
-        if platform == "pyboard":
+        if platform == 'pyboard':
             return STM32
         # nothing found!
         return None
@@ -65,18 +65,18 @@ class Chip:
     def _linux_id(self): # pylint: disable=too-many-branches
         """Attempt to detect the CPU on a computer running the Linux kernel."""
 
-        if self.detector.check_dt_compatible_value("qcom,apq8016"):
+        if self.detector.check_dt_compatible_value('qcom,apq8016'):
             return APQ8016
 
-        if self.detector.check_dt_compatible_value("fu500"):
+        if self.detector.check_dt_compatible_value('fu500'):
             return HFU540
 
         linux_id = None
-        hardware = self.detector.get_cpuinfo_field("Hardware")
+        hardware = self.detector.get_cpuinfo_field('Hardware')
 
         if hardware is None:
-            vendor_id = self.detector.get_cpuinfo_field("vendor_id")
-            if vendor_id in ("GenuineIntel", "AuthenticAMD"):
+            vendor_id = self.detector.get_cpuinfo_field('vendor_id')
+            if vendor_id in ('GenuineIntel', 'AuthenticAMD'):
                 linux_id = GENERIC_X86
 
             compatible = self.detector.get_device_compatible()
