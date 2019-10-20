@@ -102,7 +102,7 @@ class Chip:
             # conditions attempt.
             if not linux_id:
                 hardware = [
-                    entry.replace("\x00", "") for entry in compatible.split(",")
+                    entry.replace('\x00', '') for entry in compatible.split(',')
                 ]
 
         if not linux_id:
