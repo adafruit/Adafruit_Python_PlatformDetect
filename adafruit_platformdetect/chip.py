@@ -122,7 +122,7 @@ class Chip:
                 if isinstance(hardware, str):
                     if hardware in BCM_RANGE:
                         linux_id = BCM2XXX
-                elif instance(hardware, list):
+                elif isinstance(hardware, list):
                     if set(hardware) & BCM_RANGE:
                         linux_id = BCM2XXX
 
