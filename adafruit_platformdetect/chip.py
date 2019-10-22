@@ -106,9 +106,7 @@ class Chip:
                 ]
 
         if not linux_id:
-            if set(hardware) & BCM_RANGE:
-                linux_id = BCM2XXX
-            elif 'AM33XX' in hardware:
+            if 'AM33XX' in hardware:
                 linux_id = AM33XX
             elif 'sun8i' in hardware:
                 linux_id = SUN8I
@@ -120,6 +118,13 @@ class Chip:
                 linux_id = S922X
             elif 'SAMA5' in hardware:
                 linux_id = SAMA5
+            else:
+                if isinstance(hardware, str):
+                    if hardware in BCM_RANGE:
+                        linux_id = BCM2XXX
+                elif instance(hardware, list):
+                    if set(hardware) & BCM_RANGE:
+                        linux_id = BCM2XXX
 
         return linux_id
 
