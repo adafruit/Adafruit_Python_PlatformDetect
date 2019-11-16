@@ -21,6 +21,7 @@ GENERIC_X86 = "GENERIC_X86"
 FT232H = "FT232H"
 HFU540 = "HFU540"
 MCP2221 = "MCP2221"
+BINHO = "BINHO"
 
 class Chip:
     """Attempt detection of current chip / CPU."""
@@ -54,6 +55,20 @@ class Chip:
                     return MCP2221
             raise RuntimeError('BLINKA_MCP2221 environment variable ' + \
                                'set, but no MCP2221 device found')
+        if os.environ.get('BLINKA_BINHO'):
+            # import the Binho libraries
+            from binhoHostAdapter import binhoHostAdapter
+            from binhoHostAdapter import binhoUtilities
+
+            utilities = binhoUtilities.binhoUtilities()
+            devices = utilities.listAvailableDevices()
+
+            count = len(devices) 
+
+            if count == 0:
+                raise RuntimeError('BLINKA_BINHO environment variable' + \
+                                   'set, but no Binho host adapter found.')
+            return BINHO
 
         platform = sys.platform
         if platform == "linux" or platform == "linux2":

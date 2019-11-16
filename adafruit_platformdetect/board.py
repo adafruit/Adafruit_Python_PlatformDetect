@@ -68,6 +68,8 @@ SIFIVE_UNLEASHED            = "SIFIVE_UNLEASHED"
 
 MICROCHIP_MCP2221           = "MICROCHIP_MCP2221"
 
+BINHO_NOVA                  = "BINHO"
+
 # pylint: enable=bad-whitespace
 
 #OrangePI
@@ -339,6 +341,8 @@ class Board:
             board_id = self._sifive_id()
         elif chip_id == ap_chip.MCP2221:
             board_id = MICROCHIP_MCP2221
+        elif chip_id == ap_chip.BINHO:
+            board_id = BINHO_NOVA
         return board_id
     # pylint: enable=invalid-name
 
@@ -502,6 +506,11 @@ class Board:
     def microchip_mcp2221(self):
         """Check whether the current board is a Microchip MCP2221."""
         return self.id == MICROCHIP_MCP2221
+
+    @property
+    def binho_nova(self):
+        """Check whether the current board is an BINHO NOVA."""
+        return self.id == BINHO_NOVA
 
     def __getattr__(self, attr):
         """
