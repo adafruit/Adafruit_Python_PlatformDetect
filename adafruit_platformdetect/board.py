@@ -65,6 +65,7 @@ FTDI_FT232H                 = "FT232H"
 DRAGONBOARD_410C            = "DRAGONBOARD_410C"
 
 SIFIVE_UNLEASHED            = "SIFIVE_UNLEASHED"
+BINHO_NOVA                  = "BINHO"
 
 # pylint: enable=bad-whitespace
 
@@ -333,6 +334,8 @@ class Board:
             board_id = self._tegra_id()
         elif chip_id == ap_chip.HFU540:
             board_id = self._sifive_id()
+        elif chip_id == ap_chip.BINHO:
+            board_id = BINHO_NOVA
         return board_id
     # pylint: enable=invalid-name
 
@@ -491,6 +494,12 @@ class Board:
     def ftdi_ft232h(self):
         """Check whether the current board is an FTDI FT232H."""
         return self.id == FTDI_FT232H
+
+    @property
+    def binho_nova(self):
+        """Check whether the current board is an BINHO NOVA."""
+        return self.id == BINHO_NOVA
+    
 
     def __getattr__(self, attr):
         """

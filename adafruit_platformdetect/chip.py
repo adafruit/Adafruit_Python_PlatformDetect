@@ -20,6 +20,7 @@ APQ8016 = "APQ8016"
 GENERIC_X86 = "GENERIC_X86"
 FT232H = "FT232H"
 HFU540 = "HFU540"
+BINHO = "BINHO"
 
 class Chip:
     """Attempt detection of current chip / CPU."""
@@ -46,7 +47,24 @@ class Chip:
                     raise RuntimeError('BLINKA_FT232H environment variable' + \
                                        'set, but no FT232H device found')
                 return FT232H
-        except KeyError: # no FT232H environment var
+
+            elif os.environ['BLINKA_BINHO']:
+                # import the Binho libraries
+
+                from binhoHostAdapter import binhoHostAdapter
+                from binhoHostAdapter import binhoUtilities
+
+                utilities = binhoUtilities.binhoUtilities()
+                devices = utilities.listAvailableDevices()
+
+                count = len(devices) 
+
+                if count == 0:
+                    raise RuntimeError('BLINKA_BINHO environment variable' + \
+                                       'set, but no Binho host adapter found.')
+                return BINHO
+                
+        except KeyError: # no relevant environment var
             pass
 
         platform = sys.platform
