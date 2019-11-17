@@ -55,7 +55,7 @@ class Chip:
                     return MCP2221
             raise RuntimeError('BLINKA_MCP2221 environment variable ' + \
                                'set, but no MCP2221 device found')
-        if os.environ.get('BLINKA_BINHO'):
+        if os.environ.get('BLINKA_NOVA'):
             # import the Binho libraries
             from binhoHostAdapter import binhoHostAdapter
             from binhoHostAdapter import binhoUtilities
