@@ -48,7 +48,12 @@ class Chip:
                                        'set, but no FT232H device found')
                 return FT232H
 
-            elif os.environ['BLINKA_BINHO']:
+        except KeyError: # no relevant environment var
+            pass
+
+        # Another special case, if we have an environment var set for BINHO
+        try:
+            if os.environ['BLINKA_BINHO']:
                 # import the Binho libraries
 
                 from binhoHostAdapter import binhoHostAdapter
