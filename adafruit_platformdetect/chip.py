@@ -53,7 +53,7 @@ class Chip:
 
         # Another special case, if we have an environment var set for BINHO
         try:
-            if os.environ['BLINKA_BINHO']:
+            if os.environ['BLINKA_NOVA']:
                 # import the Binho libraries
 
                 from binhoHostAdapter import binhoHostAdapter
