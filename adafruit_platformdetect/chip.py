@@ -27,6 +27,7 @@ class Chip:
     """Attempt detection of current chip / CPU."""
     def __init__(self, detector):
         self.detector = detector
+        self._binho = None
 
     @property
     def id(self): # pylint: disable=invalid-name,too-many-branches,too-many-return-statements
@@ -56,6 +57,10 @@ class Chip:
             raise RuntimeError('BLINKA_MCP2221 environment variable ' + \
                                'set, but no MCP2221 device found')
         if os.environ.get('BLINKA_NOVA'):
+            # Check if we already have a binho instance
+            if self._binho is not None and self._binho == BINHO:
+                return self._binho
+
             # import the Binho libraries
             from binhoHostAdapter import binhoHostAdapter
             from binhoHostAdapter import binhoUtilities
@@ -66,8 +71,10 @@ class Chip:
             count = len(devices) 
 
             if count == 0:
+                self._binho = None
                 raise RuntimeError('BLINKA_BINHO environment variable' + \
                                    'set, but no Binho host adapter found.')
+            self._binho = BINHO
             return BINHO
 
         platform = sys.platform
