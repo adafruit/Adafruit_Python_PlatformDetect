@@ -65,7 +65,7 @@ FTDI_FT232H                 = "FT232H"
 DRAGONBOARD_410C            = "DRAGONBOARD_410C"
 
 SIFIVE_UNLEASHED            = "SIFIVE_UNLEASHED"
-BINHO_NOVA                  = "BINHO"
+BINHO_NOVA                  = "NOVA"
 
 # pylint: enable=bad-whitespace
 
