@@ -26,7 +26,11 @@ class Chip:
     """Attempt detection of current chip / CPU."""
     def __init__(self, detector):
         self.detector = detector
-        self._binho = None
+        try:
+            if os.environ['BLINKA_NOVA']:
+                self._binho = None
+        except KeyError: # no relevant environment var
+            pass
 
     @property
     def id(self): # pylint: disable=invalid-name,too-many-branches,too-many-return-statements
@@ -70,7 +74,7 @@ class Chip:
 
                 if count == 0:
                     self._binho = None
-                    raise RuntimeError('BLINKA_BINHO environment variable' + \
+                    raise RuntimeError('BLINKA_NOVA environment variable' + \
                                        'set, but no Binho host adapter found.')
                 self._binho = BINHO
                 return BINHO
