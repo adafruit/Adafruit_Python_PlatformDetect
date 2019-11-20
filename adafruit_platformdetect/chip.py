@@ -27,7 +27,11 @@ class Chip:
     """Attempt detection of current chip / CPU."""
     def __init__(self, detector):
         self.detector = detector
-        self._binho = None
+        try:
+            os.environ.get('BLINKA_NOVA'):
+                self._binho = None
+        except KeyError: # no relevant environment var
+            pass
 
     @property
     def id(self): # pylint: disable=invalid-name,too-many-branches,too-many-return-statements
