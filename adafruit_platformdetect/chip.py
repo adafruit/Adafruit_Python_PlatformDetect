@@ -47,10 +47,10 @@ class Chip:
                                    'set, but no FT232H device found')
             return FT232H
         if os.environ.get('BLINKA_MCP2221'):
-            import hid
+            import hid # pylint: disable=import-error
             # look for it based on PID/VID
             for dev in hid.enumerate():
-                if dev['vendor_id']==0x04D8 and dev['product_id']==0x00DD:
+                if dev['vendor_id'] == 0x04D8 and dev['product_id'] == 0x00DD:
                     return MCP2221
             raise RuntimeError('BLINKA_MCP2221 environment variable ' + \
                                'set, but no MCP2221 device found')
