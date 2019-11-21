@@ -61,12 +61,12 @@ ODROID_C1_PLUS              = "ODROID_C1_PLUS"
 ODROID_C2                   = "ODROID_C2"
 ODROID_N2                   = "ODROID_N2"
 
-FTDI_FT232H                 = "FT232H"
+FTDI_FT232H                 = "FTDI_FT232H"
 DRAGONBOARD_410C            = "DRAGONBOARD_410C"
 
 SIFIVE_UNLEASHED            = "SIFIVE_UNLEASHED"
 
-MICROCHIP_MCP2221           = "MCP2221"
+MICROCHIP_MCP2221           = "MICROCHIP_MCP2221"
 
 # pylint: enable=bad-whitespace
 
