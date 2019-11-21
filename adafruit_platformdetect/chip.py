@@ -20,6 +20,7 @@ APQ8016 = "APQ8016"
 GENERIC_X86 = "GENERIC_X86"
 FT232H = "FT232H"
 HFU540 = "HFU540"
+MCP2221 = "MCP2221"
 
 class Chip:
     """Attempt detection of current chip / CPU."""
@@ -36,18 +37,23 @@ class Chip:
         except KeyError: # no forced chip, continue with testing!
             pass
 
-        # Special case, if we have an environment var set, we could use FT232H
-        try:
-            if os.environ['BLINKA_FT232H']:
-                from pyftdi.usbtools import UsbTools # pylint: disable=import-error
-                # look for it based on PID/VID
-                count = len(UsbTools.find_all([(0x0403, 0x6014)]))
-                if count == 0:
-                    raise RuntimeError('BLINKA_FT232H environment variable' + \
-                                       'set, but no FT232H device found')
-                return FT232H
-        except KeyError: # no FT232H environment var
-            pass
+        # Special cases controlled by environment var
+        if os.environ.get('BLINKA_FT232H'):
+            from pyftdi.usbtools import UsbTools # pylint: disable=import-error
+            # look for it based on PID/VID
+            count = len(UsbTools.find_all([(0x0403, 0x6014)]))
+            if count == 0:
+                raise RuntimeError('BLINKA_FT232H environment variable ' + \
+                                   'set, but no FT232H device found')
+            return FT232H
+        if os.environ.get('BLINKA_MCP2221'):
+            import hid
+            # look for it based on PID/VID
+            for dev in hid.enumerate():
+                if dev['vendor_id']==0x04D8 and dev['product_id']==0x00DD:
+                    return MCP2221
+            raise RuntimeError('BLINKA_MCP2221 environment variable ' + \
+                               'set, but no MCP2221 device found')
 
         platform = sys.platform
         if platform == "linux" or platform == "linux2":

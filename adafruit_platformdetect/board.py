@@ -66,6 +66,8 @@ DRAGONBOARD_410C            = "DRAGONBOARD_410C"
 
 SIFIVE_UNLEASHED            = "SIFIVE_UNLEASHED"
 
+MICROCHIP_MCP2221           = "MCP2221"
+
 # pylint: enable=bad-whitespace
 
 #OrangePI
@@ -333,6 +335,8 @@ class Board:
             board_id = self._tegra_id()
         elif chip_id == ap_chip.HFU540:
             board_id = self._sifive_id()
+        elif chip_id == ap_chip.MCP2221:
+            board_id = MICROCHIP_MCP2221
         return board_id
     # pylint: enable=invalid-name
 
@@ -491,6 +495,11 @@ class Board:
     def ftdi_ft232h(self):
         """Check whether the current board is an FTDI FT232H."""
         return self.id == FTDI_FT232H
+
+    @property
+    def microchip_mcp2221(self):
+        """Check whether the current board is a Microchip MCP2221."""
+        return self.id == MICROCHIP_MCP2221
 
     def __getattr__(self, attr):
         """
