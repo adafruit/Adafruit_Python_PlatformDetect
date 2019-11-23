@@ -64,18 +64,8 @@ class Chip:
                     return self._binho
 
                 # import the Binho libraries
-                from binhoHostAdapter import binhoHostAdapter
-                from binhoHostAdapter import binhoUtilities
-
-                utilities = binhoUtilities.binhoUtilities()
-                devices = utilities.listAvailableDevices()
-
-                count = len(devices) 
-
-                if count == 0:
-                    self._binho = None
-                    raise RuntimeError('BLINKA_NOVA environment variable' + \
-                                       'set, but no Binho host adapter found.')
+                from adafruit_blinka.microcontroller.nova import Connection
+                self._binho = Connection.getInstance()
                 self._binho = BINHO
                 return BINHO
                 
