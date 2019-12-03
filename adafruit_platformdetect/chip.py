@@ -56,12 +56,6 @@ class Chip:
             raise RuntimeError('BLINKA_MCP2221 environment variable ' + \
                                'set, but no MCP2221 device found')
         if os.environ.get('BLINKA_NOVA'):
-            # Check for Nova connection
-            from adafruit_blinka.microcontroller.nova import Connection
-            binho = Connection.getInstance()
-            if binho is None:
-                raise RuntimeError('BLINKA_NOVA environment variable ' + \
-                                   'set, but no NOVA device found')
             return BINHO
 
         platform = sys.platform
