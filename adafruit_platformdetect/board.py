@@ -68,7 +68,7 @@ SIFIVE_UNLEASHED            = "SIFIVE_UNLEASHED"
 
 MICROCHIP_MCP2221           = "MICROCHIP_MCP2221"
 
-BINHO_NOVA                  = "NOVA"
+BINHO_NOVA                  = "BINHO_NOVA"
 
 # pylint: enable=bad-whitespace
 
