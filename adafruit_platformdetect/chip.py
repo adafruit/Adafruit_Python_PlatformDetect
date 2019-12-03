@@ -59,7 +59,7 @@ class Chip:
             # Check for Nova connection
             from adafruit_blinka.microcontroller.nova import Connection
             binho = Connection.getInstance()
-            if binho == None:
+            if binho is None:
                 raise RuntimeError('BLINKA_NOVA environment variable ' + \
                                    'set, but no NOVA device found')
             return BINHO
