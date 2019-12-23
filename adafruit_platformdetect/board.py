@@ -70,6 +70,9 @@ MICROCHIP_MCP2221           = "MICROCHIP_MCP2221"
 
 BINHO_NOVA                  = "BINHO_NOVA"
 
+ONION_OMEGA                 = "ONION_OMEGA"
+ONION_OMEGA2                 = "ONION_OMEGA2"
+
 # pylint: enable=bad-whitespace
 
 #OrangePI
@@ -288,6 +291,12 @@ _PI_REV_CODES = {
     ),
 }
 
+# Onion omega boards
+_ONION_OMEGA_BOARD_IDS = (
+    ONION_OMEGA,
+    ONION_OMEGA2,
+)
+
 class Board:
     """Attempt to detect specific boards."""
     def __init__(self, detector):
@@ -343,6 +352,8 @@ class Board:
             board_id = MICROCHIP_MCP2221
         elif chip_id == ap_chip.BINHO:
             board_id = BINHO_NOVA
+        elif chip_id == ap_chip.ONION:
+            board_id = ONION_OMEGA
         return board_id
     # pylint: enable=invalid-name
 
@@ -490,12 +501,17 @@ class Board:
         return self.id in _SIFIVE_IDS
 
     @property
+    def any_onion_omega_board(self):
+        """Check whether the current board is any defined OpenWRT board."""
+        return self.id in _ONION_OMEGA_BOARD_IDS
+
+    @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
         return self.any_raspberry_pi or self.any_beaglebone or \
          self.any_orange_pi or self.any_giant_board or self.any_jetson_board or \
          self.any_coral_board or self.any_odroid_40_pin or self.any_96boards or \
-         self.any_sifive_board
+         self.any_sifive_board or self.any_onion_omega_board
 
     @property
     def ftdi_ft232h(self):

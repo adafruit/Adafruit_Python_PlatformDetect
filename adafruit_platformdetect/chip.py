@@ -22,6 +22,7 @@ FT232H = "FT232H"
 HFU540 = "HFU540"
 MCP2221 = "MCP2221"
 BINHO = "BINHO"
+ONION = "ONION_OMEGA"
 
 class Chip:
     """Attempt detection of current chip / CPU."""
@@ -102,6 +103,11 @@ class Chip:
                 linux_id = S905
             if compatible and 'amlogic, g12b' in compatible:
                 linux_id = S922X
+
+            machine = self.detector.get_cpuinfo_field("machine")
+
+            if machine in ("Onion Omega", "Onion Omega2"):
+                linux_id = ONION
 
         elif hardware in ("BCM2708", "BCM2709", "BCM2835"):
             linux_id = BCM2XXX

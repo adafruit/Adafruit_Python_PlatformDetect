@@ -33,3 +33,6 @@ if detector.board.any_orange_pi:
 
 if detector.board.any_odroid_40_pin:
     print("Odroid detected.")
+
+if detector.board.any_onion_omega_board:
+    print("Onion Omega detected.")
