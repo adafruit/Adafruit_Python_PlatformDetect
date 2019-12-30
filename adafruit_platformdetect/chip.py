@@ -2,27 +2,26 @@
 import sys
 import os
 
-AM33XX = 'AM33XX'
-IMX8MX = 'IMX8MX'
-BCM2XXX = 'BCM2XXX'
-ESP8266 = 'ESP8266'
-SAMD21 = 'SAMD21'
-STM32 = 'STM32'
-SUN8I = 'SUN8I'
-S805 = 'S805'
-S905 = 'S905'
-S922X = 'S922X'
-SAMA5 = 'SAMA5'
-T210 = 'T210'
-T186 = 'T186'
-T194 = 'T194'
-APQ8016 = 'APQ8016'
-GENERIC_X86 = 'GENERIC_X86'
-FT232H = 'FT232H'
-HFU540 = 'HFU540'
-
-BCM_RANGE = {'BCM2708', 'BCM2709', 'BCM2835', 'BCM2837', 'bcm2708', 'bcm2709',
-             'bcm2835', 'bcm2837'}
+AM33XX = "AM33XX"
+IMX8MX = "IMX8MX"
+BCM2XXX = "BCM2XXX"
+ESP8266 = "ESP8266"
+SAMD21 = "SAMD21"
+STM32 = "STM32"
+SUN8I = "SUN8I"
+S805 = "S805"
+S905 = "S905"
+S922X = "S922X"
+SAMA5 = "SAMA5"
+T210 = "T210"
+T186 = "T186"
+T194 = "T194"
+APQ8016 = "APQ8016"
+GENERIC_X86 = "GENERIC_X86"
+FT232H = "FT232H"
+HFU540 = "HFU540"
+MCP2221 = "MCP2221"
+BINHO = "BINHO"
 
 class Chip:
     """Attempt detection of current chip / CPU."""
@@ -39,18 +38,25 @@ class Chip:
         except KeyError: # no forced chip, continue with testing!
             pass
 
-        # Special case, if we have an environment var set, we could use FT232H
-        try:
-            if os.environ['BLINKA_FT232H']:
-                from pyftdi.usbtools import UsbTools # pylint: disable=import-error
-                # look for it based on PID/VID
-                count = len(UsbTools.find_all([(0x0403, 0x6014)]))
-                if count == 0:
-                    raise RuntimeError('BLINKA_FT232H environment variable' + \
-                                       'set, but no FT232H device found')
-                return FT232H
-        except KeyError: # no FT232H environment var
-            pass
+        # Special cases controlled by environment var
+        if os.environ.get('BLINKA_FT232H'):
+            from pyftdi.usbtools import UsbTools # pylint: disable=import-error
+            # look for it based on PID/VID
+            count = len(UsbTools.find_all([(0x0403, 0x6014)]))
+            if count == 0:
+                raise RuntimeError('BLINKA_FT232H environment variable ' + \
+                                   'set, but no FT232H device found')
+            return FT232H
+        if os.environ.get('BLINKA_MCP2221'):
+            import hid # pylint: disable=import-error
+            # look for it based on PID/VID
+            for dev in hid.enumerate():
+                if dev['vendor_id'] == 0x04D8 and dev['product_id'] == 0x00DD:
+                    return MCP2221
+            raise RuntimeError('BLINKA_MCP2221 environment variable ' + \
+                               'set, but no MCP2221 device found')
+        if os.environ.get('BLINKA_NOVA'):
+            return BINHO
 
         platform = sys.platform
         if platform in ('linux', 'linux2'):

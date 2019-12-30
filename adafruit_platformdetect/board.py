@@ -62,10 +62,14 @@ ODROID_C1_PLUS              = "ODROID_C1_PLUS"
 ODROID_C2                   = "ODROID_C2"
 ODROID_N2                   = "ODROID_N2"
 
-FTDI_FT232H                 = "FT232H"
+FTDI_FT232H                 = "FTDI_FT232H"
 DRAGONBOARD_410C            = "DRAGONBOARD_410C"
 
 SIFIVE_UNLEASHED            = "SIFIVE_UNLEASHED"
+
+MICROCHIP_MCP2221           = "MICROCHIP_MCP2221"
+
+BINHO_NOVA                  = "BINHO_NOVA"
 
 # pylint: enable=bad-whitespace
 
@@ -278,8 +282,10 @@ _PI_REV_CODES = {
     ),
     RASPBERRY_PI_4B: (
         'a03111', 'b03111', 'c03111',
+        'a03112', 'b03112', 'c03112',
         '1a03111', '2a03111', '1b03111', '2b03111', # warranty bits
-        '1c03111', '2c03111',
+        '1c03111', '2c03111', '1a03112', '2a03112',
+        '1b03112', '2b03112', '1c03112', '2c03112',
     ),
 }
 
@@ -334,6 +340,10 @@ class Board:
             board_id = self._tegra_id()
         elif chip_id == ap_chip.HFU540:
             board_id = self._sifive_id()
+        elif chip_id == ap_chip.MCP2221:
+            board_id = MICROCHIP_MCP2221
+        elif chip_id == ap_chip.BINHO:
+            board_id = BINHO_NOVA
         return board_id
     # pylint: enable=invalid-name
 
@@ -516,6 +526,16 @@ class Board:
     def ftdi_ft232h(self):
         """Check whether the current board is an FTDI FT232H."""
         return self.id == FTDI_FT232H
+
+    @property
+    def microchip_mcp2221(self):
+        """Check whether the current board is a Microchip MCP2221."""
+        return self.id == MICROCHIP_MCP2221
+
+    @property
+    def binho_nova(self):
+        """Check whether the current board is an BINHO NOVA."""
+        return self.id == BINHO_NOVA
 
     def __getattr__(self, attr):
         """
