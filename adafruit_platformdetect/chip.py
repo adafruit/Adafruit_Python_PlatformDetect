@@ -23,6 +23,9 @@ HFU540 = "HFU540"
 MCP2221 = "MCP2221"
 BINHO = "BINHO"
 
+BCM_RANGE = {'BCM2708', 'BCM2709', 'BCM2835', 'BCM2837', 'bcm2708', 'bcm2709',
+             'bcm2835', 'bcm2837'}
+
 class Chip:
     """Attempt detection of current chip / CPU."""
     def __init__(self, detector):
