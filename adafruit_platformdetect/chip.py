@@ -104,9 +104,9 @@ class Chip:
             if compatible and 'amlogic, g12b' in compatible:
                 linux_id = S922X
 
-            machine = self.detector.get_cpuinfo_field("machine")
+            cpu_model = self.detector.get_cpuinfo_field("cpu model")
 
-            if machine in ("Onion Omega", "Onion Omega2"):
+            if ("MIPS 24Kc") in cpu_model:
                 linux_id = ONION
 
         elif hardware in ("BCM2708", "BCM2709", "BCM2835"):
