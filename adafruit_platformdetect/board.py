@@ -352,7 +352,7 @@ class Board:
             board_id = MICROCHIP_MCP2221
         elif chip_id == ap_chip.BINHO:
             board_id = BINHO_NOVA
-        elif chip_id == ap_chip.ONION:
+        elif chip_id == ap_chip.MIPS24KC:
             board_id = ONION_OMEGA
         return board_id
     # pylint: enable=invalid-name
