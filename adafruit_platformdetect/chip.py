@@ -22,7 +22,7 @@ FT232H = "FT232H"
 HFU540 = "HFU540"
 MCP2221 = "MCP2221"
 BINHO = "BINHO"
-ONION = "ONION_OMEGA"
+MIPS24KC = "MIPS24KC"
 
 class Chip:
     """Attempt detection of current chip / CPU."""
@@ -106,8 +106,8 @@ class Chip:
 
             cpu_model = self.detector.get_cpuinfo_field("cpu model")
 
-            if ("MIPS 24Kc") in cpu_model:
-                linux_id = ONION
+            if "MIPS 24Kc" in cpu_model:
+                linux_id = MIPS24KC
 
         elif hardware in ("BCM2708", "BCM2709", "BCM2835"):
             linux_id = BCM2XXX
