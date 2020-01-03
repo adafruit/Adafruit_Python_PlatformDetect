@@ -22,6 +22,8 @@ FT232H = "FT232H"
 HFU540 = "HFU540"
 MCP2221 = "MCP2221"
 BINHO = "BINHO"
+MIPS24KC = "MIPS24KC"
+MIPS24KEC = "MIPS24KEC"
 
 class Chip:
     """Attempt detection of current chip / CPU."""
@@ -102,6 +104,13 @@ class Chip:
                 linux_id = S905
             if compatible and 'amlogic, g12b' in compatible:
                 linux_id = S922X
+
+            cpu_model = self.detector.get_cpuinfo_field("cpu model")
+
+            if "MIPS 24Kc" in cpu_model:
+                linux_id = MIPS24KC
+            elif "MIPS 24KEc" in cpu_model:
+                linux_id = MIPS24KEC
 
         elif hardware in ("BCM2708", "BCM2709", "BCM2835"):
             linux_id = BCM2XXX
