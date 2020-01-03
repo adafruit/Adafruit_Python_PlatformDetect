@@ -1,6 +1,5 @@
 """Detect boards."""
 import os
-import re
 import adafruit_platformdetect.chip as ap_chip
 
 # Allow for aligned constant definitions:
@@ -70,6 +69,9 @@ SIFIVE_UNLEASHED            = "SIFIVE_UNLEASHED"
 MICROCHIP_MCP2221           = "MICROCHIP_MCP2221"
 
 BINHO_NOVA                  = "BINHO_NOVA"
+
+ONION_OMEGA                 = "ONION_OMEGA"
+ONION_OMEGA2                = "ONION_OMEGA2"
 
 # pylint: enable=bad-whitespace
 
@@ -289,6 +291,12 @@ _PI_REV_CODES = {
     ),
 }
 
+# Onion omega boards
+_ONION_OMEGA_BOARD_IDS = (
+    ONION_OMEGA,
+    ONION_OMEGA2,
+)
+
 class Board:
     """Attempt to detect specific boards."""
     def __init__(self, detector):
@@ -344,6 +352,10 @@ class Board:
             board_id = MICROCHIP_MCP2221
         elif chip_id == ap_chip.BINHO:
             board_id = BINHO_NOVA
+        elif chip_id == ap_chip.MIPS24KC:
+            board_id = ONION_OMEGA
+        elif chip_id == ap_chip.MIPS24KEC:
+            board_id = ONION_OMEGA2
         return board_id
     # pylint: enable=invalid-name
 
@@ -355,30 +367,6 @@ class Board:
             for model, codes in _PI_REV_CODES.items():
                 if pi_rev_code in codes:
                     return model
-
-        # We may be on a non-Raspbian OS, so try to lazily determine
-        # the version based on `get_device_model`
-        else:
-            pi_model = self.detector.get_device_model()
-            if pi_model:
-                pi_model = pi_model.upper().replace(' ', '_')
-                if "PLUS" in pi_model:
-                    re_model = re.search(r'(RASPBERRY_PI_\d).*([AB]_*)(PLUS)',
-                                         pi_model)
-                elif "CM" in pi_model: # untested for Compute Module
-                    re_model = re.search(r'(RASPBERRY_PI_CM)(\d)',
-                                         pi_model)
-                else: # untested for non-plus models
-                    re_model = re.search(r'(RASPBERRY_PI_\d).*([AB]_*)',
-                                         pi_model)
-
-                if re_model:
-                    pi_model = "".join(re_model.groups())
-                    available_models = _PI_REV_CODES.keys()
-                    for model in available_models:
-                        if model == pi_model:
-                            return model
-
         return None
 
     def _pi_rev_code(self):
@@ -515,12 +503,17 @@ class Board:
         return self.id in _SIFIVE_IDS
 
     @property
+    def any_onion_omega_board(self):
+        """Check whether the current board is any defined OpenWRT board."""
+        return self.id in _ONION_OMEGA_BOARD_IDS
+
+    @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
         return self.any_raspberry_pi or self.any_beaglebone or \
          self.any_orange_pi or self.any_giant_board or self.any_jetson_board or \
          self.any_coral_board or self.any_odroid_40_pin or self.any_96boards or \
-         self.any_sifive_board
+         self.any_sifive_board or self.any_onion_omega_board
 
     @property
     def ftdi_ft232h(self):
