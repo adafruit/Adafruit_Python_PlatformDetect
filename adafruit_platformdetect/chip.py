@@ -106,11 +106,11 @@ class Chip:
                 linux_id = S922X
 
             cpu_model = self.detector.get_cpuinfo_field("cpu model")
-
-            if "MIPS 24Kc" in cpu_model:
-                linux_id = MIPS24KC
-            elif "MIPS 24KEc" in cpu_model:
-                linux_id = MIPS24KEC
+            if cpu_model is not None:
+                if "MIPS 24Kc" in cpu_model:
+                    linux_id = MIPS24KC
+                elif "MIPS 24KEc" in cpu_model:
+                    linux_id = MIPS24KEC
 
         elif hardware in ("BCM2708", "BCM2709", "BCM2835"):
             linux_id = BCM2XXX
