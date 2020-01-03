@@ -115,20 +115,34 @@ class Chip:
                 elif "MIPS 24KEc" in cpu_model:
                     linux_id = MIPS24KEC
 
-        elif hardware in ("BCM2708", "BCM2709", "BCM2835"):
-            linux_id = BCM2XXX
-        elif "AM33XX" in hardware:
-            linux_id = AM33XX
-        elif "sun8i" in hardware:
-            linux_id = SUN8I
-        elif "ODROIDC" in hardware:
-            linux_id = S805
-        elif "ODROID-C2" in hardware:
-            linux_id = S905
-        elif "ODROID-N2" in hardware:
-            linux_id = S922X
-        elif "SAMA5" in hardware:
-            linux_id = SAMA5
+            # we still haven't identified the hardware, so
+            # convert it to a list and let the remaining
+            # conditions attempt.
+            if not linux_id:
+                hardware = [
+                    entry.replace('\x00', '') for entry in compatible.split(',')
+                ]
+
+        if not linux_id:
+            if 'AM33XX' in hardware:
+                linux_id = AM33XX
+            elif 'sun8i' in hardware:
+                linux_id = SUN8I
+            elif 'ODROIDC' in hardware:
+                linux_id = S805
+            elif 'ODROID-C2' in hardware:
+                linux_id = S905
+            elif 'ODROID-N2' in hardware:
+                linux_id = S922X
+            elif 'SAMA5' in hardware:
+                linux_id = SAMA5
+            else:
+                if isinstance(hardware, str):
+                    if hardware in BCM_RANGE:
+                        linux_id = BCM2XXX
+                elif isinstance(hardware, list):
+                    if set(hardware) & BCM_RANGE:
+                        linux_id = BCM2XXX
 
         return linux_id
 
