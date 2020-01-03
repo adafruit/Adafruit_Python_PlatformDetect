@@ -71,7 +71,7 @@ MICROCHIP_MCP2221           = "MICROCHIP_MCP2221"
 BINHO_NOVA                  = "BINHO_NOVA"
 
 ONION_OMEGA                 = "ONION_OMEGA"
-ONION_OMEGA2                 = "ONION_OMEGA2"
+ONION_OMEGA2                = "ONION_OMEGA2"
 
 # pylint: enable=bad-whitespace
 
@@ -354,6 +354,8 @@ class Board:
             board_id = BINHO_NOVA
         elif chip_id == ap_chip.MIPS24KC:
             board_id = ONION_OMEGA
+        elif chip_id == ap_chip.MIPS24KEC:
+            board_id = ONION_OMEGA2
         return board_id
     # pylint: enable=invalid-name
 

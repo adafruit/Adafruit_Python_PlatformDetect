@@ -23,6 +23,7 @@ HFU540 = "HFU540"
 MCP2221 = "MCP2221"
 BINHO = "BINHO"
 MIPS24KC = "MIPS24KC"
+MIPS24KEC = "MIPS24KEC"
 
 class Chip:
     """Attempt detection of current chip / CPU."""
@@ -108,6 +109,8 @@ class Chip:
 
             if "MIPS 24Kc" in cpu_model:
                 linux_id = MIPS24KC
+            elif "MIPS 24KEc" in cpu_model:
+                linux_id = MIPS24KEC
 
         elif hardware in ("BCM2708", "BCM2709", "BCM2835"):
             linux_id = BCM2XXX
