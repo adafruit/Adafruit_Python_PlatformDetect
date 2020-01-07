@@ -73,6 +73,10 @@ BINHO_NOVA                  = "BINHO_NOVA"
 ONION_OMEGA                 = "ONION_OMEGA"
 ONION_OMEGA2                = "ONION_OMEGA2"
 
+PINE64 = "PINE64"
+PINEBOOK = "PINEBOOK"
+PINEPHONE = "PINEPHONE"
+
 # pylint: enable=bad-whitespace
 
 #OrangePI
@@ -297,6 +301,13 @@ _ONION_OMEGA_BOARD_IDS = (
     ONION_OMEGA2,
 )
 
+# Pine64 boards and devices
+_PINE64_DEV_IDS = (
+    PINE64,
+    PINEBOOK,
+    PINEPHONE
+)
+
 class Board:
     """Attempt to detect specific boards."""
     def __init__(self, detector):
@@ -356,6 +367,8 @@ class Board:
             board_id = ONION_OMEGA
         elif chip_id == ap_chip.MIPS24KEC:
             board_id = ONION_OMEGA2
+        elif chip_id == ap_chip.SUN50IW1P1:
+            board_id = self._pine64_id()
         return board_id
     # pylint: enable=invalid-name
 
@@ -447,6 +460,18 @@ class Board:
             return SIFIVE_UNLEASHED
         return None
 
+    def _pine64_id(self):
+        """Try to detect the id for Pine64 board or device."""
+        board_value = self.detector.get_device_model()
+        board = None
+        if 'pine64' in board_value.lower():
+            board = PINE64
+        elif 'pinebook' in board_value.lower():
+            board = PINEBOOK
+        elif 'pinephone' in board_value.lower():
+            board = PINEPHONE
+        return board
+
     @property
     def any_96boards(self):
         """Check whether the current board is any 96boards board."""
@@ -508,12 +533,17 @@ class Board:
         return self.id in _ONION_OMEGA_BOARD_IDS
 
     @property
+    def any_pine64_board(self):
+        """Check whether the current board is any defined OpenWRT board."""
+        return self.id in _PINE64_DEV_IDS
+
+    @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
         return self.any_raspberry_pi or self.any_beaglebone or \
          self.any_orange_pi or self.any_giant_board or self.any_jetson_board or \
          self.any_coral_board or self.any_odroid_40_pin or self.any_96boards or \
-         self.any_sifive_board or self.any_onion_omega_board
+         self.any_sifive_board or self.any_onion_omega_board or self.any_pine64_board
 
     @property
     def ftdi_ft232h(self):

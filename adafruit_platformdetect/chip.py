@@ -24,6 +24,7 @@ MCP2221 = "MCP2221"
 BINHO = "BINHO"
 MIPS24KC = "MIPS24KC"
 MIPS24KEC = "MIPS24KEC"
+SUN50IW1P1 = "SUN50IW1P1"
 
 class Chip:
     """Attempt detection of current chip / CPU."""
@@ -127,6 +128,8 @@ class Chip:
             linux_id = S922X
         elif "SAMA5" in hardware:
             linux_id = SAMA5
+        elif "A64" in hardware:
+            linux_id = SUN50IW1P1
 
         return linux_id
 
