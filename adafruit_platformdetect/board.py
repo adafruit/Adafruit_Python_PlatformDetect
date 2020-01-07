@@ -367,7 +367,7 @@ class Board:
             board_id = ONION_OMEGA
         elif chip_id == ap_chip.MIPS24KEC:
             board_id = ONION_OMEGA2
-        elif chip_id == ap_chip.SUN50IW1P1:
+        elif chip_id == ap_chip.PINE64:
             board_id = self._pine64_id()
         return board_id
     # pylint: enable=invalid-name
@@ -423,6 +423,8 @@ class Board:
             return ORANGE_PI_R1
         if board_value == "orangepizero":
             return ORANGE_PI_ZERO
+        if board_value == "pinebook-a64":
+            return PINEBOOK
         return None
 
     def _sama5_id(self):
