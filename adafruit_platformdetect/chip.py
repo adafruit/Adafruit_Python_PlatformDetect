@@ -107,7 +107,7 @@ class Chip:
 
             cpu_model = self.detector.get_cpuinfo_field("cpu model")
 
-            if cpu_model:
+            if cpu_model is not None:
                 if "MIPS 24Kc" in cpu_model:
                     linux_id = MIPS24KC
                 elif "MIPS 24KEc" in cpu_model:
