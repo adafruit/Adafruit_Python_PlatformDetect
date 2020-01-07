@@ -534,7 +534,7 @@ class Board:
 
     @property
     def any_pine64_board(self):
-        """Check whether the current board is any defined OpenWRT board."""
+        """Check whether the current board is any Pine64 device."""
         return self.id in _PINE64_DEV_IDS
 
     @property
