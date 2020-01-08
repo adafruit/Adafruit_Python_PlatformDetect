@@ -80,7 +80,7 @@ class Chip:
 
     # pylint: enable=invalid-name
 
-    def _linux_id(self):  # pylint: disable=too-many-branches
+    def _linux_id(self):  # pylint: disable=too-many-branches,too-many-statements
         """Attempt to detect the CPU on a computer running the Linux kernel."""
 
         if self.detector.check_dt_compatible_value('qcom,apq8016'):
