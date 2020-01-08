@@ -367,7 +367,7 @@ class Board:
             board_id = ONION_OMEGA
         elif chip_id == ap_chip.MIPS24KEC:
             board_id = ONION_OMEGA2
-        elif chip_id == ap_chip.PINE64:
+        elif chip_id == ap_chip.A64:
             board_id = self._pine64_id()
         return board_id
     # pylint: enable=invalid-name
