@@ -1,5 +1,7 @@
 """Detect boards."""
 import os
+import re
+
 import adafruit_platformdetect.chip as ap_chip
 
 # Allow for aligned constant definitions:
@@ -252,44 +254,44 @@ _PI_REV_CODES = {
     ),
     RASPBERRY_PI_ZERO: (
         '900092', '920092', '900093', '920093',
-        '1900092', '1920092', '1900093', '1920093', # warranty bit 24
-        '2900092', '2920092', '2900093', '2920093', # warranty bit 25
+        '1900092', '1920092', '1900093', '1920093',  # warranty bit 24
+        '2900092', '2920092', '2900093', '2920093',  # warranty bit 25
     ),
     RASPBERRY_PI_ZERO_W: (
         '9000c1',
-        '19000c1', '29000c1', # warranty bits
+        '19000c1', '29000c1',  # warranty bits
     ),
     RASPBERRY_PI_2B: (
         'a01040', 'a01041', 'a21041', 'a22042',
-        '1a01040', '1a01041', '1a21041', '1a22042', # warranty bit 24
-        '2a01040', '2a01041', '2a21041', '2a22042', # warranty bit 25
+        '1a01040', '1a01041', '1a21041', '1a22042',  # warranty bit 24
+        '2a01040', '2a01041', '2a21041', '2a22042',  # warranty bit 25
     ),
     RASPBERRY_PI_3B: (
         'a02082', 'a22082', 'a32082', 'a52082',
-        '1a02082', '1a22082', '1a32082', '1a52082', # warranty bit 24
-        '2a02082', '2a22082', '2a32082', '2a52082', # warranty bit 25
+        '1a02082', '1a22082', '1a32082', '1a52082',  # warranty bit 24
+        '2a02082', '2a22082', '2a32082', '2a52082',  # warranty bit 25
     ),
     RASPBERRY_PI_3B_PLUS: (
         'a020d3',
-        '1a020d3', '2a020d3', # warranty bits
+        '1a020d3', '2a020d3',  # warranty bits
     ),
     RASPBERRY_PI_CM3: (
         'a020a0', 'a220a0',
-        '1a020a0', '2a020a0', # warranty bits
+        '1a020a0', '2a020a0',  # warranty bits
         '1a220a0', '2a220a0',
     ),
     RASPBERRY_PI_3A_PLUS: (
         '9020e0',
-        '19020e0', '29020e0', # warranty bits
+        '19020e0', '29020e0',  # warranty bits
     ),
     RASPBERRY_PI_CM3_PLUS: (
         'a02100',
-        '1a02100', '2a02100', # warranty bits
+        '1a02100', '2a02100',  # warranty bits
     ),
     RASPBERRY_PI_4B: (
         'a03111', 'b03111', 'c03111',
         'a03112', 'b03112', 'c03112',
-        '1a03111', '2a03111', '1b03111', '2b03111', # warranty bits
+        '1a03111', '2a03111', '1b03111', '2b03111',  # warranty bits
         '1c03111', '2c03111', '1a03112', '2a03112',
         '1b03112', '2b03112', '1c03112', '2c03112',
     ),
@@ -380,6 +382,30 @@ class Board:
             for model, codes in _PI_REV_CODES.items():
                 if pi_rev_code in codes:
                     return model
+
+        # We may be on a non-Raspbian OS, so try to lazily determine
+        # the version based on `get_device_model`
+        else:
+            pi_model = self.detector.get_device_model()
+            if pi_model:
+                pi_model = pi_model.upper().replace(' ', '_')
+                if "PLUS" in pi_model:
+                    re_model = re.search(r'(RASPBERRY_PI_\d).*([AB]_*)(PLUS)',
+                                         pi_model)
+                elif "CM" in pi_model: # untested for Compute Module
+                    re_model = re.search(r'(RASPBERRY_PI_CM)(\d)',
+                                         pi_model)
+                else: # untested for non-plus models
+                    re_model = re.search(r'(RASPBERRY_PI_\d).*([AB]_*)',
+                                         pi_model)
+
+                if re_model:
+                    pi_model = "".join(re_model.groups())
+                    available_models = _PI_REV_CODES.keys()
+                    for model in available_models:
+                        if model == pi_model:
+                            return model
+
         return None
 
     def _pi_rev_code(self):
