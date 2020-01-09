@@ -143,6 +143,8 @@ class Chip:
                 linux_id = SAMA5
             elif "Pinebook" in hardware:
                 linux_id = A64
+            elif "sun50iw1p1" in hardware:
+                linux_id = A64
             else:
                 if isinstance(hardware, str):
                     if hardware in BCM_RANGE:
