@@ -1,6 +1,6 @@
 """Attempt detection of current chip / CPU."""
-import sys
 import os
+import sys
 
 AM33XX = "AM33XX"
 IMX8MX = "IMX8MX"
@@ -24,28 +24,31 @@ MCP2221 = "MCP2221"
 BINHO = "BINHO"
 MIPS24KC = "MIPS24KC"
 MIPS24KEC = "MIPS24KEC"
+A64 = "A64"
 
 BCM_RANGE = {'BCM2708', 'BCM2709', 'BCM2835', 'BCM2837', 'bcm2708', 'bcm2709',
              'bcm2835', 'bcm2837'}
 
+
 class Chip:
     """Attempt detection of current chip / CPU."""
+
     def __init__(self, detector):
         self.detector = detector
 
     @property
-    def id(self): # pylint: disable=invalid-name,too-many-branches,too-many-return-statements
+    def id(self):  # pylint: disable=invalid-name,too-many-branches,too-many-return-statements
         """Return a unique id for the detected chip, if any."""
         # There are some times we want to trick the platform detection
         # say if a raspberry pi doesn't have the right ID, or for testing
         try:
             return os.environ['BLINKA_FORCECHIP']
-        except KeyError: # no forced chip, continue with testing!
+        except KeyError:  # no forced chip, continue with testing!
             pass
 
         # Special cases controlled by environment var
         if os.environ.get('BLINKA_FT232H'):
-            from pyftdi.usbtools import UsbTools # pylint: disable=import-error
+            from pyftdi.usbtools import UsbTools  # pylint: disable=import-error
             # look for it based on PID/VID
             count = len(UsbTools.find_all([(0x0403, 0x6014)]))
             if count == 0:
@@ -53,7 +56,7 @@ class Chip:
                                    'set, but no FT232H device found')
             return FT232H
         if os.environ.get('BLINKA_MCP2221'):
-            import hid # pylint: disable=import-error
+            import hid  # pylint: disable=import-error
             # look for it based on PID/VID
             for dev in hid.enumerate():
                 if dev['vendor_id'] == 0x04D8 and dev['product_id'] == 0x00DD:
@@ -74,9 +77,10 @@ class Chip:
             return STM32
         # nothing found!
         return None
+
     # pylint: enable=invalid-name
 
-    def _linux_id(self): # pylint: disable=too-many-branches
+    def _linux_id(self):  # pylint: disable=too-many-branches,too-many-statements
         """Attempt to detect the CPU on a computer running the Linux kernel."""
 
         if self.detector.check_dt_compatible_value('qcom,apq8016'):
@@ -109,6 +113,7 @@ class Chip:
                 linux_id = S922X
 
             cpu_model = self.detector.get_cpuinfo_field("cpu model")
+
             if cpu_model is not None:
                 if "MIPS 24Kc" in cpu_model:
                     linux_id = MIPS24KC
@@ -136,6 +141,10 @@ class Chip:
                 linux_id = S922X
             elif 'SAMA5' in hardware:
                 linux_id = SAMA5
+            elif "Pinebook" in hardware:
+                linux_id = A64
+            elif "sun50iw1p1" in hardware:
+                linux_id = A64
             else:
                 if isinstance(hardware, str):
                     if hardware in BCM_RANGE:

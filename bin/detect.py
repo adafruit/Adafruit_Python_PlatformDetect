@@ -19,8 +19,8 @@ print("Is this a Coral Edge TPU?", detector.board.CORAL_EDGE_TPU_DEV)
 print("Is this a SiFive Unleashed? ", detector.board.SIFIVE_UNLEASHED)
 print("Is this an embedded Linux system?", detector.board.any_embedded_linux)
 print("Is this a generic Linux PC?", detector.board.GENERIC_LINUX_PC)
-print("Is this an OS environment variable special case?", detector.board.FTDI_FT232H       |
-                                                          detector.board.MICROCHIP_MCP2221 )
+print("Is this an OS environment variable special case?", detector.board.FTDI_FT232H |
+      detector.board.MICROCHIP_MCP2221)
 
 if detector.board.any_raspberry_pi:
     print("Raspberry Pi detected.")
@@ -36,3 +36,6 @@ if detector.board.any_odroid_40_pin:
 
 if detector.board.any_onion_omega_board:
     print("Onion Omega detected.")
+
+if detector.board.any_pine64_board:
+    print("Pine64 device detected.")

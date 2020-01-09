@@ -1,6 +1,7 @@
 """Detect boards."""
 import os
 import re
+
 import adafruit_platformdetect.chip as ap_chip
 
 # Allow for aligned constant definitions:
@@ -73,6 +74,10 @@ BINHO_NOVA                  = "BINHO_NOVA"
 
 ONION_OMEGA                 = "ONION_OMEGA"
 ONION_OMEGA2                = "ONION_OMEGA2"
+
+PINE64 = "PINE64"
+PINEBOOK = "PINEBOOK"
+PINEPHONE = "PINEPHONE"
 
 # pylint: enable=bad-whitespace
 
@@ -249,44 +254,44 @@ _PI_REV_CODES = {
     ),
     RASPBERRY_PI_ZERO: (
         '900092', '920092', '900093', '920093',
-        '1900092', '1920092', '1900093', '1920093', # warranty bit 24
-        '2900092', '2920092', '2900093', '2920093', # warranty bit 25
+        '1900092', '1920092', '1900093', '1920093',  # warranty bit 24
+        '2900092', '2920092', '2900093', '2920093',  # warranty bit 25
     ),
     RASPBERRY_PI_ZERO_W: (
         '9000c1',
-        '19000c1', '29000c1', # warranty bits
+        '19000c1', '29000c1',  # warranty bits
     ),
     RASPBERRY_PI_2B: (
         'a01040', 'a01041', 'a21041', 'a22042',
-        '1a01040', '1a01041', '1a21041', '1a22042', # warranty bit 24
-        '2a01040', '2a01041', '2a21041', '2a22042', # warranty bit 25
+        '1a01040', '1a01041', '1a21041', '1a22042',  # warranty bit 24
+        '2a01040', '2a01041', '2a21041', '2a22042',  # warranty bit 25
     ),
     RASPBERRY_PI_3B: (
         'a02082', 'a22082', 'a32082', 'a52082',
-        '1a02082', '1a22082', '1a32082', '1a52082', # warranty bit 24
-        '2a02082', '2a22082', '2a32082', '2a52082', # warranty bit 25
+        '1a02082', '1a22082', '1a32082', '1a52082',  # warranty bit 24
+        '2a02082', '2a22082', '2a32082', '2a52082',  # warranty bit 25
     ),
     RASPBERRY_PI_3B_PLUS: (
         'a020d3',
-        '1a020d3', '2a020d3', # warranty bits
+        '1a020d3', '2a020d3',  # warranty bits
     ),
     RASPBERRY_PI_CM3: (
         'a020a0', 'a220a0',
-        '1a020a0', '2a020a0', # warranty bits
+        '1a020a0', '2a020a0',  # warranty bits
         '1a220a0', '2a220a0',
     ),
     RASPBERRY_PI_3A_PLUS: (
         '9020e0',
-        '19020e0', '29020e0', # warranty bits
+        '19020e0', '29020e0',  # warranty bits
     ),
     RASPBERRY_PI_CM3_PLUS: (
         'a02100',
-        '1a02100', '2a02100', # warranty bits
+        '1a02100', '2a02100',  # warranty bits
     ),
     RASPBERRY_PI_4B: (
         'a03111', 'b03111', 'c03111',
         'a03112', 'b03112', 'c03112',
-        '1a03111', '2a03111', '1b03111', '2b03111', # warranty bits
+        '1a03111', '2a03111', '1b03111', '2b03111',  # warranty bits
         '1c03111', '2c03111', '1a03112', '2a03112',
         '1b03112', '2b03112', '1c03112', '2c03112',
     ),
@@ -296,6 +301,13 @@ _PI_REV_CODES = {
 _ONION_OMEGA_BOARD_IDS = (
     ONION_OMEGA,
     ONION_OMEGA2,
+)
+
+# Pine64 boards and devices
+_PINE64_DEV_IDS = (
+    PINE64,
+    PINEBOOK,
+    PINEPHONE
 )
 
 class Board:
@@ -357,6 +369,8 @@ class Board:
             board_id = ONION_OMEGA
         elif chip_id == ap_chip.MIPS24KEC:
             board_id = ONION_OMEGA2
+        elif chip_id == ap_chip.A64:
+            board_id = self._pine64_id()
         return board_id
     # pylint: enable=invalid-name
 
@@ -435,6 +449,8 @@ class Board:
             return ORANGE_PI_R1
         if board_value == "orangepizero":
             return ORANGE_PI_ZERO
+        if board_value == "pinebook-a64":
+            return PINEBOOK
         return None
 
     def _sama5_id(self):
@@ -471,6 +487,18 @@ class Board:
         if 'hifive-unleashed-a00' in board_value:
             return SIFIVE_UNLEASHED
         return None
+
+    def _pine64_id(self):
+        """Try to detect the id for Pine64 board or device."""
+        board_value = self.detector.get_device_model()
+        board = None
+        if 'pine64' in board_value.lower():
+            board = PINE64
+        elif 'pinebook' in board_value.lower():
+            board = PINEBOOK
+        elif 'pinephone' in board_value.lower():
+            board = PINEPHONE
+        return board
 
     @property
     def any_96boards(self):
@@ -533,12 +561,17 @@ class Board:
         return self.id in _ONION_OMEGA_BOARD_IDS
 
     @property
+    def any_pine64_board(self):
+        """Check whether the current board is any Pine64 device."""
+        return self.id in _PINE64_DEV_IDS
+
+    @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
         return self.any_raspberry_pi or self.any_beaglebone or \
          self.any_orange_pi or self.any_giant_board or self.any_jetson_board or \
          self.any_coral_board or self.any_odroid_40_pin or self.any_96boards or \
-         self.any_sifive_board or self.any_onion_omega_board
+         self.any_sifive_board or self.any_onion_omega_board or self.any_pine64_board
 
     @property
     def ftdi_ft232h(self):
