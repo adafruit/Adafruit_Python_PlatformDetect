@@ -448,6 +448,7 @@ class Board:
         return None
     # pylint: enable=no-self-use
 
+    # pylint: disable=too-many-return-statements
     def _armbian_id(self):
         """Check whether the current board is an OrangePi PC or OrangePI R1."""
         board_value = self.detector.get_armbian_release_field('BOARD')
@@ -468,6 +469,8 @@ class Board:
             return PINEBOOK
 
         return None
+
+    # pylint: enable=too-many-return-statements
 
     def _sama5_id(self):
         """Check what type sama5 board."""
