@@ -457,7 +457,7 @@ class Board:
             return ORANGE_PI_R1
         if board_value == "orangepizero":
             return ORANGE_PI_ZERO
-        if board_value == "oragepione":
+        if board_value == "orangepione":
             return ORANGE_PI_ONE
         if board_value == "orangepilite":
             return ORANGE_PI_LITE
