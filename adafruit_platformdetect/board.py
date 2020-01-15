@@ -451,13 +451,14 @@ class Board:
     def _armbian_id(self):
         """Check whether the current board is an OrangePi PC or OrangePI R1."""
         board_value = self.detector.get_armbian_release_field('BOARD')
+
         if board_value == "orangepipc":
             return ORANGE_PI_PC
         if board_value == "orangepi-r1":
             return ORANGE_PI_R1
         if board_value == "orangepizero":
             return ORANGE_PI_ZERO
-        if board_value == "oragepione":
+        if board_value == "orangepione":
             return ORANGE_PI_ONE
         if board_value == "orangepilite":
             return ORANGE_PI_LITE
