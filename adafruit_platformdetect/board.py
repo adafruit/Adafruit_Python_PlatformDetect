@@ -27,10 +27,15 @@ FEATHER_M0_EXPRESS          = "FEATHER_M0_EXPRESS"
 GENERIC_LINUX_PC            = "GENERIC_LINUX_PC"
 PYBOARD                     = "PYBOARD"
 NODEMCU                     = "NODEMCU"
+GIANT_BOARD                 = "GIANT_BOARD"
+
+# Orange Pi boards
 ORANGE_PI_PC                = "ORANGE_PI_PC"
 ORANGE_PI_R1                = "ORANGE_PI_R1"
 ORANGE_PI_ZERO              = "ORANGE_PI_ZERO"
-GIANT_BOARD                 = "GIANT_BOARD"
+ORANGE_PI_ONE               = "ORANGE_PI_ONE"
+ORANGE_PI_LITE              = "ORANGE_PI_LITE"
+ORANGE_PI_PC_PLUS           = "ORANGE_PI_PC_PLUS"
 
 # NVIDIA Jetson boards
 JETSON_TX1                  = 'JETSON_TX1'
@@ -85,7 +90,10 @@ PINEPHONE = "PINEPHONE"
 _ORANGE_PI_IDS = (
     ORANGE_PI_PC,
     ORANGE_PI_R1,
-    ORANGE_PI_ZERO
+    ORANGE_PI_ZERO,
+    ORANGE_PI_ONE,
+    ORANGE_PI_LITE,
+    ORANGE_PI_LITE
 )
 
 _CORAL_IDS = (
@@ -440,6 +448,7 @@ class Board:
         return None
     # pylint: enable=no-self-use
 
+    # pylint: disable=too-many-return-statements
     def _armbian_id(self):
         """Check whether the current board is an OrangePi PC or OrangePI R1."""
         board_value = self.detector.get_armbian_release_field('BOARD')
@@ -449,9 +458,17 @@ class Board:
             return ORANGE_PI_R1
         if board_value == "orangepizero":
             return ORANGE_PI_ZERO
+        if board_value == "orangepione":
+            return ORANGE_PI_ONE
+        if board_value == "orangepilite":
+            return ORANGE_PI_LITE
+        if board_value == "orangepipcplus":
+            return ORANGE_PI_PC_PLUS
         if board_value == "pinebook-a64":
             return PINEBOOK
+
         return None
+    # pylint: enable=too-many-return-statements
 
     def _sama5_id(self):
         """Check what type sama5 board."""
