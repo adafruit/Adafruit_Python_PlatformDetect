@@ -13,7 +13,7 @@ class Board:
     def __init__(self, detector):
         self.detector = detector
 
-    # pylint: disable=invalid-name, too-many-branches
+    # pylint: disable=invalid-name, too-many-branches, protected-access
     @property
     def id(self):
         """Return a unique id for the detected board, if any."""
