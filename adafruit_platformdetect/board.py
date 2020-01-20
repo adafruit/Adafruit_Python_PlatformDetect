@@ -36,6 +36,7 @@ ORANGE_PI_ZERO              = "ORANGE_PI_ZERO"
 ORANGE_PI_ONE               = "ORANGE_PI_ONE"
 ORANGE_PI_LITE              = "ORANGE_PI_LITE"
 ORANGE_PI_PC_PLUS           = "ORANGE_PI_PC_PLUS"
+ORANGE_PI_PLUS_2E           = "ORANGE_PI_PLUS_2E"
 
 # NVIDIA Jetson boards
 JETSON_TX1                  = 'JETSON_TX1'
@@ -93,7 +94,8 @@ _ORANGE_PI_IDS = (
     ORANGE_PI_ZERO,
     ORANGE_PI_ONE,
     ORANGE_PI_LITE,
-    ORANGE_PI_LITE
+    ORANGE_PI_PC_PLUS,
+    ORANGE_PI_PLUS_2E,
 )
 
 _CORAL_IDS = (
@@ -463,12 +465,15 @@ class Board:
             return ORANGE_PI_ONE
         if board_value == "orangepilite":
             return ORANGE_PI_LITE
+        if board_value == "orangepiplus2e":
+            return ORANGE_PI_PLUS_2E
         if board_value == "orangepipcplus":
             return ORANGE_PI_PC_PLUS
         if board_value == "pinebook-a64":
             return PINEBOOK
 
         return None
+    # pylint: enable=too-many-return-statements
 
     # pylint: enable=too-many-return-statements
 
