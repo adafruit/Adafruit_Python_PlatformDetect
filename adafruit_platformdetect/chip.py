@@ -2,32 +2,7 @@
 import os
 import sys
 
-AM33XX = "AM33XX"
-IMX8MX = "IMX8MX"
-BCM2XXX = "BCM2XXX"
-ESP8266 = "ESP8266"
-SAMD21 = "SAMD21"
-STM32 = "STM32"
-SUN8I = "SUN8I"
-S805 = "S805"
-S905 = "S905"
-S922X = "S922X"
-SAMA5 = "SAMA5"
-T210 = "T210"
-T186 = "T186"
-T194 = "T194"
-APQ8016 = "APQ8016"
-GENERIC_X86 = "GENERIC_X86"
-FT232H = "FT232H"
-HFU540 = "HFU540"
-MCP2221 = "MCP2221"
-BINHO = "BINHO"
-MIPS24KC = "MIPS24KC"
-MIPS24KEC = "MIPS24KEC"
-A64 = "A64"
-
-BCM_RANGE = {'BCM2708', 'BCM2709', 'BCM2835', 'BCM2837', 'bcm2708', 'bcm2709',
-             'bcm2835', 'bcm2837'}
+from adafruit_platformdetect.constants import chips
 
 
 class Chip:
@@ -54,27 +29,27 @@ class Chip:
             if count == 0:
                 raise RuntimeError('BLINKA_FT232H environment variable ' + \
                                    'set, but no FT232H device found')
-            return FT232H
+            return chips.FT232H
         if os.environ.get('BLINKA_MCP2221'):
             import hid  # pylint: disable=import-error
             # look for it based on PID/VID
             for dev in hid.enumerate():
                 if dev['vendor_id'] == 0x04D8 and dev['product_id'] == 0x00DD:
-                    return MCP2221
+                    return chips.MCP2221
             raise RuntimeError('BLINKA_MCP2221 environment variable ' + \
                                'set, but no MCP2221 device found')
         if os.environ.get('BLINKA_NOVA'):
-            return BINHO
+            return chips.BINHO
 
         platform = sys.platform
         if platform in ('linux', 'linux2'):
             return self._linux_id()
         if platform == 'esp8266':
-            return ESP8266
+            return chips.ESP8266
         if platform == 'samd21':
-            return SAMD21
+            return chips.SAMD21
         if platform == 'pyboard':
-            return STM32
+            return chips.STM32
         # nothing found!
         return None
 
@@ -84,10 +59,10 @@ class Chip:
         """Attempt to detect the CPU on a computer running the Linux kernel."""
 
         if self.detector.check_dt_compatible_value('qcom,apq8016'):
-            return APQ8016
+            return chips.APQ8016
 
         if self.detector.check_dt_compatible_value('fu500'):
-            return HFU540
+            return chips.HFU540
 
         linux_id = None
         hardware = self.detector.get_cpuinfo_field('Hardware')
@@ -95,30 +70,30 @@ class Chip:
         if hardware is None:
             vendor_id = self.detector.get_cpuinfo_field('vendor_id')
             if vendor_id in ('GenuineIntel', 'AuthenticAMD'):
-                linux_id = GENERIC_X86
+                linux_id = chips.GENERIC_X86
 
             compatible = self.detector.get_device_compatible()
             if compatible and 'tegra' in compatible:
                 if 'cv' in compatible or 'nano' in compatible:
-                    linux_id = T210
+                    linux_id = chips.T210
                 elif 'quill' in compatible:
-                    linux_id = T186
+                    linux_id = chips.T186
                 elif 'xavier' in compatible:
-                    linux_id = T194
+                    linux_id = chips.T194
             if compatible and 'imx8m' in compatible:
-                linux_id = IMX8MX
+                linux_id = chips.IMX8MX
             if compatible and 'odroid-c2' in compatible:
-                linux_id = S905
+                linux_id = chips.S905
             if compatible and 'amlogic, g12b' in compatible:
-                linux_id = S922X
+                linux_id = chips.S922X
 
             cpu_model = self.detector.get_cpuinfo_field("cpu model")
 
             if cpu_model is not None:
                 if "MIPS 24Kc" in cpu_model:
-                    linux_id = MIPS24KC
+                    linux_id = chips.MIPS24KC
                 elif "MIPS 24KEc" in cpu_model:
-                    linux_id = MIPS24KEC
+                    linux_id = chips.MIPS24KEC
 
             # we still haven't identified the hardware, so
             # convert it to a list and let the remaining
@@ -130,28 +105,28 @@ class Chip:
 
         if not linux_id:
             if 'AM33XX' in hardware:
-                linux_id = AM33XX
+                linux_id = chips.AM33XX
             elif 'sun8i' in hardware:
-                linux_id = SUN8I
+                linux_id = chips.SUN8I
             elif 'ODROIDC' in hardware:
-                linux_id = S805
+                linux_id = chips.S805
             elif 'ODROID-C2' in hardware:
-                linux_id = S905
+                linux_id = chips.S905
             elif 'ODROID-N2' in hardware:
-                linux_id = S922X
+                linux_id = chips.S922X
             elif 'SAMA5' in hardware:
-                linux_id = SAMA5
+                linux_id = chips.SAMA5
             elif "Pinebook" in hardware:
-                linux_id = A64
+                linux_id = chips.A64
             elif "sun50iw1p1" in hardware:
-                linux_id = A64
+                linux_id = chips.A64
             else:
                 if isinstance(hardware, str):
-                    if hardware in BCM_RANGE:
-                        linux_id = BCM2XXX
+                    if hardware in chips.BCM_RANGE:
+                        linux_id = chips.BCM2XXX
                 elif isinstance(hardware, list):
-                    if set(hardware) & BCM_RANGE:
-                        linux_id = BCM2XXX
+                    if set(hardware) & chips.BCM_RANGE:
+                        linux_id = chips.BCM2XXX
 
         return linux_id
 

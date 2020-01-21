@@ -22,11 +22,11 @@
 """
 Attempt to detect the current platform.
 """
-import sys
-import platform
 import re
+
 from adafruit_platformdetect.board import Board
 from adafruit_platformdetect.chip import Chip
+
 
 # Various methods here may retain state in future, so tell pylint not to worry
 # that they don't use self right now:
