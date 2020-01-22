@@ -133,7 +133,7 @@ class Board:
         # special condition for BeagleBone Green rev. 1A
         # refer to GitHub issue #57 in this repo for more info
         if eeprom_bytes == b'\xaaU3\xeeA335BNLT\x1a\x00\x00\x00':
-            return BEAGLEBONE_GREEN
+            return boards.BEAGLEBONE_GREEN
 
         id_string = eeprom_bytes[4:].decode("ascii")
         for model, bb_ids in boards._BEAGLEBONE_BOARD_IDS.items():
