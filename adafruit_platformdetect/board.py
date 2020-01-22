@@ -95,7 +95,7 @@ class Board:
                     re_model = re.search(r'(RASPBERRY_PI_CM)(\d)',
                                          pi_model)
                 else:  # untested for non-plus models
-                    re_model = re.search(r'(RASPBERRY_PI_\d).*([AB]_*)',
+                    re_model = re.search(r'(RASPBERRY_PI_\d).*([AB])',
                                          pi_model)
 
                 if re_model:

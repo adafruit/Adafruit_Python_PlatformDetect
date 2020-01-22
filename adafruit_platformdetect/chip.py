@@ -122,10 +122,10 @@ class Chip:
                 linux_id = chips.A64
             else:
                 if isinstance(hardware, str):
-                    if hardware in chips.BCM_RANGE:
+                    if hardware.upper() in chips.BCM_RANGE:
                         linux_id = chips.BCM2XXX
                 elif isinstance(hardware, list):
-                    if set(hardware) & chips.BCM_RANGE:
+                    if set([model.upper() for model in hardware]) & chips.BCM_RANGE:
                         linux_id = chips.BCM2XXX
 
         return linux_id
