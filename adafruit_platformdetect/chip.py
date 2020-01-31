@@ -18,6 +18,7 @@ class Chip:
         # say if a raspberry pi doesn't have the right ID, or for testing
         try:
             return os.environ['BLINKA_FORCECHIP']
+
         except KeyError:  # no forced chip, continue with testing!
             pass
 
@@ -26,30 +27,41 @@ class Chip:
             from pyftdi.usbtools import UsbTools  # pylint: disable=import-error
             # look for it based on PID/VID
             count = len(UsbTools.find_all([(0x0403, 0x6014)]))
+
             if count == 0:
-                raise RuntimeError('BLINKA_FT232H environment variable ' + \
-                                   'set, but no FT232H device found')
+                raise RuntimeError(
+                    'BLINKA_FT232H environment variable set, but no FT232H device found'
+                )
             return chips.FT232H
         if os.environ.get('BLINKA_MCP2221'):
+
             import hid  # pylint: disable=import-error
             # look for it based on PID/VID
             for dev in hid.enumerate():
+
                 if dev['vendor_id'] == 0x04D8 and dev['product_id'] == 0x00DD:
                     return chips.MCP2221
-            raise RuntimeError('BLINKA_MCP2221 environment variable ' + \
-                               'set, but no MCP2221 device found')
+
+            raise RuntimeError(
+                'BLINKA_MCP2221 environment variable set, but no MCP2221 device found'
+            )
         if os.environ.get('BLINKA_NOVA'):
             return chips.BINHO
 
         platform = sys.platform
+
         if platform in ('linux', 'linux2'):
             return self._linux_id()
+
         if platform == 'esp8266':
             return chips.ESP8266
+
         if platform == 'samd21':
             return chips.SAMD21
+
         if platform == 'pyboard':
             return chips.STM32
+
         # nothing found!
         return None
 
@@ -69,29 +81,39 @@ class Chip:
 
         if hardware is None:
             vendor_id = self.detector.get_cpuinfo_field('vendor_id')
+
             if vendor_id in ('GenuineIntel', 'AuthenticAMD'):
                 linux_id = chips.GENERIC_X86
 
             compatible = self.detector.get_device_compatible()
+
             if compatible and 'tegra' in compatible:
+
                 if 'cv' in compatible or 'nano' in compatible:
                     linux_id = chips.T210
+
                 elif 'quill' in compatible:
                     linux_id = chips.T186
+
                 elif 'xavier' in compatible:
                     linux_id = chips.T194
+
             if compatible and 'imx8m' in compatible:
                 linux_id = chips.IMX8MX
+
             if compatible and 'odroid-c2' in compatible:
                 linux_id = chips.S905
+
             if compatible and 'amlogic, g12b' in compatible:
                 linux_id = chips.S922X
 
             cpu_model = self.detector.get_cpuinfo_field("cpu model")
 
             if cpu_model is not None:
+
                 if "MIPS 24Kc" in cpu_model:
                     linux_id = chips.MIPS24KC
+
                 elif "MIPS 24KEc" in cpu_model:
                     linux_id = chips.MIPS24KEC
 
@@ -104,29 +126,31 @@ class Chip:
                 ]
 
         if not linux_id:
-            if 'AM33XX' in hardware:
-                linux_id = chips.AM33XX
-            elif 'sun8i' in hardware:
-                linux_id = chips.SUN8I
-            elif 'ODROIDC' in hardware:
-                linux_id = chips.S805
-            elif 'ODROID-C2' in hardware:
-                linux_id = chips.S905
-            elif 'ODROID-N2' in hardware:
-                linux_id = chips.S922X
-            elif 'SAMA5' in hardware:
-                linux_id = chips.SAMA5
-            elif "Pinebook" in hardware:
-                linux_id = chips.A64
-            elif "sun50iw1p1" in hardware:
-                linux_id = chips.A64
-            else:
-                if isinstance(hardware, str):
-                    if hardware.upper() in chips.BCM_RANGE:
-                        linux_id = chips.BCM2XXX
-                elif isinstance(hardware, list):
-                    if set([model.upper() for model in hardware]) & chips.BCM_RANGE:
-                        linux_id = chips.BCM2XXX
+            hardware_chips = {
+                'AM33XX':       chips.AM33XX,
+                'sun8i':        chips.SUN8I,
+                'ODROIDC':      chips.S805,
+                'ODROID-C2':    chips.S905,
+                'ODROID-N2':    chips.S922X,
+                'SAMA5':        chips.SAMA5,
+                "Pinebook":     chips.A64,
+                "sun50iw1p1":   chips.A64,
+            }
+
+            for hardware_value in hardware_chips:
+
+                if hardware_value in hardware:
+                    # return found value
+                    linux_id = hardware_chips[hardware_value]
+                    break
+
+            if isinstance(hardware, str):
+                if hardware.upper() in chips.BCM_RANGE:
+                    linux_id = chips.BCM2XXX
+
+            elif isinstance(hardware, list):
+                if set([model.upper() for model in hardware]) & chips.BCM_RANGE:
+                    linux_id = chips.BCM2XXX
 
         return linux_id
 
@@ -137,4 +161,5 @@ class Chip:
         """
         if self.id == attr:
             return True
+
         return False
