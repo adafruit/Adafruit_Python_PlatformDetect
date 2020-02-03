@@ -39,48 +39,78 @@ class Detector:
         self.chip = Chip(self)
 
     def get_cpuinfo_field(self, field):
-        """
-        Search /proc/cpuinfo for a field and return its value, if found,
-        otherwise None.
+        """Get a given field value from cpuinfo.
+
+        Read the file `/proc/cpuinfo` and look for a given
+        field.
+
+        Args:
+            field (str): Field to look value of.
+
+        Returns:
+            Found value of given field, otherwise None.
         """
         # Match a line like 'Hardware   : BCM2709':
         pattern = r'^' + field + r'\s+:\s+(.*)$'
 
         with open('/proc/cpuinfo', 'r') as infile:
             cpuinfo = infile.read().split('\n')
+
             for line in cpuinfo:
                 match = re.search(pattern, line, flags=re.IGNORECASE)
+
                 if match:
                     return match.group(1)
 
         return None
 
     def check_dt_compatible_value(self, value):
-        """
-        Search /proc/device-tree/compatible for a value and return True, if found,
-        otherwise False.
+        """Check if value in device-tree compatible.
+
+        Read the file `/proc/device-tree/compatible` and
+        search for a value.
+
+        Args1:
+            value (str): Value to check on file.
+
+        Returns:
+            True if found, otherwise False.
         """
         # Match a value like 'qcom,apq8016-sbc':
         try:
-            if value in open('/proc/device-tree/compatible').read():
-                return True
+
+            with open('/proc/device-tree/compatible') as compatible_file:
+
+                if value in compatible_file.read():
+                    return True
+
         except FileNotFoundError:
             pass
 
         return False
 
     def get_armbian_release_field(self, field):
-        """
-        Search /etc/armbian-release, if it exists, for a field and return its
-        value, if found, otherwise None.
+        """Search the armbian release field.
+
+        Read the content of the `/etc/armbian-release` if file
+        exists.
+
+        Args:
+            field (str): Field to look value of.
+
+        Returns:
+            Release field if found, otherwise None.
         """
         field_value = None
         pattern = r'^' + field + r'=(.*)'
         try:
+
             with open("/etc/armbian-release", 'r') as release_file:
                 armbian = release_file.read().split('\n')
+
                 for line in armbian:
                     match = re.search(pattern, line)
+
                     if match:
                         field_value = match.group(1)
         except FileNotFoundError:
@@ -89,24 +119,64 @@ class Detector:
         return field_value
 
     def get_device_model(self):
-        """
-        Search /proc/device-tree/model for the device model and return its value, if found,
-        otherwise None.
+        """Search for the device model.
+
+        Read the content of `/proc/device-tree/model` and return its value.
+
+        Returns:
+            Device model if found, otherwise None
         """
         try:
+
             with open('/proc/device-tree/model', 'r') as model_file:
                 model = model_file.read()
                 return model
+
         except FileNotFoundError:
             pass
 
     def get_device_compatible(self):
+        """Search for the compatible chip name.
+
+        Read the content of the `/proc/device-tree/compatible` file.
+
+        Returns:
+            Compatible model found on file, otherwise None
         """
-        Search /proc/device-tree/compatible for the compatible chip name.
-        """
+
+
         try:
+
             with open('/proc/device-tree/compatible', 'r') as model_file:
                 model = model_file.read()
                 return model
+
         except FileNotFoundError:
             pass
+
+    def _get_value(self, relationship, value):
+        """Get a value from a relationship dictionary.
+
+        When the key:value pair contains a function as a value,
+        it will execute the function. In some cases the function
+        is used to also get a value which could end up in a string.
+
+        Args:
+            relationship (dict): Relationship key:value
+            value (str): Value to be look for in the relationship.
+
+        Returns:
+            Depending on the value assigned to a key.
+        """
+        gotten_value = relationship.get(value, None)
+
+        if callable(gotten_value):
+            final_value = gotten_value()
+
+        elif isinstance(gotten_value, str) and gotten_value:
+            final_value = gotten_value
+
+        else:  # Not found.
+            final_value = None
+
+        return final_value

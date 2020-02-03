@@ -86,26 +86,25 @@ class Chip:
                 linux_id = chips.GENERIC_X86
 
             compatible = self.detector.get_device_compatible()
+            # Relationship compatible-chip
+            compatible_chips = {
+                'cv':               chips.T210,
+                'nano':             chips.T210,
+                'quill':            chips.T186,
+                'xavier':           chips.T194,
+                'imx8m':            chips.IMX8MX,
+                'odroid-c2':        chips.S905,
+                'amlogic, g12b':    chips.S922X
 
-            if compatible and 'tegra' in compatible:
+            }
 
-                if 'cv' in compatible or 'nano' in compatible:
-                    linux_id = chips.T210
+            if compatible:
 
-                elif 'quill' in compatible:
-                    linux_id = chips.T186
+                for compatible_value in compatible_chips:
 
-                elif 'xavier' in compatible:
-                    linux_id = chips.T194
-
-            if compatible and 'imx8m' in compatible:
-                linux_id = chips.IMX8MX
-
-            if compatible and 'odroid-c2' in compatible:
-                linux_id = chips.S905
-
-            if compatible and 'amlogic, g12b' in compatible:
-                linux_id = chips.S922X
+                    if compatible_value in compatible:
+                        linux_id = compatible_chips[compatible_value]
+                        break
 
             cpu_model = self.detector.get_cpuinfo_field("cpu model")
 
@@ -126,6 +125,7 @@ class Chip:
                 ]
 
         if not linux_id:
+            # Relationship hardware-chip
             hardware_chips = {
                 'AM33XX':       chips.AM33XX,
                 'sun8i':        chips.SUN8I,

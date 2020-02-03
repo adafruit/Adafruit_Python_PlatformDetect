@@ -50,16 +50,7 @@ class Board:
             chips.SUN8I:        self._armbian_id,
         }
 
-        board = boards_chip.get(chip_id, None)
-
-        if callable(board):
-            board_id = board()
-
-        elif isinstance(board, str) and board:
-            board_id = board
-
-        else:  # Not found.
-            board_id = None
+        board_id = self.detector._get_value(boards_chip, chip_id)
 
         return board_id
 
@@ -143,6 +134,7 @@ class Board:
 
     # pylint: enable=no-self-use
 
+    # pylint: disable=protected-access
     def _armbian_id(self):
         """Check whether the current board is an OrangePi board."""
         board_value = self.detector.get_armbian_release_field('BOARD')
@@ -158,9 +150,11 @@ class Board:
 
         }
 
-        board = armbian_board.get(board_value, None)
+        board = self.detector._get_value(armbian_board, board_value)
 
         return board
+
+    # pylint: enable=protected-access
 
     def _sama5_id(self):
         """Check what type sama5 board."""
@@ -210,18 +204,14 @@ class Board:
     def _pine64_id(self):
         """Try to detect the id for Pine64 board or device."""
         board_value = self.detector.get_device_model()
-        board = None
 
-        if 'pine64' in board_value.lower():
-            board = boards.PINE64
+        pine_boards = {
+            'pine64': boards.PINE64,
+            'pinebook': boards.PINEBOOK,
+            'pinephone': boards.PINEPHONE
+        }
 
-        elif 'pinebook' in board_value.lower():
-            board = boards.PINEBOOK
-
-        elif 'pinephone' in board_value.lower():
-            board = boards.PINEPHONE
-
-        return board
+        return self.detector._get_value(pine_boards, board_value.lower())
 
     @property
     def any_96boards(self):
