@@ -134,7 +134,6 @@ class Board:
 
     # pylint: enable=no-self-use
 
-    # pylint: disable=protected-access
     def _armbian_id(self):
         """Check whether the current board is an OrangePi board."""
         board_value = self.detector.get_armbian_release_field('BOARD')
@@ -154,7 +153,6 @@ class Board:
 
         return board
 
-    # pylint: enable=protected-access
 
     def _sama5_id(self):
         """Check what type sama5 board."""
