@@ -103,8 +103,22 @@ class Board:
         if self.detector.chip.id != chips.BCM2XXX:
             # Something else, not a Pi.
             return None
+          
+        rev = self.detector.get_cpuinfo_field('Revision')
 
-        return self.detector.get_cpuinfo_field('Revision')
+        if rev is not None:
+            return rev
+        else:
+            try:
+                with open("/proc/device-tree/system/linux,revision", "rb") as revision:
+                    rev_bytes = revision.read()
+
+                    if rev_bytes[:1] == b'\x00':
+                        rev_bytes = rev_bytes[1:]
+
+                    return rev_bytes.hex()
+            except FileNotFoundError:
+                return None
 
     # pylint: disable=no-self-use
     def _beaglebone_id(self):
