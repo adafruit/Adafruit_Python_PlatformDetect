@@ -103,7 +103,7 @@ class Board:
         if self.detector.chip.id != chips.BCM2XXX:
             # Something else, not a Pi.
             return None
-          
+
         rev = self.detector.get_cpuinfo_field('Revision')
 
         if rev is not None:
