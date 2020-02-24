@@ -74,11 +74,12 @@ class Chip:
 
             compatible = self.detector.get_device_compatible()
             if compatible and 'tegra' in compatible:
-                if 'cv' in compatible or 'nano' in compatible:
+                compats = compatible.split('\x00')
+                if 'nvidia,tegra210' in compats:
                     linux_id = chips.T210
-                elif 'quill' in compatible:
+                elif 'nvidia,tegra186' in compats:
                     linux_id = chips.T186
-                elif 'xavier' in compatible:
+                elif 'nvidia,tegra194' in compats:
                     linux_id = chips.T194
             if compatible and 'imx8m' in compatible:
                 linux_id = chips.IMX8MX

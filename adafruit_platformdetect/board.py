@@ -204,17 +204,14 @@ class Board:
 
     def _tegra_id(self):
         """Try to detect the id of aarch64 board."""
-        board_value = self.detector.get_device_model()
-        board = None
-        if 'tx1' in board_value.lower():
-            board = boards.JETSON_TX1
-        elif 'quill' in board_value or "storm" in board_value or "lightning" in board_value:
-            board = boards.JETSON_TX2
-        elif 'xavier' in board_value.lower() or 'agx' in board_value.lower():
-            board = boards.JETSON_XAVIER
-        elif 'nano' in board_value.lower():
-            board = boards.JETSON_NANO
-        return board
+        compatible = self.detector.get_device_compatible()
+        if not compatible:
+            return None
+        compats = compatible.split('\x00')
+        for board_id, board_compats in boards._JETSON_IDS.items():
+            if any(v in compats for v in board_compats):
+                return board_id
+        return None
 
     def _sifive_id(self):
         """Try to detect the id for Sifive RISCV64 board."""
