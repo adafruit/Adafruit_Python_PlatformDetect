@@ -87,6 +87,8 @@ class Chip:
                 linux_id = chips.S905
             if compatible and 'amlogic, g12b' in compatible:
                 linux_id = chips.S922X
+            if compatible and 'sun50i-a64' in compatible:
+                linux_id = chips.A64
 
             cpu_model = self.detector.get_cpuinfo_field("cpu model")
 
