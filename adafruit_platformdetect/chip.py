@@ -121,6 +121,10 @@ class Chip:
                 linux_id = chips.A64
             elif "sun50iw1p1" in hardware:
                 linux_id = chips.A64
+            elif "Xilinx Zynq" in hardware:
+                compatible = self.detector.get_device_compatible()
+                if compatible and 'xlnx,zynq-7000' in compatible:
+                    linux_id = chips.ZYNQ7000
             else:
                 if isinstance(hardware, str):
                     if hardware.upper() in chips.BCM_RANGE:

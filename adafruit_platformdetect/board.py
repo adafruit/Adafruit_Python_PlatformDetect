@@ -67,6 +67,8 @@ class Board:
             board_id = boards.ONION_OMEGA
         elif chip_id == chips.MIPS24KEC:
             board_id = boards.ONION_OMEGA2
+        elif chip_id == chips.ZYNQ7000:
+            board_id = self._pynq_id()
         elif chip_id == chips.A64:
             board_id = self._pine64_id()
         return board_id
@@ -232,6 +234,22 @@ class Board:
             board = boards.PINEPHONE
         return board
 
+    # pylint: disable=no-self-use
+    def _pynq_id(self):
+        """Try to detect the id for Xilinx PYNQ boards."""
+        try:
+            with open("/proc/device-tree/chosen/pynq_board", "r") as board_file:
+                board_model = board_file.read()
+                match = board_model.upper().replace('-', '_').rstrip('\x00')
+                for model in boards._PYNQ_IDS:
+                    if model == match:
+                        return model
+
+                return None
+
+        except FileNotFoundError:
+            return None
+
     @property
     def any_96boards(self):
         """Check whether the current board is any 96boards board."""
@@ -266,6 +284,11 @@ class Board:
     def any_coral_board(self):
         """Check whether the current board is any defined Coral."""
         return self.CORAL_EDGE_TPU_DEV
+
+    @property
+    def any_pynq_board(self):
+        """Check whether the current board is any defined PYNQ Board."""
+        return self.id in boards._PYNQ_IDS
 
     @property
     def any_giant_board(self):
@@ -306,6 +329,7 @@ class Board:
                 self.any_giant_board, self.any_jetson_board, self.any_coral_board,
                 self.any_odroid_40_pin, self.any_96boards, self.any_sifive_board,
                 self.any_onion_omega_board, self.any_pine64_board,
+                self.any_pynq_board,
             ]
         )
 

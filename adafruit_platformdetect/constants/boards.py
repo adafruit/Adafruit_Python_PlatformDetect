@@ -43,6 +43,10 @@ JETSON_NX = 'JETSON_NX'
 # Google Coral dev board
 CORAL_EDGE_TPU_DEV = "CORAL_EDGE_TPU_DEV"
 
+# Xilinx PYNQ FPGA dev boards
+PYNQ_Z1 = "PYNQ_Z1"
+PYNQ_Z2 = "PYNQ_Z2"
+
 # Various Raspberry Pi models
 RASPBERRY_PI_B_REV1 = "RASPBERRY_PI_B_REV1"
 RASPBERRY_PI_B_REV2 = "RASPBERRY_PI_B_REV2"
@@ -96,6 +100,11 @@ _ORANGE_PI_IDS = (
 
 _CORAL_IDS = (
     CORAL_EDGE_TPU_DEV,
+)
+
+_PYNQ_IDS = (
+    PYNQ_Z1,
+    PYNQ_Z2,
 )
 
 _JETSON_IDS = {
