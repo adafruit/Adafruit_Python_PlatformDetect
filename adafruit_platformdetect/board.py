@@ -234,6 +234,7 @@ class Board:
             board = boards.PINEPHONE
         return board
 
+    # pylint: disable=no-self-use
     def _pynq_id(self):
         """Try to detect the id for Xilinx PYNQ boards."""
         try:
