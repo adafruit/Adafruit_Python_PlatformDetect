@@ -74,11 +74,12 @@ class Chip:
 
             compatible = self.detector.get_device_compatible()
             if compatible and 'tegra' in compatible:
-                if 'cv' in compatible or 'nano' in compatible:
+                compats = compatible.split('\x00')
+                if 'nvidia,tegra210' in compats:
                     linux_id = chips.T210
-                elif 'quill' in compatible:
+                elif 'nvidia,tegra186' in compats:
                     linux_id = chips.T186
-                elif 'xavier' in compatible:
+                elif 'nvidia,tegra194' in compats:
                     linux_id = chips.T194
             if compatible and 'imx8m' in compatible:
                 linux_id = chips.IMX8MX
@@ -86,6 +87,8 @@ class Chip:
                 linux_id = chips.S905
             if compatible and 'amlogic, g12b' in compatible:
                 linux_id = chips.S922X
+            if compatible and 'sun50i-a64' in compatible:
+                linux_id = chips.A64
 
             cpu_model = self.detector.get_cpuinfo_field("cpu model")
 
@@ -120,6 +123,10 @@ class Chip:
                 linux_id = chips.A64
             elif "sun50iw1p1" in hardware:
                 linux_id = chips.A64
+            elif "Xilinx Zynq" in hardware:
+                compatible = self.detector.get_device_compatible()
+                if compatible and 'xlnx,zynq-7000' in compatible:
+                    linux_id = chips.ZYNQ7000
             else:
                 if isinstance(hardware, str):
                     if hardware.upper() in chips.BCM_RANGE:

@@ -67,6 +67,8 @@ class Board:
             board_id = boards.ONION_OMEGA
         elif chip_id == chips.MIPS24KEC:
             board_id = boards.ONION_OMEGA2
+        elif chip_id == chips.ZYNQ7000:
+            board_id = self._pynq_id()
         elif chip_id == chips.A64:
             board_id = self._pine64_id()
         return board_id
@@ -204,17 +206,14 @@ class Board:
 
     def _tegra_id(self):
         """Try to detect the id of aarch64 board."""
-        board_value = self.detector.get_device_model()
-        board = None
-        if 'tx1' in board_value.lower():
-            board = boards.JETSON_TX1
-        elif 'quill' in board_value or "storm" in board_value or "lightning" in board_value:
-            board = boards.JETSON_TX2
-        elif 'xavier' in board_value.lower() or 'agx' in board_value.lower():
-            board = boards.JETSON_XAVIER
-        elif 'nano' in board_value.lower():
-            board = boards.JETSON_NANO
-        return board
+        compatible = self.detector.get_device_compatible()
+        if not compatible:
+            return None
+        compats = compatible.split('\x00')
+        for board_id, board_compats in boards._JETSON_IDS.items():
+            if any(v in compats for v in board_compats):
+                return board_id
+        return None
 
     def _sifive_id(self):
         """Try to detect the id for Sifive RISCV64 board."""
@@ -234,6 +233,22 @@ class Board:
         elif 'pinephone' in board_value.lower():
             board = boards.PINEPHONE
         return board
+
+    # pylint: disable=no-self-use
+    def _pynq_id(self):
+        """Try to detect the id for Xilinx PYNQ boards."""
+        try:
+            with open("/proc/device-tree/chosen/pynq_board", "r") as board_file:
+                board_model = board_file.read()
+                match = board_model.upper().replace('-', '_').rstrip('\x00')
+                for model in boards._PYNQ_IDS:
+                    if model == match:
+                        return model
+
+                return None
+
+        except FileNotFoundError:
+            return None
 
     @property
     def any_96boards(self):
@@ -269,6 +284,11 @@ class Board:
     def any_coral_board(self):
         """Check whether the current board is any defined Coral."""
         return self.CORAL_EDGE_TPU_DEV
+
+    @property
+    def any_pynq_board(self):
+        """Check whether the current board is any defined PYNQ Board."""
+        return self.id in boards._PYNQ_IDS
 
     @property
     def any_giant_board(self):
@@ -309,6 +329,7 @@ class Board:
                 self.any_giant_board, self.any_jetson_board, self.any_coral_board,
                 self.any_odroid_40_pin, self.any_96boards, self.any_sifive_board,
                 self.any_onion_omega_board, self.any_pine64_board,
+                self.any_pynq_board,
             ]
         )
 
