@@ -85,6 +85,8 @@ class Chip:
                 linux_id = chips.IMX8MX
             if compatible and 'odroid-c2' in compatible:
                 linux_id = chips.S905
+            if compatible and 'amlogic, g12a' in compatible:
+                linux_id = chips.S905X3
             if compatible and 'amlogic, g12b' in compatible:
                 linux_id = chips.S922X
             if compatible and 'sun50i-a64' in compatible:
@@ -117,6 +119,8 @@ class Chip:
                 linux_id = chips.S905
             elif 'ODROID-N2' in hardware:
                 linux_id = chips.S922X
+            elif 'ODROID-C4' in hardware:
+                linux_id = chips.S905X3
             elif 'SAMA5' in hardware:
                 linux_id = chips.SAMA5
             elif "Pinebook" in hardware:
