@@ -3,7 +3,7 @@ import os
 import re
 
 # Allow for aligned constant definitions:
-# pylint: disable=bad-whitespace
+# pylint: disable=bad-whitespace,too-many-statements
 from adafruit_platformdetect.constants import boards, chips
 
 
@@ -49,6 +49,8 @@ class Board:
             board_id = boards.ODROID_C1
         elif chip_id == chips.S905:
             board_id = boards.ODROID_C2
+        elif chip_id == chips.S905X3:
+            board_id = boards.ODROID_C4
         elif chip_id == chips.S922X:
             board_id = boards.ODROID_N2
         elif chip_id == chips.FT232H:
