@@ -73,6 +73,8 @@ class Board:
             board_id = self._pynq_id()
         elif chip_id == chips.A64:
             board_id = self._pine64_id()
+        elif chip_id == chips.A33:
+            board_id = self._clockwork_pi_id()
         return board_id
 
     # pylint: enable=invalid-name
@@ -252,6 +254,14 @@ class Board:
         except FileNotFoundError:
             return None
 
+    def _clockwork_pi_id(self):
+        """Check what type of Clockwork Pi board."""
+        board_value = self.detector.get_device_model()
+        board = None
+        if board_value and "Clockwork CPI3" in board_value:
+            board = boards.CLOCKWORK_CPI3
+        return board
+
     @property
     def any_96boards(self):
         """Check whether the current board is any 96boards board."""
@@ -323,6 +333,11 @@ class Board:
         return self.id in boards._PINE64_DEV_IDS
 
     @property
+    def any_clockwork_pi_board(self):
+        """Check whether the current board is any Clockwork Pi device."""
+        return self.CLOCKWORK_CPI3
+
+    @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
         return any(
@@ -331,7 +346,7 @@ class Board:
                 self.any_giant_board, self.any_jetson_board, self.any_coral_board,
                 self.any_odroid_40_pin, self.any_96boards, self.any_sifive_board,
                 self.any_onion_omega_board, self.any_pine64_board,
-                self.any_pynq_board,
+                self.any_pynq_board, self.any_clockwork_pi_board
             ]
         )
 

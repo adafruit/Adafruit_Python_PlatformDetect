@@ -64,6 +64,9 @@ class Chip:
         if self.detector.check_dt_compatible_value('fu500'):
             return chips.HFU540
 
+        if self.detector.check_dt_compatible_value('sun8i-a33'):
+            return chips.A33
+
         linux_id = None
         hardware = self.detector.get_cpuinfo_field('Hardware')
 
