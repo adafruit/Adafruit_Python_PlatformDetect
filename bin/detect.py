@@ -19,6 +19,7 @@ print("Is this a Giant Board?", detector.board.GIANT_BOARD)
 print("Is this a Coral Edge TPU?", detector.board.CORAL_EDGE_TPU_DEV)
 print("Is this a SiFive Unleashed? ", detector.board.SIFIVE_UNLEASHED)
 print("Is this a PYNQ Board?", detector.board.PYNQ_Z1 | detector.board.PYNQ_Z2)
+print("Is this a Clockwork Pi board?", detector.board.any_clockwork_pi_board)
 print("Is this an embedded Linux system?", detector.board.any_embedded_linux)
 print("Is this a generic Linux PC?", detector.board.GENERIC_LINUX_PC)
 print("Is this an OS environment variable special case?", detector.board.FTDI_FT232H |
@@ -44,3 +45,6 @@ if detector.board.any_onion_omega_board:
 
 if detector.board.any_pine64_board:
     print("Pine64 device detected.")
+
+if detector.board.any_clockwork_pi:
+    print("Clockwork Pi device detected.")

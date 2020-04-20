@@ -27,7 +27,7 @@ class Chip:
             # look for it based on PID/VID
             count = len(UsbTools.find_all([(0x0403, 0x6014)]))
             if count == 0:
-                raise RuntimeError('BLINKA_FT232H environment variable ' + \
+                raise RuntimeError('BLINKA_FT232H environment variable ' +
                                    'set, but no FT232H device found')
             return chips.FT232H
         if os.environ.get('BLINKA_MCP2221'):
@@ -36,7 +36,7 @@ class Chip:
             for dev in hid.enumerate():
                 if dev['vendor_id'] == 0x04D8 and dev['product_id'] == 0x00DD:
                     return chips.MCP2221
-            raise RuntimeError('BLINKA_MCP2221 environment variable ' + \
+            raise RuntimeError('BLINKA_MCP2221 environment variable ' +
                                'set, but no MCP2221 device found')
         if os.environ.get('BLINKA_NOVA'):
             return chips.BINHO
@@ -55,7 +55,9 @@ class Chip:
 
     # pylint: enable=invalid-name
 
-    def _linux_id(self):  # pylint: disable=too-many-branches,too-many-statements
+    def _linux_id(self):
+        # pylint: disable=too-many-branches,too-many-statements
+        # pylint: disable=too-many-return-statements
         """Attempt to detect the CPU on a computer running the Linux kernel."""
 
         if self.detector.check_dt_compatible_value('qcom,apq8016'):
@@ -63,6 +65,9 @@ class Chip:
 
         if self.detector.check_dt_compatible_value('fu500'):
             return chips.HFU540
+
+        if self.detector.check_dt_compatible_value('sun8i-a33'):
+            return chips.A33
 
         linux_id = None
         hardware = self.detector.get_cpuinfo_field('Hardware')
@@ -85,10 +90,16 @@ class Chip:
                 linux_id = chips.IMX8MX
             if compatible and 'odroid-c2' in compatible:
                 linux_id = chips.S905
-            if compatible and 'amlogic, g12a' in compatible:
-                linux_id = chips.S905X3
-            if compatible and 'amlogic, g12b' in compatible:
-                linux_id = chips.S922X
+            if compatible and 'amlogic' in compatible:
+                compatible_list = compatible.replace('\x00', ',') \
+                    .replace(' ', '').split(',')
+                if 'g12a' in compatible_list:
+                    # 'sm1' is correct for S905X3, but some kernels use 'g12a'
+                    return chips.S905X3
+                if 'g12b' in compatible_list:
+                    return chips.S922X
+                if 'sm1' in compatible_list:
+                    return chips.S905X3
             if compatible and 'sun50i-a64' in compatible:
                 linux_id = chips.A64
 
