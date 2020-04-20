@@ -25,7 +25,9 @@ class Chip:
 
         # Special cases controlled by environment var
         if os.environ.get("BLINKA_FT232H"):
-            from pyftdi.usbtools import UsbTools  # pylint: disable=import-error,import-outside-toplevel
+            from pyftdi.usbtools import (
+                UsbTools,
+            )  # pylint: disable=import-error,import-outside-toplevel
 
             # look for it based on PID/VID
             count = len(UsbTools.find_all([(0x0403, 0x6014)]))
