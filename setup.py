@@ -13,33 +13,31 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 # Import the README and use it as the long-description.
 # Note: this will only work if 'README.md' is present in your MANIFEST.in file!
-with io.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
-    long_description = '\n' + f.read()
+with io.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
+    long_description = "\n" + f.read()
 
 setup(
-    name='Adafruit-PlatformDetect',
+    name="Adafruit-PlatformDetect",
     use_scm_version=True,
     setup_requires=["setuptools_scm"],
-    description='Platform detection for use by libraries like Adafruit-Blinka.',
+    description="Platform detection for use by libraries like Adafruit-Blinka.",
     long_description=long_description,
-    long_description_content_type='text/x-rst',
-    author='Adafruit Industries',
-    author_email='circuitpython@adafruit.com',
-    python_requires='>=3.4.0',
-    url='https://github.com/adafruit/Adafruit_Python_PlatformDetect',
-
+    long_description_content_type="text/x-rst",
+    author="Adafruit Industries",
+    author_email="circuitpython@adafruit.com",
+    python_requires=">=3.4.0",
+    url="https://github.com/adafruit/Adafruit_Python_PlatformDetect",
     # If your package is a single module, use this instead of 'packages':
-    packages=['adafruit_platformdetect', 'adafruit_platformdetect.constants'],
-
+    packages=["adafruit_platformdetect", "adafruit_platformdetect.constants"],
     install_requires=[],
-    license='MIT',
+    license="MIT",
     classifiers=[
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
-        'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: Implementation :: MicroPython',
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: Implementation :: MicroPython",
     ],
 )
