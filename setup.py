@@ -1,45 +1,47 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+"""A setuptools based setup module.
 
-# Note: To use the 'upload' functionality of this file, you must:
-#   $ pip install twine
-
-import io
-import os
+See:
+https://packaging.python.org/en/latest/distributing.html
+https://github.com/pypa/sampleproject
+"""
 
 from setuptools import setup, find_packages
 
-here = os.path.abspath(os.path.dirname(__file__))
+# To use a consistent encoding
+from codecs import open
+from os import path
 
-# Import the README and use it as the long-description.
-# Note: this will only work if 'README.md' is present in your MANIFEST.in file!
-with io.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
-    long_description = '\n' + f.read()
+here = path.abspath(path.dirname(__file__))
+
+# Get the long description from the README file
+with open(path.join(here, "README.rst"), encoding="utf-8") as f:
+    long_description = f.read()
 
 setup(
-    name='Adafruit-PlatformDetect',
+    name="Adafruit-PlatformDetect",
     use_scm_version=True,
     setup_requires=["setuptools_scm"],
-    description='Platform detection for use by libraries like Adafruit-Blinka.',
+    description="Platform detection for use by libraries like Adafruit-Blinka.",
     long_description=long_description,
-    long_description_content_type='text/x-rst',
-    author='Adafruit Industries',
-    author_email='circuitpython@adafruit.com',
-    python_requires='>=3.4.0',
-    url='https://github.com/adafruit/Adafruit_Python_PlatformDetect',
-
+    long_description_content_type="text/x-rst",
+    python_requires=">=3.5.0",
+    url="https://github.com/adafruit/Adafruit_Python_PlatformDetect",
     # If your package is a single module, use this instead of 'packages':
-    packages=['adafruit_platformdetect', 'adafruit_platformdetect.constants'],
-
+    author="Adafruit Industries",
+    author_email="circuitpython@adafruit.com",
     install_requires=[],
-    license='MIT',
+    # Choose your license
+    license="MIT",
+    # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
-        # Trove classifiers
-        # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
-        'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: Implementation :: MicroPython',
+        "Development Status :: 3 - Alpha",
+        "Intended Audience :: Developers",
+        "Topic :: Software Development :: Libraries",
+        "Topic :: System :: Hardware",
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
     ],
+    packages=["adafruit_platformdetect", "adafruit_platformdetect.constants"],
 )

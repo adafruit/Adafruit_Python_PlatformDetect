@@ -44,10 +44,10 @@ class Detector:
         otherwise None.
         """
         # Match a line like 'Hardware   : BCM2709':
-        pattern = r'^' + field + r'\s+:\s+(.*)$'
+        pattern = r"^" + field + r"\s+:\s+(.*)$"
 
-        with open('/proc/cpuinfo', 'r') as infile:
-            cpuinfo = infile.read().split('\n')
+        with open("/proc/cpuinfo", "r") as infile:
+            cpuinfo = infile.read().split("\n")
             for line in cpuinfo:
                 match = re.search(pattern, line, flags=re.IGNORECASE)
                 if match:
@@ -62,7 +62,7 @@ class Detector:
         """
         # Match a value like 'qcom,apq8016-sbc':
         try:
-            if value in open('/proc/device-tree/compatible').read():
+            if value in open("/proc/device-tree/compatible").read():
                 return True
         except FileNotFoundError:
             pass
@@ -75,10 +75,10 @@ class Detector:
         value, if found, otherwise None.
         """
         field_value = None
-        pattern = r'^' + field + r'=(.*)'
+        pattern = r"^" + field + r"=(.*)"
         try:
-            with open("/etc/armbian-release", 'r') as release_file:
-                armbian = release_file.read().split('\n')
+            with open("/etc/armbian-release", "r") as release_file:
+                armbian = release_file.read().split("\n")
                 for line in armbian:
                     match = re.search(pattern, line)
                     if match:
@@ -94,7 +94,7 @@ class Detector:
         otherwise None.
         """
         try:
-            with open('/proc/device-tree/model', 'r') as model_file:
+            with open("/proc/device-tree/model", "r") as model_file:
                 model = model_file.read()
                 return model
         except FileNotFoundError:
@@ -105,7 +105,7 @@ class Detector:
         Search /proc/device-tree/compatible for the compatible chip name.
         """
         try:
-            with open('/proc/device-tree/compatible', 'r') as model_file:
+            with open("/proc/device-tree/compatible", "r") as model_file:
                 model = model_file.read()
                 return model
         except FileNotFoundError:

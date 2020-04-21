@@ -13,13 +13,13 @@ generally dependent on the former.  Platform info is gathered from:
 
   - Various files on Linux systems:
 
-    - `/proc/cpuinfo` (for processor info, Raspberry Pi hardware revisions, etc.)
+    - /proc/cpuinfo (for processor info, Raspberry Pi hardware revisions, etc.)
 
-    - `/proc/device-tree/compatible` (for 96Boards info)
+    - /proc/device-tree/compatible (for 96Boards info)
 
   - Beaglebone EEPROM board IDs
 
-  - Distribution-specific files such as `/etc/armbian-release`.
+  - Distribution-specific files such as /etc/armbian-release.
 
 The API is currently unstable and may change drastically in future releases.
 

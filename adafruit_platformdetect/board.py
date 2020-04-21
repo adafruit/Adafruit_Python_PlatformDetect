@@ -1,10 +1,48 @@
-"""Detect boards."""
+# The MIT License (MIT)
+#
+# Copyright (c) 2020 Melissa LeBlanc-Williams for Adafruit Industries
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+"""
+`adafruit_platformdetect.board`
+================================================================================
+
+Detect boards
+
+* Author(s): Melissa LeBlanc-Williams
+
+Implementation Notes
+--------------------
+
+**Software and Dependencies:**
+
+* Linux and Python 3.5 or Higher
+
+"""
+
+# imports
 import os
 import re
-
-# Allow for aligned constant definitions:
-# pylint: disable=bad-whitespace,too-many-statements
 from adafruit_platformdetect.constants import boards, chips
+
+__version__ = "0.0.0-auto.0"
+__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
 
 
 class Board:
@@ -13,14 +51,14 @@ class Board:
     def __init__(self, detector):
         self.detector = detector
 
-    # pylint: disable=invalid-name, too-many-branches, protected-access
+    # pylint: disable=invalid-name, protected-access
     @property
     def id(self):
         """Return a unique id for the detected board, if any."""
         # There are some times we want to trick the platform detection
         # say if a raspberry pi doesn't have the right ID, or for testing
         try:
-            return os.environ['BLINKA_FORCEBOARD']
+            return os.environ["BLINKA_FORCEBOARD"]
         except KeyError:  # no forced board, continue with testing!
             pass
 
@@ -93,16 +131,13 @@ class Board:
         else:
             pi_model = self.detector.get_device_model()
             if pi_model:
-                pi_model = pi_model.upper().replace(' ', '_')
+                pi_model = pi_model.upper().replace(" ", "_")
                 if "PLUS" in pi_model:
-                    re_model = re.search(r'(RASPBERRY_PI_\d).*([AB]_*)(PLUS)',
-                                         pi_model)
+                    re_model = re.search(r"(RASPBERRY_PI_\d).*([AB]_*)(PLUS)", pi_model)
                 elif "CM" in pi_model:  # untested for Compute Module
-                    re_model = re.search(r'(RASPBERRY_PI_CM)(\d)',
-                                         pi_model)
+                    re_model = re.search(r"(RASPBERRY_PI_CM)(\d)", pi_model)
                 else:  # untested for non-plus models
-                    re_model = re.search(r'(RASPBERRY_PI_\d).*([AB])',
-                                         pi_model)
+                    re_model = re.search(r"(RASPBERRY_PI_\d).*([AB])", pi_model)
 
                 if re_model:
                     pi_model = "".join(re_model.groups())
@@ -122,21 +157,21 @@ class Board:
         if self.detector.chip.id != chips.BCM2XXX:
             # Something else, not a Pi.
             return None
-        rev = self.detector.get_cpuinfo_field('Revision')
+        rev = self.detector.get_cpuinfo_field("Revision")
 
         if rev is not None:
             return rev
-        else:
-            try:
-                with open("/proc/device-tree/system/linux,revision", "rb") as revision:
-                    rev_bytes = revision.read()
 
-                    if rev_bytes[:1] == b'\x00':
-                        rev_bytes = rev_bytes[1:]
+        try:
+            with open("/proc/device-tree/system/linux,revision", "rb") as revision:
+                rev_bytes = revision.read()
 
-                    return rev_bytes.hex()
-            except FileNotFoundError:
-                return None
+                if rev_bytes[:1] == b"\x00":
+                    rev_bytes = rev_bytes[1:]
+
+                return rev_bytes.hex()
+        except FileNotFoundError:
+            return None
 
     # pylint: disable=no-self-use
     def _beaglebone_id(self):
@@ -147,12 +182,12 @@ class Board:
         except FileNotFoundError:
             return None
 
-        if eeprom_bytes[:4] != b'\xaaU3\xee':
+        if eeprom_bytes[:4] != b"\xaaU3\xee":
             return None
 
         # special condition for BeagleBone Green rev. 1A
         # refer to GitHub issue #57 in this repo for more info
-        if eeprom_bytes == b'\xaaU3\xeeA335BNLT\x1a\x00\x00\x00':
+        if eeprom_bytes == b"\xaaU3\xeeA335BNLT\x1a\x00\x00\x00":
             return boards.BEAGLEBONE_GREEN
 
         id_string = eeprom_bytes[4:].decode("ascii")
@@ -168,7 +203,7 @@ class Board:
     # pylint: disable=too-many-return-statements
     def _armbian_id(self):
         """Check whether the current board is an OrangePi board."""
-        board_value = self.detector.get_armbian_release_field('BOARD')
+        board_value = self.detector.get_armbian_release_field("BOARD")
         board = None
 
         if board_value == "orangepipc":
@@ -213,7 +248,7 @@ class Board:
         compatible = self.detector.get_device_compatible()
         if not compatible:
             return None
-        compats = compatible.split('\x00')
+        compats = compatible.split("\x00")
         for board_id, board_compats in boards._JETSON_IDS.items():
             if any(v in compats for v in board_compats):
                 return board_id
@@ -222,7 +257,7 @@ class Board:
     def _sifive_id(self):
         """Try to detect the id for Sifive RISCV64 board."""
         board_value = self.detector.get_device_model()
-        if 'hifive-unleashed-a00' in board_value:
+        if "hifive-unleashed-a00" in board_value:
             return boards.SIFIVE_UNLEASHED
         return None
 
@@ -230,11 +265,11 @@ class Board:
         """Try to detect the id for Pine64 board or device."""
         board_value = self.detector.get_device_model()
         board = None
-        if 'pine64' in board_value.lower():
+        if "pine64" in board_value.lower():
             board = boards.PINE64
-        elif 'pinebook' in board_value.lower():
+        elif "pinebook" in board_value.lower():
             board = boards.PINEBOOK
-        elif 'pinephone' in board_value.lower():
+        elif "pinephone" in board_value.lower():
             board = boards.PINEPHONE
         return board
 
@@ -244,7 +279,7 @@ class Board:
         try:
             with open("/proc/device-tree/chosen/pynq_board", "r") as board_file:
                 board_model = board_file.read()
-                match = board_model.upper().replace('-', '_').rstrip('\x00')
+                match = board_model.upper().replace("-", "_").rstrip("\x00")
                 for model in boards._PYNQ_IDS:
                     if model == match:
                         return model
@@ -342,11 +377,19 @@ class Board:
         """Check whether the current board is any embedded Linux device."""
         return any(
             [
-                self.any_raspberry_pi, self.any_beaglebone, self.any_orange_pi,
-                self.any_giant_board, self.any_jetson_board, self.any_coral_board,
-                self.any_odroid_40_pin, self.any_96boards, self.any_sifive_board,
-                self.any_onion_omega_board, self.any_pine64_board,
-                self.any_pynq_board, self.any_clockwork_pi_board
+                self.any_raspberry_pi,
+                self.any_beaglebone,
+                self.any_orange_pi,
+                self.any_giant_board,
+                self.any_jetson_board,
+                self.any_coral_board,
+                self.any_odroid_40_pin,
+                self.any_96boards,
+                self.any_sifive_board,
+                self.any_onion_omega_board,
+                self.any_pine64_board,
+                self.any_pynq_board,
+                self.any_clockwork_pi_board,
             ]
         )
 
