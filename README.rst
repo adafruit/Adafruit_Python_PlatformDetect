@@ -37,71 +37,61 @@ generally dependent on the former.  Platform info is gathered from:
 
   - Distribution-specific files such as /etc/armbian-release.
 
-  Dependencies
-  =============
-  This driver depends on:
+Dependencies
+=============
+This driver depends on:
 
-  * `Adafruit CircuitPython <https://github.com/adafruit/circuitpython>`_
+* Python 3.5 or higher
 
-  Please ensure all dependencies are available on the CircuitPython filesystem.
-  This is easily achieved by downloading
-  `the Adafruit library and driver bundle <https://circuitpython.org/libraries>`_.
+Installing from PyPI
+=====================
 
-  Installing from PyPI
-  =====================
-  .. note:: This library is not available on PyPI yet. Install documentation is included
-     as a standard element. Stay tuned for PyPI availability!
+On supported GNU/Linux systems like the Raspberry Pi, you can install the driver locally `from
+PyPI <https://pypi.org/project/Adafruit-PlatformDetect/>`_. To install for current user:
 
-  .. todo:: Remove the above note if PyPI version is/will be available at time of release.
-     If the library is not planned for PyPI, remove the entire 'Installing from PyPI' section.
+.. code-block:: shell
 
-  On supported GNU/Linux systems like the Raspberry Pi, you can install the driver locally `from
-  PyPI <https://pypi.org/project/Adafruit-PlatformDetect/>`_. To install for current user:
+  pip3 install Adafruit-PlatformDetect
 
-  .. code-block:: shell
+To install system-wide (this may be required in some cases):
 
-      pip3 install Adafruit-PlatformDetect
+.. code-block:: shell
 
-  To install system-wide (this may be required in some cases):
+  sudo pip3 install Adafruit-PlatformDetect
 
-  .. code-block:: shell
+To install in a virtual environment in your current project:
 
-      sudo pip3 install Adafruit-PlatformDetect
+.. code-block:: shell
 
-  To install in a virtual environment in your current project:
+  mkdir project-name && cd project-name
+  python3 -m venv .env
+  source .env/bin/activate
+  pip3 install Adafruit-PlatformDetect
 
-  .. code-block:: shell
+Usage Example
+=============
 
-      mkdir project-name && cd project-name
-      python3 -m venv .env
-      source .env/bin/activate
-      pip3 install Adafruit-PlatformDetect
+.. code-block:: python
 
-  Usage Example
-  =============
+  from adafruit_platformdetect import Detector
+  detector = Detector()
+  print("Chip id: ", detector.chip.id)
+  print("Board id: ", detector.board.id)
 
-  .. code-block:: python
+  # Check for specific board models:
+  print("Pi 3B+? ", detector.board.RASPBERRY_PI_3B_PLUS)
+  print("BBB? ", detector.board.BEAGLEBONE_BLACK)
+  print("Orange Pi PC? ", detector.board.ORANGE_PI_PC)
+  print("generic Linux PC? ", detector.board.GENERIC_LINUX_PC)
 
-      from adafruit_platformdetect import Detector
-      detector = Detector()
-      print("Chip id: ", detector.chip.id)
-      print("Board id: ", detector.board.id)
+Contributing
+============
 
-      # Check for specific board models:
-      print("Pi 3B+? ", detector.board.RASPBERRY_PI_3B_PLUS)
-      print("BBB? ", detector.board.BEAGLEBONE_BLACK)
-      print("Orange Pi PC? ", detector.board.ORANGE_PI_PC)
-      print("generic Linux PC? ", detector.board.GENERIC_LINUX_PC)
+Contributions are welcome! Please read our `Code of Conduct
+<https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect/blob/master/CODE_OF_CONDUCT.md>`_
+before contributing to help this project stay welcoming.
 
-  Contributing
-  ============
+Documentation
+=============
 
-  Contributions are welcome! Please read our `Code of Conduct
-  <https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect/blob/master/CODE_OF_CONDUCT.md>`_
-  before contributing to help this project stay welcoming.
-
-  Documentation
-  =============
-
-  For information on building library documentation, please check out `this guide <https://learn.adafruit.com/creating-and-sharing-a-circuitpython-library/sharing-our-docs-on-readthedocs#sphinx-5-1>`_.
-  
+For information on building library documentation, please check out `this guide <https://learn.adafruit.com/creating-and-sharing-a-circuitpython-library/sharing-our-docs-on-readthedocs#sphinx-5-1>`_.
