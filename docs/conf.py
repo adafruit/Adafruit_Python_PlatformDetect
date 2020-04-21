@@ -13,6 +13,7 @@ sys.path.insert(0, os.path.abspath("../adafruit_platformdetect"))
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
+    "sphinx.ext.napoleon",
     "sphinx.ext.todo",
 ]
 
@@ -22,7 +23,7 @@ extensions = [
 autodoc_mock_imports = ["machine"]
 
 intersphinx_mapping = {
-    "python": ("https://docs.python.org/3.4", None),
+    "python": ("https://docs.python.org/3.5", None),
     "CircuitPython": ("https://circuitpython.readthedocs.io/en/latest/", None),
 }
 
@@ -58,7 +59,13 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", ".env", "CODE_OF_CONDUCT.md"]
+exclude_patterns = [
+    "_build",
+    "Thumbs.db",
+    ".DS_Store",
+    ".env",
+    "CODE_OF_CONDUCT.md",
+]
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -78,6 +85,7 @@ todo_include_todos = False
 # If this is True, todo emits a warning for each TODO entries. The default is False.
 todo_emit_warnings = True
 
+napoleon_numpy_docstring = False
 
 # -- Options for HTML output ----------------------------------------------
 
@@ -103,6 +111,12 @@ else:
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 
+# The name of an image file (relative to this directory) to use as a favicon of
+# the docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
+# pixels large.
+#
+html_favicon = "_static/favicon.ico"
+
 # Output file base name for HTML help builder.
 htmlhelp_basename = "AdafruitPlatformDetectLibrarydoc"
 
@@ -110,16 +124,12 @@ htmlhelp_basename = "AdafruitPlatformDetectLibrarydoc"
 
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
-    #
     # 'papersize': 'letterpaper',
     # The font size ('10pt', '11pt' or '12pt').
-    #
     # 'pointsize': '10pt',
     # Additional stuff for the LaTeX preamble.
-    #
     # 'preamble': '',
     # Latex figure (float) alignment
-    #
     # 'figure_align': 'htbp',
 }
 
