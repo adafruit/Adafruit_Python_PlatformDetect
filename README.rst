@@ -1,7 +1,7 @@
 Introduction
 ============
 
-.. image:: https://readthedocs.org/projects/Adafruit-PlatformDetect/badge/?version=latest
+.. image:: https://readthedocs.org/projects/adafruit-platformdetect/badge/?version=latest
     :target: https://circuitpython.readthedocs.io/projects/platformdetect/en/latest/
     :alt: Documentation Status
 
@@ -9,8 +9,8 @@ Introduction
     :target: https://discord.gg/nBQh6qu
     :alt: Discord
 
-.. image:: https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect/workflows/Build%20CI/badge.svg
-    :target: https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect/actions
+.. image:: https://github.com/adafruit/Adafruit_Python_PlatformDetect/workflows/Build%20CI/badge.svg
+    :target: https://github.com/adafruit/Adafruit_Python_PlatformDetect/actions
     :alt: Build Status
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
@@ -88,7 +88,7 @@ Contributing
 ============
 
 Contributions are welcome! Please read our `Code of Conduct
-<https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect/blob/master/CODE_OF_CONDUCT.md>`_
+<https://github.com/adafruit/Adafruit_Python_PlatformDetect/blob/master/CODE_OF_CONDUCT.md>`_
 before contributing to help this project stay welcoming.
 
 Documentation
