@@ -51,7 +51,7 @@ class Board:
     def __init__(self, detector):
         self.detector = detector
 
-    # pylint: disable=invalid-name, protected-access
+    # pylint: disable=invalid-name, protected-access, too-many-public-methods
     @property
     def id(self):
         """Return a unique id for the detected board, if any."""
