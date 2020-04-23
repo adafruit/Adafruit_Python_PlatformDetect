@@ -113,6 +113,8 @@ class Board:
             board_id = self._pine64_id()
         elif chip_id == chips.A33:
             board_id = self._clockwork_pi_id()
+        elif chip_id == chips.RK3308:
+            board_id = self._rock_pi_id()
         return board_id
 
     # pylint: enable=invalid-name
@@ -289,6 +291,14 @@ class Board:
         except FileNotFoundError:
             return None
 
+    def _rock_pi_id(self):
+        """Check what type of Rock Pi board."""
+        board_value = self.detector.get_device_model()
+        board = None
+        if board_value and "ROCK Pi S" in board_value:
+            board = boards.ROCK_PI_S
+        return board
+
     def _clockwork_pi_id(self):
         """Check what type of Clockwork Pi board."""
         board_value = self.detector.get_device_model()
@@ -368,6 +378,11 @@ class Board:
         return self.id in boards._PINE64_DEV_IDS
 
     @property
+    def any_rock_pi_board(self):
+        """Check whether the current board is any Clockwork Pi device."""
+        return self.ROCK_PI_S
+
+    @property
     def any_clockwork_pi_board(self):
         """Check whether the current board is any Clockwork Pi device."""
         return self.CLOCKWORK_CPI3
@@ -389,6 +404,7 @@ class Board:
                 self.any_onion_omega_board,
                 self.any_pine64_board,
                 self.any_pynq_board,
+                self.any_rock_pi_board,
                 self.any_clockwork_pi_board,
             ]
         )
