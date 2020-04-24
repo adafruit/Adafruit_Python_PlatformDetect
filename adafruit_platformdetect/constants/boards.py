@@ -89,6 +89,8 @@ PINE64 = "PINE64"
 PINEBOOK = "PINEBOOK"
 PINEPHONE = "PINEPHONE"
 
+ROCK_PI_S = "ROCK_PI_S"
+
 # pylint: enable=bad-whitespace
 
 # OrangePI
