@@ -92,6 +92,8 @@ PINEPHONE = "PINEPHONE"
 
 ROCK_PI_S = "ROCK_PI_S"
 
+GREATFET_ONE = "GREATFET_ONE"
+
 # pylint: enable=bad-whitespace
 
 # OrangePI
