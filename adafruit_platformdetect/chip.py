@@ -89,9 +89,10 @@ class Chip:
             )
         if os.environ.get("BLINKA_GREATFET"):
             from greatfet import GreatFET
+            from greatfet.errors import DeviceNotFoundError
 
             try:
-                gf = GreatFET()
+                _ = GreatFET()
                 return chips.LPC4330
             except DeviceNotFoundError():
                 raise RuntimeError(

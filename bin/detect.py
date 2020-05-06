@@ -25,7 +25,10 @@ print("Is this an embedded Linux system?", detector.board.any_embedded_linux)
 print("Is this a generic Linux PC?", detector.board.GENERIC_LINUX_PC)
 print(
     "Is this an OS environment variable special case?",
-    detector.board.FTDI_FT232H | detector.board.MICROCHIP_MCP2221 | detector.board.BINHO_NOVA | detector.board.GREATFET_ONE,
+    detector.board.FTDI_FT232H
+    | detector.board.MICROCHIP_MCP2221
+    | detector.board.BINHO_NOVA
+    | detector.board.GREATFET_ONE,
 )
 
 if detector.board.any_raspberry_pi:
