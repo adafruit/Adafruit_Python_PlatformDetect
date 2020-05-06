@@ -103,6 +103,8 @@ class Board:
             board_id = boards.MICROCHIP_MCP2221
         elif chip_id == chips.BINHO:
             board_id = boards.BINHO_NOVA
+        elif chip_id == chips.LPC4330:
+            board_id = boards.GREATFET_ONE
         elif chip_id == chips.MIPS24KC:
             board_id = boards.ONION_OMEGA
         elif chip_id == chips.MIPS24KEC:
@@ -423,6 +425,11 @@ class Board:
     def binho_nova(self):
         """Check whether the current board is an BINHO NOVA."""
         return self.id == boards.BINHO_NOVA
+
+    @property
+    def greatfet_one(self):
+        """Check whether the current board is a GreatFET One."""
+        return self.id == boards.GREATFET_ONE
 
     def __getattr__(self, attr):
         """

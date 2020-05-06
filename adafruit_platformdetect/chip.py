@@ -87,6 +87,17 @@ class Chip:
                 "BLINKA_MCP2221 environment variable "
                 + "set, but no MCP2221 device found"
             )
+        if os.environ.get("BLINKA_GREATFET"):
+            from greatfet import GreatFET
+
+            try:
+                gf = GreatFET()
+                return chips.LPC4330
+            except DeviceNotFoundError():
+                raise RuntimeError(
+                    "BLINKA_GREATFET environment variable "
+                    + "set, but no GreatFET device found"
+                )
         if os.environ.get("BLINKA_NOVA"):
             return chips.BINHO
 
