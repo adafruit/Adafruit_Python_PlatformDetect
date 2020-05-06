@@ -226,6 +226,8 @@ class Board:
             board = boards.ORANGE_PI_PC_PLUS
         if board_value == "pinebook-a64":
             board = boards.PINEBOOK
+        if board_value == "orangepi2":
+            board = boards.ORANGE_PI_2
 
         return board
 
