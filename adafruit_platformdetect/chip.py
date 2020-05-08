@@ -88,17 +88,14 @@ class Chip:
                 + "set, but no MCP2221 device found"
             )
         if os.environ.get("BLINKA_GREATFET"):
-            from greatfet import GreatFET
-            from greatfet.errors import DeviceNotFoundError
+            import usb
 
-            try:
-                _ = GreatFET()
+            if usb.core.find(idVendor=0x1d50, idProduct=0x60e6) is not None:
                 return chips.LPC4330
-            except DeviceNotFoundError():
-                raise RuntimeError(
-                    "BLINKA_GREATFET environment variable "
-                    + "set, but no GreatFET device found"
-                )
+            raise RuntimeError(
+                "BLINKA_GREATFET environment variable "
+                + "set, but no GreatFET device found"
+            )
         if os.environ.get("BLINKA_NOVA"):
             return chips.BINHO
 
