@@ -90,7 +90,7 @@ class Chip:
         if os.environ.get("BLINKA_GREATFET"):
             import usb
 
-            if usb.core.find(idVendor=0x1d50, idProduct=0x60e6) is not None:
+            if usb.core.find(idVendor=0x1D50, idProduct=0x60E6) is not None:
                 return chips.LPC4330
             raise RuntimeError(
                 "BLINKA_GREATFET environment variable "
