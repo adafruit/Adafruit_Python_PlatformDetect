@@ -102,7 +102,7 @@ class Detector:
         except FileNotFoundError:
             pass
 
-       return model
+        return model
 
     def get_device_compatible(self):
         """
