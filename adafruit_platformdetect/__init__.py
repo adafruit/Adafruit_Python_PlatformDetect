@@ -116,7 +116,7 @@ class Detector:
         except FileNotFoundError:
             pass
 
-       return model
+        return model
 
     def get_board_asset_tag(self):
         """
