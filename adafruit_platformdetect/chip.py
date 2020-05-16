@@ -211,7 +211,7 @@ class Chip:
                 elif isinstance(hardware, list):
                     if {model.upper() for model in hardware} & chips.BCM_RANGE:
                         linux_id = chips.BCM2XXX
-                elif get_board_asset_tag() == "SC40-2000-0000-C0|C":
+                elif self.detectget_board_asset_tag() == "SC40-2000-0000-C0|C":
                     linux_id = chips.RYZEN_V1605B
 
         return linux_id
