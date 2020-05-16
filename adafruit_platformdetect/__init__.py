@@ -75,6 +75,7 @@ class Detector:
         value, if found, otherwise None.
         """
         field_value = None
+
         pattern = r"^" + field + r"=(.*)"
         try:
             with open("/etc/armbian-release", "r") as release_file:
@@ -93,20 +94,41 @@ class Detector:
         Search /proc/device-tree/model for the device model and return its value, if found,
         otherwise None.
         """
+        model = None
+
         try:
             with open("/proc/device-tree/model", "r") as model_file:
                 model = model_file.read()
-                return model
         except FileNotFoundError:
             pass
+
+       return model
 
     def get_device_compatible(self):
         """
         Search /proc/device-tree/compatible for the compatible chip name.
         """
+        model = None
+
         try:
             with open("/proc/device-tree/compatible", "r") as model_file:
                 model = model_file.read()
-                return model
         except FileNotFoundError:
             pass
+
+       return model
+
+    def get_board_asset_tag(self):
+        """
+        Search /proc/device-tree/model for the device model and return its value, if found,
+        otherwise None.
+        """
+        tag = None
+
+        try:
+            with open("/sys/devices/virtual/dmi/id/board_asset_tag", "r") as tag_file:
+                tag = tag_file.read()
+        except FileNotFoundError:
+            pass
+
+        return tag
