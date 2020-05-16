@@ -118,7 +118,7 @@ class Board:
         elif chip_id == chips.RK3308:
             board_id = self._rock_pi_id()
         elif chip_id == chips.RYZEN_V1605B:
-            board_id == boards.UDOO_BOLT
+            board_id = boards.UDOO_BOLT
 
         return board_id
 
