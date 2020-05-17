@@ -118,7 +118,7 @@ class Detector:
 
         return model
 
-    def get_board_asset_tag(self):
+    def check_board_asset_tag_value(self):
         """
         Search /proc/device-tree/model for the device model and return its value, if found,
         otherwise None.

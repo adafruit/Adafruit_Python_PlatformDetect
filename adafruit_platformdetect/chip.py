@@ -135,7 +135,13 @@ class Chip:
 
         if hardware is None:
             vendor_id = self.detector.get_cpuinfo_field("vendor_id")
-            if vendor_id in ("GenuineIntel", "AuthenticAMD"):
+            if vendor_id == "AuthenticAMD":
+                model_name = self.detector.get_cpuinfo_field("model name").upper()
+                if "RYZEN EMBEDDED V1605B" in model_name:
+                    linux_id = chips.RYZEN_V1605B
+                else:
+                    linux_id = chips.GENERIC_X86
+            elif vendor_id == "GenuineIntel":
                 linux_id = chips.GENERIC_X86
 
             compatible = self.detector.get_device_compatible()
@@ -211,8 +217,6 @@ class Chip:
                 elif isinstance(hardware, list):
                     if {model.upper() for model in hardware} & chips.BCM_RANGE:
                         linux_id = chips.BCM2XXX
-                elif self.detectget_board_asset_tag() == "SC40-2000-0000-C0|C":
-                    linux_id = chips.RYZEN_V1605B
 
         return linux_id
 
