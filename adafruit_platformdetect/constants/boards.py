@@ -95,6 +95,8 @@ ROCK_PI_S = "ROCK_PI_S"
 
 GREATFET_ONE = "GREATFET_ONE"
 
+UDOO_BOLT = "UDOO_BOLT"
+
 # pylint: enable=bad-whitespace
 
 # OrangePI
