@@ -50,6 +50,7 @@ class Board:
 
     def __init__(self, detector):
         self.detector = detector
+        self.board_asset_tag = self.detector.check_board_asset_tag_value().strip()
 
     # pylint: disable=invalid-name, protected-access
     @property
@@ -117,7 +118,7 @@ class Board:
             board_id = self._clockwork_pi_id()
         elif chip_id == chips.RK3308:
             board_id = self._rock_pi_id()
-        elif chip_id == chips.RYZEN_V1605B:
+        elif self.board_asset_tag == "SC40-2000-0000-C0|C":
             board_id = boards.UDOO_BOLT
 
         return board_id
