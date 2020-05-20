@@ -118,7 +118,7 @@ class Board:
             board_id = self._clockwork_pi_id()
         elif chip_id == chips.RK3308:
             board_id = self._rock_pi_id()
-        elif self.board_asset_tag == boards._UDOO_BOLT_BOARD_ASSET_TAG
+        elif self.board_asset_tag == boards._UDOO_BOLT_BOARD_ASSET_TAG:
             board_id = boards.UDOO_BOLT
 
         return board_id
