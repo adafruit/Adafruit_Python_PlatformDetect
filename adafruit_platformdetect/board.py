@@ -316,7 +316,7 @@ class Board:
 
     def _udoo_id(self):
         """Try to detect the id of udoo board."""
-        board_asset_tag == self.detector.check_board_asset_tag_value()
+        board_asset_tag = self.detector.check_board_asset_tag_value()
         for board_id, board_tags in boards._UDOO_BOARD_IDS.items():
             if any(v == board_asset_tag for v in board_tags):
                 return board_id
