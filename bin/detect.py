@@ -5,8 +5,8 @@ import adafruit_platformdetect
 detector = adafruit_platformdetect.Detector()
 
 print("Chip id: ", detector.chip.id)
-
 print("Board id: ", detector.board.id)
+print()
 
 print("Is this a DragonBoard 410c?", detector.board.DRAGONBOARD_410C)
 print("Is this a Pi 3B+?", detector.board.RASPBERRY_PI_3B_PLUS)
@@ -23,6 +23,7 @@ print("Is this a Rock Pi board?", detector.board.any_rock_pi_board)
 print("Is this a Clockwork Pi board?", detector.board.any_clockwork_pi_board)
 print("Is this an embedded Linux system?", detector.board.any_embedded_linux)
 print("Is this a generic Linux PC?", detector.board.GENERIC_LINUX_PC)
+print("Is this a UDOO Bolt?", detector.board.UDOO_BOLT)
 print(
     "Is this an OS environment variable special case?",
     detector.board.FTDI_FT232H

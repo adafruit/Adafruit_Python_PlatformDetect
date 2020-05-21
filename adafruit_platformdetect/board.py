@@ -50,6 +50,7 @@ class Board:
 
     def __init__(self, detector):
         self.detector = detector
+        self.board_asset_tag = self.detector.check_board_asset_tag_value().strip()
 
     # pylint: disable=invalid-name, protected-access
     @property
@@ -117,7 +118,7 @@ class Board:
             board_id = self._clockwork_pi_id()
         elif chip_id == chips.RK3308:
             board_id = self._rock_pi_id()
-        elif chip_id == chips.RYZEN_V1605B:
+        elif self.board_asset_tag == boards._UDOO_BOLT_BOARD_ASSET_TAG:
             board_id = boards.UDOO_BOLT
 
         return board_id
@@ -395,6 +396,11 @@ class Board:
         return self.CLOCKWORK_CPI3
 
     @property
+    def any_udoo_board(self):
+        """Check to see if the current board is an UDOO board"""
+        return self.id in boards._UDOO_BOARD_IDS
+
+    @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
         return any(
@@ -413,6 +419,7 @@ class Board:
                 self.any_pynq_board,
                 self.any_rock_pi_board,
                 self.any_clockwork_pi_board,
+                self.any_udoo_board,
             ]
         )
 

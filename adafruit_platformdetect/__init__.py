@@ -127,7 +127,7 @@ class Detector:
 
         try:
             with open("/sys/devices/virtual/dmi/id/board_asset_tag", "r") as tag_file:
-                tag = tag_file.read()
+                tag = tag_file.read().strip()
         except FileNotFoundError:
             pass
 
