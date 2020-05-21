@@ -170,6 +170,8 @@ class Chip:
                     return chips.S905X3
             if compatible and "sun50i-a64" in compatible:
                 linux_id = chips.A64
+            if compatible and "odroid-xu4" in compatible:
+                linux_id = chips.EXYNOS5422
 
             cpu_model = self.detector.get_cpuinfo_field("cpu model")
 
@@ -200,6 +202,8 @@ class Chip:
                 linux_id = chips.S922X
             elif "ODROID-C4" in hardware:
                 linux_id = chips.S905X3
+            elif "ODROID-XU4" in hardware:
+                linux_id = chips.EXYNOS5422
             elif "SAMA5" in hardware:
                 linux_id = chips.SAMA5
             elif "Pinebook" in hardware:

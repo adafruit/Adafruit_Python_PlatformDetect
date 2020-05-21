@@ -91,6 +91,8 @@ class Board:
             board_id = boards.ODROID_C4
         elif chip_id == chips.S922X:
             board_id = boards.ODROID_N2
+        elif chip_id == chips.EXYNOS5422:
+            board_id = boards.ODROID_XU4
         elif chip_id == chips.FT232H:
             board_id = boards.FTDI_FT232H
         elif chip_id == chips.APQ8016:
