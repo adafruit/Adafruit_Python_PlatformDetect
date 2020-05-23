@@ -120,7 +120,7 @@ class Board:
         elif chip_id == chips.RK3308:
             board_id = self._rock_pi_id()
         elif chip_id == chips.RYZEN_V1605B:
-            board_id = boards.UDOO_BOLT
+            board_id = self._udoo_id()
 
         return board_id
 
@@ -316,6 +316,14 @@ class Board:
             board = boards.CLOCKWORK_CPI3
         return board
 
+    def _udoo_id(self):
+        """Try to detect the id of udoo board."""
+        board_asset_tag = self.detector.check_board_asset_tag_value()
+        for board_id, board_tags in boards._UDOO_BOARD_IDS.items():
+            if any(v == board_asset_tag for v in board_tags):
+                return board_id
+        return None
+
     @property
     def any_96boards(self):
         """Check whether the current board is any 96boards board."""
@@ -397,6 +405,11 @@ class Board:
         return self.CLOCKWORK_CPI3
 
     @property
+    def any_udoo_board(self):
+        """Check to see if the current board is an UDOO board"""
+        return self.id in boards._UDOO_BOARD_IDS
+
+    @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
         return any(
@@ -415,6 +428,7 @@ class Board:
                 self.any_pynq_board,
                 self.any_rock_pi_board,
                 self.any_clockwork_pi_board,
+                self.any_udoo_board,
             ]
         )
 
