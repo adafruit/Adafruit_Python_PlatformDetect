@@ -137,6 +137,8 @@ class Chip:
             vendor_id = self.detector.get_cpuinfo_field("vendor_id")
             if vendor_id == "AuthenticAMD":
                 model_name = self.detector.get_cpuinfo_field("model name").upper()
+                if "RYZEN EMBEDDED V1202B" in model_name:
+                    linux_id = chips.RYZEN_V1202B
                 if "RYZEN EMBEDDED V1605B" in model_name:
                     linux_id = chips.RYZEN_V1605B
                 else:
