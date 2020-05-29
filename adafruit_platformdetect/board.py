@@ -421,7 +421,7 @@ class Board:
 
     def any_asus_tinker_board(self):
         """Check to see if the current board is an ASUS Tinker Board"""
-        return self.id in boards._ASUS_Tinker_Board
+        return self.ASUS_Tinker_Board
 
     @property
     def any_embedded_linux(self):
