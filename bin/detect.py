@@ -59,3 +59,6 @@ if detector.board.any_rock_pi_board:
 
 if detector.board.any_clockwork_pi:
     print("Clockwork Pi device detected.")
+
+if detector.board.any_asus_tinker_board:
+    print("ASUS Tinker Board device detected.")
