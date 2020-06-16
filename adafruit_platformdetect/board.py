@@ -120,7 +120,7 @@ class Board:
         elif chip_id == chips.RK3308:
             board_id = self._rock_pi_id()
         elif chip_id == chips.RK3288:
-            board_id = boards.ASUS_TINKER_BOARD
+            board_id = boards._ASUS_TINKER_BOARD_IDS
         elif chip_id == chips.RYZEN_V1605B:
             board_id = self._udoo_id()
 
@@ -331,7 +331,7 @@ class Board:
         board_value = self.detector.get_device_model()
         board = None
         if board_value and "ASUS Tinker Board" in board_value:
-            board = boards.ASUS_TINKER_BOARD
+            board = boards._ASUS_TINKER_BOARD_IDS
         return board
 
     @property
