@@ -95,6 +95,8 @@ class Board:
             board_id = boards.ODROID_XU4
         elif chip_id == chips.FT232H:
             board_id = boards.FTDI_FT232H
+        elif chip_id == chips.FT2232H:
+            board_id = boards.FTDI_FT2232H
         elif chip_id == chips.APQ8016:
             board_id = boards.DRAGONBOARD_410C
         elif chip_id in (chips.T210, chips.T186, chips.T194):
@@ -436,6 +438,11 @@ class Board:
     def ftdi_ft232h(self):
         """Check whether the current board is an FTDI FT232H."""
         return self.id == boards.FTDI_FT232H
+
+    @property
+    def ftdi_ft2232h(self):
+        """Check whether the current board is an FTDI FT2232H."""
+        return self.id == boards.FTDI_FT2232H
 
     @property
     def microchip_mcp2221(self):
