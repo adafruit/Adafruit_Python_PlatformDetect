@@ -130,6 +130,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("rockchip,rk3308"):
             return chips.RK3308
 
+        if self.detector.check_dt_compatible_value("rockchip,rk3288"):
+            return chips.RK3288
+
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
 
@@ -212,6 +215,8 @@ class Chip:
                 linux_id = chips.A64
             elif "sun50iw1p1" in hardware:
                 linux_id = chips.A64
+            elif "ASUS_TINKER_BOARD" in hardware:
+                linux_id = chips.RK3288
             elif "Xilinx Zynq" in hardware:
                 compatible = self.detector.get_device_compatible()
                 if compatible and "xlnx,zynq-7000" in compatible:

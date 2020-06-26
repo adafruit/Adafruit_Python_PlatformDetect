@@ -119,6 +119,8 @@ class Board:
             board_id = self._clockwork_pi_id()
         elif chip_id == chips.RK3308:
             board_id = self._rock_pi_id()
+        elif chip_id == chips.RK3288:
+            board_id = self._asus_tinker_board_id()
         elif chip_id == chips.RYZEN_V1605B:
             board_id = self._udoo_id()
 
@@ -324,6 +326,14 @@ class Board:
                 return board_id
         return None
 
+    def _asus_tinker_board_id(self):
+        """Check what type of Tinker Board."""
+        board_value = self.detector.get_device_model()
+        board = None
+        if board_value and "ASUS Tinker Board" in board_value:
+            board = boards._ASUS_TINKER_BOARD_IDS
+        return board
+
     @property
     def any_96boards(self):
         """Check whether the current board is any 96boards board."""
@@ -409,6 +419,10 @@ class Board:
         """Check to see if the current board is an UDOO board"""
         return self.id in boards._UDOO_BOARD_IDS
 
+    def any_asus_tinker_board(self):
+        """Check to see if the current board is an ASUS Tinker Board"""
+        return self.id in boards._ASUS_TINKER_BOARD_IDS
+
     @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
@@ -429,6 +443,7 @@ class Board:
                 self.any_rock_pi_board,
                 self.any_clockwork_pi_board,
                 self.any_udoo_board,
+                self.any_asus_tinker_board,
             ]
         )
 

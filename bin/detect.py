@@ -24,6 +24,7 @@ print("Is this a Clockwork Pi board?", detector.board.any_clockwork_pi_board)
 print("Is this an embedded Linux system?", detector.board.any_embedded_linux)
 print("Is this a generic Linux PC?", detector.board.GENERIC_LINUX_PC)
 print("Is this a UDOO Bolt?", detector.board.UDOO_BOLT)
+print("Is this an ASUS Tinker Board?", detector.board.ASUS_TINKER_BOARD)
 print(
     "Is this an OS environment variable special case?",
     detector.board.FTDI_FT232H
@@ -58,3 +59,6 @@ if detector.board.any_rock_pi_board:
 
 if detector.board.any_clockwork_pi:
     print("Clockwork Pi device detected.")
+
+if detector.board.any_asus_tinker_board:
+    print("ASUS Tinker Board device detected.")
