@@ -62,8 +62,9 @@ class Detector:
         """
         # Match a value like 'qcom,apq8016-sbc':
         try:
-            if value in open("/proc/device-tree/compatible").read():
-                return True
+            with open("/proc/device-tree/compatible") as compatible:
+                if value in compatible.read():
+                    return True
         except FileNotFoundError:
             pass
 
