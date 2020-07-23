@@ -218,7 +218,7 @@ class Chip:
             elif "Pinebook" in hardware:
                 linux_id = chips.A64
             #elif "sun50iw1p1" in hardware:   #sun50iw1p1 is a common identfier in Allwinner SOC's. I do not believe it should be 
-                #linux_id = chips.A64         #used as an identifier. I feel it makes more sense to rely on the Linux ID. Otherwise it will be
+                #linux_id = chips.A64         #used as an identifier. I feel it makes more sense to rely on the device compatible field. Otherwise it will be
                                               #Impossible to differentiate between Allwinner A64's and Allwinner H6's.
             elif "ASUS_TINKER_BOARD" in hardware:
                 linux_id = chips.RK3288
