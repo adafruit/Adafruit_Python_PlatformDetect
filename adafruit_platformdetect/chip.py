@@ -135,8 +135,10 @@ class Chip:
 
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
-        if hardware == "sun50iw1p1":         #sun50iw1p1 is a common hardware identifier among different allwinner SOC's. Because it is common it should not be considered a valid 
-            hardware = None                  #chip identifier. 
+        if (
+            hardware == "sun50iw1p1"
+        ):  # sun50iw1p1 is a common hardware identifier among different allwinner SOC's. Because it is common it should not be considered a valid
+            hardware = None  # chip identifier.
 
         if hardware is None:
             vendor_id = self.detector.get_cpuinfo_field("vendor_id")
@@ -217,9 +219,9 @@ class Chip:
                 linux_id = chips.SAMA5
             elif "Pinebook" in hardware:
                 linux_id = chips.A64
-            #elif "sun50iw1p1" in hardware:   #sun50iw1p1 is a common identfier in Allwinner SOC's. I do not believe it should be 
-                #linux_id = chips.A64         #used as an identifier. I feel it makes more sense to rely on the device compatible field. Otherwise it will be
-                                              #Impossible to differentiate between Allwinner A64's and Allwinner H6's.
+            # elif "sun50iw1p1" in hardware:   #sun50iw1p1 is a common identfier in Allwinner SOC's. I do not believe it should be
+            # linux_id = chips.A64         #used as an identifier. I feel it makes more sense to rely on the device compatible field. Otherwise it will be
+            # Impossible to differentiate between Allwinner A64's and Allwinner H6's.
             elif "ASUS_TINKER_BOARD" in hardware:
                 linux_id = chips.RK3288
             elif "Xilinx Zynq" in hardware:
