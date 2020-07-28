@@ -419,6 +419,7 @@ class Board:
         """Check to see if the current board is an UDOO board"""
         return self.id in boards._UDOO_BOARD_IDS
 
+    @property
     def any_asus_tinker_board(self):
         """Check to see if the current board is an ASUS Tinker Board"""
         return self.id in boards._ASUS_TINKER_BOARD_IDS
