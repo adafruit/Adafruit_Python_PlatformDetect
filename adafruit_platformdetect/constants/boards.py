@@ -104,9 +104,7 @@ UDOO_BOLT_V8 = "UDOO_BOLT_V8"
 # pylint: enable=bad-whitespace
 
 # Asus Tinkerboard
-_ASUS_TINKER_BOARD_IDS = (
-    ASUS_TINKER_BOARD,
-)
+_ASUS_TINKER_BOARD_IDS = (ASUS_TINKER_BOARD,)
 
 # OrangePI
 _ORANGE_PI_IDS = (
