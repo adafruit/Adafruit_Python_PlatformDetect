@@ -100,7 +100,7 @@ ROCK_PI_S = "ROCK_PI_S"
 
 GREATFET_ONE = "GREATFET_ONE"
 
-#Udoo boards
+# Udoo boards
 UDOO_BOLT_V3 = "UDOO_BOLT_V3"
 UDOO_BOLT_V8 = "UDOO_BOLT_V8"
 UDOO_X86 = "UDOO_X86"
@@ -123,13 +123,10 @@ _ORANGE_PI_IDS = (
 
 _CORAL_IDS = (CORAL_EDGE_TPU_DEV,)
 
-_PYNQ_IDS = (
-    PYNQ_Z1,
-    PYNQ_Z2,
-)
+_PYNQ_IDS = (PYNQ_Z1, PYNQ_Z2)
 
 _JETSON_IDS = {
-    JETSON_TX1: ("nvidia,p2371-2180", "nvidia,jetson-cv",),
+    JETSON_TX1: ("nvidia,p2371-2180", "nvidia,jetson-cv"),
     JETSON_TX2: (
         "nvidia,p2771-0000",
         "nvidia,p2771-0888",
@@ -138,8 +135,8 @@ _JETSON_IDS = {
         "nvidia,quill",
         "nvidia,storm",
     ),
-    JETSON_XAVIER: ("nvidia,p2972-0000", "nvidia,p2972-0006", "nvidia,jetson-xavier",),
-    JETSON_NANO: ("nvidia,p3450-0000", "nvidia,p3450-0002", "nvidia,jetson-nano",),
+    JETSON_XAVIER: ("nvidia,p2972-0000", "nvidia,p2972-0006", "nvidia,jetson-xavier"),
+    JETSON_NANO: ("nvidia,p3450-0000", "nvidia,p3450-0002", "nvidia,jetson-nano"),
     JETSON_NX: (
         "nvidia,p3509-0000+p3668-0000",
         "nvidia,p3509-0000+p3668-0001",
@@ -220,7 +217,7 @@ _BEAGLEBONE_BOARD_IDS = {
     BEAGLEBONE_BLUE: (("A2", "A335BNLTBLA2"),),
     BEAGLEBONE_BLACK_WIRELESS: (("A5", "A335BNLTBWA5"),),
     BEAGLEBONE_POCKETBEAGLE: (("A2", "A335PBGL00A2"),),
-    BEAGLEBONE_GREEN: (("1A", "A335BNLT...."), ("UNKNOWN", "A335BNLTBBG1"),),
+    BEAGLEBONE_GREEN: (("1A", "A335BNLT...."), ("UNKNOWN", "A335BNLTBBG1")),
     BEAGLEBONE_GREEN_WIRELESS: (("W1A", "A335BNLTGW1A"),),
     BEAGLEBONE_BLACK_INDUSTRIAL: (
         ("A0", "A335BNLTAIA0"),  # Arrow
@@ -264,10 +261,10 @@ _PI_REV_CODES = {
         "100000e",
         "100000f",
     ),
-    RASPBERRY_PI_B_PLUS: ("0010", "0013", "900032", "1000010", "1000013", "1900032",),
-    RASPBERRY_PI_A: ("0007", "0008", "0009", "1000007", "1000008", "1000009",),
-    RASPBERRY_PI_A_PLUS: ("0012", "0015", "900021", "1000012", "1000015", "1900021",),
-    RASPBERRY_PI_CM1: ("0011", "0014", "10000011", "10000014",),
+    RASPBERRY_PI_B_PLUS: ("0010", "0013", "900032", "1000010", "1000013", "1900032"),
+    RASPBERRY_PI_A: ("0007", "0008", "0009", "1000007", "1000008", "1000009"),
+    RASPBERRY_PI_A_PLUS: ("0012", "0015", "900021", "1000012", "1000015", "1900021"),
+    RASPBERRY_PI_CM1: ("0011", "0014", "10000011", "10000014"),
     RASPBERRY_PI_ZERO: (
         "900092",
         "920092",
@@ -282,7 +279,7 @@ _PI_REV_CODES = {
         "2900093",
         "2920093",  # warranty bit 25
     ),
-    RASPBERRY_PI_ZERO_W: ("9000c1", "19000c1", "29000c1",),  # warranty bits
+    RASPBERRY_PI_ZERO_W: ("9000c1", "19000c1", "29000c1"),  # warranty bits
     RASPBERRY_PI_2B: (
         "a01040",
         "a01041",
@@ -319,7 +316,7 @@ _PI_REV_CODES = {
         "2a32082",
         "2a52082",  # warranty bit 25
     ),
-    RASPBERRY_PI_3B_PLUS: ("a020d3", "1a020d3", "2a020d3",),  # warranty bits
+    RASPBERRY_PI_3B_PLUS: ("a020d3", "1a020d3", "2a020d3"),  # warranty bits
     RASPBERRY_PI_AVNET_IIOT_GW: ("60a220b0",),
     RASPBERRY_PI_CM3: (
         "a020a0",
@@ -329,8 +326,8 @@ _PI_REV_CODES = {
         "1a220a0",
         "2a220a0",
     ),
-    RASPBERRY_PI_3A_PLUS: ("9020e0", "19020e0", "29020e0",),  # warranty bits
-    RASPBERRY_PI_CM3_PLUS: ("a02100", "1a02100", "2a02100",),  # warranty bits
+    RASPBERRY_PI_3A_PLUS: ("9020e0", "19020e0", "29020e0"),  # warranty bits
+    RASPBERRY_PI_CM3_PLUS: ("a02100", "1a02100", "2a02100"),  # warranty bits
     RASPBERRY_PI_4B: (
         "a03111",
         "b03111",
@@ -355,10 +352,7 @@ _PI_REV_CODES = {
 }
 
 # Onion omega boards
-_ONION_OMEGA_BOARD_IDS = (
-    ONION_OMEGA,
-    ONION_OMEGA2,
-)
+_ONION_OMEGA_BOARD_IDS = (ONION_OMEGA, ONION_OMEGA2)
 
 # Pine64 boards and devices
 _PINE64_DEV_IDS = (PINE64, PINEBOOK, PINEPHONE)
@@ -367,6 +361,4 @@ _PINE64_DEV_IDS = (PINE64, PINEBOOK, PINEPHONE)
 _ASUS_TINKER_BOARD_DEV_IDS = ASUS_TINKER_BOARD
 
 # UDOO
-_UDOO_BOARD_IDS = {UDOO_BOLT_V8: ("SC40-2000-0000-C0|C",),
-                   UDOO_X86: ("dummy",)
-}
+_UDOO_BOARD_IDS = {UDOO_BOLT_V8: ("SC40-2000-0000-C0|C",), UDOO_X86: ("dummy",)}
