@@ -123,6 +123,8 @@ class Board:
             board_id = self._asus_tinker_board_id()
         elif chip_id == chips.RYZEN_V1605B:
             board_id = self._udoo_id()
+        elif chip_id == chips.PENTIUM_N3710:
+            board_id = self._udoo_id()
 
         return board_id
 
@@ -324,7 +326,11 @@ class Board:
         for board_id, board_tags in boards._UDOO_BOARD_IDS.items():
             if any(v == board_asset_tag for v in board_tags):
                 return board_id
-        return None
+
+        if self.detector.check_board_name_value() == 'UDOO x86':
+            return boards.UDOO_X86
+        else:
+            return None
 
     def _asus_tinker_board_id(self):
         """Check what type of Tinker Board."""
