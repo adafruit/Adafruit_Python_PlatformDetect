@@ -327,10 +327,10 @@ class Board:
             if any(v == board_asset_tag for v in board_tags):
                 return board_id
 
-        if self.detector.check_board_name_value() == 'UDOO x86':
+        if self.detector.check_board_name_value() == "UDOO x86":
             return boards.UDOO_X86
-        else:
-            return None
+
+        return None
 
     def _asus_tinker_board_id(self):
         """Check what type of Tinker Board."""
