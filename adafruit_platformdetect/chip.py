@@ -144,10 +144,14 @@ class Chip:
                     linux_id = chips.RYZEN_V1202B
                 if "RYZEN EMBEDDED V1605B" in model_name:
                     linux_id = chips.RYZEN_V1605B
+            elif vendor_id == "GenuineIntel":
+                model_name = self.detector.get_cpuinfo_field("model name").upper()
+                ##                print('model_name =', model_name)
+                if "N3710" in model_name:
+                    linux_id = chips.PENTIUM_N3710
                 else:
                     linux_id = chips.GENERIC_X86
-            elif vendor_id == "GenuineIntel":
-                linux_id = chips.GENERIC_X86
+            ##            print("linux_id = ", linux_id)
 
             compatible = self.detector.get_device_compatible()
             if compatible and "tegra" in compatible:
