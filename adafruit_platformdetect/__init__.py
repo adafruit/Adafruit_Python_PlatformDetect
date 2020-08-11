@@ -121,7 +121,7 @@ class Detector:
 
     def check_board_asset_tag_value(self):
         """
-        Search /proc/device-tree/model for the device model and return its value, if found,
+        Search /sys/devices/virtual/dmi/id for the device model and return its value, if found,
         otherwise None.
         """
         tag = None
@@ -133,3 +133,18 @@ class Detector:
             pass
 
         return tag
+        
+    def check_board_name_value(self):
+        """
+        Search /sys/devices/virtual/dmi/id for the device model and return its value, if found,
+        otherwise None. Debian/ubuntu based
+        """
+        board_name = None
+    
+        try:
+            with open("/sys/devices/virtual/dmi/id/board_name", "r") as board_name_file:
+                board_name = board_name_file.read().strip()
+        except FileNotFoundError:
+            pass
+    
+        return board_name
