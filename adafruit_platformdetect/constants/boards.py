@@ -1,6 +1,5 @@
 """Definition of boards and/or ids"""
 # Allow for aligned constant definitions:
-# pylint: disable=bad-whitespace
 BEAGLEBONE = "BEAGLEBONE"
 BEAGLEBONE_BLACK = "BEAGLEBONE_BLACK"
 BEAGLEBONE_BLUE = "BEAGLEBONE_BLUE"
@@ -106,8 +105,6 @@ GREATFET_ONE = "GREATFET_ONE"
 UDOO_BOLT_V3 = "UDOO_BOLT_V3"
 UDOO_BOLT_V8 = "UDOO_BOLT_V8"
 UDOO_X86 = "UDOO_X86"
-
-# pylint: enable=bad-whitespace
 
 # Asus Tinkerboard
 _ASUS_TINKER_BOARD_IDS = (ASUS_TINKER_BOARD,)
