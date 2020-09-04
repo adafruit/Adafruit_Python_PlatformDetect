@@ -107,7 +107,7 @@ class Chip:
         if platform == "samd21":
             return chips.SAMD21
         if platform == "pyboard":
-            return chips.STM32
+            return chips.STM32F405
         # nothing found!
         return None
 
