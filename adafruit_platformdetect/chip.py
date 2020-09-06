@@ -107,7 +107,7 @@ class Chip:
         if platform == "samd21":
             return chips.SAMD21
         if platform == "pyboard":
-            return chips.STM32
+            return chips.STM32F405
         # nothing found!
         return None
 
@@ -132,6 +132,9 @@ class Chip:
 
         if self.detector.check_dt_compatible_value("rockchip,rk3288"):
             return chips.RK3288
+
+        if self.detector.check_dt_compatible_value("st,stm32mp157"):
+            return chips.STM32MP157
 
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")

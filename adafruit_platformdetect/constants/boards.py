@@ -1,6 +1,5 @@
 """Definition of boards and/or ids"""
 # Allow for aligned constant definitions:
-# pylint: disable=bad-whitespace
 BEAGLEBONE = "BEAGLEBONE"
 BEAGLEBONE_BLACK = "BEAGLEBONE_BLACK"
 BEAGLEBONE_BLUE = "BEAGLEBONE_BLUE"
@@ -54,6 +53,9 @@ CORAL_EDGE_TPU_DEV = "CORAL_EDGE_TPU_DEV"
 PYNQ_Z1 = "PYNQ_Z1"
 PYNQ_Z2 = "PYNQ_Z2"
 
+# STM32 MPU boards
+STM32MP157C_DK2 = "STM32MP157C_DK2"
+
 # Various Raspberry Pi models
 RASPBERRY_PI_B_REV1 = "RASPBERRY_PI_B_REV1"
 RASPBERRY_PI_B_REV2 = "RASPBERRY_PI_B_REV2"
@@ -104,10 +106,11 @@ UDOO_BOLT_V3 = "UDOO_BOLT_V3"
 UDOO_BOLT_V8 = "UDOO_BOLT_V8"
 UDOO_X86 = "UDOO_X86"
 
-# pylint: enable=bad-whitespace
-
 # Asus Tinkerboard
 _ASUS_TINKER_BOARD_IDS = (ASUS_TINKER_BOARD,)
+
+# STM32MP1
+_STM32MP1_IDS = (STM32MP157C_DK2,)
 
 # OrangePI
 _ORANGE_PI_IDS = (

@@ -81,7 +81,7 @@ class Board:
             board_id = boards.FEATHER_HUZZAH
         elif chip_id == chips.SAMD21:
             board_id = boards.FEATHER_M0_EXPRESS
-        elif chip_id == chips.STM32:
+        elif chip_id == chips.STM32F405:
             board_id = boards.PYBOARD
         elif chip_id == chips.S805:
             board_id = boards.ODROID_C1
@@ -125,6 +125,8 @@ class Board:
             board_id = self._udoo_id()
         elif chip_id == chips.PENTIUM_N3710:
             board_id = self._udoo_id()
+        elif chip_id == chips.STM32MP157:
+            board_id = self._stm32mp1_id()
 
         return board_id
 
@@ -249,6 +251,13 @@ class Board:
         board_value = self.detector.get_device_model()
         if "Giant Board" in board_value:
             return boards.GIANT_BOARD
+        return None
+
+    def _stm32mp1_id(self):
+        """Check what type stm32mp1 board."""
+        board_value = self.detector.get_device_model()
+        if "STM32MP157C-DK2" in board_value:
+            return boards.STM32MP157C_DK2
         return None
 
     def _imx8mx_id(self):
@@ -431,6 +440,11 @@ class Board:
         return self.id in boards._ASUS_TINKER_BOARD_IDS
 
     @property
+    def any_stm32mp1(self):
+        """Check whether the current board is any stm32mp1 board."""
+        return self.id in boards._STM32MP1_IDS
+
+    @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
         return any(
@@ -451,6 +465,7 @@ class Board:
                 self.any_clockwork_pi_board,
                 self.any_udoo_board,
                 self.any_asus_tinker_board,
+                self.any_stm32mp1,
             ]
         )
 
