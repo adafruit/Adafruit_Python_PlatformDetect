@@ -51,6 +51,7 @@ class Chip:
 
     def __init__(self, detector):
         self.detector = detector
+        self._chip_id = None
 
     @property
     def id(
@@ -59,6 +60,11 @@ class Chip:
         """Return a unique id for the detected chip, if any."""
         # There are some times we want to trick the platform detection
         # say if a raspberry pi doesn't have the right ID, or for testing
+
+        # Caching
+        if self._chip_id:
+            return self._chip_id
+
         try:
             return os.environ["BLINKA_FORCECHIP"]
         except KeyError:  # no forced chip, continue with testing!
@@ -75,14 +81,16 @@ class Chip:
                     "BLINKA_FT232H environment variable "
                     + "set, but no FT232H device found"
                 )
-            return chips.FT232H
+            self._chip_id = chips.FT232H
+            return self._chip_id
         if os.environ.get("BLINKA_MCP2221"):
             import hid
 
             # look for it based on PID/VID
             for dev in hid.enumerate():
                 if dev["vendor_id"] == 0x04D8 and dev["product_id"] == 0x00DD:
-                    return chips.MCP2221
+                    self._chip_id = chips.MCP2221
+                    return self._chip_id
             raise RuntimeError(
                 "BLINKA_MCP2221 environment variable "
                 + "set, but no MCP2221 device found"
@@ -91,23 +99,29 @@ class Chip:
             import usb
 
             if usb.core.find(idVendor=0x1D50, idProduct=0x60E6) is not None:
-                return chips.LPC4330
+                self._chip_id = chips.LPC4330
+                return self._chip_id
             raise RuntimeError(
                 "BLINKA_GREATFET environment variable "
                 + "set, but no GreatFET device found"
             )
         if os.environ.get("BLINKA_NOVA"):
-            return chips.BINHO
+            self._chip_id = chips.BINHO
+            return self._chip_id
 
         platform = sys.platform
         if platform in ("linux", "linux2"):
-            return self._linux_id()
+            self._chip_id = self._linux_id()
+            return self._chip_id
         if platform == "esp8266":
-            return chips.ESP8266
+            self._chip_id = chips.ESP8266
+            return self._chip_id
         if platform == "samd21":
-            return chips.SAMD21
+            self._chip_id = chips.SAMD21
+            return self._chip_id
         if platform == "pyboard":
-            return chips.STM32F405
+            self._chip_id = chips.STM32F405
+            return self._chip_id
         # nothing found!
         return None
 

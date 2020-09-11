@@ -50,6 +50,7 @@ class Board:
 
     def __init__(self, detector):
         self.detector = detector
+        self._board_id = None
 
     # pylint: disable=invalid-name, protected-access
     @property
@@ -57,6 +58,11 @@ class Board:
         """Return a unique id for the detected board, if any."""
         # There are some times we want to trick the platform detection
         # say if a raspberry pi doesn't have the right ID, or for testing
+
+        # Caching
+        if self._board_id:
+            return self._board_id
+
         try:
             return os.environ["BLINKA_FORCEBOARD"]
         except KeyError:  # no forced board, continue with testing!
@@ -128,6 +134,7 @@ class Board:
         elif chip_id == chips.STM32MP157:
             board_id = self._stm32mp1_id()
 
+        self._board_id = board_id
         return board_id
 
     # pylint: enable=invalid-name
