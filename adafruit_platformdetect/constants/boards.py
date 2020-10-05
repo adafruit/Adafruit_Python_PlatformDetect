@@ -42,6 +42,7 @@ ORANGE_PI_2 = "ORANGE_PI_2"
 # NVIDIA Jetson boards
 JETSON_TX1 = "JETSON_TX1"
 JETSON_TX2 = "JETSON_TX2"
+CLARA_AGX_XAVIER = "CLARA_AGX_XAVIER"
 JETSON_XAVIER = "JETSON_XAVIER"
 JETSON_NANO = "JETSON_NANO"
 JETSON_NX = "JETSON_NX"
@@ -147,6 +148,7 @@ _JETSON_IDS = (
             "nvidia,storm",
         ),
     ),
+    (CLARA_AGX_XAVIER, ("nvidia,e3900-0000+p2888-0004",)),
     (
         JETSON_XAVIER,
         (
