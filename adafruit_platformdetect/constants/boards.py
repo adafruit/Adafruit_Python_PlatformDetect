@@ -42,6 +42,7 @@ ORANGE_PI_2 = "ORANGE_PI_2"
 # NVIDIA Jetson boards
 JETSON_TX1 = "JETSON_TX1"
 JETSON_TX2 = "JETSON_TX2"
+CLARA_AGX_XAVIER = "CLARA_AGX_XAVIER"
 JETSON_XAVIER = "JETSON_XAVIER"
 JETSON_NANO = "JETSON_NANO"
 JETSON_NX = "JETSON_NX"
@@ -128,25 +129,52 @@ _CORAL_IDS = (CORAL_EDGE_TPU_DEV,)
 
 _PYNQ_IDS = (PYNQ_Z1, PYNQ_Z2)
 
-_JETSON_IDS = {
-    JETSON_TX1: ("nvidia,p2371-2180", "nvidia,jetson-cv"),
-    JETSON_TX2: (
-        "nvidia,p2771-0000",
-        "nvidia,p2771-0888",
-        "nvidia,p3489-0000",
-        "nvidia,lightning",
-        "nvidia,quill",
-        "nvidia,storm",
+_JETSON_IDS = (
+    (
+        JETSON_TX1,
+        (
+            "nvidia,p2371-2180",
+            "nvidia,jetson-cv",
+        ),
     ),
-    JETSON_XAVIER: ("nvidia,p2972-0000", "nvidia,p2972-0006", "nvidia,jetson-xavier"),
-    JETSON_NANO: ("nvidia,p3450-0000", "nvidia,p3450-0002", "nvidia,jetson-nano"),
-    JETSON_NX: (
-        "nvidia,p3509-0000+p3668-0000",
-        "nvidia,p3509-0000+p3668-0001",
-        "nvidia,p3449-0000+p3668-0000",
-        "nvidia,p3449-0000+p3668-0001",
+    (
+        JETSON_TX2,
+        (
+            "nvidia,p2771-0000",
+            "nvidia,p2771-0888",
+            "nvidia,p3489-0000",
+            "nvidia,lightning",
+            "nvidia,quill",
+            "nvidia,storm",
+        ),
     ),
-}
+    (CLARA_AGX_XAVIER, ("nvidia,e3900-0000+p2888-0004",)),
+    (
+        JETSON_XAVIER,
+        (
+            "nvidia,p2972-0000",
+            "nvidia,p2972-0006",
+            "nvidia,jetson-xavier",
+        ),
+    ),
+    (
+        JETSON_NANO,
+        (
+            "nvidia,p3450-0000",
+            "nvidia,p3450-0002",
+            "nvidia,jetson-nano",
+        ),
+    ),
+    (
+        JETSON_NX,
+        (
+            "nvidia,p3509-0000+p3668-0000",
+            "nvidia,p3509-0000+p3668-0001",
+            "nvidia,p3449-0000+p3668-0000",
+            "nvidia,p3449-0000+p3668-0001",
+        ),
+    ),
+)
 
 _RASPBERRY_PI_40_PIN_IDS = (
     RASPBERRY_PI_B_PLUS,

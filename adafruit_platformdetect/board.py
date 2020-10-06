@@ -280,7 +280,7 @@ class Board:
         if not compatible:
             return None
         compats = compatible.split("\x00")
-        for board_id, board_compats in boards._JETSON_IDS.items():
+        for board_id, board_compats in boards._JETSON_IDS:
             if any(v in compats for v in board_compats):
                 return board_id
         return None
