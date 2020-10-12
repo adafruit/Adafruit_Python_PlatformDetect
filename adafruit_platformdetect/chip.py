@@ -257,6 +257,6 @@ class Chip:
         Detect whether the given attribute is the currently-detected chip.  See
         list of constants at the top of this module for available options.
         """
-        if self.id == attr:
+        if attr != "id" and self.id == attr:
             return True
         return False
