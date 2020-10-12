@@ -409,7 +409,7 @@ class Board:
     @property
     def any_jetson_board(self):
         """Check whether the current board is any defined Jetson Board."""
-        return self.id in boards._JETSON_IDS
+        return self.id in [v[0] for v in boards._JETSON_IDS]
 
     @property
     def any_sifive_board(self):
