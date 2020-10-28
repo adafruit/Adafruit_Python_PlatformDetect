@@ -212,10 +212,6 @@ class Board:
         if eeprom_bytes == b"\xaaU3\xeeA335BNLT\x1a\x00\x00\x00":
             return boards.BEAGLEBONE_GREEN
 
-        # BeagleBone Green Gateway eeprom ID
-        #if eeprom_bytes == b"\xaaU3\xeeA335BNLTGG1A":
-            #return boards.BEAGLEBONE_GREEN_GATEWAY
-
         id_string = eeprom_bytes[4:].decode("ascii")
         for model, bb_ids in boards._BEAGLEBONE_BOARD_IDS.items():
             for bb_id in bb_ids:
@@ -508,3 +504,4 @@ class Board:
         if self.id == attr:
             return True
         return False
+    
