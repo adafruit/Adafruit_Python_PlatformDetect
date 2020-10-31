@@ -150,6 +150,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("st,stm32mp157"):
             return chips.STM32MP157
 
+        if self.detector.check_dt_compatible_value("sun50i-a64"):
+            return chips.A64
+
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
 
@@ -236,8 +239,6 @@ class Chip:
             elif "SAMA5" in hardware:
                 linux_id = chips.SAMA5
             elif "Pinebook" in hardware:
-                linux_id = chips.A64
-            elif "sun50iw1p1" in hardware:
                 linux_id = chips.A64
             elif "ASUS_TINKER_BOARD" in hardware:
                 linux_id = chips.RK3288
