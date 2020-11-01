@@ -155,10 +155,6 @@ class Chip:
 
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
-        if (
-            hardware == "sun50iw1p1"
-        ):  # sun50iw1p1 is a common hardware identifier among different allwinner SOC's. Because it is common it should not be considered a valid
-            hardware = None  # chip identifier.
 
         if hardware is None:
             vendor_id = self.detector.get_cpuinfo_field("vendor_id")
