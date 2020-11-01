@@ -121,6 +121,8 @@ class Board:
             board_id = self._pynq_id()
         elif chip_id == chips.A64:
             board_id = self._pine64_id()
+        elif chip_id == chips.H6:
+            board_id = self._pine64_id()
         elif chip_id == chips.H5:
             board_id = self._armbian_id()
         elif chip_id == chips.A33:
@@ -246,6 +248,8 @@ class Board:
             board = boards.ORANGE_PI_PC_PLUS
         if board_value == "pinebook-a64":
             board = boards.PINEBOOK
+        if board_value == "pineH64":
+            board = boards.PINEH64
         if board_value == "orangepi2":
             board = boards.ORANGE_PI_2
         if board_value == "bananapim2zero":
@@ -302,6 +306,8 @@ class Board:
         board = None
         if "pine64" in board_value.lower():
             board = boards.PINE64
+        elif "pine h64" in board_value.lower():
+            board = boards.PINEH64
         elif "pinebook" in board_value.lower():
             board = boards.PINEBOOK
         elif "pinephone" in board_value.lower():

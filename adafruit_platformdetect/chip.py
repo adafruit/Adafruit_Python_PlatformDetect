@@ -202,6 +202,10 @@ class Chip:
                     return chips.S905X3
             if compatible and "sun50i-a64" in compatible:
                 linux_id = chips.A64
+            if compatible and "sun50i-h6" in compatible:
+                linux_id = chips.H6
+            if compatible and "sun50i-h5" in compatible:
+                linux_id = chips.H5
             if compatible and "odroid-xu4" in compatible:
                 linux_id = chips.EXYNOS5422
 
