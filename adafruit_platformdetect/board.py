@@ -50,6 +50,7 @@ class Board:
 
     def __init__(self, detector):
         self.detector = detector
+        self._board_id = None
 
     # pylint: disable=invalid-name, protected-access
     @property
@@ -57,6 +58,11 @@ class Board:
         """Return a unique id for the detected board, if any."""
         # There are some times we want to trick the platform detection
         # say if a raspberry pi doesn't have the right ID, or for testing
+
+        # Caching
+        if self._board_id:
+            return self._board_id
+
         try:
             return os.environ["BLINKA_FORCEBOARD"]
         except KeyError:  # no forced board, continue with testing!
@@ -81,7 +87,7 @@ class Board:
             board_id = boards.FEATHER_HUZZAH
         elif chip_id == chips.SAMD21:
             board_id = boards.FEATHER_M0_EXPRESS
-        elif chip_id == chips.STM32:
+        elif chip_id == chips.STM32F405:
             board_id = boards.PYBOARD
         elif chip_id == chips.S805:
             board_id = boards.ODROID_C1
@@ -117,6 +123,8 @@ class Board:
             board_id = self._pine64_id()
         elif chip_id == chips.H6:
             board_id = self._pine64_id()
+        elif chip_id == chips.H5:
+            board_id = self._armbian_id()
         elif chip_id == chips.A33:
             board_id = self._clockwork_pi_id()
         elif chip_id == chips.RK3308:
@@ -125,7 +133,12 @@ class Board:
             board_id = self._asus_tinker_board_id()
         elif chip_id == chips.RYZEN_V1605B:
             board_id = self._udoo_id()
+        elif chip_id == chips.PENTIUM_N3710:
+            board_id = self._udoo_id()
+        elif chip_id == chips.STM32MP157:
+            board_id = self._stm32mp1_id()
 
+        self._board_id = board_id
         return board_id
 
     # pylint: enable=invalid-name
@@ -239,6 +252,8 @@ class Board:
             board = boards.PINEH64
         if board_value == "orangepi2":
             board = boards.ORANGE_PI_2
+        if board_value == "bananapim2zero":
+            board = boards.BANANA_PI_M2_ZERO
 
         return board
 
@@ -251,6 +266,13 @@ class Board:
         board_value = self.detector.get_device_model()
         if "Giant Board" in board_value:
             return boards.GIANT_BOARD
+        return None
+
+    def _stm32mp1_id(self):
+        """Check what type stm32mp1 board."""
+        board_value = self.detector.get_device_model()
+        if "STM32MP157C-DK2" in board_value:
+            return boards.STM32MP157C_DK2
         return None
 
     def _imx8mx_id(self):
@@ -266,7 +288,7 @@ class Board:
         if not compatible:
             return None
         compats = compatible.split("\x00")
-        for board_id, board_compats in boards._JETSON_IDS.items():
+        for board_id, board_compats in boards._JETSON_IDS:
             if any(v in compats for v in board_compats):
                 return board_id
         return None
@@ -330,6 +352,10 @@ class Board:
         for board_id, board_tags in boards._UDOO_BOARD_IDS.items():
             if any(v == board_asset_tag for v in board_tags):
                 return board_id
+
+        if self.detector.check_board_name_value() == "UDOO x86":
+            return boards.UDOO_X86
+
         return None
 
     def _asus_tinker_board_id(self):
@@ -393,7 +419,7 @@ class Board:
     @property
     def any_jetson_board(self):
         """Check whether the current board is any defined Jetson Board."""
-        return self.id in boards._JETSON_IDS
+        return self.id in [v[0] for v in boards._JETSON_IDS]
 
     @property
     def any_sifive_board(self):
@@ -425,9 +451,15 @@ class Board:
         """Check to see if the current board is an UDOO board"""
         return self.id in boards._UDOO_BOARD_IDS
 
+    @property
     def any_asus_tinker_board(self):
         """Check to see if the current board is an ASUS Tinker Board"""
         return self.id in boards._ASUS_TINKER_BOARD_IDS
+
+    @property
+    def any_stm32mp1(self):
+        """Check whether the current board is any stm32mp1 board."""
+        return self.id in boards._STM32MP1_IDS
 
     @property
     def any_embedded_linux(self):
@@ -450,6 +482,7 @@ class Board:
                 self.any_clockwork_pi_board,
                 self.any_udoo_board,
                 self.any_asus_tinker_board,
+                self.any_stm32mp1,
             ]
         )
 

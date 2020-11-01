@@ -1,6 +1,5 @@
 """Definition of boards and/or ids"""
 # Allow for aligned constant definitions:
-# pylint: disable=bad-whitespace
 BEAGLEBONE = "BEAGLEBONE"
 BEAGLEBONE_BLACK = "BEAGLEBONE_BLACK"
 BEAGLEBONE_BLUE = "BEAGLEBONE_BLUE"
@@ -8,6 +7,7 @@ BEAGLEBONE_BLACK_WIRELESS = "BEAGLEBONE_BLACK_WIRELESS"
 BEAGLEBONE_POCKETBEAGLE = "BEAGLEBONE_POCKETBEAGLE"
 BEAGLEBONE_GREEN = "BEAGLEBONE_GREEN"
 BEAGLEBONE_GREEN_WIRELESS = "BEAGLEBONE_GREEN_WIRELESS"
+BEAGLEBONE_GREEN_GATEWAY = "BEAGLEBONE_GREEN_GATEWAY"
 BEAGLEBONE_BLACK_INDUSTRIAL = "BEAGLEBONE_BLACK_INDUSTRIAL"
 BEAGLEBONE_ENHANCED = "BEAGLEBONE_ENHANCED"
 BEAGLEBONE_USOMIQ = "BEAGLEBONE_USOMIQ"
@@ -23,7 +23,6 @@ GENERIC_LINUX_PC = "GENERIC_LINUX_PC"
 PYBOARD = "PYBOARD"
 NODEMCU = "NODEMCU"
 GIANT_BOARD = "GIANT_BOARD"
-_ASUS_TINKER_BOARD = "ASUS_TINKER_BOARD"
 
 # ASUS Tinker Boards
 ASUS_TINKER_BOARD = "ASUS_TINKER_BOARD"
@@ -40,10 +39,15 @@ ORANGE_PI_LITE = "ORANGE_PI_LITE"
 ORANGE_PI_PC_PLUS = "ORANGE_PI_PC_PLUS"
 ORANGE_PI_PLUS_2E = "ORANGE_PI_PLUS_2E"
 ORANGE_PI_2 = "ORANGE_PI_2"
+ORANGE_PI_ZERO_PLUS_2H5 = "ORANGE_PI_ZERO_PLUS_2H5"
+
+# Banana Pi boards
+BANANA_PI_M2_ZERO = "BANANA_PI_M2_ZERO"
 
 # NVIDIA Jetson boards
 JETSON_TX1 = "JETSON_TX1"
 JETSON_TX2 = "JETSON_TX2"
+CLARA_AGX_XAVIER = "CLARA_AGX_XAVIER"
 JETSON_XAVIER = "JETSON_XAVIER"
 JETSON_NANO = "JETSON_NANO"
 JETSON_NX = "JETSON_NX"
@@ -54,6 +58,9 @@ CORAL_EDGE_TPU_DEV = "CORAL_EDGE_TPU_DEV"
 # Xilinx PYNQ FPGA dev boards
 PYNQ_Z1 = "PYNQ_Z1"
 PYNQ_Z2 = "PYNQ_Z2"
+
+# STM32 MPU boards
+STM32MP157C_DK2 = "STM32MP157C_DK2"
 
 # Various Raspberry Pi models
 RASPBERRY_PI_B_REV1 = "RASPBERRY_PI_B_REV1"
@@ -100,12 +107,17 @@ PINEPHONE = "PINEPHONE"
 ROCK_PI_S = "ROCK_PI_S"
 
 GREATFET_ONE = "GREATFET_ONE"
+
+# Udoo boards
 UDOO_BOLT_V3 = "UDOO_BOLT_V3"
 UDOO_BOLT_V8 = "UDOO_BOLT_V8"
+UDOO_X86 = "UDOO_X86"
 
-# pylint: enable=bad-whitespace
+# Asus Tinkerboard
+_ASUS_TINKER_BOARD_IDS = (ASUS_TINKER_BOARD,)
 
-_ASUS_TINKER_BOARD_IDS = ASUS_TINKER_BOARD
+# STM32MP1
+_STM32MP1_IDS = (STM32MP157C_DK2,)
 
 # OrangePI
 _ORANGE_PI_IDS = (
@@ -117,34 +129,62 @@ _ORANGE_PI_IDS = (
     ORANGE_PI_PC_PLUS,
     ORANGE_PI_PLUS_2E,
     ORANGE_PI_2,
+    ORANGE_PI_ZERO_PLUS_2H5,
 )
+
+# BananaPI
+_BANANA_PI_IDS = (BANANA_PI_M2_ZERO,)
 
 _CORAL_IDS = (CORAL_EDGE_TPU_DEV,)
 
-_PYNQ_IDS = (
-    PYNQ_Z1,
-    PYNQ_Z2,
-)
+_PYNQ_IDS = (PYNQ_Z1, PYNQ_Z2)
 
-_JETSON_IDS = {
-    JETSON_TX1: ("nvidia,p2371-2180", "nvidia,jetson-cv",),
-    JETSON_TX2: (
-        "nvidia,p2771-0000",
-        "nvidia,p2771-0888",
-        "nvidia,p3489-0000",
-        "nvidia,lightning",
-        "nvidia,quill",
-        "nvidia,storm",
+_JETSON_IDS = (
+    (
+        JETSON_TX1,
+        (
+            "nvidia,p2371-2180",
+            "nvidia,jetson-cv",
+        ),
     ),
-    JETSON_XAVIER: ("nvidia,p2972-0000", "nvidia,p2972-0006", "nvidia,jetson-xavier",),
-    JETSON_NANO: ("nvidia,p3450-0000", "nvidia,p3450-0002", "nvidia,jetson-nano",),
-    JETSON_NX: (
-        "nvidia,p3509-0000+p3668-0000",
-        "nvidia,p3509-0000+p3668-0001",
-        "nvidia,p3449-0000+p3668-0000",
-        "nvidia,p3449-0000+p3668-0001",
+    (
+        JETSON_TX2,
+        (
+            "nvidia,p2771-0000",
+            "nvidia,p2771-0888",
+            "nvidia,p3489-0000",
+            "nvidia,lightning",
+            "nvidia,quill",
+            "nvidia,storm",
+        ),
     ),
-}
+    (CLARA_AGX_XAVIER, ("nvidia,e3900-0000+p2888-0004",)),
+    (
+        JETSON_XAVIER,
+        (
+            "nvidia,p2972-0000",
+            "nvidia,p2972-0006",
+            "nvidia,jetson-xavier",
+        ),
+    ),
+    (
+        JETSON_NANO,
+        (
+            "nvidia,p3450-0000",
+            "nvidia,p3450-0002",
+            "nvidia,jetson-nano",
+        ),
+    ),
+    (
+        JETSON_NX,
+        (
+            "nvidia,p3509-0000+p3668-0000",
+            "nvidia,p3509-0000+p3668-0001",
+            "nvidia,p3449-0000+p3668-0000",
+            "nvidia,p3449-0000+p3668-0001",
+        ),
+    ),
+)
 
 _RASPBERRY_PI_40_PIN_IDS = (
     RASPBERRY_PI_B_PLUS,
@@ -178,6 +218,7 @@ _BEAGLEBONE_IDS = (
     BEAGLEBONE_POCKETBEAGLE,
     BEAGLEBONE_GREEN,
     BEAGLEBONE_GREEN_WIRELESS,
+    BEAGLEBONE_GREEN_GATEWAY,
     BEAGLEBONE_BLACK_INDUSTRIAL,
     BEAGLEBONE_ENHANCED,
     BEAGLEBONE_USOMIQ,
@@ -218,8 +259,9 @@ _BEAGLEBONE_BOARD_IDS = {
     BEAGLEBONE_BLUE: (("A2", "A335BNLTBLA2"),),
     BEAGLEBONE_BLACK_WIRELESS: (("A5", "A335BNLTBWA5"),),
     BEAGLEBONE_POCKETBEAGLE: (("A2", "A335PBGL00A2"),),
-    BEAGLEBONE_GREEN: (("1A", "A335BNLT...."), ("UNKNOWN", "A335BNLTBBG1"),),
+    BEAGLEBONE_GREEN: (("1A", "A335BNLT...."), ("UNKNOWN", "A335BNLTBBG1")),
     BEAGLEBONE_GREEN_WIRELESS: (("W1A", "A335BNLTGW1A"),),
+    BEAGLEBONE_GREEN_GATEWAY: (("GA1", "A335BNLTGG1A"),),
     BEAGLEBONE_BLACK_INDUSTRIAL: (
         ("A0", "A335BNLTAIA0"),  # Arrow
         ("A0", "A335BNLTEIA0"),  # Element14
@@ -262,10 +304,10 @@ _PI_REV_CODES = {
         "100000e",
         "100000f",
     ),
-    RASPBERRY_PI_B_PLUS: ("0010", "0013", "900032", "1000010", "1000013", "1900032",),
-    RASPBERRY_PI_A: ("0007", "0008", "0009", "1000007", "1000008", "1000009",),
-    RASPBERRY_PI_A_PLUS: ("0012", "0015", "900021", "1000012", "1000015", "1900021",),
-    RASPBERRY_PI_CM1: ("0011", "0014", "10000011", "10000014",),
+    RASPBERRY_PI_B_PLUS: ("0010", "0013", "900032", "1000010", "1000013", "1900032"),
+    RASPBERRY_PI_A: ("0007", "0008", "0009", "1000007", "1000008", "1000009"),
+    RASPBERRY_PI_A_PLUS: ("0012", "0015", "900021", "1000012", "1000015", "1900021"),
+    RASPBERRY_PI_CM1: ("0011", "0014", "10000011", "10000014"),
     RASPBERRY_PI_ZERO: (
         "900092",
         "920092",
@@ -280,22 +322,26 @@ _PI_REV_CODES = {
         "2900093",
         "2920093",  # warranty bit 25
     ),
-    RASPBERRY_PI_ZERO_W: ("9000c1", "19000c1", "29000c1",),  # warranty bits
+    RASPBERRY_PI_ZERO_W: ("9000c1", "19000c1", "29000c1"),  # warranty bits
     RASPBERRY_PI_2B: (
         "a01040",
         "a01041",
+        "a02042",
         "a21041",
         "a22042",
         "1a01040",
         "1a01041",
+        "1a02042",
         "1a21041",
         "1a22042",  # warranty bit 24
         "2a01040",
         "2a01041",
+        "2a02042",
         "2a21041",
         "2a22042",  # warranty bit 25
         "3a01040",
         "3a01041",
+        "3a02042",
         "3a21041",
         "3a22042",
     ),
@@ -313,7 +359,7 @@ _PI_REV_CODES = {
         "2a32082",
         "2a52082",  # warranty bit 25
     ),
-    RASPBERRY_PI_3B_PLUS: ("a020d3", "1a020d3", "2a020d3",),  # warranty bits
+    RASPBERRY_PI_3B_PLUS: ("a020d3", "1a020d3", "2a020d3"),  # warranty bits
     RASPBERRY_PI_AVNET_IIOT_GW: ("60a220b0",),
     RASPBERRY_PI_CM3: (
         "a020a0",
@@ -323,8 +369,8 @@ _PI_REV_CODES = {
         "1a220a0",
         "2a220a0",
     ),
-    RASPBERRY_PI_3A_PLUS: ("9020e0", "19020e0", "29020e0",),  # warranty bits
-    RASPBERRY_PI_CM3_PLUS: ("a02100", "1a02100", "2a02100",),  # warranty bits
+    RASPBERRY_PI_3A_PLUS: ("9020e0", "19020e0", "29020e0"),  # warranty bits
+    RASPBERRY_PI_CM3_PLUS: ("a02100", "1a02100", "2a02100"),  # warranty bits
     RASPBERRY_PI_4B: (
         "a03111",
         "b03111",
@@ -332,6 +378,7 @@ _PI_REV_CODES = {
         "a03112",
         "b03112",
         "c03112",
+        "b03114",
         "d03114",
         "1a03111",
         "2a03111",
@@ -349,16 +396,10 @@ _PI_REV_CODES = {
 }
 
 # Onion omega boards
-_ONION_OMEGA_BOARD_IDS = (
-    ONION_OMEGA,
-    ONION_OMEGA2,
-)
+_ONION_OMEGA_BOARD_IDS = (ONION_OMEGA, ONION_OMEGA2)
 
 # Pine64 boards and devices
 _PINE64_DEV_IDS = (PINE64, PINEH64, PINEBOOK, PINEPHONE)
 
-#  ASUS Tinker Board
-_ASUS_TINKER_BOARD_DEV_IDS = ASUS_TINKER_BOARD
-
 # UDOO
-_UDOO_BOARD_IDS = {UDOO_BOLT_V8: ("SC40-2000-0000-C0|C",)}
+_UDOO_BOARD_IDS = {UDOO_BOLT_V8: ("SC40-2000-0000-C0|C",), UDOO_X86: ("dummy",)}

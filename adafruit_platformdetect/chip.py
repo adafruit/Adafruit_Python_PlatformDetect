@@ -51,6 +51,7 @@ class Chip:
 
     def __init__(self, detector):
         self.detector = detector
+        self._chip_id = None
 
     @property
     def id(
@@ -59,6 +60,11 @@ class Chip:
         """Return a unique id for the detected chip, if any."""
         # There are some times we want to trick the platform detection
         # say if a raspberry pi doesn't have the right ID, or for testing
+
+        # Caching
+        if self._chip_id:
+            return self._chip_id
+
         try:
             return os.environ["BLINKA_FORCECHIP"]
         except KeyError:  # no forced chip, continue with testing!
@@ -75,14 +81,16 @@ class Chip:
                     "BLINKA_FT232H environment variable "
                     + "set, but no FT232H device found"
                 )
-            return chips.FT232H
+            self._chip_id = chips.FT232H
+            return self._chip_id
         if os.environ.get("BLINKA_MCP2221"):
             import hid
 
             # look for it based on PID/VID
             for dev in hid.enumerate():
                 if dev["vendor_id"] == 0x04D8 and dev["product_id"] == 0x00DD:
-                    return chips.MCP2221
+                    self._chip_id = chips.MCP2221
+                    return self._chip_id
             raise RuntimeError(
                 "BLINKA_MCP2221 environment variable "
                 + "set, but no MCP2221 device found"
@@ -91,23 +99,29 @@ class Chip:
             import usb
 
             if usb.core.find(idVendor=0x1D50, idProduct=0x60E6) is not None:
-                return chips.LPC4330
+                self._chip_id = chips.LPC4330
+                return self._chip_id
             raise RuntimeError(
                 "BLINKA_GREATFET environment variable "
                 + "set, but no GreatFET device found"
             )
         if os.environ.get("BLINKA_NOVA"):
-            return chips.BINHO
+            self._chip_id = chips.BINHO
+            return self._chip_id
 
         platform = sys.platform
         if platform in ("linux", "linux2"):
-            return self._linux_id()
+            self._chip_id = self._linux_id()
+            return self._chip_id
         if platform == "esp8266":
-            return chips.ESP8266
+            self._chip_id = chips.ESP8266
+            return self._chip_id
         if platform == "samd21":
-            return chips.SAMD21
+            self._chip_id = chips.SAMD21
+            return self._chip_id
         if platform == "pyboard":
-            return chips.STM32
+            self._chip_id = chips.STM32F405
+            return self._chip_id
         # nothing found!
         return None
 
@@ -133,6 +147,12 @@ class Chip:
         if self.detector.check_dt_compatible_value("rockchip,rk3288"):
             return chips.RK3288
 
+        if self.detector.check_dt_compatible_value("st,stm32mp157"):
+            return chips.STM32MP157
+
+        if self.detector.check_dt_compatible_value("sun50i-a64"):
+            return chips.A64
+
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
         if (
@@ -150,8 +170,15 @@ class Chip:
                     linux_id = chips.RYZEN_V1605B
                 else:
                     linux_id = chips.GENERIC_X86
+            ##            print("linux_id = ", linux_id)
             elif vendor_id == "GenuineIntel":
-                linux_id = chips.GENERIC_X86
+                model_name = self.detector.get_cpuinfo_field("model name").upper()
+                ##                print('model_name =', model_name)
+                if "N3710" in model_name:
+                    linux_id = chips.PENTIUM_N3710
+                else:
+                    linux_id = chips.GENERIC_X86
+            ##            print("linux_id = ", linux_id)
 
             compatible = self.detector.get_device_compatible()
             if compatible and "tegra" in compatible:
@@ -181,6 +208,8 @@ class Chip:
                 linux_id = chips.A64
             if compatible and "sun50i-h6" in compatible:
                 linux_id = chips.H6
+            if compatible and "sun50i-h5" in compatible:
+                linux_id = chips.H5
             if compatible and "odroid-xu4" in compatible:
                 linux_id = chips.EXYNOS5422
 
@@ -219,9 +248,6 @@ class Chip:
                 linux_id = chips.SAMA5
             elif "Pinebook" in hardware:
                 linux_id = chips.A64
-            # elif "sun50iw1p1" in hardware:   #sun50iw1p1 is a common identfier in Allwinner SOC's. I do not believe it should be
-            # linux_id = chips.A64         #used as an identifier. I feel it makes more sense to rely on the device compatible field. Otherwise it will be
-            # Impossible to differentiate between Allwinner A64's and Allwinner H6's.
             elif "ASUS_TINKER_BOARD" in hardware:
                 linux_id = chips.RK3288
             elif "Xilinx Zynq" in hardware:
