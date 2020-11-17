@@ -312,6 +312,8 @@ class Board:
             board = boards.PINEBOOK
         elif "pinephone" in board_value.lower():
             board = boards.PINEPHONE
+        elif "sopine" in board_value.lower():
+            board = boards.SOPINE
         return board
 
     # pylint: disable=no-self-use
