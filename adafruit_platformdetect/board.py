@@ -137,6 +137,8 @@ class Board:
             board_id = self._udoo_id()
         elif chip_id == chips.STM32MP157:
             board_id = self._stm32mp1_id()
+        elif chip_id == chips.MT8167:
+            board_id = boards.CORAL_EDGE_TPU_DEV_MINI
 
         self._board_id = board_id
         return board_id
@@ -401,7 +403,7 @@ class Board:
     @property
     def any_coral_board(self):
         """Check whether the current board is any defined Coral."""
-        return self.CORAL_EDGE_TPU_DEV
+        return self.id in boards._CORAL_IDS
 
     @property
     def any_pynq_board(self):
