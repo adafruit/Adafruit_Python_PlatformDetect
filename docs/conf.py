@@ -36,7 +36,7 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = "Adafruit Blinka Library"
+project = "Adafruit PlatformDetect Library"
 copyright = "2017 Adafruit Industries"
 author = "Brennen Bearnes"
 
