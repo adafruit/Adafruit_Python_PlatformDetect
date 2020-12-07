@@ -16,7 +16,8 @@ print("Is this a Raspberry Pi Compute Module?", detector.board.any_raspberry_pi_
 print("Is this a BeagleBone Black?", detector.board.BEAGLEBONE_BLACK)
 print("Is this a BeagleBone Green?", detector.board.BEAGLEBONE_GREEN)
 print("Is this a Giant Board?", detector.board.GIANT_BOARD)
-print("Is this a Coral Edge TPU?", detector.board.CORAL_EDGE_TPU_DEV)
+print("Is this a Coral Dev Board?", detector.board.CORAL_EDGE_TPU_DEV)
+print("Is this a Coral Dev Board Mini?", detector.board.CORAL_EDGE_TPU_DEV_MINI)
 print("Is this a SiFive Unleashed? ", detector.board.SIFIVE_UNLEASHED)
 print("Is this a PYNQ Board?", detector.board.PYNQ_Z1 | detector.board.PYNQ_Z2)
 print("Is this a Rock Pi board?", detector.board.any_rock_pi_board)
@@ -63,3 +64,6 @@ if detector.board.any_clockwork_pi:
 
 if detector.board.any_asus_tinker_board:
     print("ASUS Tinker Board device detected.")
+
+if detector.board.any_coral_board:
+    print("Coral device detected.")

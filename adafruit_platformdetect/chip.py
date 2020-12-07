@@ -153,6 +153,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("sun50i-a64"):
             return chips.A64
 
+        if self.detector.check_dt_compatible_value("mediatek,mt8167"):
+            return chips.MT8167
+
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
 
