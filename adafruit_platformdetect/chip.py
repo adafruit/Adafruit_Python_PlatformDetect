@@ -150,6 +150,12 @@ class Chip:
         if self.detector.check_dt_compatible_value("st,stm32mp157"):
             return chips.STM32MP157
 
+        if self.detector.check_dt_compatible_value("sun50i-a64"):
+            return chips.A64
+
+        if self.detector.check_dt_compatible_value("mediatek,mt8167"):
+            return chips.MT8167
+
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
 
@@ -199,6 +205,10 @@ class Chip:
                     return chips.S905X3
             if compatible and "sun50i-a64" in compatible:
                 linux_id = chips.A64
+            if compatible and "sun50i-h6" in compatible:
+                linux_id = chips.H6
+            if compatible and "sun50i-h5" in compatible:
+                linux_id = chips.H5
             if compatible and "odroid-xu4" in compatible:
                 linux_id = chips.EXYNOS5422
 
@@ -236,8 +246,6 @@ class Chip:
             elif "SAMA5" in hardware:
                 linux_id = chips.SAMA5
             elif "Pinebook" in hardware:
-                linux_id = chips.A64
-            elif "sun50iw1p1" in hardware:
                 linux_id = chips.A64
             elif "ASUS_TINKER_BOARD" in hardware:
                 linux_id = chips.RK3288

@@ -121,6 +121,10 @@ class Board:
             board_id = self._pynq_id()
         elif chip_id == chips.A64:
             board_id = self._pine64_id()
+        elif chip_id == chips.H6:
+            board_id = self._pine64_id()
+        elif chip_id == chips.H5:
+            board_id = self._armbian_id()
         elif chip_id == chips.A33:
             board_id = self._clockwork_pi_id()
         elif chip_id == chips.RK3308:
@@ -133,6 +137,8 @@ class Board:
             board_id = self._udoo_id()
         elif chip_id == chips.STM32MP157:
             board_id = self._stm32mp1_id()
+        elif chip_id == chips.MT8167:
+            board_id = boards.CORAL_EDGE_TPU_DEV_MINI
 
         self._board_id = board_id
         return board_id
@@ -244,6 +250,8 @@ class Board:
             board = boards.ORANGE_PI_PC_PLUS
         if board_value == "pinebook-a64":
             board = boards.PINEBOOK
+        if board_value == "pineH64":
+            board = boards.PINEH64
         if board_value == "orangepi2":
             board = boards.ORANGE_PI_2
         if board_value == "bananapim2zero":
@@ -300,10 +308,14 @@ class Board:
         board = None
         if "pine64" in board_value.lower():
             board = boards.PINE64
+        elif "pine h64" in board_value.lower():
+            board = boards.PINEH64
         elif "pinebook" in board_value.lower():
             board = boards.PINEBOOK
         elif "pinephone" in board_value.lower():
             board = boards.PINEPHONE
+        elif "sopine" in board_value.lower():
+            board = boards.SOPINE
         return board
 
     # pylint: disable=no-self-use
@@ -391,7 +403,7 @@ class Board:
     @property
     def any_coral_board(self):
         """Check whether the current board is any defined Coral."""
-        return self.CORAL_EDGE_TPU_DEV
+        return self.id in boards._CORAL_IDS
 
     @property
     def any_pynq_board(self):
