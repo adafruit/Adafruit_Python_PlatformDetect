@@ -256,6 +256,8 @@ class Board:
             board = boards.ORANGE_PI_2
         if board_value == "bananapim2zero":
             board = boards.BANANA_PI_M2_ZERO
+        if board_value == "orangepizeroplus2-h5":
+            board = boards.ORANGE_PI_ZERO_PLUS_2H5
 
         return board
 
