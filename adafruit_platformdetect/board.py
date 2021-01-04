@@ -248,6 +248,8 @@ class Board:
             board = boards.ORANGE_PI_PLUS_2E
         if board_value == "orangepipcplus":
             board = boards.ORANGE_PI_PC_PLUS
+        if board_value == "nanopiduo2":
+            board = boards.NANO_PI_DUO2
         if board_value == "pinebook-a64":
             board = boards.PINEBOOK
         if board_value == "pineH64":
@@ -401,6 +403,11 @@ class Board:
         return self.id in boards._ORANGE_PI_IDS
 
     @property
+    def any_nano_pi(self):
+        """Check whether the current board is any defined Nano Pi."""
+        return self.id in boards._NANO_PI_IDS
+    
+    @property
     def any_coral_board(self):
         """Check whether the current board is any defined Coral."""
         return self.id in boards._CORAL_IDS
@@ -473,6 +480,7 @@ class Board:
                 self.any_raspberry_pi,
                 self.any_beaglebone,
                 self.any_orange_pi,
+                self.any_nano_pi,
                 self.any_giant_board,
                 self.any_jetson_board,
                 self.any_coral_board,
