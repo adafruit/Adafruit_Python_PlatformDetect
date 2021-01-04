@@ -47,6 +47,9 @@ if detector.board.any_pynq_board:
 if detector.board.any_orange_pi:
     print("Orange Pi detected.")
 
+if detector.board.any_nano_pi:
+    print("Nano Pi detected.")
+
 if detector.board.any_odroid_40_pin:
     print("Odroid detected.")
 
