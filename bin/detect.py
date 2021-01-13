@@ -67,3 +67,6 @@ if detector.board.any_asus_tinker_board:
 
 if detector.board.any_coral_board:
     print("Coral device detected.")
+
+if detector.board.any_lubancat:
+    print("LubanCat detected.")
