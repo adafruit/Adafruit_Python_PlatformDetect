@@ -159,6 +159,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("mediatek,mt8167"):
             return chips.MT8167
 
+        if self.detector.check_dt_compatible_value("imx6ull"):
+            return chips.IMX6ULL
+
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
 

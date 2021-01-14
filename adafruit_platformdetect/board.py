@@ -83,6 +83,8 @@ class Board:
             board_id = self._sama5_id()
         elif chip_id == chips.IMX8MX:
             board_id = self._imx8mx_id()
+        elif chip_id == chips.IMX6ULL:
+            board_id = self._imx6ull_id()
         elif chip_id == chips.ESP8266:
             board_id = boards.FEATHER_HUZZAH
         elif chip_id == chips.SAMD21:
@@ -277,6 +279,8 @@ class Board:
         board_value = self.detector.get_device_model()
         if "STM32MP157C-DK2" in board_value:
             return boards.STM32MP157C_DK2
+        if "LubanCat" in board_value:
+            return boards.LUBANCAT_STM32MP157
         return None
 
     def _imx8mx_id(self):
@@ -284,6 +288,13 @@ class Board:
         board_value = self.detector.get_device_model()
         if "Phanbell" in board_value:
             return boards.CORAL_EDGE_TPU_DEV
+        return None
+
+    def _imx6ull_id(self):
+        """Check what type iMX6ULL board."""
+        board_value = self.detector.get_device_model()
+        if "LubanCat" in board_value or "Embedfire" in board_value:
+            return boards.LUBANCAT_IMX6ULL
         return None
 
     def _tegra_id(self):
@@ -403,6 +414,11 @@ class Board:
         return self.id in boards._ORANGE_PI_IDS
 
     @property
+    def any_lubancat(self):
+        """Check whether the current board is any defined lubancat."""
+        return self.id in boards._LUBANCAT_IDS
+
+    @property
     def any_coral_board(self):
         """Check whether the current board is any defined Coral."""
         return self.id in boards._CORAL_IDS
@@ -489,6 +505,7 @@ class Board:
                 self.any_udoo_board,
                 self.any_asus_tinker_board,
                 self.any_stm32mp1,
+                self.any_lubancat,
             ]
         )
 
