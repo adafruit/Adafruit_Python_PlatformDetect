@@ -129,6 +129,8 @@ class Board:
             board_id = self._clockwork_pi_id()
         elif chip_id == chips.RK3308:
             board_id = self._rock_pi_id()
+        elif chip_id == chips.ATOM_X5_Z8350:
+            board_id = self._rock_pi_id()
         elif chip_id == chips.RK3288:
             board_id = self._asus_tinker_board_id()
         elif chip_id == chips.RYZEN_V1605B:
@@ -342,6 +344,8 @@ class Board:
         board = None
         if board_value and "ROCK Pi S" in board_value:
             board = boards.ROCK_PI_S
+        if self.detector.check_board_name_value() == "ROCK Pi X":
+            board = boards.ROCK_PI_X
         return board
 
     def _clockwork_pi_id(self):
