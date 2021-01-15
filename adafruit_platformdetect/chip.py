@@ -181,6 +181,8 @@ class Chip:
                 ##                print('model_name =', model_name)
                 if "N3710" in model_name:
                     linux_id = chips.PENTIUM_N3710
+                elif "X5-Z8350" in model_name:
+                    linux_id = chips.ATOM_X5_Z8350
                 else:
                     linux_id = chips.GENERIC_X86
             ##            print("linux_id = ", linux_id)
