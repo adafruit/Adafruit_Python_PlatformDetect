@@ -61,7 +61,8 @@ class Detector:
         otherwise False.
         """
         # Match a value like 'qcom,apq8016-sbc':
-        if value in self.get_device_compatible():
+        dt_compatible = self.get_device_compatible()
+        if dt_compatible and value in dt_compatible:
             return True
 
         return False
