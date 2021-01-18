@@ -239,6 +239,8 @@ class Chip:
         if not linux_id:
             if "AM33XX" in hardware:
                 linux_id = chips.AM33XX
+            elif "DRA74X" in hardware:
+                linux_id = chips.DRA74X
             elif "sun8i" in hardware:
                 linux_id = chips.SUN8I
             elif "ODROIDC" in hardware:
