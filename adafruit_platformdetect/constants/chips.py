@@ -1,5 +1,6 @@
 """Definition of chips."""
 AM33XX = "AM33XX"
+DRA74X = "DRA74X"
 IMX6ULL = "IMX6ULL"
 IMX8MX = "IMX8MX"
 BCM2XXX = "BCM2XXX"

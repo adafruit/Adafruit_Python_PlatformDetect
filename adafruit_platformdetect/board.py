@@ -75,6 +75,8 @@ class Board:
             board_id = self._pi_id()
         elif chip_id == chips.AM33XX:
             board_id = self._beaglebone_id()
+        elif chip_id == chips.DRA74X:
+            board_id = self._bbai_id()
         elif chip_id == chips.GENERIC_X86:
             board_id = boards.GENERIC_LINUX_PC
         elif chip_id == chips.SUN8I:
@@ -231,6 +233,13 @@ class Board:
         return None
 
     # pylint: enable=no-self-use
+
+    def _bbai_id(self):
+        """Try to detect id of a Beaglebone AI related board."""
+        board_value = self.detector.get_device_model()
+        if "BeagleBone AI" in board_value:
+            return boards.BEAGLEBONE_AI
+        return None
 
     # pylint: disable=too-many-return-statements
     def _armbian_id(self):
