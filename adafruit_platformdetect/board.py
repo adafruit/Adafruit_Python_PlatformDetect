@@ -129,6 +129,8 @@ class Board:
             board_id = self._pine64_id()
         elif chip_id == chips.H5:
             board_id = self._armbian_id()
+        elif chip_id == chips.H616:
+            board_id = self._armbian_id()
         elif chip_id == chips.A33:
             board_id = self._clockwork_pi_id()
         elif chip_id == chips.RK3308:
