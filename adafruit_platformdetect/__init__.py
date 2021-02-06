@@ -48,11 +48,11 @@ class Detector:
 
         with open("/proc/cpuinfo", "r") as infile:
             cpuinfo = infile.read().split("\n")
+            infile.close()
             for line in cpuinfo:
                 match = re.search(pattern, line, flags=re.IGNORECASE)
                 if match:
                     return match.group(1)
-
         return None
 
     def check_dt_compatible_value(self, value):
@@ -61,12 +61,9 @@ class Detector:
         otherwise False.
         """
         # Match a value like 'qcom,apq8016-sbc':
-        try:
-            with open("/proc/device-tree/compatible") as compatible:
-                if value in compatible.read():
-                    return True
-        except FileNotFoundError:
-            pass
+        dt_compatible = self.get_device_compatible()
+        if dt_compatible and value in dt_compatible:
+            return True
 
         return False
 
@@ -85,6 +82,7 @@ class Detector:
                     match = re.search(pattern, line)
                     if match:
                         field_value = match.group(1)
+                release_file.close()
         except FileNotFoundError:
             pass
 
@@ -100,6 +98,7 @@ class Detector:
         try:
             with open("/proc/device-tree/model", "r") as model_file:
                 model = model_file.read()
+                model_file.close()
         except FileNotFoundError:
             pass
 
@@ -114,6 +113,7 @@ class Detector:
         try:
             with open("/proc/device-tree/compatible", "r") as model_file:
                 model = model_file.read()
+                model_file.close()
         except FileNotFoundError:
             pass
 
@@ -129,6 +129,7 @@ class Detector:
         try:
             with open("/sys/devices/virtual/dmi/id/board_asset_tag", "r") as tag_file:
                 tag = tag_file.read().strip()
+                tag_file.close()
         except FileNotFoundError:
             pass
 
@@ -136,7 +137,7 @@ class Detector:
 
     def check_board_name_value(self):
         """
-        Search /sys/devices/virtual/dmi/id for the device model and return its value, if found,
+        Search /sys/devices/virtual/dmi/id for the board name and return its value, if found,
         otherwise None. Debian/ubuntu based
         """
         board_name = None
@@ -144,6 +145,7 @@ class Detector:
         try:
             with open("/sys/devices/virtual/dmi/id/board_name", "r") as board_name_file:
                 board_name = board_name_file.read().strip()
+                board_name.close()
         except FileNotFoundError:
             pass
 

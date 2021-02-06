@@ -159,6 +159,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("mediatek,mt8167"):
             return chips.MT8167
 
+        if self.detector.check_dt_compatible_value("imx6ull"):
+            return chips.IMX6ULL
+
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
 
@@ -178,6 +181,8 @@ class Chip:
                 ##                print('model_name =', model_name)
                 if "N3710" in model_name:
                     linux_id = chips.PENTIUM_N3710
+                elif "X5-Z8350" in model_name:
+                    linux_id = chips.ATOM_X5_Z8350
                 else:
                     linux_id = chips.GENERIC_X86
             ##            print("linux_id = ", linux_id)
@@ -234,6 +239,8 @@ class Chip:
         if not linux_id:
             if "AM33XX" in hardware:
                 linux_id = chips.AM33XX
+            elif "DRA74X" in hardware:
+                linux_id = chips.DRA74X
             elif "sun8i" in hardware:
                 linux_id = chips.SUN8I
             elif "ODROIDC" in hardware:
