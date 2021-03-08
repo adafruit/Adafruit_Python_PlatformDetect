@@ -135,6 +135,8 @@ class Board:
             board_id = self._clockwork_pi_id()
         elif chip_id == chips.RK3308:
             board_id = self._rock_pi_id()
+        elif chip_id == chips.RK3399:
+            board_id = self._rock_pi_id()
         elif chip_id == chips.ATOM_X5_Z8350:
             board_id = self._rock_pi_id()
         elif chip_id == chips.RK3288:
@@ -372,6 +374,8 @@ class Board:
         board = None
         if board_value and "ROCK Pi S" in board_value:
             board = boards.ROCK_PI_S
+        if board_value and "ROCK PI 4" in board_value.upper():
+            board = boards.ROCK_PI_4
         if self.detector.check_board_name_value() == "ROCK Pi X":
             board = boards.ROCK_PI_X
         return board
@@ -486,8 +490,8 @@ class Board:
 
     @property
     def any_rock_pi_board(self):
-        """Check whether the current board is any Clockwork Pi device."""
-        return self.ROCK_PI_S
+        """Check whether the current board is any Rock Pi device."""
+        return self.id in boards._ROCK_PI_IDS
 
     @property
     def any_clockwork_pi_board(self):
