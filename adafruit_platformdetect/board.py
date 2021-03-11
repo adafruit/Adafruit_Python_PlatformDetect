@@ -518,7 +518,9 @@ class Board:
     @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
-        return any([self.any_raspberry_pi,
+        return any(
+            [
+                self.any_raspberry_pi,
                 self.any_beaglebone,
                 self.any_orange_pi,
                 self.any_nanopi,
@@ -536,7 +538,9 @@ class Board:
                 self.any_udoo_board,
                 self.any_asus_tinker_board,
                 self.any_stm32mp1,
-                self.any_lubancat,])
+                self.any_lubancat,
+            ]
+        )
 
     @property
     def ftdi_ft232h(self):
