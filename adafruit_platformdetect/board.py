@@ -14,7 +14,7 @@
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
@@ -223,7 +223,7 @@ class Board:
         if eeprom_bytes[:4] != b"\xaaU3\xee":
             return None
 
-        # special condition for BeagleBone Green rev. 1A
+        # special condition for BeagleBone Green rev.  1A
         # refer to GitHub issue #57 in this repo for more info
         if eeprom_bytes == b"\xaaU3\xeeA335BNLT\x1a\x00\x00\x00":
             return boards.BEAGLEBONE_GREEN
@@ -302,6 +302,8 @@ class Board:
             return boards.STM32MP157C_DK2
         if "LubanCat" in board_value:
             return boards.LUBANCAT_STM32MP157
+        if "OSD32MP1-BRK" in board_value:
+            return boards.OSD32MP1_BRK
         return None
 
     def _imx8mx_id(self):
@@ -516,9 +518,7 @@ class Board:
     @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
-        return any(
-            [
-                self.any_raspberry_pi,
+        return any([self.any_raspberry_pi,
                 self.any_beaglebone,
                 self.any_orange_pi,
                 self.any_nanopi,
@@ -536,9 +536,7 @@ class Board:
                 self.any_udoo_board,
                 self.any_asus_tinker_board,
                 self.any_stm32mp1,
-                self.any_lubancat,
-            ]
-        )
+                self.any_lubancat,])
 
     @property
     def ftdi_ft232h(self):
