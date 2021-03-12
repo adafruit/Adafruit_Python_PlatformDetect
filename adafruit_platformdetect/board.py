@@ -302,6 +302,8 @@ class Board:
             return boards.STM32MP157C_DK2
         if "LubanCat" in board_value:
             return boards.LUBANCAT_STM32MP157
+        if "OSD32MP1-BRK" in board_value:
+            return boards.OSD32MP1_BRK
         return None
 
     def _imx8mx_id(self):
