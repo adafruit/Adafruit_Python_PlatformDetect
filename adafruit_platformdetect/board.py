@@ -50,6 +50,7 @@ class Board:
 
     def __init__(self, detector):
         self.detector = detector
+        self._board_id = None
 
     # pylint: disable=invalid-name, protected-access
     @property
@@ -57,6 +58,11 @@ class Board:
         """Return a unique id for the detected board, if any."""
         # There are some times we want to trick the platform detection
         # say if a raspberry pi doesn't have the right ID, or for testing
+
+        # Caching
+        if self._board_id:
+            return self._board_id
+
         try:
             return os.environ["BLINKA_FORCEBOARD"]
         except KeyError:  # no forced board, continue with testing!
@@ -69,6 +75,8 @@ class Board:
             board_id = self._pi_id()
         elif chip_id == chips.AM33XX:
             board_id = self._beaglebone_id()
+        elif chip_id == chips.DRA74X:
+            board_id = self._bbai_id()
         elif chip_id == chips.GENERIC_X86:
             board_id = boards.GENERIC_LINUX_PC
         elif chip_id == chips.SUN8I:
@@ -77,11 +85,13 @@ class Board:
             board_id = self._sama5_id()
         elif chip_id == chips.IMX8MX:
             board_id = self._imx8mx_id()
+        elif chip_id == chips.IMX6ULL:
+            board_id = self._imx6ull_id()
         elif chip_id == chips.ESP8266:
             board_id = boards.FEATHER_HUZZAH
         elif chip_id == chips.SAMD21:
             board_id = boards.FEATHER_M0_EXPRESS
-        elif chip_id == chips.STM32:
+        elif chip_id == chips.STM32F405:
             board_id = boards.PYBOARD
         elif chip_id == chips.S805:
             board_id = boards.ODROID_C1
@@ -117,13 +127,32 @@ class Board:
             board_id = self._pynq_id()
         elif chip_id == chips.A64:
             board_id = self._pine64_id()
+        elif chip_id == chips.H6:
+            board_id = self._pine64_id()
+        elif chip_id == chips.H5:
+            board_id = self._armbian_id()
+        elif chip_id == chips.H616:
+            board_id = self._armbian_id()
         elif chip_id == chips.A33:
             board_id = self._clockwork_pi_id()
         elif chip_id == chips.RK3308:
             board_id = self._rock_pi_id()
+        elif chip_id == chips.RK3399:
+            board_id = self._rock_pi_id()
+        elif chip_id == chips.ATOM_X5_Z8350:
+            board_id = self._rock_pi_id()
+        elif chip_id == chips.RK3288:
+            board_id = self._asus_tinker_board_id()
         elif chip_id == chips.RYZEN_V1605B:
             board_id = self._udoo_id()
+        elif chip_id == chips.PENTIUM_N3710:
+            board_id = self._udoo_id()
+        elif chip_id == chips.STM32MP157:
+            board_id = self._stm32mp1_id()
+        elif chip_id == chips.MT8167:
+            board_id = boards.CORAL_EDGE_TPU_DEV_MINI
 
+        self._board_id = board_id
         return board_id
 
     # pylint: enable=invalid-name
@@ -211,6 +240,13 @@ class Board:
 
     # pylint: enable=no-self-use
 
+    def _bbai_id(self):
+        """Try to detect id of a Beaglebone AI related board."""
+        board_value = self.detector.get_device_model()
+        if "BeagleBone AI" in board_value:
+            return boards.BEAGLEBONE_AI
+        return None
+
     # pylint: disable=too-many-return-statements
     def _armbian_id(self):
         """Check whether the current board is an OrangePi board."""
@@ -219,22 +255,34 @@ class Board:
 
         if board_value == "orangepipc":
             board = boards.ORANGE_PI_PC
-        if board_value == "orangepi-r1":
+        elif board_value == "orangepi-r1":
             board = boards.ORANGE_PI_R1
-        if board_value == "orangepizero":
+        elif board_value == "orangepizero":
             board = boards.ORANGE_PI_ZERO
-        if board_value == "orangepione":
+        elif board_value == "orangepione":
             board = boards.ORANGE_PI_ONE
-        if board_value == "orangepilite":
+        elif board_value == "orangepilite":
             board = boards.ORANGE_PI_LITE
-        if board_value == "orangepiplus2e":
+        elif board_value == "orangepiplus2e":
             board = boards.ORANGE_PI_PLUS_2E
-        if board_value == "orangepipcplus":
+        elif board_value == "orangepipcplus":
             board = boards.ORANGE_PI_PC_PLUS
-        if board_value == "pinebook-a64":
+        elif board_value == "pinebook-a64":
             board = boards.PINEBOOK
-        if board_value == "orangepi2":
+        elif board_value == "pineH64":
+            board = boards.PINEH64
+        elif board_value == "orangepi2":
             board = boards.ORANGE_PI_2
+        elif board_value == "bananapim2zero":
+            board = boards.BANANA_PI_M2_ZERO
+        elif board_value == "orangepizeroplus2-h5":
+            board = boards.ORANGE_PI_ZERO_PLUS_2H5
+        elif board_value == "orangepizeroplus":
+            board = boards.ORANGE_PI_ZERO_PLUS
+        elif board_value == "nanopiair":
+            board = boards.NANOPI_NEO_AIR
+        elif board_value == "nanopiduo2":
+            board = boards.NANOPI_DUO2
 
         return board
 
@@ -249,11 +297,29 @@ class Board:
             return boards.GIANT_BOARD
         return None
 
+    def _stm32mp1_id(self):
+        """Check what type stm32mp1 board."""
+        board_value = self.detector.get_device_model()
+        if "STM32MP157C-DK2" in board_value:
+            return boards.STM32MP157C_DK2
+        if "LubanCat" in board_value:
+            return boards.LUBANCAT_STM32MP157
+        if "OSD32MP1-BRK" in board_value:
+            return boards.OSD32MP1_BRK
+        return None
+
     def _imx8mx_id(self):
         """Check what type iMX8M board."""
         board_value = self.detector.get_device_model()
         if "Phanbell" in board_value:
             return boards.CORAL_EDGE_TPU_DEV
+        return None
+
+    def _imx6ull_id(self):
+        """Check what type iMX6ULL board."""
+        board_value = self.detector.get_device_model()
+        if "LubanCat" in board_value or "Embedfire" in board_value:
+            return boards.LUBANCAT_IMX6ULL
         return None
 
     def _tegra_id(self):
@@ -262,7 +328,7 @@ class Board:
         if not compatible:
             return None
         compats = compatible.split("\x00")
-        for board_id, board_compats in boards._JETSON_IDS.items():
+        for board_id, board_compats in boards._JETSON_IDS:
             if any(v in compats for v in board_compats):
                 return board_id
         return None
@@ -280,10 +346,14 @@ class Board:
         board = None
         if "pine64" in board_value.lower():
             board = boards.PINE64
+        elif "pine h64" in board_value.lower():
+            board = boards.PINEH64
         elif "pinebook" in board_value.lower():
             board = boards.PINEBOOK
         elif "pinephone" in board_value.lower():
             board = boards.PINEPHONE
+        elif "sopine" in board_value.lower():
+            board = boards.SOPINE
         return board
 
     # pylint: disable=no-self-use
@@ -308,6 +378,10 @@ class Board:
         board = None
         if board_value and "ROCK Pi S" in board_value:
             board = boards.ROCK_PI_S
+        if board_value and "ROCK PI 4" in board_value.upper():
+            board = boards.ROCK_PI_4
+        if self.detector.check_board_name_value() == "ROCK Pi X":
+            board = boards.ROCK_PI_X
         return board
 
     def _clockwork_pi_id(self):
@@ -324,7 +398,24 @@ class Board:
         for board_id, board_tags in boards._UDOO_BOARD_IDS.items():
             if any(v == board_asset_tag for v in board_tags):
                 return board_id
+
+        if self.detector.check_board_name_value() == "UDOO x86":
+            return boards.UDOO_X86
+
         return None
+
+    def _asus_tinker_board_id(self):
+        """Check what type of Tinker Board."""
+        board_value = self.detector.get_device_model()
+        board = None
+        if board_value and "ASUS Tinker Board" in board_value:
+            board = boards._ASUS_TINKER_BOARD_IDS
+        return board
+
+    @property
+    def any_nanopi(self):
+        """Check whether the current board is any defined Nano Pi."""
+        return self.id in boards._NANOPI_IDS
 
     @property
     def any_96boards(self):
@@ -357,9 +448,14 @@ class Board:
         return self.id in boards._ORANGE_PI_IDS
 
     @property
+    def any_lubancat(self):
+        """Check whether the current board is any defined lubancat."""
+        return self.id in boards._LUBANCAT_IDS
+
+    @property
     def any_coral_board(self):
         """Check whether the current board is any defined Coral."""
-        return self.CORAL_EDGE_TPU_DEV
+        return self.id in boards._CORAL_IDS
 
     @property
     def any_pynq_board(self):
@@ -379,7 +475,7 @@ class Board:
     @property
     def any_jetson_board(self):
         """Check whether the current board is any defined Jetson Board."""
-        return self.id in boards._JETSON_IDS
+        return self.id in [v[0] for v in boards._JETSON_IDS]
 
     @property
     def any_sifive_board(self):
@@ -398,8 +494,8 @@ class Board:
 
     @property
     def any_rock_pi_board(self):
-        """Check whether the current board is any Clockwork Pi device."""
-        return self.ROCK_PI_S
+        """Check whether the current board is any Rock Pi device."""
+        return self.id in boards._ROCK_PI_IDS
 
     @property
     def any_clockwork_pi_board(self):
@@ -412,6 +508,16 @@ class Board:
         return self.id in boards._UDOO_BOARD_IDS
 
     @property
+    def any_asus_tinker_board(self):
+        """Check to see if the current board is an ASUS Tinker Board"""
+        return self.id in boards._ASUS_TINKER_BOARD_IDS
+
+    @property
+    def any_stm32mp1(self):
+        """Check whether the current board is any stm32mp1 board."""
+        return self.id in boards._STM32MP1_IDS
+
+    @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
         return any(
@@ -419,6 +525,7 @@ class Board:
                 self.any_raspberry_pi,
                 self.any_beaglebone,
                 self.any_orange_pi,
+                self.any_nanopi,
                 self.any_giant_board,
                 self.any_jetson_board,
                 self.any_coral_board,
@@ -431,6 +538,9 @@ class Board:
                 self.any_rock_pi_board,
                 self.any_clockwork_pi_board,
                 self.any_udoo_board,
+                self.any_asus_tinker_board,
+                self.any_stm32mp1,
+                self.any_lubancat,
             ]
         )
 
