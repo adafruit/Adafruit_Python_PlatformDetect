@@ -111,6 +111,10 @@ SIFIVE_UNLEASHED = "SIFIVE_UNLEASHED"
 
 MICROCHIP_MCP2221 = "MICROCHIP_MCP2221"
 
+# Raspberry Pi Pico with u2if firmware
+# https://github.com/execuc/u2if
+PICO_U2IF = "PICO_U2IF"
+
 BINHO_NOVA = "BINHO_NOVA"
 
 ONION_OMEGA = "ONION_OMEGA"
