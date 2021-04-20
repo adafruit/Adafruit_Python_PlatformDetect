@@ -151,6 +151,8 @@ class Board:
             board_id = self._stm32mp1_id()
         elif chip_id == chips.MT8167:
             board_id = boards.CORAL_EDGE_TPU_DEV_MINI
+        elif chip_id == chips.PICO_U2IF:
+            board_id = boards.PICO_U2IF
 
         self._board_id = board_id
         return board_id
@@ -558,6 +560,11 @@ class Board:
     def microchip_mcp2221(self):
         """Check whether the current board is a Microchip MCP2221."""
         return self.id == boards.MICROCHIP_MCP2221
+
+    @property
+    def pico_u2if(self):
+        """Check whether the current board is a RPi Pico w/ u2if."""
+        return self.id == boards.PICO_U2IF
 
     @property
     def binho_nova(self):

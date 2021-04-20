@@ -33,7 +33,8 @@ print(
     | detector.board.FTDI_FT2232H
     | detector.board.MICROCHIP_MCP2221
     | detector.board.BINHO_NOVA
-    | detector.board.GREATFET_ONE,
+    | detector.board.GREATFET_ONE
+    | detector.board.PICO_U2IF,
 )
 
 if detector.board.any_raspberry_pi:
