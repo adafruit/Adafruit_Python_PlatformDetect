@@ -113,6 +113,8 @@ class Board:
             board_id = self._tegra_id()
         elif chip_id == chips.HFU540:
             board_id = self._sifive_id()
+        elif chip_id == chips.C906:
+            board_id == self.allwiner_id()
         elif chip_id == chips.MCP2221:
             board_id = boards.MICROCHIP_MCP2221
         elif chip_id == chips.BINHO:
@@ -340,6 +342,13 @@ class Board:
         board_value = self.detector.get_device_model()
         if "hifive-unleashed-a00" in board_value:
             return boards.SIFIVE_UNLEASHED
+        return None
+
+    def _allwinner_id(self):
+        """Try to detect the id for Allwiner D1 board."""
+        board_value = self.detector.get_device_model()
+        if "sun20iw1p1" in board_value:
+            return boards.ALLWINER_D1
         return None
 
     def _pine64_id(self):
