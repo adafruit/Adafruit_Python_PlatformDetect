@@ -114,7 +114,7 @@ class Board:
         elif chip_id == chips.HFU540:
             board_id = self._sifive_id()
         elif chip_id == chips.C906:
-            board_id == self.allwiner_id()
+            board_id = self._allwinner_id()
         elif chip_id == chips.MCP2221:
             board_id = boards.MICROCHIP_MCP2221
         elif chip_id == chips.BINHO:
