@@ -114,6 +114,8 @@ class Board:
         elif chip_id == chips.HFU540:
             board_id = self._sifive_id()
         elif chip_id == chips.C906:
+            board_id = self.__beaglebone_id()
+        elif chip_id == chips.VICU7:
             board_id = self._allwinner_id()
         elif chip_id == chips.VICU7:
             board_id = self.__beaglebone_id()
@@ -243,9 +245,20 @@ class Board:
                     return model
 
         board_value = self.detector.get_armbian_release_field("BOARD")
+<<<<<<< HEAD
 
         if board_value == "freedom-u74-arty":
             return boards.BEAGLEV_STARFIV
+=======
+        board = None
+
+        if board_value == "freedom-u74-arty":
+            board = boards.BEAGLEV_STARFIV
+
+        if self.detector.chip.id != chips.BCi:
+            # Something else, not a Pi.
+            return None
+>>>>>>> d720af9... Adding support for the BeagleV Starfive, chip VIC-U7
 
         return None
 
