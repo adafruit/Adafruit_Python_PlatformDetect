@@ -115,6 +115,8 @@ class Board:
             board_id = self._sifive_id()
         elif chip_id == chips.C906:
             board_id = self._allwinner_id()
+        elif chip_id == chips.VICU7:
+            board_id = self.__beaglebone_id()
         elif chip_id == chips.MCP2221:
             board_id = boards.MICROCHIP_MCP2221
         elif chip_id == chips.BINHO:
@@ -239,6 +241,11 @@ class Board:
             for bb_id in bb_ids:
                 if id_string == bb_id[1]:
                     return model
+
+        board_value = self.detector.get_armbian_release_field("BOARD")
+
+        if board_value == "freedom-u74-arty":
+            return boards.BEAGLEV_STARFIV
 
         return None
 
