@@ -165,6 +165,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("sun20iw1p1"):
             return chips.C906
 
+        if self.detector.check_dt_compatible_value("sifive"):
+            return chips.VICU7
+
         if self.detector.check_dt_compatible_value("sun8i-a33"):
             return chips.A33
 
