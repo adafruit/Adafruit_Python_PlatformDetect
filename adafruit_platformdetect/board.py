@@ -117,8 +117,6 @@ class Board:
             board_id = self.__beaglebone_id()
         elif chip_id == chips.VICU7:
             board_id = self._allwinner_id()
-        elif chip_id == chips.VICU7:
-            board_id = self.__beaglebone_id()
         elif chip_id == chips.MCP2221:
             board_id = boards.MICROCHIP_MCP2221
         elif chip_id == chips.BINHO:
