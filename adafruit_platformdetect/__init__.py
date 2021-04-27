@@ -48,12 +48,10 @@ class Detector:
 
         with open("/proc/cpuinfo", "r") as infile:
             cpuinfo = infile.read().split("\n")
-            infile.close()
-            for line in cpuinfo:
-                match = re.search(pattern, line, flags=re.IGNORECASE)
-                if match:
-                    return match.group(1)
-        return None
+        for line in cpuinfo:
+            match = re.search(pattern, line, flags=re.IGNORECASE)
+            if match:
+                return match.group(1)
 
     def check_dt_compatible_value(self, value):
         """
@@ -82,7 +80,6 @@ class Detector:
                     match = re.search(pattern, line)
                     if match:
                         field_value = match.group(1)
-                release_file.close()
         except FileNotFoundError:
             pass
 
@@ -93,60 +90,40 @@ class Detector:
         Search /proc/device-tree/model for the device model and return its value, if found,
         otherwise None.
         """
-        model = None
-
         try:
             with open("/proc/device-tree/model", "r") as model_file:
-                model = model_file.read()
-                model_file.close()
+                return model_file.read()
         except FileNotFoundError:
             pass
-
-        return model
 
     def get_device_compatible(self):
         """
         Search /proc/device-tree/compatible for the compatible chip name.
         """
-        model = None
-
         try:
             with open("/proc/device-tree/compatible", "r") as model_file:
-                model = model_file.read()
-                model_file.close()
+                return model_file.read()
         except FileNotFoundError:
             pass
-
-        return model
 
     def check_board_asset_tag_value(self):
         """
         Search /sys/devices/virtual/dmi/id for the device model and return its value, if found,
         otherwise None.
         """
-        tag = None
-
         try:
             with open("/sys/devices/virtual/dmi/id/board_asset_tag", "r") as tag_file:
-                tag = tag_file.read().strip()
-                tag_file.close()
+                return tag_file.read().strip()
         except FileNotFoundError:
             pass
-
-        return tag
 
     def check_board_name_value(self):
         """
         Search /sys/devices/virtual/dmi/id for the board name and return its value, if found,
         otherwise None. Debian/ubuntu based
         """
-        board_name = None
-
         try:
             with open("/sys/devices/virtual/dmi/id/board_name", "r") as board_name_file:
-                board_name = board_name_file.read().strip()
-                board_name.close()
+                return board_name_file.read().strip()
         except FileNotFoundError:
             pass
-
-        return board_name
