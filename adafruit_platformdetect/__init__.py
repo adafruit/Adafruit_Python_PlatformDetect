@@ -52,6 +52,7 @@ class Detector:
             match = re.search(pattern, line, flags=re.IGNORECASE)
             if match:
                 return match.group(1)
+        return None
 
     def check_dt_compatible_value(self, value):
         """
@@ -95,6 +96,7 @@ class Detector:
                 return model_file.read()
         except FileNotFoundError:
             pass
+        return None
 
     def get_device_compatible(self):
         """
@@ -105,6 +107,7 @@ class Detector:
                 return model_file.read()
         except FileNotFoundError:
             pass
+        return None
 
     def check_board_asset_tag_value(self):
         """
@@ -116,6 +119,7 @@ class Detector:
                 return tag_file.read().strip()
         except FileNotFoundError:
             pass
+        return None
 
     def check_board_name_value(self):
         """
@@ -127,3 +131,4 @@ class Detector:
                 return board_name_file.read().strip()
         except FileNotFoundError:
             pass
+        return None
