@@ -30,9 +30,11 @@ print("Is this an STM32MP1 Board?", detector.board.any_stm32mp1)
 print(
     "Is this an OS environment variable special case?",
     detector.board.FTDI_FT232H
+    | detector.board.FTDI_FT2232H
     | detector.board.MICROCHIP_MCP2221
     | detector.board.BINHO_NOVA
-    | detector.board.GREATFET_ONE,
+    | detector.board.GREATFET_ONE
+    | detector.board.PICO_U2IF,
 )
 
 if detector.board.any_raspberry_pi:

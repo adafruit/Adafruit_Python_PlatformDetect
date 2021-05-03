@@ -83,6 +83,18 @@ class Chip:
                 )
             self._chip_id = chips.FT232H
             return self._chip_id
+        if os.environ.get("BLINKA_FT2232H"):
+            from pyftdi.usbtools import UsbTools
+
+            # look for it based on PID/VID
+            count = len(UsbTools.find_all([(0x0403, 0x6010)]))
+            if count == 0:
+                raise RuntimeError(
+                    "BLINKA_FT2232H environment variable "
+                    + "set, but no FT2232H device found"
+                )
+            self._chip_id = chips.FT2232H
+            return self._chip_id
         if os.environ.get("BLINKA_MCP2221"):
             import hid
 
@@ -94,6 +106,18 @@ class Chip:
             raise RuntimeError(
                 "BLINKA_MCP2221 environment variable "
                 + "set, but no MCP2221 device found"
+            )
+        if os.environ.get("BLINKA_PICO_U2IF"):
+            import hid
+
+            # look for it based on PID/VID
+            for dev in hid.enumerate():
+                if dev["vendor_id"] == 0xCAFE and dev["product_id"] == 0x4005:
+                    self._chip_id = chips.PICO_U2IF
+                    return self._chip_id
+            raise RuntimeError(
+                "BLINKA_PICO_U2IF environment variable "
+                + "set, but no Pico device found"
             )
         if os.environ.get("BLINKA_GREATFET"):
             import usb
@@ -138,11 +162,20 @@ class Chip:
         if self.detector.check_dt_compatible_value("fu500"):
             return chips.HFU540
 
+        if self.detector.check_dt_compatible_value("sun20iw1p1"):
+            return chips.C906
+
+        if self.detector.check_dt_compatible_value("sifive"):
+            return chips.VICU7
+
         if self.detector.check_dt_compatible_value("sun8i-a33"):
             return chips.A33
 
         if self.detector.check_dt_compatible_value("rockchip,rk3308"):
             return chips.RK3308
+
+        if self.detector.check_dt_compatible_value("rockchip,rk3399"):
+            return chips.RK3399
 
         if self.detector.check_dt_compatible_value("rockchip,rk3288"):
             return chips.RK3288

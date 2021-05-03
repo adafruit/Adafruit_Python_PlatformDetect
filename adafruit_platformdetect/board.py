@@ -105,12 +105,18 @@ class Board:
             board_id = boards.ODROID_XU4
         elif chip_id == chips.FT232H:
             board_id = boards.FTDI_FT232H
+        elif chip_id == chips.FT2232H:
+            board_id = boards.FTDI_FT2232H
         elif chip_id == chips.APQ8016:
             board_id = boards.DRAGONBOARD_410C
         elif chip_id in (chips.T210, chips.T186, chips.T194):
             board_id = self._tegra_id()
         elif chip_id == chips.HFU540:
             board_id = self._sifive_id()
+        elif chip_id == chips.C906:
+            board_id = self._allwinner_id()
+        elif chip_id == chips.VICU7:
+            board_id = self.__beaglebone_id()
         elif chip_id == chips.MCP2221:
             board_id = boards.MICROCHIP_MCP2221
         elif chip_id == chips.BINHO:
@@ -135,6 +141,8 @@ class Board:
             board_id = self._clockwork_pi_id()
         elif chip_id == chips.RK3308:
             board_id = self._rock_pi_id()
+        elif chip_id == chips.RK3399:
+            board_id = self._rock_pi_id()
         elif chip_id == chips.ATOM_X5_Z8350:
             board_id = self._rock_pi_id()
         elif chip_id == chips.RK3288:
@@ -147,6 +155,8 @@ class Board:
             board_id = self._stm32mp1_id()
         elif chip_id == chips.MT8167:
             board_id = boards.CORAL_EDGE_TPU_DEV_MINI
+        elif chip_id == chips.PICO_U2IF:
+            board_id = boards.PICO_U2IF
 
         self._board_id = board_id
         return board_id
@@ -232,6 +242,11 @@ class Board:
                 if id_string == bb_id[1]:
                     return model
 
+        board_value = self.detector.get_armbian_release_field("BOARD")
+
+        if board_value == "freedom-u74-arty":
+            return boards.BEAGLEV_STARFIV
+
         return None
 
     # pylint: enable=no-self-use
@@ -300,6 +315,8 @@ class Board:
             return boards.STM32MP157C_DK2
         if "LubanCat" in board_value:
             return boards.LUBANCAT_STM32MP157
+        if "OSD32MP1-BRK" in board_value:
+            return boards.OSD32MP1_BRK
         return None
 
     def _imx8mx_id(self):
@@ -332,6 +349,13 @@ class Board:
         board_value = self.detector.get_device_model()
         if "hifive-unleashed-a00" in board_value:
             return boards.SIFIVE_UNLEASHED
+        return None
+
+    def _allwinner_id(self):
+        """Try to detect the id for Allwiner D1 board."""
+        board_value = self.detector.get_device_model()
+        if "sun20iw1p1" in board_value:
+            return boards.ALLWINER_D1
         return None
 
     def _pine64_id(self):
@@ -372,6 +396,8 @@ class Board:
         board = None
         if board_value and "ROCK Pi S" in board_value:
             board = boards.ROCK_PI_S
+        if board_value and "ROCK PI 4" in board_value.upper():
+            board = boards.ROCK_PI_4
         if self.detector.check_board_name_value() == "ROCK Pi X":
             board = boards.ROCK_PI_X
         return board
@@ -486,8 +512,8 @@ class Board:
 
     @property
     def any_rock_pi_board(self):
-        """Check whether the current board is any Clockwork Pi device."""
-        return self.ROCK_PI_S
+        """Check whether the current board is any Rock Pi device."""
+        return self.id in boards._ROCK_PI_IDS
 
     @property
     def any_clockwork_pi_board(self):
@@ -542,9 +568,19 @@ class Board:
         return self.id == boards.FTDI_FT232H
 
     @property
+    def ftdi_ft2232h(self):
+        """Check whether the current board is an FTDI FT2232H."""
+        return self.id == boards.FTDI_FT2232H
+
+    @property
     def microchip_mcp2221(self):
         """Check whether the current board is a Microchip MCP2221."""
         return self.id == boards.MICROCHIP_MCP2221
+
+    @property
+    def pico_u2if(self):
+        """Check whether the current board is a RPi Pico w/ u2if."""
+        return self.id == boards.PICO_U2IF
 
     @property
     def binho_nova(self):
