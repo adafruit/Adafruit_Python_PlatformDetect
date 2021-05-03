@@ -202,6 +202,8 @@ _JETSON_IDS = (
             "nvidia,p2972-0000",
             "nvidia,p2972-0006",
             "nvidia,jetson-xavier",
+            "nvidia,jetson-xavier-industrial",
+            "nvidia,galen-industrial",
         ),
     ),
     (
