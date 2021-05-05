@@ -195,6 +195,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("sun50iw9"):
             return chips.H616
 
+        if self.detector.check_dt_compatible_value("sun50i-h616"):
+            return chips.H616
+
         if self.detector.check_dt_compatible_value("mediatek,mt8167"):
             return chips.MT8167
 
