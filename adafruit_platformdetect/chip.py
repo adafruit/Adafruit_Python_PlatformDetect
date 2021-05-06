@@ -65,73 +65,74 @@ class Chip:
         if self._chip_id:
             return self._chip_id
 
-        try:
-            return os.environ["BLINKA_FORCECHIP"]
-        except KeyError:  # no forced chip, continue with testing!
-            pass
+        if getattr(os, "environ", None) is not None:
+            try:
+                return os.environ["BLINKA_FORCECHIP"]
+            except KeyError:  # no forced chip, continue with testing!
+                pass
 
-        # Special cases controlled by environment var
-        if os.environ.get("BLINKA_FT232H"):
-            from pyftdi.usbtools import UsbTools
+            # Special cases controlled by environment var
+            if os.environ.get("BLINKA_FT232H"):
+                from pyftdi.usbtools import UsbTools
 
-            # look for it based on PID/VID
-            count = len(UsbTools.find_all([(0x0403, 0x6014)]))
-            if count == 0:
-                raise RuntimeError(
-                    "BLINKA_FT232H environment variable "
-                    + "set, but no FT232H device found"
-                )
-            self._chip_id = chips.FT232H
-            return self._chip_id
-        if os.environ.get("BLINKA_FT2232H"):
-            from pyftdi.usbtools import UsbTools
-
-            # look for it based on PID/VID
-            count = len(UsbTools.find_all([(0x0403, 0x6010)]))
-            if count == 0:
-                raise RuntimeError(
-                    "BLINKA_FT2232H environment variable "
-                    + "set, but no FT2232H device found"
-                )
-            self._chip_id = chips.FT2232H
-            return self._chip_id
-        if os.environ.get("BLINKA_MCP2221"):
-            import hid
-
-            # look for it based on PID/VID
-            for dev in hid.enumerate():
-                if dev["vendor_id"] == 0x04D8 and dev["product_id"] == 0x00DD:
-                    self._chip_id = chips.MCP2221
-                    return self._chip_id
-            raise RuntimeError(
-                "BLINKA_MCP2221 environment variable "
-                + "set, but no MCP2221 device found"
-            )
-        if os.environ.get("BLINKA_PICO_U2IF"):
-            import hid
-
-            # look for it based on PID/VID
-            for dev in hid.enumerate():
-                if dev["vendor_id"] == 0xCAFE and dev["product_id"] == 0x4005:
-                    self._chip_id = chips.PICO_U2IF
-                    return self._chip_id
-            raise RuntimeError(
-                "BLINKA_PICO_U2IF environment variable "
-                + "set, but no Pico device found"
-            )
-        if os.environ.get("BLINKA_GREATFET"):
-            import usb
-
-            if usb.core.find(idVendor=0x1D50, idProduct=0x60E6) is not None:
-                self._chip_id = chips.LPC4330
+                # look for it based on PID/VID
+                count = len(UsbTools.find_all([(0x0403, 0x6014)]))
+                if count == 0:
+                    raise RuntimeError(
+                        "BLINKA_FT232H environment variable "
+                        + "set, but no FT232H device found"
+                    )
+                self._chip_id = chips.FT232H
                 return self._chip_id
-            raise RuntimeError(
-                "BLINKA_GREATFET environment variable "
-                + "set, but no GreatFET device found"
-            )
-        if os.environ.get("BLINKA_NOVA"):
-            self._chip_id = chips.BINHO
-            return self._chip_id
+            if os.environ.get("BLINKA_FT2232H"):
+                from pyftdi.usbtools import UsbTools
+
+                # look for it based on PID/VID
+                count = len(UsbTools.find_all([(0x0403, 0x6010)]))
+                if count == 0:
+                    raise RuntimeError(
+                        "BLINKA_FT2232H environment variable "
+                        + "set, but no FT2232H device found"
+                    )
+                self._chip_id = chips.FT2232H
+                return self._chip_id
+            if os.environ.get("BLINKA_MCP2221"):
+                import hid
+
+                # look for it based on PID/VID
+                for dev in hid.enumerate():
+                    if dev["vendor_id"] == 0x04D8 and dev["product_id"] == 0x00DD:
+                        self._chip_id = chips.MCP2221
+                        return self._chip_id
+                raise RuntimeError(
+                    "BLINKA_MCP2221 environment variable "
+                    + "set, but no MCP2221 device found"
+                )
+            if os.environ.get("BLINKA_PICO_U2IF"):
+                import hid
+
+                # look for it based on PID/VID
+                for dev in hid.enumerate():
+                    if dev["vendor_id"] == 0xCAFE and dev["product_id"] == 0x4005:
+                        self._chip_id = chips.PICO_U2IF
+                        return self._chip_id
+                raise RuntimeError(
+                    "BLINKA_PICO_U2IF environment variable "
+                    + "set, but no Pico device found"
+                )
+            if os.environ.get("BLINKA_GREATFET"):
+                import usb
+
+                if usb.core.find(idVendor=0x1D50, idProduct=0x60E6) is not None:
+                    self._chip_id = chips.LPC4330
+                    return self._chip_id
+                raise RuntimeError(
+                    "BLINKA_GREATFET environment variable "
+                    + "set, but no GreatFET device found"
+                )
+            if os.environ.get("BLINKA_NOVA"):
+                self._chip_id = chips.BINHO
+                return self._chip_id
 
         platform = sys.platform
         if platform in ("linux", "linux2"):
