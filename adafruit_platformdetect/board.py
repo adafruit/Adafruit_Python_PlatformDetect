@@ -65,7 +65,7 @@ class Board:
 
         try:
             return os.environ["BLINKA_FORCEBOARD"]
-        except KeyError:  # no forced board, continue with testing!
+        except (AttributeError, KeyError):  # no forced board, continue with testing!
             pass
 
         chip_id = self.detector.chip.id
