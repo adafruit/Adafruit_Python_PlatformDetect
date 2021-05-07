@@ -93,6 +93,8 @@ class Board:
             board_id = boards.FEATHER_M0_EXPRESS
         elif chip_id == chips.STM32F405:
             board_id = boards.PYBOARD
+        elif chip_id == chips.RP2040:
+            board_id = boards.RASPBERRY_PI_PICO
         elif chip_id == chips.S805:
             board_id = boards.ODROID_C1
         elif chip_id == chips.S905:

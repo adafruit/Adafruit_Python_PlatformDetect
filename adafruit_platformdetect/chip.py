@@ -147,6 +147,9 @@ class Chip:
         if platform == "pyboard":
             self._chip_id = chips.STM32F405
             return self._chip_id
+        if platform == "rp2":
+            self._chip_id = chips.RP2040
+            return self._chip_id
         # nothing found!
         return None
 
