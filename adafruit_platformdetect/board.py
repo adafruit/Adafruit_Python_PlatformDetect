@@ -80,7 +80,7 @@ class Board:
         elif chip_id == chips.GENERIC_X86:
             board_id = boards.GENERIC_LINUX_PC
         elif chip_id == chips.SUN8I:
-            board_id = self._armbian_id() or self._allwinner_variants_id()
+            board_id = self._armbian_id()
         elif chip_id == chips.SAMA5:
             board_id = self._sama5_id()
         elif chip_id == chips.IMX8MX:
@@ -136,9 +136,9 @@ class Board:
         elif chip_id == chips.H6:
             board_id = self._pine64_id()
         elif chip_id == chips.H5:
-            board_id = self._armbian_id() or self._allwinner_variants_id()
+            board_id = self._armbian_id()
         elif chip_id == chips.H616:
-            board_id = self._armbian_id() or self._allwinner_variants_id()
+            board_id = self._armbian_id()
         elif chip_id == chips.A33:
             board_id = self._clockwork_pi_id()
         elif chip_id == chips.RK3308:
@@ -149,6 +149,8 @@ class Board:
             board_id = self._rock_pi_id()
         elif chip_id == chips.RK3288:
             board_id = self._asus_tinker_board_id()
+        elif chip_id == chips.RK3328:
+            board_id = self._rock_pi_id()
         elif chip_id == chips.RYZEN_V1605B:
             board_id = self._udoo_id()
         elif chip_id == chips.PENTIUM_N3710:
@@ -402,6 +404,8 @@ class Board:
             board = boards.ROCK_PI_S
         if board_value and "ROCK PI 4" in board_value.upper():
             board = boards.ROCK_PI_4
+        if board_value and "ROCK PI E" in board_value.upper():
+            board = boards.ROCK_PI_E
         if self.detector.check_board_name_value() == "ROCK Pi X":
             board = boards.ROCK_PI_X
         return board
@@ -432,27 +436,6 @@ class Board:
         board = None
         if board_value and "ASUS Tinker Board" in board_value:
             board = boards._ASUS_TINKER_BOARD_IDS
-        return board
-
-    def _allwinner_variants_id(self):
-        """Try to detect the id of allwinner based board. (orangepi, nanopi)"""
-        board_value = self.detector.get_device_model()
-        board = None
-        if not board_value:
-            return board
-        board_value = board_value.lower()
-        chip_id = self.detector.chip.id
-        if "nanopi" in board_value:
-            if "neo" in board_value and "SUN8I" in chip_id:
-                board = boards.NANOPI_NEO_AIR
-            # TODO: Add other specifc board contexts here
-        elif "orange pi" in board_value:
-            if "zero" in board_value:
-                if "H5" in chip_id:
-                    board = boards.ORANGE_PI_ZERO_PLUS_2H5
-                elif "H616" in chip_id:
-                    board = boards.ORANGE_PI_ZERO_2
-            # TODO: Add other specifc board contexts here
         return board
 
     @property
