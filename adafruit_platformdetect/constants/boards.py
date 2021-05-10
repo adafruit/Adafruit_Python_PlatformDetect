@@ -133,6 +133,7 @@ SOPINE = "SOPINE"
 ROCK_PI_S = "ROCK_PI_S"
 ROCK_PI_4 = "ROCK_PI_4"
 ROCK_PI_X = "ROCK_PI_X"
+ROCK_PI_E = "ROCK_PI_E"
 
 GREATFET_ONE = "GREATFET_ONE"
 
@@ -145,11 +146,7 @@ UDOO_X86 = "UDOO_X86"
 _ASUS_TINKER_BOARD_IDS = (ASUS_TINKER_BOARD,)
 
 # STM32MP1
-_STM32MP1_IDS = (
-    STM32MP157C_DK2,
-    LUBANCAT_STM32MP157,
-    OSD32MP1_BRK,
-)
+_STM32MP1_IDS = (STM32MP157C_DK2, LUBANCAT_STM32MP157, OSD32MP1_BRK)
 
 # OrangePI
 _ORANGE_PI_IDS = (
@@ -167,36 +164,21 @@ _ORANGE_PI_IDS = (
 )
 
 # NanoPi
-_NANOPI_IDS = (
-    NANOPI_NEO_AIR,
-    NANOPI_DUO2,
-)
+_NANOPI_IDS = (NANOPI_NEO_AIR, NANOPI_DUO2)
 
 # BananaPI
 _BANANA_PI_IDS = (BANANA_PI_M2_ZERO,)
 
 # LubanCat
-_LUBANCAT_IDS = (
-    LUBANCAT_IMX6ULL,
-    LUBANCAT_STM32MP157,
-)
+_LUBANCAT_IDS = (LUBANCAT_IMX6ULL, LUBANCAT_STM32MP157)
 
 # Coral boards
-_CORAL_IDS = (
-    CORAL_EDGE_TPU_DEV,
-    CORAL_EDGE_TPU_DEV_MINI,
-)
+_CORAL_IDS = (CORAL_EDGE_TPU_DEV, CORAL_EDGE_TPU_DEV_MINI)
 
 _PYNQ_IDS = (PYNQ_Z1, PYNQ_Z2)
 
 _JETSON_IDS = (
-    (
-        JETSON_TX1,
-        (
-            "nvidia,p2371-2180",
-            "nvidia,jetson-cv",
-        ),
-    ),
+    (JETSON_TX1, ("nvidia,p2371-2180", "nvidia,jetson-cv")),
     (
         JETSON_TX2,
         (
@@ -210,22 +192,8 @@ _JETSON_IDS = (
     ),
     (JETSON_TX2_NX, ("nvidia,p3509-0000+p3636-0001",)),
     (CLARA_AGX_XAVIER, ("nvidia,e3900-0000+p2888-0004",)),
-    (
-        JETSON_XAVIER,
-        (
-            "nvidia,p2972-0000",
-            "nvidia,p2972-0006",
-            "nvidia,jetson-xavier",
-        ),
-    ),
-    (
-        JETSON_NANO,
-        (
-            "nvidia,p3450-0000",
-            "nvidia,p3450-0002",
-            "nvidia,jetson-nano",
-        ),
-    ),
+    (JETSON_XAVIER, ("nvidia,p2972-0000", "nvidia,p2972-0006", "nvidia,jetson-xavier")),
+    (JETSON_NANO, ("nvidia,p3450-0000", "nvidia,p3450-0002", "nvidia,jetson-nano")),
     (
         JETSON_NX,
         (
@@ -454,11 +422,7 @@ _PI_REV_CODES = {
         "2c03112",
     ),
     RASPBERRY_PI_400: ("c03130",),
-    RASPBERRY_PI_CM4: (
-        "a03140",
-        "b03140",
-        "c03140",
-    ),
+    RASPBERRY_PI_CM4: ("a03140", "b03140", "c03140"),
 }
 
 # Onion omega boards
@@ -468,7 +432,7 @@ _ONION_OMEGA_BOARD_IDS = (ONION_OMEGA, ONION_OMEGA2)
 _PINE64_DEV_IDS = (PINE64, PINEH64, PINEBOOK, PINEPHONE, SOPINE)
 
 # RockPi boards and devices
-_ROCK_PI_IDS = (ROCK_PI_S, ROCK_PI_4, ROCK_PI_X)
+_ROCK_PI_IDS = (ROCK_PI_S, ROCK_PI_4, ROCK_PI_X, ROCK_PI_E)
 
 # UDOO
 _UDOO_BOARD_IDS = {UDOO_BOLT_V8: ("SC40-2000-0000-C0|C",), UDOO_X86: ("dummy",)}

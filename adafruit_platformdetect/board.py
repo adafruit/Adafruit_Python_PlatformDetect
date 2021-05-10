@@ -149,6 +149,8 @@ class Board:
             board_id = self._rock_pi_id()
         elif chip_id == chips.RK3288:
             board_id = self._asus_tinker_board_id()
+        elif chip_id == chips.RK3328:
+            board_id = self._rock_pi_id()
         elif chip_id == chips.RYZEN_V1605B:
             board_id = self._udoo_id()
         elif chip_id == chips.PENTIUM_N3710:
@@ -402,6 +404,8 @@ class Board:
             board = boards.ROCK_PI_S
         if board_value and "ROCK PI 4" in board_value.upper():
             board = boards.ROCK_PI_4
+        if board_value and "ROCK PI E" in board_value.upper():
+            board = boards.ROCK_PI_E
         if self.detector.check_board_name_value() == "ROCK Pi X":
             board = boards.ROCK_PI_X
         return board
