@@ -34,7 +34,10 @@ print(
     | detector.board.MICROCHIP_MCP2221
     | detector.board.BINHO_NOVA
     | detector.board.GREATFET_ONE
-    | detector.board.PICO_U2IF,
+    | detector.board.PICO_U2IF
+    | detector.board.FEATHER_U2IF
+    | detector.board.ITSYBITY_U2IF
+    | detector.board.QTPY_U2IF,
 )
 
 if detector.board.any_raspberry_pi:

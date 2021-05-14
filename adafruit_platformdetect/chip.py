@@ -108,17 +108,30 @@ class Chip:
                     "BLINKA_MCP2221 environment variable "
                     + "set, but no MCP2221 device found"
                 )
-            if os.environ.get("BLINKA_PICO_U2IF"):
+            if os.environ.get("BLINKA_U2IF"):
                 import hid
 
                 # look for it based on PID/VID
                 for dev in hid.enumerate():
+                    # Raspberry Pi Pico
                     if dev["vendor_id"] == 0xCAFE and dev["product_id"] == 0x4005:
                         self._chip_id = chips.PICO_U2IF
                         return self._chip_id
+                    # Feather RP2040
+                    if dev["vendor_id"] == 0x239A and dev["product_id"] == 0x80F2:
+                        self._chip_id = chips.FEATHER_U2IF
+                        return self._chip_id
+                    # Itsy Bitsy RP2040
+                    if dev["vendor_id"] == 0x239A and dev["product_id"] == 0x80FE:
+                        self._chip_id = chips.ITSYBITSY_U2IF
+                        return self._chip_id
+                    # QT Py RP2040
+                    if dev["vendor_id"] == 0x239A and dev["product_id"] == 0x80F8:
+                        self._chip_id = chips.QTPY_U2IF
+                        return self._chip_id
                 raise RuntimeError(
-                    "BLINKA_PICO_U2IF environment variable "
-                    + "set, but no Pico device found"
+                    "BLINKA_U2IF environment variable "
+                    + "set, but no compatible device found"
                 )
             if os.environ.get("BLINKA_GREATFET"):
                 import usb

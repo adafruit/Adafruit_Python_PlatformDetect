@@ -115,9 +115,12 @@ ALLWINER_D1 = "ALLWINER_D1"
 
 MICROCHIP_MCP2221 = "MICROCHIP_MCP2221"
 
-# Raspberry Pi Pico with u2if firmware
+# Boards with u2if firmware
 # https://github.com/execuc/u2if
 PICO_U2IF = "PICO_U2IF"
+FEATHER_U2IF = "FEATHER_U2IF"
+ITSYBITSY_U2IF = "ITSYBITSY_U2IF"
+QTPY_U2IF = "QTPY_U2IF"
 
 BINHO_NOVA = "BINHO_NOVA"
 
