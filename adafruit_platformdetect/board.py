@@ -168,7 +168,7 @@ class Board:
         elif chip_id == chips.QTPY_U2IF:
             board_id = boards.QTPY_U2IF
         elif chip_id == chips.QT2040_TRINKEY_U2IF:
-            board_id == boards.QT2040_TRINKEY_U2IF
+            board_id = boards.QT2040_TRINKEY_U2IF
         self._board_id = board_id
         return board_id
 
