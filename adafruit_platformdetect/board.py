@@ -167,6 +167,8 @@ class Board:
             board_id = boards.ITSYBITSY_U2IF
         elif chip_id == chips.QTPY_U2IF:
             board_id = boards.QTPY_U2IF
+        elif chip_id == chips.QT2040_TRINKEY_U2IF:
+            board_id == boards.QT2040_TRINKEY_U2IF
         self._board_id = board_id
         return board_id
 
@@ -630,6 +632,11 @@ class Board:
     def qtpy_u2if(self):
         """Check whether the current board is a QT Py w/ u2if."""
         return self.id == boards.QTPY_U2IF
+
+    @property
+    def qt2040_trinkey_u2if(self):
+        """Check whether the current board is a QT Py w/ u2if."""
+        return self.id == boards.QT2040_TRINKEY_U2IF
 
     @property
     def binho_nova(self):

@@ -129,6 +129,10 @@ class Chip:
                     if dev["vendor_id"] == 0x239A and dev["product_id"] == 0x80F8:
                         self._chip_id = chips.QTPY_U2IF
                         return self._chip_id
+                    # QT2040 Trinkey
+                    if dev["vendor_id"] == 0x239A and dev["product_id"] == 0x13C0:
+                        self._chip_id = chips.QT2040_TRINKEY_U2IF
+                        return self._chip_id
                 raise RuntimeError(
                     "BLINKA_U2IF environment variable "
                     + "set, but no compatible device found"
