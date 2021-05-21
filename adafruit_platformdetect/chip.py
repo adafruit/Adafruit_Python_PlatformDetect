@@ -118,19 +118,19 @@ class Chip:
                         self._chip_id = chips.PICO_U2IF
                         return self._chip_id
                     # Feather RP2040
-                    if dev["vendor_id"] == 0x239A and dev["product_id"] == 0x80F2:
+                    if dev["vendor_id"] == 0x239A and dev["product_id"] == 0x00F1:
                         self._chip_id = chips.FEATHER_U2IF
                         return self._chip_id
                     # Itsy Bitsy RP2040
-                    if dev["vendor_id"] == 0x239A and dev["product_id"] == 0x80FE:
+                    if dev["vendor_id"] == 0x239A and dev["product_id"] == 0x00FD:
                         self._chip_id = chips.ITSYBITSY_U2IF
                         return self._chip_id
                     # QT Py RP2040
-                    if dev["vendor_id"] == 0x239A and dev["product_id"] == 0x80F8:
+                    if dev["vendor_id"] == 0x239A and dev["product_id"] == 0x00F7:
                         self._chip_id = chips.QTPY_U2IF
                         return self._chip_id
                     # QT2040 Trinkey
-                    if dev["vendor_id"] == 0x239A and dev["product_id"] == 0x13C0:
+                    if dev["vendor_id"] == 0x239A and dev["product_id"] == 0x0109:
                         self._chip_id = chips.QT2040_TRINKEY_U2IF
                         return self._chip_id
                 raise RuntimeError(
