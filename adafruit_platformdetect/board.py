@@ -161,7 +161,14 @@ class Board:
             board_id = boards.CORAL_EDGE_TPU_DEV_MINI
         elif chip_id == chips.PICO_U2IF:
             board_id = boards.PICO_U2IF
-
+        elif chip_id == chips.FEATHER_U2IF:
+            board_id = boards.FEATHER_U2IF
+        elif chip_id == chips.ITSYBITSY_U2IF:
+            board_id = boards.ITSYBITSY_U2IF
+        elif chip_id == chips.QTPY_U2IF:
+            board_id = boards.QTPY_U2IF
+        elif chip_id == chips.QT2040_TRINKEY_U2IF:
+            board_id = boards.QT2040_TRINKEY_U2IF
         self._board_id = board_id
         return board_id
 
@@ -610,6 +617,26 @@ class Board:
     def pico_u2if(self):
         """Check whether the current board is a RPi Pico w/ u2if."""
         return self.id == boards.PICO_U2IF
+
+    @property
+    def feather_u2if(self):
+        """Check whether the current board is a Feather RP2040 w/ u2if."""
+        return self.id == boards.FEATHER_U2IF
+
+    @property
+    def itsybitsy_u2if(self):
+        """Check whether the current board is a Itsy Bitsy w/ u2if."""
+        return self.id == boards.ITSYBITSY_U2IF
+
+    @property
+    def qtpy_u2if(self):
+        """Check whether the current board is a QT Py w/ u2if."""
+        return self.id == boards.QTPY_U2IF
+
+    @property
+    def qt2040_trinkey_u2if(self):
+        """Check whether the current board is a QT Py w/ u2if."""
+        return self.id == boards.QT2040_TRINKEY_U2IF
 
     @property
     def binho_nova(self):
