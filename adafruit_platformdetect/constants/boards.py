@@ -428,7 +428,7 @@ _PI_REV_CODES = {
         "2c03112",
     ),
     RASPBERRY_PI_400: ("c03130",),
-    RASPBERRY_PI_CM4: ("a03140", "b03140", "c03140"),
+    RASPBERRY_PI_CM4: ("a03140", "b03140", "c03140","d03140"),
 }
 
 # Onion omega boards
