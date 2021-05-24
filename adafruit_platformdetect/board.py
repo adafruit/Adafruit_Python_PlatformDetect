@@ -117,8 +117,8 @@ class Board:
             board_id = self._sifive_id()
         elif chip_id == chips.C906:
             board_id = self._allwinner_id()
-        elif chip_id == chips.VICU7:
-            board_id = self.__beaglebone_id()
+        elif chip_id == chips.JH71x0:
+            board_id = self._beaglebone_id()
         elif chip_id == chips.MCP2221:
             board_id = boards.MICROCHIP_MCP2221
         elif chip_id == chips.BINHO:
@@ -233,6 +233,11 @@ class Board:
     # pylint: disable=no-self-use
     def _beaglebone_id(self):
         """Try to detect id of a Beaglebone."""
+
+        board_value = self.detector.get_device_compatible()
+        if "freedom-u74-arty" in board_value:
+            return boards.BEAGLEV_STARLIGHT
+
         try:
             with open("/sys/bus/nvmem/devices/0-00500/nvmem", "rb") as eeprom:
                 eeprom_bytes = eeprom.read(16)
@@ -254,9 +259,6 @@ class Board:
                     return model
 
         board_value = self.detector.get_armbian_release_field("BOARD")
-
-        if board_value == "freedom-u74-arty":
-            return boards.BEAGLEV_STARFIV
 
         return None
 
