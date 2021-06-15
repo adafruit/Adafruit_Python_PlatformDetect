@@ -39,7 +39,7 @@ Implementation Notes
 # imports
 import os
 import re
-from adafruit_platformdetect.constants import boards, chips
+from adafruit_platformdetect.constants import boards, chips, u2if
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
@@ -159,16 +159,16 @@ class Board:
             board_id = self._stm32mp1_id()
         elif chip_id == chips.MT8167:
             board_id = boards.CORAL_EDGE_TPU_DEV_MINI
-        elif chip_id == chips.PICO_U2IF:
-            board_id = boards.PICO_U2IF
-        elif chip_id == chips.FEATHER_U2IF:
-            board_id = boards.FEATHER_U2IF
-        elif chip_id == chips.ITSYBITSY_U2IF:
-            board_id = boards.ITSYBITSY_U2IF
-        elif chip_id == chips.QTPY_U2IF:
-            board_id = boards.QTPY_U2IF
-        elif chip_id == chips.QT2040_TRINKEY_U2IF:
-            board_id = boards.QT2040_TRINKEY_U2IF
+        elif chip_id == u2if.PICO_U2IF:
+            board_id = u2if.PICO_U2IF
+        elif chip_id == u2if.FEATHER_U2IF:
+            board_id = u2if.FEATHER_U2IF
+        elif chip_id == u2if.ITSYBITSY_U2IF:
+            board_id = u2if.ITSYBITSY_U2IF
+        elif chip_id ==u2if.QTPY_U2IF:
+            board_id = u2if.QTPY_U2IF
+        elif chip_id == u2if.QT2040_TRINKEY_U2IF:
+            board_id = u2if.QT2040_TRINKEY_U2IF
         self._board_id = board_id
         return board_id
 
@@ -618,27 +618,27 @@ class Board:
     @property
     def pico_u2if(self):
         """Check whether the current board is a RPi Pico w/ u2if."""
-        return self.id == boards.PICO_U2IF
+        return self.id == u2if.PICO_U2IF
 
     @property
     def feather_u2if(self):
         """Check whether the current board is a Feather RP2040 w/ u2if."""
-        return self.id == boards.FEATHER_U2IF
+        return self.id == u2if.FEATHER_U2IF
 
     @property
     def itsybitsy_u2if(self):
         """Check whether the current board is a Itsy Bitsy w/ u2if."""
-        return self.id == boards.ITSYBITSY_U2IF
+        return self.id == u2if.ITSYBITSY_U2IF
 
     @property
     def qtpy_u2if(self):
         """Check whether the current board is a QT Py w/ u2if."""
-        return self.id == boards.QTPY_U2IF
+        return self.id == u2if.QTPY_U2IF
 
     @property
     def qt2040_trinkey_u2if(self):
         """Check whether the current board is a QT Py w/ u2if."""
-        return self.id == boards.QT2040_TRINKEY_U2IF
+        return self.id == u2if.QT2040_TRINKEY_U2IF
 
     @property
     def binho_nova(self):
