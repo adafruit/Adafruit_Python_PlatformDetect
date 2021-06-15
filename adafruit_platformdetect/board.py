@@ -165,7 +165,7 @@ class Board:
             board_id = u2if.FEATHER_U2IF
         elif chip_id == u2if.ITSYBITSY_U2IF:
             board_id = u2if.ITSYBITSY_U2IF
-        elif chip_id ==u2if.QTPY_U2IF:
+        elif chip_id == u2if.QTPY_U2IF:
             board_id = u2if.QTPY_U2IF
         elif chip_id == u2if.QT2040_TRINKEY_U2IF:
             board_id = u2if.QT2040_TRINKEY_U2IF
