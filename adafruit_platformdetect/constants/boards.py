@@ -196,7 +196,16 @@ _JETSON_IDS = (
     ),
     (JETSON_TX2_NX, ("nvidia,p3509-0000+p3636-0001",)),
     (CLARA_AGX_XAVIER, ("nvidia,e3900-0000+p2888-0004",)),
-    (JETSON_XAVIER, ("nvidia,p2972-0000", "nvidia,p2972-0006", "nvidia,jetson-xavier")),
+    (
+        JETSON_XAVIER,
+        (
+            "nvidia,p2972-0000",
+            "nvidia,p2972-0006",
+            "nvidia,jetson-xavier",
+            "nvidia,jetson-xavier-industrial",
+            "nvidia,galen-industrial",
+        ),
+    ),
     (JETSON_NANO, ("nvidia,p3450-0000", "nvidia,p3450-0002", "nvidia,jetson-nano")),
     (
         JETSON_NX,
