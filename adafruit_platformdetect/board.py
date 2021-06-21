@@ -39,7 +39,7 @@ Implementation Notes
 # imports
 import os
 import re
-from adafruit_platformdetect.constants import boards, chips, u2if
+from adafruit_platformdetect.constants import boards, chips
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
@@ -159,16 +159,8 @@ class Board:
             board_id = self._stm32mp1_id()
         elif chip_id == chips.MT8167:
             board_id = boards.CORAL_EDGE_TPU_DEV_MINI
-        elif chip_id == u2if.PICO_U2IF:
-            board_id = u2if.PICO_U2IF
-        elif chip_id == u2if.FEATHER_U2IF:
-            board_id = u2if.FEATHER_U2IF
-        elif chip_id == u2if.ITSYBITSY_U2IF:
-            board_id = u2if.ITSYBITSY_U2IF
-        elif chip_id ==u2if.QTPY_U2IF:
-            board_id = u2if.QTPY_U2IF
-        elif chip_id == u2if.QT2040_TRINKEY_U2IF:
-            board_id = u2if.QT2040_TRINKEY_U2IF
+        elif chip_id == chips.RP2040_U2IF:
+            board_id = self._rp2040_u2if_id()
         self._board_id = board_id
         return board_id
 
@@ -468,6 +460,32 @@ class Board:
             # TODO: Add other specifc board contexts here
         return board
 
+    def _rp2040_u2if_id(self):
+        import hid
+
+        # look for it based on PID/VID
+        for dev in hid.enumerate():
+            # Raspberry Pi Pico
+            vendor = dev["vendor_id"]
+            product = dev["product_id"]
+            if vendor == 0xCAFE and product == 0x4005:
+                return boards.PICO_U2IF
+            if vendor == 0x239A:
+                # Feather RP2040
+                if product == 0x00F1:
+                    return boards.FEATHER_U2IF
+                # Itsy Bitsy RP2040
+                if product == 0x00FD:
+                    return boards.ITSYBITSY_U2IF
+                # QT Py RP2040
+                if product == 0x00F7:
+                    return boards.QTPY_U2IF
+                # QT2040 Trinkey
+                if product == 0x0109:
+                    return boards.QT2040_TRINKEY_U2IF
+        # Will only reach here if a device was added in chip.py but here.
+        raise RuntimeError("RP2040_U2IF device was added to chip but not board.")
+
     @property
     def any_nanopi(self):
         """Check whether the current board is any defined Nano Pi."""
@@ -618,27 +636,27 @@ class Board:
     @property
     def pico_u2if(self):
         """Check whether the current board is a RPi Pico w/ u2if."""
-        return self.id == u2if.PICO_U2IF
+        return self.id == boards.PICO_U2IF
 
     @property
     def feather_u2if(self):
         """Check whether the current board is a Feather RP2040 w/ u2if."""
-        return self.id == u2if.FEATHER_U2IF
+        return self.id == boards.FEATHER_U2IF
 
     @property
     def itsybitsy_u2if(self):
         """Check whether the current board is a Itsy Bitsy w/ u2if."""
-        return self.id == u2if.ITSYBITSY_U2IF
+        return self.id == boards.ITSYBITSY_U2IF
 
     @property
     def qtpy_u2if(self):
         """Check whether the current board is a QT Py w/ u2if."""
-        return self.id == u2if.QTPY_U2IF
+        return self.id == boards.QTPY_U2IF
 
     @property
     def qt2040_trinkey_u2if(self):
         """Check whether the current board is a QT Py w/ u2if."""
-        return self.id == u2if.QT2040_TRINKEY_U2IF
+        return self.id == boards.QT2040_TRINKEY_U2IF
 
     @property
     def binho_nova(self):
