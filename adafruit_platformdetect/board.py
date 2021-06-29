@@ -77,8 +77,6 @@ class Board:
             board_id = self._beaglebone_id()
         elif chip_id == chips.DRA74X:
             board_id = self._bbai_id()
-        elif chip_id == chips.GENERIC_X86:
-            board_id = boards.GENERIC_LINUX_PC
         elif chip_id == chips.SUN8I:
             board_id = self._armbian_id() or self._allwinner_variants_id()
         elif chip_id == chips.SAMA5:
@@ -161,6 +159,8 @@ class Board:
             board_id = boards.CORAL_EDGE_TPU_DEV_MINI
         elif chip_id == chips.RP2040_U2IF:
             board_id = self._rp2040_u2if_id()
+        elif chip_id == chips.GENERIC_X86:
+            board_id = boards.GENERIC_LINUX_PC
         self._board_id = board_id
         return board_id
 
