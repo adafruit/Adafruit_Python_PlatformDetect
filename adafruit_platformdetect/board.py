@@ -52,7 +52,7 @@ class Board:
         self.detector = detector
         self._board_id = None
 
-    # pylint: disable=invalid-name, protected-access
+    # pylint: disable=invalid-name, protected-access, too-many-return-statements
     @property
     def id(self):
         """Return a unique id for the detected board, if any."""
@@ -227,7 +227,12 @@ class Board:
         """Try to detect id of a Beaglebone."""
 
         board_value = self.detector.get_device_compatible()
+        # Older Builds
         if "freedom-u74-arty" in board_value:
+            return boards.BEAGLEV_STARLIGHT
+
+        # Newer Builds
+        if "beaglev-starlight" in board_value:
             return boards.BEAGLEV_STARLIGHT
 
         try:
