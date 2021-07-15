@@ -113,25 +113,23 @@ class Chip:
 
                 # look for it based on PID/VID
                 for dev in hid.enumerate():
-                    # Raspberry Pi Pico
-                    if dev["vendor_id"] == 0xCAFE and dev["product_id"] == 0x4005:
-                        self._chip_id = chips.PICO_U2IF
-                        return self._chip_id
-                    # Feather RP2040
-                    if dev["vendor_id"] == 0x239A and dev["product_id"] == 0x00F1:
-                        self._chip_id = chips.FEATHER_U2IF
-                        return self._chip_id
-                    # Itsy Bitsy RP2040
-                    if dev["vendor_id"] == 0x239A and dev["product_id"] == 0x00FD:
-                        self._chip_id = chips.ITSYBITSY_U2IF
-                        return self._chip_id
-                    # QT Py RP2040
-                    if dev["vendor_id"] == 0x239A and dev["product_id"] == 0x00F7:
-                        self._chip_id = chips.QTPY_U2IF
-                        return self._chip_id
-                    # QT2040 Trinkey
-                    if dev["vendor_id"] == 0x239A and dev["product_id"] == 0x0109:
-                        self._chip_id = chips.QT2040_TRINKEY_U2IF
+                    vendor = dev["vendor_id"]
+                    product = dev["product_id"]
+                    # NOTE: If any products are added here, they need added
+                    # to _rp2040_u2if_id() in board.py as well.
+                    if (
+                        # Raspberry Pi Pico
+                        vendor == 0xCAFE
+                        and product == 0x4005
+                    ) or (
+                        # Feather RP2040
+                        # Itsy Bitsy RP2040
+                        # QT Py RP2040
+                        # QT2040 Trinkey
+                        vendor == 0x239A
+                        and product in (0x00F1, 0x00FD, 0x00F7, 0x0109)
+                    ):
+                        self._chip_id = chips.RP2040_U2IF
                         return self._chip_id
                 raise RuntimeError(
                     "BLINKA_U2IF environment variable "
