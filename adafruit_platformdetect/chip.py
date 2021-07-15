@@ -186,7 +186,12 @@ class Chip:
         if self.detector.check_dt_compatible_value("sun20iw1p1"):
             return chips.C906
 
+        # Older Builds
         if self.detector.check_dt_compatible_value("sifive"):
+            return chips.JH71x0
+
+        # Newer Builds
+        if self.detector.check_dt_compatible_value("jh7100"):
             return chips.JH71x0
 
         if self.detector.check_dt_compatible_value("sun8i-a33"):
