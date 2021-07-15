@@ -52,7 +52,7 @@ class Board:
         self.detector = detector
         self._board_id = None
 
-    # pylint: disable=invalid-name, protected-access
+    # pylint: disable=invalid-name, protected-access, too-many-return-statements
     @property
     def id(self):
         """Return a unique id for the detected board, if any."""
