@@ -601,6 +601,7 @@ class Board:
         """Check whether the current board is any embedded Linux device."""
         return any(
             [
+                self.any_raspberry_pi_40_pin,
                 self.any_raspberry_pi,
                 self.any_beaglebone,
                 self.any_orange_pi,
