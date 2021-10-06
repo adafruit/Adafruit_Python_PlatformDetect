@@ -33,7 +33,7 @@ jobs:
       # (e.g. - apt-get: gettext, etc; pip: circuitpython-build-tools, requirements.txt; etc.)
       run: |
         source actions-ci/install.sh
-    - name: Pip install pylint, black, & Sphinx
+    - name: Pip install pylint==2.7.1, black, & Sphinx
       run: |
         pip install --force-reinstall pylint black Sphinx sphinx-rtd-theme
     - name: Library version
