@@ -128,7 +128,7 @@ class Chip:
                         # QT2040 Trinkey
                         # MacroPad RP2040 (NEEDS NEW PID)
                         vendor == 0x239A
-                        and product in (0x00F1, 0x00FD, 0x00F7, 0x0109, 0x0000)
+                        and product in (0x00F1, 0x00FD, 0x00F7, 0x0109, 0x0107)
                     ):
                         self._chip_id = chips.RP2040_U2IF
                         return self._chip_id
