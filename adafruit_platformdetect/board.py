@@ -488,6 +488,9 @@ class Board:
                 # QT2040 Trinkey
                 if product == 0x0109:
                     return boards.QT2040_TRINKEY_U2IF
+                # MacroPad RP2040 (NEEDS NEW PID)
+                if product == 0x0000:
+                    return boards.MACROPAD_U2IF
         # Will only reach here if a device was added in chip.py but here.
         raise RuntimeError("RP2040_U2IF device was added to chip but not board.")
 
@@ -653,6 +656,11 @@ class Board:
     def itsybitsy_u2if(self):
         """Check whether the current board is a Itsy Bitsy w/ u2if."""
         return self.id == boards.ITSYBITSY_U2IF
+
+    @property
+    def macropad_u2if(self):
+        """Check whether the current board is a MacroPad w/ u2if."""
+        return self.id == boards.MACROPAD_U2IF
 
     @property
     def qtpy_u2if(self):
