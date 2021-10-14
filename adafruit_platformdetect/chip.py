@@ -126,8 +126,9 @@ class Chip:
                         # Itsy Bitsy RP2040
                         # QT Py RP2040
                         # QT2040 Trinkey
+                        # MacroPad RP2040
                         vendor == 0x239A
-                        and product in (0x00F1, 0x00FD, 0x00F7, 0x0109)
+                        and product in (0x00F1, 0x00FD, 0x00F7, 0x0109, 0x0107)
                     ):
                         self._chip_id = chips.RP2040_U2IF
                         return self._chip_id

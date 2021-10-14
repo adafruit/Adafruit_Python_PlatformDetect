@@ -37,6 +37,7 @@ print(
     | detector.board.PICO_U2IF
     | detector.board.FEATHER_U2IF
     | detector.board.ITSYBITY_U2IF
+    | detector.board.MACROPAD_U2IF
     | detector.board.QTPY_U2IF
     | detector.board.QT2040_TRINKEY_U2IF,
 )
