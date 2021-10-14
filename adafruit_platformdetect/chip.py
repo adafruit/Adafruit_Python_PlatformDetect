@@ -126,7 +126,7 @@ class Chip:
                         # Itsy Bitsy RP2040
                         # QT Py RP2040
                         # QT2040 Trinkey
-                        # MacroPad RP2040 (NEEDS NEW PID)
+                        # MacroPad RP2040
                         vendor == 0x239A
                         and product in (0x00F1, 0x00FD, 0x00F7, 0x0109, 0x0107)
                     ):
