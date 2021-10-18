@@ -598,6 +598,11 @@ class Board:
     def any_stm32mp1(self):
         """Check whether the current board is any stm32mp1 board."""
         return self.id in boards._STM32MP1_IDS
+    
+    @property
+    def any_bananapi(self):
+        """Check whether the current board is any BananaPi-family system."""
+        return self.id in boards._BANANA_PI_IDS 
 
     @property
     def any_embedded_linux(self):
@@ -624,6 +629,7 @@ class Board:
                 self.any_asus_tinker_board,
                 self.any_stm32mp1,
                 self.any_lubancat,
+                self.any_bananapi,
             ]
         )
 
