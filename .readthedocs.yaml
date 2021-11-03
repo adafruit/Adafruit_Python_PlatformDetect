@@ -11,5 +11,5 @@ version: 2
 python:
   version: "3.6"
   install:
-    - requirements_file: docs/requirements.txt
-    - requirements_file: requirements.txt
+    - requirements: docs/requirements.txt
+    - requirements: requirements.txt
