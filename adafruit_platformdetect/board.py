@@ -336,9 +336,9 @@ class Board:
     def _imx8mx_id(self):
         """Check what type iMX8M board."""
         board_value = self.detector.get_device_model()
-        if "i.MX8MM" in board_value:
+        if "FSL i.MX8MM DDR4 EVK" in board_value:
             return boards.MAAXBOARD_MINI
-        if "i.MX8MQ" in board_value:
+        if "Freescale i.MX8MQ EVK" in board_value:
             return boards.MAAXBOARD
         if "Phanbell" in board_value:
             return boards.CORAL_EDGE_TPU_DEV
