@@ -611,6 +611,11 @@ class Board:
         return self.id in boards._BANANA_PI_IDS
 
     @property
+    def any_maaxboard(self):
+        """Check whether the current board is any BananaPi-family system."""
+        return self.id in boards._MAAXBOARD_IDS
+
+    @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
         return any(
@@ -636,6 +641,7 @@ class Board:
                 self.any_stm32mp1,
                 self.any_lubancat,
                 self.any_bananapi,
+                self.any_maaxboard,
             ]
         )
 
