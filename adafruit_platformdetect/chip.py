@@ -166,6 +166,12 @@ class Chip:
         if platform == "rp2":
             self._chip_id = chips.RP2040
             return self._chip_id
+        if platform == "esp32":
+            self._chip_id = chips.ESP32
+            return self._chip_id
+        if platform == "esp32c3":
+            self._chip_id = chips.ESP32C3
+            return self._chip_id
         # nothing found!
         return None
 

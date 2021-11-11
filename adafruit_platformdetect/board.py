@@ -159,6 +159,10 @@ class Board:
             board_id = boards.CORAL_EDGE_TPU_DEV_MINI
         elif chip_id == chips.RP2040_U2IF:
             board_id = self._rp2040_u2if_id()
+        elif chip_id == chips.ESP32:
+            board_id = self._m5stack_id()
+        elif chip_id == chips.ESP32C3:
+            board_id = self._m5stack_id()
         elif chip_id == chips.GENERIC_X86:
             board_id = boards.GENERIC_LINUX_PC
         self._board_id = board_id
@@ -391,6 +395,17 @@ class Board:
         elif "sopine" in board_value.lower():
             board = boards.SOPINE
         return board
+
+    def _m5stack_id(self):
+        """Try to detect the id for M5Stack board or device."""
+        board_value = os.uname().machine
+        if "M5Stack CORE with ESP32" in board_value:
+            return boards.M5CORE
+        elif "M5Stack STAMP-PICO with ESP32" in board_value:
+            return boards.M5STAMP_PICO
+        elif "M5Stack STAMP-C3 with ESP32C3" in board_value:
+            return boards.M5STAMP_C3
+        return None
 
     # pylint: disable=no-self-use
     def _pynq_id(self):
