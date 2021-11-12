@@ -336,9 +336,9 @@ class Board:
     def _imx8mx_id(self):
         """Check what type iMX8M board."""
         board_value = self.detector.get_device_model()
-        if "i.MX8MM" in board_value:
+        if "FSL i.MX8MM DDR4 EVK" in board_value:
             return boards.MAAXBOARD_MINI
-        if "i.MX8MQ" in board_value:
+        if "Freescale i.MX8MQ EVK" in board_value:
             return boards.MAAXBOARD
         if "Phanbell" in board_value:
             return boards.CORAL_EDGE_TPU_DEV
@@ -611,6 +611,11 @@ class Board:
         return self.id in boards._BANANA_PI_IDS
 
     @property
+    def any_maaxboard(self):
+        """Check whether the current board is any BananaPi-family system."""
+        return self.id in boards._MAAXBOARD_IDS
+
+    @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
         return any(
@@ -636,6 +641,7 @@ class Board:
                 self.any_stm32mp1,
                 self.any_lubancat,
                 self.any_bananapi,
+                self.any_maaxboard,
             ]
         )
 
