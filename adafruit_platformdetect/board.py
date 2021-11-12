@@ -396,18 +396,7 @@ class Board:
             board = boards.SOPINE
         return board
 
-    def _m5stack_id(self):
-        """Try to detect the id for M5Stack board or device."""
-        board_value = os.uname().machine
-        if "M5Stack CORE with ESP32" in board_value:
-            return boards.M5CORE
-        if "M5Stack STAMP-PICO with ESP32" in board_value:
-            return boards.M5STAMP_PICO
-        if "M5Stack STAMP-C3 with ESP32C3" in board_value:
-            return boards.M5STAMP_C3
-        return None
-
-    # pylint: disable=no-self-use
+        # pylint: disable=no-self-use
     def _pynq_id(self):
         """Try to detect the id for Xilinx PYNQ boards."""
         try:
@@ -514,6 +503,18 @@ class Board:
                     return boards.MACROPAD_U2IF
         # Will only reach here if a device was added in chip.py but here.
         raise RuntimeError("RP2040_U2IF device was added to chip but not board.")
+
+    def _m5stack_id(self):
+            """Try to detect the id for M5Stack board or device."""
+            board_value = os.uname().machine
+            if "M5Stack CORE with ESP32" in board_value:
+                return boards.M5CORE
+            if "M5Stack STAMP-PICO with ESP32" in board_value:
+                return boards.M5STAMP_PICO
+            if "M5Stack STAMP-C3 with ESP32C3" in board_value:
+                return boards.M5STAMP_C3
+            return None
+
 
     @property
     def any_nanopi(self):
