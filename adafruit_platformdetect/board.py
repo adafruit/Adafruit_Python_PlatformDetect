@@ -620,7 +620,7 @@ class Board:
         """Check whether the current board is any embedded Linux device."""
 
         def lazily_generate_conditions():
-            yield self.any_raspberry_pi_40_pi
+            yield self.any_raspberry_pi_40_pin
             yield self.any_raspberry_pi
             yield self.any_beaglebone
             yield self.any_orange_pi
