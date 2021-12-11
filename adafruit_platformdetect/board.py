@@ -71,7 +71,9 @@ class Board:
         chip_id = self.detector.chip.id
         board_id = None
 
-        if chip_id == chips.BCM2XXX:
+        if chip_id == chips.H3:
+            board_id = self._armbian_id()
+        elif chip_id == chips.BCM2XXX:
             board_id = self._pi_id()
         elif chip_id == chips.AM33XX:
             board_id = self._beaglebone_id()
@@ -306,6 +308,8 @@ class Board:
             board = boards.NANOPI_NEO_AIR
         elif board_value == "nanopiduo2":
             board = boards.NANOPI_DUO2
+        elif board_value == "nanopineo":
+            board = boards.NANOPI_NEO
 
         return board
 
