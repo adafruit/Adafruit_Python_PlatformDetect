@@ -71,7 +71,9 @@ class Board:
         chip_id = self.detector.chip.id
         board_id = None
 
-        if chip_id == chips.BCM2XXX:
+        if chip_id == chips.H3:
+            board_id = self._armbian_id() or self._allwinner_variants_id()
+        elif chip_id == chips.BCM2XXX:
             board_id = self._pi_id()
         elif chip_id == chips.AM33XX:
             board_id = self._beaglebone_id()
@@ -161,6 +163,8 @@ class Board:
             board_id = self._rp2040_u2if_id()
         elif chip_id == chips.GENERIC_X86:
             board_id = boards.GENERIC_LINUX_PC
+        elif chip_id == chips.TDA4VM:
+            board_id = self._tisk_id()
         self._board_id = board_id
         return board_id
 
@@ -268,6 +272,18 @@ class Board:
             return boards.BEAGLEBONE_AI
         return None
 
+    def _tisk_id(self):
+        """Try to detect the id of aarch64 board."""
+        compatible = self.detector.get_device_compatible()
+        print(compatible)
+        if not compatible:
+            return None
+        compats = compatible.split("\x00")
+        for board_id, board_compats in boards._TI_SK_BOARD_IDS:
+            if any(v in compats for v in board_compats):
+                return board_id
+        return None
+
     # pylint: disable=too-many-return-statements
     def _armbian_id(self):
         """Check whether the current board is an OrangePi board."""
@@ -306,6 +322,8 @@ class Board:
             board = boards.NANOPI_NEO_AIR
         elif board_value == "nanopiduo2":
             board = boards.NANOPI_DUO2
+        elif board_value == "nanopineo":
+            board = boards.NANOPI_NEO
 
         return board
 
@@ -616,6 +634,11 @@ class Board:
         return self.id in boards._MAAXBOARD_IDS
 
     @property
+    def any_tisk_board(self):
+        """Check whether the current board is any defined TI SK Board."""
+        return self.id in [v[0] for v in boards._TI_SK_BOARD_IDS]
+
+    @property
     def any_embedded_linux(self):
         """Check whether the current board is any embedded Linux device."""
 
@@ -642,6 +665,7 @@ class Board:
             yield self.any_lubancat
             yield self.any_bananapi
             yield self.any_maaxboard
+            yield self.any_tisk_board
 
         return any(condition for condition in lazily_generate_conditions())
 

@@ -176,6 +176,9 @@ class Chip:
         # pylint: disable=too-many-return-statements
         """Attempt to detect the CPU on a computer running the Linux kernel."""
 
+        if self.detector.check_dt_compatible_value("sun8i-h3"):
+            return chips.H3
+
         if self.detector.check_dt_compatible_value("qcom,apq8016"):
             return chips.APQ8016
 
@@ -231,6 +234,9 @@ class Chip:
 
         if self.detector.check_dt_compatible_value("imx6ull"):
             return chips.IMX6ULL
+
+        if self.detector.check_dt_compatible_value("ti,j721e"):
+            return chips.TDA4VM
 
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
