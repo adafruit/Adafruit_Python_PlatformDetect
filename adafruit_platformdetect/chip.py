@@ -235,6 +235,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("imx6ull"):
             return chips.IMX6ULL
 
+        if self.detector.check_dt_compatible_value("ti,j721e"):
+            return chips.TDA4VM
+
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
 

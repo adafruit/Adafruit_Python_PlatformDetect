@@ -50,6 +50,9 @@ if detector.board.any_raspberry_pi:
 if detector.board.any_jetson_board:
     print("Jetson platform detected.")
 
+if detector.board.any_tisk_board:
+    print("TI platform detected.")
+
 if detector.board.any_pynq_board:
     print("PYNQ platform detected.")
 
