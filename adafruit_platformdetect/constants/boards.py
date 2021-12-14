@@ -63,6 +63,9 @@ JETSON_XAVIER = "JETSON_XAVIER"
 JETSON_NANO = "JETSON_NANO"
 JETSON_NX = "JETSON_NX"
 
+# Texas Instruments SK boards
+TI_J721E_SK = "TI_J721E_SK"
+
 # Google Coral dev board
 CORAL_EDGE_TPU_DEV = "CORAL_EDGE_TPU_DEV"
 CORAL_EDGE_TPU_DEV_MINI = "CORAL_EDGE_TPU_DEV_MINI"
@@ -226,6 +229,10 @@ _JETSON_IDS = (
             "nvidia,p3449-0000+p3668-0001",
         ),
     ),
+)
+
+_TI_SK_BOARD_IDS = (
+    (TI_J721E_SK, ('ti,j721e-sk', 'ti,j721e')),
 )
 
 _RASPBERRY_PI_40_PIN_IDS = (
