@@ -1,1 +1,4 @@
-docutils<0.18
+docutils<0.18#
+# SPDX-License-Identifier: Unlicense
+
+sphinx>=4.0.0

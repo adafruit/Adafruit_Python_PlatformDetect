@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021 Melissa LeBlanc-Williams for Adafruit Industries
+#
+# SPDX-License-Identifier: MIT
+
 #!/usr/bin/env python3
 
 import adafruit_platformdetect

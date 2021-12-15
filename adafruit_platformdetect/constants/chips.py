@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021 Melissa LeBlanc-Williams for Adafruit Industries
+#
+# SPDX-License-Identifier: MIT
+
 """Definition of chips."""
 AM33XX = "AM33XX"
 DRA74X = "DRA74X"
