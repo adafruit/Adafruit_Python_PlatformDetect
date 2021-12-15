@@ -46,7 +46,7 @@ class Detector:
         # Match a line like 'Hardware   : BCM2709':
         pattern = r"^" + field + r"\s+:\s+(.*)$"
 
-        with open("/proc/cpuinfo", "r") as infile:
+        with open("/proc/cpuinfo", "r", encoding="utf-8") as infile:
             cpuinfo = infile.read().split("\n")
         for line in cpuinfo:
             match = re.search(pattern, line, flags=re.IGNORECASE)
@@ -75,7 +75,7 @@ class Detector:
 
         pattern = r"^" + field + r"=(.*)"
         try:
-            with open("/etc/armbian-release", "r") as release_file:
+            with open("/etc/armbian-release", "r", encoding="utf-8") as release_file:
                 armbian = release_file.read().split("\n")
                 for line in armbian:
                     match = re.search(pattern, line)
@@ -92,7 +92,7 @@ class Detector:
         otherwise None.
         """
         try:
-            with open("/proc/device-tree/model", "r") as model_file:
+            with open("/proc/device-tree/model", "r", encoding="utf-8") as model_file:
                 return model_file.read()
         except FileNotFoundError:
             pass
@@ -103,7 +103,9 @@ class Detector:
         Search /proc/device-tree/compatible for the compatible chip name.
         """
         try:
-            with open("/proc/device-tree/compatible", "r") as model_file:
+            with open(
+                "/proc/device-tree/compatible", "r", encoding="utf-8"
+            ) as model_file:
                 return model_file.read()
         except FileNotFoundError:
             pass
@@ -115,7 +117,9 @@ class Detector:
         otherwise None.
         """
         try:
-            with open("/sys/devices/virtual/dmi/id/board_asset_tag", "r") as tag_file:
+            with open(
+                "/sys/devices/virtual/dmi/id/board_asset_tag", "r", encoding="utf-8"
+            ) as tag_file:
                 return tag_file.read().strip()
         except FileNotFoundError:
             pass
@@ -127,7 +131,9 @@ class Detector:
         otherwise None. Debian/ubuntu based
         """
         try:
-            with open("/sys/devices/virtual/dmi/id/board_name", "r") as board_name_file:
+            with open(
+                "/sys/devices/virtual/dmi/id/board_name", "r", encoding="utf-8"
+            ) as board_name_file:
                 return board_name_file.read().strip()
         except FileNotFoundError:
             pass
