@@ -2,6 +2,23 @@
 #
 # SPDX-License-Identifier: MIT
 
+"""
+`bin.detect`
+================================================================================
+
+Board detection and determination script
+
+* Author(s): Melissa LeBlanc-Williams
+
+Implementation Notes
+--------------------
+
+**Software and Dependencies:**
+
+* Linux and Python 3.5 or Higher
+
+"""
+
 #!/usr/bin/env python3
 
 import adafruit_platformdetect
