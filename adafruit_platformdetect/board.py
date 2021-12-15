@@ -414,7 +414,9 @@ class Board:
     def _pynq_id(self):
         """Try to detect the id for Xilinx PYNQ boards."""
         try:
-            with open("/proc/device-tree/chosen/pynq_board", "r") as board_file:
+            with open(
+                "/proc/device-tree/chosen/pynq_board", "r", encoding="utf-8"
+            ) as board_file:
                 board_model = board_file.read()
                 match = board_model.upper().replace("-", "_").rstrip("\x00")
                 for model in boards._PYNQ_IDS:
