@@ -41,7 +41,7 @@ Dependencies
 =============
 This driver depends on:
 
-* Python 3.5 or higher
+* Python 3.6 or higher
 
 Installing from PyPI
 =====================
