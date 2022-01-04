@@ -118,7 +118,7 @@ class Board:
         elif chip_id == chips.A64:
             board_id = self._pine64_id()
         elif chip_id == chips.H6:
-            board_id = self._pine64_id()
+            board_id = self._pine64_id() or self._armbian_id()
         elif chip_id == chips.H5:
             board_id = self._armbian_id() or self._allwinner_variants_id()
         elif chip_id == chips.H616:
@@ -294,6 +294,8 @@ class Board:
             board = boards.PINEH64
         elif board_value == "orangepi2":
             board = boards.ORANGE_PI_2
+        elif board_value == "orangepi3":
+            board = boards.ORANGE_PI_3
         elif board_value == "bananapim2zero":
             board = boards.BANANA_PI_M2_ZERO
         elif board_value == "orangepizeroplus2-h5":
