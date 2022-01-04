@@ -15,7 +15,7 @@ Implementation Notes
 
 **Software and Dependencies:**
 
-* Linux and Python 3.5 or Higher
+* Linux and Python 3.6 or Higher
 
 """
 
