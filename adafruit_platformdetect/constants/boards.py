@@ -460,11 +460,6 @@ _PI_REV_CODES = {
     RASPBERRY_PI_400: ("c03130", "c03131"),
     RASPBERRY_PI_CM4: ("a03140", "b03140", "c03140", "d03140"),
     RASPBERRY_PI_ZERO_2_W: ("902120", "2902120"),
-    #Adding in 2902120 Revision for board below
-    #Hardware        : BCM2835
-    #Revision        : 2902120
-    #Serial          : 000000007ff6f08d
-    #Model           : Raspberry Pi Zero 2 W Rev 1.0 
 }
 
 # Onion omega boards
