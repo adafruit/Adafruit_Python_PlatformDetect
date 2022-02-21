@@ -6,9 +6,9 @@
 Attempt to detect the current platform.
 """
 import re
-
-from adafruit_platformdetect.board import Board
-from adafruit_platformdetect.chip import Chip
+from typing import Optional
+from .board import Board
+from .chip import Chip
 
 
 # Various methods here may retain state in future, so tell pylint not to worry
@@ -17,11 +17,11 @@ from adafruit_platformdetect.chip import Chip
 class Detector:
     """Wrap various platform detection functions."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.board = Board(self)
         self.chip = Chip(self)
 
-    def get_cpuinfo_field(self, field):
+    def get_cpuinfo_field(self, field: str) -> Optional[str]:
         """
         Search /proc/cpuinfo for a field and return its value, if found,
         otherwise None.
@@ -37,7 +37,7 @@ class Detector:
                 return match.group(1)
         return None
 
-    def check_dt_compatible_value(self, value):
+    def check_dt_compatible_value(self, value: str) -> bool:
         """
         Search /proc/device-tree/compatible for a value and return True, if found,
         otherwise False.
@@ -49,7 +49,7 @@ class Detector:
 
         return False
 
-    def get_armbian_release_field(self, field):
+    def get_armbian_release_field(self, field: str) -> Optional[str]:
         """
         Search /etc/armbian-release, if it exists, for a field and return its
         value, if found, otherwise None.
@@ -69,7 +69,7 @@ class Detector:
 
         return field_value
 
-    def get_device_model(self):
+    def get_device_model(self) -> Optional[str]:
         """
         Search /proc/device-tree/model for the device model and return its value, if found,
         otherwise None.
@@ -81,7 +81,7 @@ class Detector:
             pass
         return None
 
-    def get_device_compatible(self):
+    def get_device_compatible(self) -> Optional[str]:
         """
         Search /proc/device-tree/compatible for the compatible chip name.
         """
@@ -94,7 +94,7 @@ class Detector:
             pass
         return None
 
-    def check_board_asset_tag_value(self):
+    def check_board_asset_tag_value(self) -> Optional[str]:
         """
         Search /sys/devices/virtual/dmi/id for the device model and return its value, if found,
         otherwise None.
@@ -108,7 +108,7 @@ class Detector:
             pass
         return None
 
-    def check_board_name_value(self):
+    def check_board_name_value(self) -> Optional[str]:
         """
         Search /sys/devices/virtual/dmi/id for the board name and return its value, if found,
         otherwise None. Debian/ubuntu based
