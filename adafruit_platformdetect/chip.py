@@ -15,15 +15,19 @@ Implementation Notes
 
 **Software and Dependencies:**
 
-* Linux and Python 3.6 or Higher
+* Linux and Python 3.7 or Higher
 
 """
 
 # imports
+from __future__ import annotations
 import os
 import sys
+from typing import Optional, TYPE_CHECKING
+from .constants import chips
 
-from adafruit_platformdetect.constants import chips
+if TYPE_CHECKING:
+    from . import Detector
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
@@ -32,14 +36,16 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.gi
 class Chip:
     """Attempt detection of current chip / CPU."""
 
-    def __init__(self, detector):
+    def __init__(self, detector: Detector) -> None:
         self.detector = detector
         self._chip_id = None
 
     @property
     def id(
         self,
-    ):  # pylint: disable=invalid-name,too-many-branches,too-many-return-statements
+    ) -> Optional[
+        str
+    ]:  # pylint: disable=invalid-name,too-many-branches,too-many-return-statements
         """Return a unique id for the detected chip, if any."""
         # There are some times we want to trick the platform detection
         # say if a raspberry pi doesn't have the right ID, or for testing
@@ -154,7 +160,7 @@ class Chip:
 
     # pylint: enable=invalid-name
 
-    def _linux_id(self):
+    def _linux_id(self) -> Optional[str]:
         # pylint: disable=too-many-branches,too-many-statements
         # pylint: disable=too-many-return-statements
         """Attempt to detect the CPU on a computer running the Linux kernel."""
@@ -332,7 +338,7 @@ class Chip:
 
         return linux_id
 
-    def __getattr__(self, attr):
+    def __getattr__(self, attr: str) -> bool:
         """
         Detect whether the given attribute is the currently-detected chip.  See
         list of constants at the top of this module for available options.
