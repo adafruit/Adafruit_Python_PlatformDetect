@@ -6,7 +6,11 @@
 Attempt to detect the current platform.
 """
 import re
-from typing import Optional
+
+try:
+    from typing import Optional
+except ImportError:
+    pass
 from .board import Board
 from .chip import Chip
 

@@ -27,7 +27,7 @@ extensions = [
 autodoc_mock_imports = ["machine"]
 
 intersphinx_mapping = {
-    "python": ("https://docs.python.org/3.6", None),
+    "python": ("https://docs.python.org/3.7", None),
     "CircuitPython": ("https://circuitpython.readthedocs.io/en/latest/", None),
 }
 

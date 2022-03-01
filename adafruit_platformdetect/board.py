@@ -16,19 +16,25 @@ Implementation Notes
 
 **Software and Dependencies:**
 
-* Linux and Python 3.6 or Higher
+* Linux and Python 3.7 or Higher
 
 """
 
 # imports
-from __future__ import annotations
 import os
 import re
-from typing import Optional, TYPE_CHECKING
+
+try:
+    from typing import TYPE_CHECKING, Optional
+except ImportError:
+    TYPE_CHECKING = False
+
 from .constants import boards, chips
 
 if TYPE_CHECKING:
-    from . import Detector
+    from .protocols import DetectorProtocol
+else:
+    DetectorProtocol = ...
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
@@ -37,7 +43,8 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.gi
 class Board:
     """Attempt to detect specific boards."""
 
-    def __init__(self, detector: Detector) -> None:
+    # pylint: disable=used-before-assignment
+    def __init__(self, detector: DetectorProtocol) -> None:
         self.detector = detector
         self._board_id = None
 
