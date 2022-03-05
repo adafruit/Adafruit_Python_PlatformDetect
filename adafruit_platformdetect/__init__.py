@@ -5,11 +5,17 @@
 """
 Attempt to detect the current platform.
 """
+import os
 import re
+import sys
 from typing import Optional
+
 from .board import Board
 from .chip import Chip
 
+# Needed to find libs (like libusb) installed by homebrew on Apple Silicon
+if sys.platform == "darwin":
+    os.environ["DYLD_FALLBACK_LIBRARY_PATH"] = "/opt/homebrew/lib/"
 
 # Various methods here may retain state in future, so tell pylint not to worry
 # that they don't use self right now:
