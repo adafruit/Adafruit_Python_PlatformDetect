@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # SPDX-FileCopyrightText: 2021 Melissa LeBlanc-Williams for Adafruit Industries
 #
 # SPDX-License-Identifier: MIT
@@ -18,8 +20,6 @@ Implementation Notes
 * Linux and Python 3.5 or Higher
 
 """
-
-#!/usr/bin/env python3
 
 import adafruit_platformdetect
 
