@@ -200,6 +200,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("rockchip,rk3328"):
             return chips.RK3328
 
+        if self.detector.check_dt_compatible_value("amlogic,a311d"):
+            return chips.A311D
+
         if self.detector.check_dt_compatible_value("st,stm32mp157"):
             return chips.STM32MP157
 
@@ -276,6 +279,8 @@ class Chip:
                     return chips.S922X
                 if "sm1" in compatible_list:
                     return chips.S905X3
+                if "vim3amlogic" in compatible_list:
+                    return chips.A311D
             if compatible and "sun50i-a64" in compatible:
                 linux_id = chips.A64
             if compatible and "sun50i-h6" in compatible:
@@ -290,6 +295,8 @@ class Chip:
             if cpu_model is not None:
                 if "MIPS 24Kc" in cpu_model:
                     linux_id = chips.MIPS24KC
+                elif "A311D" in cpu_model:
+                    linux_id = chips.A311D
                 elif "MIPS 24KEc" in cpu_model:
                     linux_id = chips.MIPS24KEC
 
@@ -318,6 +325,8 @@ class Chip:
                 linux_id = chips.S905X3
             elif "ODROID-XU4" in hardware:
                 linux_id = chips.EXYNOS5422
+            elif "KHADAS-VIM3" in hardware:
+                linux_id = chips.A311D
             elif "SAMA5" in hardware:
                 linux_id = chips.SAMA5
             elif "Pinebook" in hardware:

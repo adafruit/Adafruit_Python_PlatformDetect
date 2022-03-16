@@ -92,6 +92,8 @@ class Board:
             board_id = boards.ODROID_C4
         elif chip_id == chips.S922X:
             board_id = boards.ODROID_N2
+        elif chip_id == chips.A311D:
+            board_id = boards.KHADAS_VIM3
         elif chip_id == chips.EXYNOS5422:
             board_id = boards.ODROID_XU4
         elif chip_id == chips.FT232H:
@@ -574,6 +576,11 @@ class Board:
         return self.id in boards._ODROID_40_PIN_IDS
 
     @property
+    def khadas_vim3_40_pin(self) -> bool:
+        """Check whether the current board is any defined 40-pin Khadas VIM3."""
+        return self.id in boards._KHADAS_40_PIN_IDS
+
+    @property
     def any_jetson_board(self) -> bool:
         """Check whether the current board is any defined Jetson Board."""
         return self.id in [v[0] for v in boards._JETSON_IDS]
@@ -647,6 +654,7 @@ class Board:
                 self.any_jetson_board,
                 self.any_coral_board,
                 self.any_odroid_40_pin,
+                self.khadas_vim3_40_pin,
                 self.any_96boards,
                 self.any_sifive_board,
                 self.any_onion_omega_board,
