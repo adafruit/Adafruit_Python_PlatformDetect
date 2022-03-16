@@ -295,8 +295,6 @@ class Chip:
             if cpu_model is not None:
                 if "MIPS 24Kc" in cpu_model:
                     linux_id = chips.MIPS24KC
-                elif "A311D" in cpu_model:
-                    linux_id = chips.A311D
                 elif "MIPS 24KEc" in cpu_model:
                     linux_id = chips.MIPS24KEC
 
