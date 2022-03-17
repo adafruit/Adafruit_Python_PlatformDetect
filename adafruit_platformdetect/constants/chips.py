@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 """Definition of chips."""
+A311D = "A311D"
 AM33XX = "AM33XX"
 DRA74X = "DRA74X"
 TDA4VM = "TDA4VM"
