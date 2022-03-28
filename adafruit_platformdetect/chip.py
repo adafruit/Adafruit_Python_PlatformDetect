@@ -23,7 +23,7 @@ Implementation Notes
 try:
     from __future__ import annotations
 except ImportError:
-    pass
+    pass  # pylint: disable=unnecessary-pass
 import os
 import sys
 
@@ -31,7 +31,7 @@ try:
     from typing import Optional, TYPE_CHECKING
 except ImportError:
     TYPE_CHECKING = False
-    pass
+    pass  # pylint: disable=unnecessary-pass
 
 from adafruit_platformdetect.constants import chips
 
