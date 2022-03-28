@@ -20,24 +20,16 @@ Implementation Notes
 
 """
 
-# imports
-try:
-    from __future__ import annotations
-except ImportError:
-    pass
-
 import os
 import re
 
 try:
-    from typing import Optional, TYPE_CHECKING
+    from typing import Optional
 except ImportError:
-    TYPE_CHECKING = False
+    pass
 
 from adafruit_platformdetect.constants import boards, chips
 
-if TYPE_CHECKING:
-    from . import Detector
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
@@ -46,7 +38,7 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.gi
 class Board:
     """Attempt to detect specific boards."""
 
-    def __init__(self, detector: Detector) -> None:
+    def __init__(self, detector) -> None:
         self.detector = detector
         self._board_id = None
 
