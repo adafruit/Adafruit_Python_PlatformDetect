@@ -21,11 +21,21 @@ Implementation Notes
 """
 
 # imports
-from __future__ import annotations
+try:
+    from __future__ import annotations
+except ImportError:
+    pass
+
 import os
 import re
-from typing import Optional, TYPE_CHECKING
-from .constants import boards, chips
+
+try:
+    from typing import Optional, TYPE_CHECKING
+except ImportError:
+    TYPE_CHECKING = False
+    pass
+
+from adafruit_platformdetect.constants import boards, chips
 
 if TYPE_CHECKING:
     from . import Detector
