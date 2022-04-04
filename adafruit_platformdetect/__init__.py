@@ -8,10 +8,14 @@ Attempt to detect the current platform.
 import os
 import re
 import sys
-from typing import Optional
 
-from .board import Board
-from .chip import Chip
+try:
+    from typing import Optional
+except ImportError:
+    pass
+
+from adafruit_platformdetect.board import Board
+from adafruit_platformdetect.chip import Chip
 
 # Needed to find libs (like libusb) installed by homebrew on Apple Silicon
 if sys.platform == "darwin":
