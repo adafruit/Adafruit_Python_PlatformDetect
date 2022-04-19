@@ -69,6 +69,10 @@ class Board:
             board_id = self._beaglebone_id()
         elif chip_id == chips.DRA74X:
             board_id = self._bbai_id()
+        elif chip_id == chips.SUN4I:
+            board_id = self._armbian_id()
+        elif chip_id == chips.SUN7I:
+            board_id = self._armbian_id()
         elif chip_id == chips.SUN8I:
             board_id = self._armbian_id() or self._allwinner_variants_id()
         elif chip_id == chips.SAMA5:
@@ -123,6 +127,10 @@ class Board:
             board_id = boards.ONION_OMEGA2
         elif chip_id == chips.ZYNQ7000:
             board_id = self._pynq_id()
+        elif chip_id == chips.A10:
+            board_id = self._armbian_id()
+        elif chip_id == chips.A20:
+            board_id = self._armbian_id()
         elif chip_id == chips.A64:
             board_id = self._pine64_id()
         elif chip_id == chips.H6:
@@ -320,6 +328,10 @@ class Board:
             board = boards.NANOPI_DUO2
         elif board_value == "nanopineo":
             board = boards.NANOPI_NEO
+        elif board_value == "pcduino2":
+            board = boards.PCDUINO2
+        elif board_value == "pcduino3":
+            board = boards.PCDUINO3
 
         return board
 
@@ -464,6 +476,16 @@ class Board:
         board = None
         if board_value and "ASUS Tinker Board" in board_value:
             board = boards._ASUS_TINKER_BOARD_IDS
+        return board
+
+    def _pcduino_board_id(self) -> Optional[str]:
+        """Check on the type of Pcduino"""
+        board_value = self.detector.get_device_model()
+        board = None
+        if "pcduino2" in board_value.lower():
+            board = boards.PCDUINO2
+        if "pcduino3" in board_value.lower():
+            board = boards.PCDUINO3
         return board
 
     def _allwinner_variants_id(self) -> Optional[str]:
@@ -622,6 +644,10 @@ class Board:
         return self.id in boards._ASUS_TINKER_BOARD_IDS
 
     @property
+    def any_pcduino_board(self) -> bool:
+        return self.id in boards._PCDUINO_DEV_IDS
+
+    @property
     def any_stm32mp1(self) -> bool:
         """Check whether the current board is any stm32mp1 board."""
         return self.id in boards._STM32MP1_IDS
@@ -670,6 +696,7 @@ class Board:
                 self.any_bananapi,
                 self.any_maaxboard,
                 self.any_tisk_board,
+                self.any_pcduino_board,
             ]
         )
 
