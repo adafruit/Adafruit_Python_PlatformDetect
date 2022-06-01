@@ -167,6 +167,9 @@ class Chip:
         # pylint: disable=too-many-return-statements
         """Attempt to detect the CPU on a computer running the Linux kernel."""
 
+        if self.detector.check_dt_compatible_value("amlogic,g12a"):
+            return chips.S905Y2
+
         if self.detector.check_dt_compatible_value("sun8i-h3"):
             return chips.H3
 

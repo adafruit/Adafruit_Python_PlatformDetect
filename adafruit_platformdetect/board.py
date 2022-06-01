@@ -77,6 +77,8 @@ class Board:
             board_id = self._imx8mx_id()
         elif chip_id == chips.IMX6ULL:
             board_id = self._imx6ull_id()
+        elif chip_id == chips.S905Y2:
+            board_id = boards.RADXA_ZERO
         elif chip_id == chips.ESP8266:
             board_id = boards.FEATHER_HUZZAH
         elif chip_id == chips.SAMD21:
