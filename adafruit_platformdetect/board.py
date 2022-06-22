@@ -81,6 +81,8 @@ class Board:
             board_id = self._imx8mx_id()
         elif chip_id == chips.IMX6ULL:
             board_id = self._imx6ull_id()
+        elif chip_id == chips.S905Y2:
+            board_id = boards.RADXA_ZERO
         elif chip_id == chips.ESP8266:
             board_id = boards.FEATHER_HUZZAH
         elif chip_id == chips.SAMD21:
@@ -314,6 +316,8 @@ class Board:
             board = boards.ORANGE_PI_2
         elif board_value == "orangepi3":
             board = boards.ORANGE_PI_3
+        elif board_value == "orangepi3-lts":
+            board = boards.ORANGE_PI_3_LTS
         elif board_value == "bananapim2zero":
             board = boards.BANANA_PI_M2_ZERO
         elif board_value == "orangepizeroplus2-h5":
