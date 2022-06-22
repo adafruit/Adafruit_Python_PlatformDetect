@@ -169,10 +169,10 @@ class Chip:
 
         if self.detector.check_dt_compatible_value("sun4i-a10"):
             return chips.A10
-        
+
         if self.detector.check_dt_compatible_value("sun7i-a20"):
             return chips.A20
-        
+
         if self.detector.check_dt_compatible_value("amlogic,g12a"):
             return chips.S905Y2
 

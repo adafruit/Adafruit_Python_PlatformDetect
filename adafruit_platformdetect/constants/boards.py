@@ -127,7 +127,7 @@ ALLWINER_D1 = "ALLWINER_D1"
 
 MICROCHIP_MCP2221 = "MICROCHIP_MCP2221"
 
-#Linkspirte Pcduino based boards
+# Linkspirte Pcduino based boards
 PCDUINO2 = "PCDUINO2"
 PCDUINO3 = "PCDUINO3"
 
@@ -485,7 +485,7 @@ _ONION_OMEGA_BOARD_IDS = (ONION_OMEGA, ONION_OMEGA2)
 # Pine64 boards and devices
 _PINE64_DEV_IDS = (PINE64, PINEH64, PINEBOOK, PINEPHONE, SOPINE)
 
-#Pcduino baords
+# Pcduino baords
 _PCDUINO_DEV_IDS = (PCDUINO2, PCDUINO3)
 # RockPi boards and devices
 _ROCK_PI_IDS = (ROCK_PI_S, ROCK_PI_4, ROCK_PI_X, ROCK_PI_E, RADXA_ZERO)
