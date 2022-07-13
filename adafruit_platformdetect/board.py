@@ -352,7 +352,7 @@ class Board:
         if "OSD32MP1-RED" in board_value:
             return boards.OSD32MP1_RED
         if "STM32MP1XX OLinuXino" in board_value:
-            return boards.STMP157_OLINUXINO_LIME2 
+            return boards.STMP157_OLINUXINO_LIME2
         return None
 
     def _imx8mx_id(self) -> Optional[str]:
