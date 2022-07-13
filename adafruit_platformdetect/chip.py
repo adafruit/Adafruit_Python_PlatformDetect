@@ -34,7 +34,6 @@ from adafruit_platformdetect.constants import chips
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
 
-
 class Chip:
     """Attempt detection of current chip / CPU."""
 
@@ -316,7 +315,7 @@ class Chip:
         if not linux_id:
             if "AM33XX" in hardware:
                 linux_id = chips.AM33XX
-            elif "DRA74X" in hardware: 
+            elif "DRA74X" in hardware:
                 linux_id = chips.DRA74X
             elif "sun8i" in hardware:
                 linux_id = chips.SUN8I
