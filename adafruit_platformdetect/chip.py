@@ -212,7 +212,7 @@ class Chip:
             return chips.STM32MP157
 
         if self.detector.check_dt_compatible_value("st,stm32mp153"):
-            return chips.STM32MP157AAA3
+            return chips.STM32MP157DAA1
 
         if self.detector.check_dt_compatible_value("sun50i-a64"):
             return chips.A64
