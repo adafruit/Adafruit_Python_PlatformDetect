@@ -151,7 +151,7 @@ class Board:
             board_id = self._udoo_id()
         elif chip_id == chips.STM32MP157:
             board_id = self._stm32mp1_id()
-        elif chip_id == chips.STM32MP157AAA3:
+        elif chip_id == chips.STM32MP157DAA1:
             board_id = self._stm32mp1_id()
         elif chip_id == chips.MT8167:
             board_id = boards.CORAL_EDGE_TPU_DEV_MINI
