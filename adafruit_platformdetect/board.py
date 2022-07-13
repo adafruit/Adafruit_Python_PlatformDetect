@@ -152,7 +152,7 @@ class Board:
         elif chip_id == chips.STM32MP157:
             board_id = self._stm32mp1_id()
         elif chip_id == chips.STM32MP157AAA3:
-            board_id = self._stm32mp157_id()
+            board_id = self._stm32mp1_id()
         elif chip_id == chips.MT8167:
             board_id = boards.CORAL_EDGE_TPU_DEV_MINI
         elif chip_id == chips.RP2040_U2IF:
@@ -352,14 +352,7 @@ class Board:
         if "OSD32MP1-RED" in board_value:
             return boards.OSD32MP1_RED
         if "STM32MP1XX OLinuXino" in board_value:
-            return boards.STMP157 
-        return None
-
-    def _stm32mp157_id(self) -> Optional[str]:
-        """Check what type of olimex board."""
-        board_value = self.detector.get_device_model()
-        if "STM32MP1XX OLinuXino" in board_value:
-            return boards.STMP157 
+            return boards.STMP157_OLINUXINO_LIME2 
         return None
 
     def _imx8mx_id(self) -> Optional[str]:
@@ -638,10 +631,6 @@ class Board:
 
     @property
     def any_stm32mp1(self) -> bool:
-        """Check whether the current board is any stm32mp1 board."""
-        return self.id in boards._STM32MP1_IDS
-    @property
-    def any_stm32mp157(self) -> bool:
         """Check whether the current board is any stm32mp1 board."""
         return self.id in boards._STM32MP1_IDS
 
