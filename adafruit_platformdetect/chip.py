@@ -34,6 +34,7 @@ from adafruit_platformdetect.constants import chips
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
 
+
 class Chip:
     """Attempt detection of current chip / CPU."""
 
