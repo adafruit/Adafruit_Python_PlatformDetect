@@ -151,6 +151,8 @@ class Board:
             board_id = self._udoo_id()
         elif chip_id == chips.STM32MP157:
             board_id = self._stm32mp1_id()
+        elif chip_id == chips.STM32MP157DAA1:
+            board_id = self._stm32mp1_id()
         elif chip_id == chips.MT8167:
             board_id = boards.CORAL_EDGE_TPU_DEV_MINI
         elif chip_id == chips.RP2040_U2IF:
@@ -349,6 +351,8 @@ class Board:
             return boards.OSD32MP1_BRK
         if "OSD32MP1-RED" in board_value:
             return boards.OSD32MP1_RED
+        if "STM32MP1XX OLinuXino" in board_value:
+            return boards.STMP157_OLINUXINO_LIME2
         return None
 
     def _imx8mx_id(self) -> Optional[str]:

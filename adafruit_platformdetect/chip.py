@@ -211,6 +211,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("st,stm32mp157"):
             return chips.STM32MP157
 
+        if self.detector.check_dt_compatible_value("st,stm32mp153"):
+            return chips.STM32MP157DAA1
+
         if self.detector.check_dt_compatible_value("sun50i-a64"):
             return chips.A64
 
@@ -294,7 +297,6 @@ class Chip:
                 linux_id = chips.H5
             if compatible and "odroid-xu4" in compatible:
                 linux_id = chips.EXYNOS5422
-
             cpu_model = self.detector.get_cpuinfo_field("cpu model")
 
             if cpu_model is not None:
