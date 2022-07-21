@@ -346,7 +346,7 @@ class Board:
         """Check what type S905X3 board."""
         board_value = self.detector.get_device_model()
         if "Bananapi BPI-M5" in board_value:
-          return boards.BANANA_PI_M5
+            return boards.BANANA_PI_M5
         return boards.ODROID_C4
 
     def _stm32mp1_id(self) -> Optional[str]:
