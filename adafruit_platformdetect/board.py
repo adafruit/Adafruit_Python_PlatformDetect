@@ -92,7 +92,7 @@ class Board:
         elif chip_id == chips.S905:
             board_id = boards.ODROID_C2
         elif chip_id == chips.S905X3:
-            board_id = boards.ODROID_C4
+            board_id = self._s905x3_id()
         elif chip_id == chips.S922X:
             board_id = boards.ODROID_N2
         elif chip_id == chips.A311D:
@@ -314,6 +314,8 @@ class Board:
             board = boards.ORANGE_PI_3_LTS
         elif board_value == "bananapim2zero":
             board = boards.BANANA_PI_M2_ZERO
+        elif board_value == "bananapim5":
+            board = boards.BANANA_PI_M5
         elif board_value == "orangepizeroplus2-h5":
             board = boards.ORANGE_PI_ZERO_PLUS_2H5
         elif board_value == "orangepizeroplus":
@@ -339,6 +341,13 @@ class Board:
         if "Giant Board" in board_value:
             return boards.GIANT_BOARD
         return None
+
+    def _s905x3_id(self) -> Optional[str]:
+        """Check what type S905X3 board."""
+        board_value = self.detector.get_device_model()
+        if "Bananapi BPI-M5" in board_value:
+          return boards.BANANA_PI_M5
+        return boards.ODROID_C4
 
     def _stm32mp1_id(self) -> Optional[str]:
         """Check what type stm32mp1 board."""
