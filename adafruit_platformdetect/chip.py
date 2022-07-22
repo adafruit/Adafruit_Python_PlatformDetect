@@ -169,6 +169,8 @@ class Chip:
 
         if self.detector.check_dt_compatible_value("amlogic,g12a"):
             return chips.S905Y2
+        if self.detector.check_dt_compatible_value("amlogic, g12a"):
+            return chips.S905X3
 
         if self.detector.check_dt_compatible_value("sun8i-h3"):
             return chips.H3
