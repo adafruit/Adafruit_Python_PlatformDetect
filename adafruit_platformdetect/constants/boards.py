@@ -67,6 +67,7 @@ JETSON_TX2 = "JETSON_TX2"
 JETSON_TX2_NX = "JETSON_TX2_NX"
 CLARA_AGX_XAVIER = "CLARA_AGX_XAVIER"
 JETSON_XAVIER = "JETSON_XAVIER"
+JETSON_AGX_ORIN = "JETSON_ORIN"
 JETSON_NANO = "JETSON_NANO"
 JETSON_NX = "JETSON_NX"
 
@@ -250,6 +251,14 @@ _JETSON_IDS = (
             "nvidia,p3509-0000-a00+p3668-0001-a01",
             "nvidia,p3449-0000+p3668-0000",
             "nvidia,p3449-0000+p3668-0001",
+            "nvidia,p3449-0000+p3668-0003",
+        ),
+    ),
+    (
+        JETSON_AGX_ORIN,
+        (
+            "nvidia,p3737-0000+p3701-0000",
+            "nvidia,p3737-0000+p3701-0004",
         ),
     ),
 )

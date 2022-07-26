@@ -105,7 +105,7 @@ class Board:
             board_id = boards.FTDI_FT2232H
         elif chip_id == chips.APQ8016:
             board_id = boards.DRAGONBOARD_410C
-        elif chip_id in (chips.T210, chips.T186, chips.T194):
+        elif chip_id in (chips.T210, chips.T186, chips.T194, chips.T234):
             board_id = self._tegra_id()
         elif chip_id == chips.HFU540:
             board_id = self._sifive_id()
