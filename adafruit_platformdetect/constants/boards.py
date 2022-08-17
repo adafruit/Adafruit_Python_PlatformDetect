@@ -324,7 +324,7 @@ _SIFIVE_IDS = (SIFIVE_UNLEASHED,)
 # BeagleBone eeprom board ids from:
 #   https://github.com/beagleboard/image-builder
 # Thanks to zmatt on freenode #beagle for pointers.
-_BEAGLEBONE_BOARD_IDS = {
+_BEAGLEBONE_BOSARD_ID = {
     # Original bone/white:
     BEAGLEBONE: (
         ("A4", "A335BONE00A4"),
@@ -340,6 +340,7 @@ _BEAGLEBONE_BOARD_IDS = {
         ("A5B", "A335BNLT0A5B"),
         ("A5C", "A335BNLT0A5C"),
         ("A6", "A335BNLT00A6"),
+        ("A6A", "A335BNLT0A6A"),
         ("B", "A335BNLT000B"),
         ("C", "A335BNLT000C"),
         ("C", "A335BNLT00C0"),
