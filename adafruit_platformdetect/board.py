@@ -162,7 +162,7 @@ class Board:
         elif chip_id == chips.TDA4VM:
             board_id = self._tisk_id()
         elif chip_id == chips.D1:
-            board_id = boards.LICHEE_D1
+            board_id = boards.LICHEE_RV
         self._board_id = board_id
         return board_id
 
