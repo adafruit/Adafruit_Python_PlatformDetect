@@ -162,7 +162,7 @@ class Board:
         elif chip_id == chips.TDA4VM:
             board_id = self._tisk_id()
         elif chip_id == chips.D1:
-            board_id = boards.LICHEE_RV
+            board_id = self._armbian_id()
         self._board_id = board_id
         return board_id
 
@@ -330,6 +330,8 @@ class Board:
             board = boards.NANOPI_DUO2
         elif board_value == "nanopineo":
             board = boards.NANOPI_NEO
+        elif board_value == "nezha":
+            board = boards.LICHEE_RV
 
         return board
 
