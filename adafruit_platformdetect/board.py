@@ -664,7 +664,7 @@ class Board:
 
     @property
     def any_lichee_riscv_board(self) -> bool:
-        """Check whether the current board is any defined TI SK Board."""
+        """Check whether the current board is any defined Lichee RISC-V."""
         return self.id in [v[0] for v in boards._LICHEE_RISCV_IDS]
 
     @property
