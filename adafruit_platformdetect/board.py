@@ -663,6 +663,11 @@ class Board:
         return self.id in [v[0] for v in boards._TI_SK_BOARD_IDS]
 
     @property
+    def any_lichee_riscv_board(self) -> bool:
+        """Check whether the current board is any defined TI SK Board."""
+        return self.id in [v[0] for v in boards._LICHEE_RISCV_IDS]
+
+    @property
     def any_embedded_linux(self) -> bool:
         """Check whether the current board is any embedded Linux device."""
         return any(
@@ -691,6 +696,7 @@ class Board:
                 self.any_bananapi,
                 self.any_maaxboard,
                 self.any_tisk_board,
+                self.any_lichee_riscv_board,
             ]
         )
 
