@@ -161,6 +161,8 @@ class Board:
             board_id = boards.GENERIC_LINUX_PC
         elif chip_id == chips.TDA4VM:
             board_id = self._tisk_id()
+        elif chip_id == chips.D1_RISCV:
+            board_id = self._armbian_id()
         self._board_id = board_id
         return board_id
 
@@ -332,6 +334,8 @@ class Board:
             board = boards.NANOPI_DUO2
         elif board_value == "nanopineo":
             board = boards.NANOPI_NEO
+        elif board_value == "nezha":
+            board = boards.LICHEE_RV
 
         return board
 
@@ -663,6 +667,11 @@ class Board:
         return self.id in [v[0] for v in boards._TI_SK_BOARD_IDS]
 
     @property
+    def any_lichee_riscv_board(self) -> bool:
+        """Check whether the current board is any defined Lichee RISC-V."""
+        return self.id in boards._LICHEE_RISCV_IDS
+
+    @property
     def any_embedded_linux(self) -> bool:
         """Check whether the current board is any embedded Linux device."""
         return any(
@@ -691,6 +700,7 @@ class Board:
                 self.any_bananapi,
                 self.any_maaxboard,
                 self.any_tisk_board,
+                self.any_lichee_riscv_board,
             ]
         )
 
