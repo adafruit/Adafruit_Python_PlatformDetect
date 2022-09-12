@@ -138,7 +138,7 @@ class Board:
         elif chip_id == chips.RK3308:
             board_id = self._rock_pi_id()
         elif chip_id == chips.RK3399:
-            board_id = self._rock_pi_id()
+            board_id = self._rock_pi_id() or self._armbian_id()
         elif chip_id == chips.ATOM_X5_Z8350:
             board_id = self._rock_pi_id()
         elif chip_id == chips.RK3288:
@@ -312,6 +312,10 @@ class Board:
             board = boards.ORANGE_PI_3
         elif board_value == "orangepi3-lts":
             board = boards.ORANGE_PI_3_LTS
+        elif board_value == "orangepi4":
+            board = boards.ORANGE_PI_4
+        elif board_value == "orangepi4-lts":
+            board = boards.ORANGE_PI_4_LTS
         elif board_value == "bananapim2zero":
             board = boards.BANANA_PI_M2_ZERO
         elif board_value == "bananapim5":
