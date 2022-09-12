@@ -241,7 +241,7 @@ class Chip:
             return chips.TDA4VM
 
         if self.detector.check_dt_compatible_value("sun20i-d1"):
-            return chips.D1
+            return chips.D1_RISCV
 
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")

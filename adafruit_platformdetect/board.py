@@ -161,7 +161,7 @@ class Board:
             board_id = boards.GENERIC_LINUX_PC
         elif chip_id == chips.TDA4VM:
             board_id = self._tisk_id()
-        elif chip_id == chips.D1:
+        elif chip_id == chips.D1_RISCV:
             board_id = self._armbian_id()
         self._board_id = board_id
         return board_id
