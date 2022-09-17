@@ -96,7 +96,7 @@ class Board:
         elif chip_id == chips.S905:
             board_id = boards.ODROID_C2
         elif chip_id == chips.S905X3:
-            board_id = boards.ODROID_C4
+            board_id = self._s905x3_id()
         elif chip_id == chips.S922X:
             board_id = boards.ODROID_N2
         elif chip_id == chips.A311D:
@@ -109,7 +109,7 @@ class Board:
             board_id = boards.FTDI_FT2232H
         elif chip_id == chips.APQ8016:
             board_id = boards.DRAGONBOARD_410C
-        elif chip_id in (chips.T210, chips.T186, chips.T194):
+        elif chip_id in (chips.T210, chips.T186, chips.T194, chips.T234):
             board_id = self._tegra_id()
         elif chip_id == chips.HFU540:
             board_id = self._sifive_id()
@@ -146,7 +146,7 @@ class Board:
         elif chip_id == chips.RK3308:
             board_id = self._rock_pi_id()
         elif chip_id == chips.RK3399:
-            board_id = self._rock_pi_id()
+            board_id = self._rock_pi_id() or self._armbian_id()
         elif chip_id == chips.ATOM_X5_Z8350:
             board_id = self._rock_pi_id()
         elif chip_id == chips.RK3288:
@@ -159,6 +159,8 @@ class Board:
             board_id = self._udoo_id()
         elif chip_id == chips.STM32MP157:
             board_id = self._stm32mp1_id()
+        elif chip_id == chips.STM32MP157DAA1:
+            board_id = self._stm32mp1_id()
         elif chip_id == chips.MT8167:
             board_id = boards.CORAL_EDGE_TPU_DEV_MINI
         elif chip_id == chips.RP2040_U2IF:
@@ -167,6 +169,8 @@ class Board:
             board_id = boards.GENERIC_LINUX_PC
         elif chip_id == chips.TDA4VM:
             board_id = self._tisk_id()
+        elif chip_id == chips.D1_RISCV:
+            board_id = self._armbian_id()
         self._board_id = board_id
         return board_id
 
@@ -318,8 +322,14 @@ class Board:
             board = boards.ORANGE_PI_3
         elif board_value == "orangepi3-lts":
             board = boards.ORANGE_PI_3_LTS
+        elif board_value == "orangepi4":
+            board = boards.ORANGE_PI_4
+        elif board_value == "orangepi4-lts":
+            board = boards.ORANGE_PI_4_LTS
         elif board_value == "bananapim2zero":
             board = boards.BANANA_PI_M2_ZERO
+        elif board_value == "bananapim5":
+            board = boards.BANANA_PI_M5
         elif board_value == "orangepizeroplus2-h5":
             board = boards.ORANGE_PI_ZERO_PLUS_2H5
         elif board_value == "orangepizeroplus":
@@ -332,6 +342,8 @@ class Board:
             board = boards.NANOPI_DUO2
         elif board_value == "nanopineo":
             board = boards.NANOPI_NEO
+        elif board_value == "nezha":
+            board = boards.LICHEE_RV
         elif board_value == "pcduino2":
             board = boards.PCDUINO2
         elif board_value == "pcduino3":
@@ -350,6 +362,13 @@ class Board:
             return boards.GIANT_BOARD
         return None
 
+    def _s905x3_id(self) -> Optional[str]:
+        """Check what type S905X3 board."""
+        board_value = self.detector.get_device_model()
+        if "Bananapi BPI-M5" in board_value:
+            return boards.BANANA_PI_M5
+        return boards.ODROID_C4
+
     def _stm32mp1_id(self) -> Optional[str]:
         """Check what type stm32mp1 board."""
         board_value = self.detector.get_device_model()
@@ -361,6 +380,8 @@ class Board:
             return boards.OSD32MP1_BRK
         if "OSD32MP1-RED" in board_value:
             return boards.OSD32MP1_RED
+        if "STM32MP1XX OLinuXino" in board_value:
+            return boards.STMP157_OLINUXINO_LIME2
         return None
 
     def _imx8mx_id(self) -> Optional[str]:
@@ -649,6 +670,7 @@ class Board:
 
     @property
     def any_pcduino_board(self) -> bool:
+        """Check whether the current board is any Pcduino board"""
         return self.id in boards._PCDUINO_DEV_IDS
 
     @property
@@ -670,6 +692,11 @@ class Board:
     def any_tisk_board(self) -> bool:
         """Check whether the current board is any defined TI SK Board."""
         return self.id in [v[0] for v in boards._TI_SK_BOARD_IDS]
+
+    @property
+    def any_lichee_riscv_board(self) -> bool:
+        """Check whether the current board is any defined Lichee RISC-V."""
+        return self.id in boards._LICHEE_RISCV_IDS
 
     @property
     def any_embedded_linux(self) -> bool:
@@ -700,6 +727,7 @@ class Board:
                 self.any_bananapi,
                 self.any_maaxboard,
                 self.any_tisk_board,
+                self.any_lichee_riscv_board,
                 self.any_pcduino_board,
             ]
         )

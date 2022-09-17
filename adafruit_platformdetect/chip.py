@@ -175,6 +175,8 @@ class Chip:
 
         if self.detector.check_dt_compatible_value("amlogic,g12a"):
             return chips.S905Y2
+        if self.detector.check_dt_compatible_value("amlogic, g12a"):
+            return chips.S905X3
 
         if self.detector.check_dt_compatible_value("sun8i-h3"):
             return chips.H3
@@ -217,6 +219,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("st,stm32mp157"):
             return chips.STM32MP157
 
+        if self.detector.check_dt_compatible_value("st,stm32mp153"):
+            return chips.STM32MP157DAA1
+
         if self.detector.check_dt_compatible_value("sun50i-a64"):
             return chips.A64
 
@@ -240,6 +245,9 @@ class Chip:
 
         if self.detector.check_dt_compatible_value("ti,j721e"):
             return chips.TDA4VM
+
+        if self.detector.check_dt_compatible_value("sun20i-d1"):
+            return chips.D1_RISCV
 
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
@@ -275,6 +283,8 @@ class Chip:
                     linux_id = chips.T186
                 elif "nvidia,tegra194" in compats:
                     linux_id = chips.T194
+                elif "nvidia,tegra234" in compats:
+                    linux_id = chips.T234
             if compatible and "imx8m" in compatible:
                 linux_id = chips.IMX8MX
             if compatible and "odroid-c2" in compatible:
@@ -300,7 +310,6 @@ class Chip:
                 linux_id = chips.H5
             if compatible and "odroid-xu4" in compatible:
                 linux_id = chips.EXYNOS5422
-
             cpu_model = self.detector.get_cpuinfo_field("cpu model")
 
             if cpu_model is not None:
