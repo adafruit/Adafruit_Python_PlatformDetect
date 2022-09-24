@@ -67,6 +67,8 @@ class Board:
             board_id = self._pi_id()
         elif chip_id == chips.AM33XX:
             board_id = self._beaglebone_id()
+        elif chip_id == chips.AM65XX:
+            board_id = self._siemens_simatic_iot2000_id()
         elif chip_id == chips.DRA74X:
             board_id = self._bbai_id()
         elif chip_id == chips.SUN4I:
@@ -563,6 +565,21 @@ class Board:
         # Will only reach here if a device was added in chip.py but here.
         raise RuntimeError("RP2040_U2IF device was added to chip but not board.")
 
+    def _siemens_simatic_iot2000_id(self) -> Optional[str]:
+        """Try to detect if this is a IOT2050 Gateway."""
+        board_value = self.detector.get_device_model()
+        board = None
+        if board_value and "SIMATIC IOT2050 Advanced" in board_value:
+            board = boards.SIEMENS_SIMATIC_IOT2050_ADV
+        elif board_value and "SIMATIC IOT2050 Basic" in board_value:
+            board = boards.SIEMENS_SIMATIC_IOT2050_BASIC
+        return board
+
+    @property
+    def any_siemens_simatic_iot2000(self) -> bool:
+        """Check whether the current board is a SIEMENS SIMATIC IOT2000 Gateway."""
+        return self.id in boards._SIEMENS_SIMATIC_IOT2000_IDS
+
     @property
     def any_nanopi(self) -> bool:
         """Check whether the current board is any defined Nano Pi."""
@@ -727,6 +744,7 @@ class Board:
                 self.any_bananapi,
                 self.any_maaxboard,
                 self.any_tisk_board,
+                self.any_siemens_simatic_iot2000,
                 self.any_lichee_riscv_board,
                 self.any_pcduino_board,
             ]
