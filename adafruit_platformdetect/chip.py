@@ -172,6 +172,12 @@ class Chip:
         if self.detector.check_dt_compatible_value("ti,am652"):
             return chips.AM65XX
 
+        if self.detector.check_dt_compatible_value("sun4i-a10"):
+            return chips.A10
+
+        if self.detector.check_dt_compatible_value("sun7i-a20"):
+            return chips.A20
+
         if self.detector.check_dt_compatible_value("amlogic,g12a"):
             return chips.S905Y2
         if self.detector.check_dt_compatible_value("amlogic, g12a"):
@@ -330,6 +336,10 @@ class Chip:
                 linux_id = chips.AM33XX
             elif "DRA74X" in hardware:
                 linux_id = chips.DRA74X
+            elif "sun4i" in hardware:
+                linux_id = chips.A10
+            elif "sun7i" in hardware:
+                linux_id = chips.A20
             elif "sun8i" in hardware:
                 linux_id = chips.SUN8I
             elif "ODROIDC" in hardware:
