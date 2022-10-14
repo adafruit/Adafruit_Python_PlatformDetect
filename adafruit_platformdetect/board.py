@@ -173,6 +173,8 @@ class Board:
             board_id = self._tisk_id()
         elif chip_id == chips.D1_RISCV:
             board_id = self._armbian_id()
+        elif chip_id == chips.S905X:
+            board_id = boards.AML_S905X_CC
         self._board_id = board_id
         return board_id
 
@@ -804,6 +806,11 @@ class Board:
     def greatfet_one(self) -> bool:
         """Check whether the current board is a GreatFET One."""
         return self.id == boards.GREATFET_ONE
+
+    @property
+    def aml_s905x_cc(self) -> bool:
+        """Check whether the current board is a aml-s905x-cc One."""
+        return self.id == boards.AML_S905X_CC
 
     def __getattr__(self, attr: str) -> bool:
         """
