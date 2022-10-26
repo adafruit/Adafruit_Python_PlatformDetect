@@ -114,4 +114,3 @@ if detector.board.any_lubancat:
 
 if detector.board.any_siemens_simatic_iot2000:
     print("Siemens Simatic IOT2000 Gateway detected.")
-
