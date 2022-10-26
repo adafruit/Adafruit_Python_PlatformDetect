@@ -29,6 +29,10 @@ print("Chip id: ", detector.chip.id)
 print("Board id: ", detector.board.id)
 print()
 
+print(
+    "Is this a Siemens Simatic IOT2000 Gateway?",
+    detector.board.any_siemens_simatic_iot2000,
+)
 print("Is this a DragonBoard 410c?", detector.board.DRAGONBOARD_410C)
 print("Is this a Pi 3B+?", detector.board.RASPBERRY_PI_3B_PLUS)
 print("Is this a Pi 4B?", detector.board.RASPBERRY_PI_4B)
@@ -107,3 +111,7 @@ if detector.board.any_coral_board:
 
 if detector.board.any_lubancat:
     print("LubanCat detected.")
+
+if detector.board.any_siemens_simatic_iot2000:
+    print("Siemens Simatic IOT2000 Gateway detected.")
+
