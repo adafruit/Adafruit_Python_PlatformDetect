@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
+#
+# SPDX-License-Identifier: MIT
+
 """A setuptools based setup module.
 
 See:
@@ -24,7 +28,7 @@ setup(
     description="Platform detection for use by libraries like Adafruit-Blinka.",
     long_description=long_description,
     long_description_content_type="text/x-rst",
-    python_requires=">=3.6.0",
+    python_requires=">=3.7.0",
     url="https://github.com/adafruit/Adafruit_Python_PlatformDetect",
     # If your package is a single module, use this instead of 'packages':
     author="Adafruit Industries",
@@ -34,13 +38,13 @@ setup(
     license="MIT",
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Libraries",
         "Topic :: System :: Hardware",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
     ],
     packages=["adafruit_platformdetect", "adafruit_platformdetect.constants"],
 )

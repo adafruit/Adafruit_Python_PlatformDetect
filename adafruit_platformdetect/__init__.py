@@ -1,32 +1,25 @@
-# Copyright (c) 2014-2018 Adafruit Industries
-# Author: Tony DiCola, Limor Fried, Brennen Bearnes
-
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
+# SPDX-FileCopyrightText: 2014-2018 Tony DiCola, Limor Fried, Brennen Bearnes
+#
+# SPDX-License-Identifier: MIT
 
 """
 Attempt to detect the current platform.
 """
+import os
 import re
+import sys
+
+try:
+    from typing import Optional
+except ImportError:
+    pass
 
 from adafruit_platformdetect.board import Board
 from adafruit_platformdetect.chip import Chip
 
+# Needed to find libs (like libusb) installed by homebrew on Apple Silicon
+if sys.platform == "darwin":
+    os.environ["DYLD_FALLBACK_LIBRARY_PATH"] = "/opt/homebrew/lib/"
 
 # Various methods here may retain state in future, so tell pylint not to worry
 # that they don't use self right now:
@@ -34,11 +27,11 @@ from adafruit_platformdetect.chip import Chip
 class Detector:
     """Wrap various platform detection functions."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.board = Board(self)
         self.chip = Chip(self)
 
-    def get_cpuinfo_field(self, field):
+    def get_cpuinfo_field(self, field: str) -> Optional[str]:
         """
         Search /proc/cpuinfo for a field and return its value, if found,
         otherwise None.
@@ -46,7 +39,7 @@ class Detector:
         # Match a line like 'Hardware   : BCM2709':
         pattern = r"^" + field + r"\s+:\s+(.*)$"
 
-        with open("/proc/cpuinfo", "r") as infile:
+        with open("/proc/cpuinfo", "r", encoding="utf-8") as infile:
             cpuinfo = infile.read().split("\n")
         for line in cpuinfo:
             match = re.search(pattern, line, flags=re.IGNORECASE)
@@ -54,7 +47,7 @@ class Detector:
                 return match.group(1)
         return None
 
-    def check_dt_compatible_value(self, value):
+    def check_dt_compatible_value(self, value: str) -> bool:
         """
         Search /proc/device-tree/compatible for a value and return True, if found,
         otherwise False.
@@ -66,7 +59,7 @@ class Detector:
 
         return False
 
-    def get_armbian_release_field(self, field):
+    def get_armbian_release_field(self, field: str) -> Optional[str]:
         """
         Search /etc/armbian-release, if it exists, for a field and return its
         value, if found, otherwise None.
@@ -75,7 +68,7 @@ class Detector:
 
         pattern = r"^" + field + r"=(.*)"
         try:
-            with open("/etc/armbian-release", "r") as release_file:
+            with open("/etc/armbian-release", "r", encoding="utf-8") as release_file:
                 armbian = release_file.read().split("\n")
                 for line in armbian:
                     match = re.search(pattern, line)
@@ -86,48 +79,54 @@ class Detector:
 
         return field_value
 
-    def get_device_model(self):
+    def get_device_model(self) -> Optional[str]:
         """
         Search /proc/device-tree/model for the device model and return its value, if found,
         otherwise None.
         """
         try:
-            with open("/proc/device-tree/model", "r") as model_file:
+            with open("/proc/device-tree/model", "r", encoding="utf-8") as model_file:
                 return model_file.read()
         except FileNotFoundError:
             pass
         return None
 
-    def get_device_compatible(self):
+    def get_device_compatible(self) -> Optional[str]:
         """
         Search /proc/device-tree/compatible for the compatible chip name.
         """
         try:
-            with open("/proc/device-tree/compatible", "r") as model_file:
+            with open(
+                "/proc/device-tree/compatible", "r", encoding="utf-8"
+            ) as model_file:
                 return model_file.read()
         except FileNotFoundError:
             pass
         return None
 
-    def check_board_asset_tag_value(self):
+    def check_board_asset_tag_value(self) -> Optional[str]:
         """
         Search /sys/devices/virtual/dmi/id for the device model and return its value, if found,
         otherwise None.
         """
         try:
-            with open("/sys/devices/virtual/dmi/id/board_asset_tag", "r") as tag_file:
+            with open(
+                "/sys/devices/virtual/dmi/id/board_asset_tag", "r", encoding="utf-8"
+            ) as tag_file:
                 return tag_file.read().strip()
         except FileNotFoundError:
             pass
         return None
 
-    def check_board_name_value(self):
+    def check_board_name_value(self) -> Optional[str]:
         """
         Search /sys/devices/virtual/dmi/id for the board name and return its value, if found,
         otherwise None. Debian/ubuntu based
         """
         try:
-            with open("/sys/devices/virtual/dmi/id/board_name", "r") as board_name_file:
+            with open(
+                "/sys/devices/virtual/dmi/id/board_name", "r", encoding="utf-8"
+            ) as board_name_file:
                 return board_name_file.read().strip()
         except FileNotFoundError:
             pass

@@ -1,24 +1,7 @@
-# The MIT License (MIT)
+# SPDX-FileCopyrightText: 2021 Melissa LeBlanc-Williams for Adafruit Industries
 #
-# Copyright (c) 2020 Melissa LeBlanc-Williams for Adafruit Industries
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
+# SPDX-License-Identifier: MIT
+
 """
 `adafruit_platformdetect.chip`
 ================================================================================
@@ -32,15 +15,21 @@ Implementation Notes
 
 **Software and Dependencies:**
 
-* Linux and Python 3.5 or Higher
+* Linux and Python 3.7 or Higher
 
 """
 
-# imports
+
 import os
 import sys
 
+try:
+    from typing import Optional
+except ImportError:
+    pass
+
 from adafruit_platformdetect.constants import chips
+
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
@@ -49,14 +38,16 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.gi
 class Chip:
     """Attempt detection of current chip / CPU."""
 
-    def __init__(self, detector):
+    def __init__(self, detector) -> None:
         self.detector = detector
         self._chip_id = None
 
     @property
     def id(
         self,
-    ):  # pylint: disable=invalid-name,too-many-branches,too-many-return-statements
+    ) -> Optional[
+        str
+    ]:  # pylint: disable=invalid-name,too-many-branches,too-many-return-statements
         """Return a unique id for the detected chip, if any."""
         # There are some times we want to trick the platform detection
         # say if a raspberry pi doesn't have the right ID, or for testing
@@ -171,10 +162,26 @@ class Chip:
 
     # pylint: enable=invalid-name
 
-    def _linux_id(self):
+    def _linux_id(self) -> Optional[str]:
         # pylint: disable=too-many-branches,too-many-statements
         # pylint: disable=too-many-return-statements
         """Attempt to detect the CPU on a computer running the Linux kernel."""
+        if self.detector.check_dt_compatible_value("ti,am654"):
+            return chips.AM65XX
+
+        if self.detector.check_dt_compatible_value("ti,am652"):
+            return chips.AM65XX
+
+        if self.detector.check_dt_compatible_value("sun4i-a10"):
+            return chips.A10
+
+        if self.detector.check_dt_compatible_value("sun7i-a20"):
+            return chips.A20
+
+        if self.detector.check_dt_compatible_value("amlogic,g12a"):
+            return chips.S905Y2
+        if self.detector.check_dt_compatible_value("amlogic, g12a"):
+            return chips.S905X3
 
         if self.detector.check_dt_compatible_value("sun8i-h3"):
             return chips.H3
@@ -211,8 +218,17 @@ class Chip:
         if self.detector.check_dt_compatible_value("rockchip,rk3328"):
             return chips.RK3328
 
+        if self.detector.check_dt_compatible_value("rockchip,rk3588"):
+            return chips.RK3588
+
+        if self.detector.check_dt_compatible_value("amlogic,a311d"):
+            return chips.A311D
+
         if self.detector.check_dt_compatible_value("st,stm32mp157"):
             return chips.STM32MP157
+
+        if self.detector.check_dt_compatible_value("st,stm32mp153"):
+            return chips.STM32MP157DAA1
 
         if self.detector.check_dt_compatible_value("sun50i-a64"):
             return chips.A64
@@ -237,6 +253,12 @@ class Chip:
 
         if self.detector.check_dt_compatible_value("ti,j721e"):
             return chips.TDA4VM
+
+        if self.detector.check_dt_compatible_value("sun20i-d1"):
+            return chips.D1_RISCV
+
+        if self.detector.check_dt_compatible_value("libretech,aml-s905x-cc"):
+            return chips.S905X
 
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
@@ -272,6 +294,8 @@ class Chip:
                     linux_id = chips.T186
                 elif "nvidia,tegra194" in compats:
                     linux_id = chips.T194
+                elif "nvidia,tegra234" in compats:
+                    linux_id = chips.T234
             if compatible and "imx8m" in compatible:
                 linux_id = chips.IMX8MX
             if compatible and "odroid-c2" in compatible:
@@ -287,6 +311,8 @@ class Chip:
                     return chips.S922X
                 if "sm1" in compatible_list:
                     return chips.S905X3
+                if "vim3amlogic" in compatible_list:
+                    return chips.A311D
             if compatible and "sun50i-a64" in compatible:
                 linux_id = chips.A64
             if compatible and "sun50i-h6" in compatible:
@@ -295,7 +321,6 @@ class Chip:
                 linux_id = chips.H5
             if compatible and "odroid-xu4" in compatible:
                 linux_id = chips.EXYNOS5422
-
             cpu_model = self.detector.get_cpuinfo_field("cpu model")
 
             if cpu_model is not None:
@@ -317,6 +342,10 @@ class Chip:
                 linux_id = chips.AM33XX
             elif "DRA74X" in hardware:
                 linux_id = chips.DRA74X
+            elif "sun4i" in hardware:
+                linux_id = chips.A10
+            elif "sun7i" in hardware:
+                linux_id = chips.A20
             elif "sun8i" in hardware:
                 linux_id = chips.SUN8I
             elif "ODROIDC" in hardware:
@@ -329,6 +358,8 @@ class Chip:
                 linux_id = chips.S905X3
             elif "ODROID-XU4" in hardware:
                 linux_id = chips.EXYNOS5422
+            elif "KHADAS-VIM3" in hardware:
+                linux_id = chips.A311D
             elif "SAMA5" in hardware:
                 linux_id = chips.SAMA5
             elif "Pinebook" in hardware:
@@ -349,7 +380,7 @@ class Chip:
 
         return linux_id
 
-    def __getattr__(self, attr):
+    def __getattr__(self, attr: str) -> bool:
         """
         Detect whether the given attribute is the currently-detected chip.  See
         list of constants at the top of this module for available options.
