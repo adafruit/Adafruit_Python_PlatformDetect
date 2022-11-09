@@ -731,38 +731,38 @@ class Board:
     @property
     def any_embedded_linux(self) -> bool:
         """Check whether the current board is any embedded Linux device."""
-        return any(
-            [
-                self.any_raspberry_pi_40_pin,
-                self.any_raspberry_pi,
-                self.any_beaglebone,
-                self.any_orange_pi,
-                self.any_nanopi,
-                self.any_giant_board,
-                self.any_jetson_board,
-                self.any_coral_board,
-                self.any_odroid_40_pin,
-                self.khadas_vim3_40_pin,
-                self.any_96boards,
-                self.any_sifive_board,
-                self.any_onion_omega_board,
-                self.any_pine64_board,
-                self.any_pynq_board,
-                self.any_rock_pi_board,
-                self.any_clockwork_pi_board,
-                self.any_udoo_board,
-                self.any_asus_tinker_board,
-                self.any_stm32mp1,
-                self.any_lubancat,
-                self.any_bananapi,
-                self.any_maaxboard,
-                self.any_tisk_board,
-                self.any_siemens_simatic_iot2000,
-                self.any_lichee_riscv_board,
-                self.any_pcduino_board,
-                self.any_libre_computer_board,
-            ]
-        )
+
+        def lazily_generate_conditions():
+            yield self.any_raspberry_pi_40_pin
+            yield self.any_raspberry_pi
+            yield self.any_beaglebone
+            yield self.any_orange_pi
+            yield self.any_nanopi
+            yield self.any_giant_board
+            yield self.any_jetson_board
+            yield self.any_coral_board
+            yield self.any_odroid_40_pin
+            yield self.khadas_vim3_40_pin
+            yield self.any_96boards
+            yield self.any_sifive_board
+            yield self.any_onion_omega_board
+            yield self.any_pine64_board
+            yield self.any_pynq_board
+            yield self.any_rock_pi_board
+            yield self.any_clockwork_pi_board
+            yield self.any_udoo_board
+            yield self.any_asus_tinker_board
+            yield self.any_stm32mp1
+            yield self.any_lubancat
+            yield self.any_bananapi
+            yield self.any_maaxboard
+            yield self.any_tisk_board
+            yield self.any_siemens_simatic_iot2000
+            yield self.any_lichee_riscv_board
+            yield self.any_pcduino_board
+            yield self.any_libre_computer_board
+
+        return any(condition for condition in lazily_generate_conditions())
 
     @property
     def ftdi_ft232h(self) -> bool:
