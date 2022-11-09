@@ -742,7 +742,7 @@ class Board:
             yield self.any_jetson_board
             yield self.any_coral_board
             yield self.any_odroid_40_pin
-            yield self.khadas_vim3_40_pin,
+            yield self.khadas_vim3_40_pin
             yield self.any_96boards
             yield self.any_sifive_board
             yield self.any_onion_omega_board
@@ -757,10 +757,10 @@ class Board:
             yield self.any_bananapi
             yield self.any_maaxboard
             yield self.any_tisk_board
-            yield self.any_siemens_simatic_iot2000,
-            yield self.any_lichee_riscv_board,
-            yield self.any_pcduino_board,
-            yield self.any_libre_computer_board,
+            yield self.any_siemens_simatic_iot2000
+            yield self.any_lichee_riscv_board
+            yield self.any_pcduino_board
+            yield self.any_libre_computer_board
 
         return any(condition for condition in lazily_generate_conditions())
 
