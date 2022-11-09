@@ -720,6 +720,11 @@ class Board:
         return self.id in boards._LICHEE_RISCV_IDS
 
     @property
+    def any_libre_computer_board(self) -> bool:
+        """Check whether the current board is any defined Libre Computer board."""
+        return self.id in boards._LIBRE_COMPUTER_IDS
+
+    @property
     def any_embedded_linux(self) -> bool:
         """Check whether the current board is any embedded Linux device."""
         return any(
@@ -751,6 +756,7 @@ class Board:
                 self.any_siemens_simatic_iot2000,
                 self.any_lichee_riscv_board,
                 self.any_pcduino_board,
+                self.any_libre_computer_board,
             ]
         )
 
@@ -808,11 +814,6 @@ class Board:
     def greatfet_one(self) -> bool:
         """Check whether the current board is a GreatFET One."""
         return self.id == boards.GREATFET_ONE
-
-    @property
-    def aml_s905x_cc(self) -> bool:
-        """Check whether the current board is a aml-s905x-cc One."""
-        return self.id == boards.AML_S905X_CC
 
     def __getattr__(self, attr: str) -> bool:
         """
