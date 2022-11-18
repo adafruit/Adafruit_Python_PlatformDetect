@@ -155,6 +155,10 @@ class Board:
             board_id = self._asus_tinker_board_id()
         elif chip_id == chips.RK3328:
             board_id = self._rock_pi_id()
+        elif chip_id == chips.RK3566:
+            board_id = self._rk3566_id()
+        elif chip_id == chips.RK3568:
+            board_id = self._rk3568_id()
         elif chip_id == chips.RK3588:
             board_id = self._rock_pi_id()
         elif chip_id == chips.RYZEN_V1605B:
