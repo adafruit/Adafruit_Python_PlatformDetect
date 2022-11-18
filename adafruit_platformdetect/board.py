@@ -468,12 +468,12 @@ class Board:
 
         except FileNotFoundError:
             return None
-            
+
     def _rk3566_id(self) -> Optional[str]:
         """Check what type of rk3566 board."""
         board_value = self.detector.get_device_model()
         board = None
-        if board_value and "LubanCat Zero" in board_value:
+        if board_value and "LubanCat-Zero" in board_value:
             board = boards.LUBANCAT_ZERO
         if board_value and "LubanCat1" in board_value:
             board = boards.LUBANCAT1
