@@ -218,6 +218,12 @@ class Chip:
         if self.detector.check_dt_compatible_value("rockchip,rk3328"):
             return chips.RK3328
 
+        if self.detector.check_dt_compatible_value("rockchip,rk3566"):
+            return chips.RK3566
+
+        if self.detector.check_dt_compatible_value("rockchip,rk3568"):
+            return chips.RK3568
+
         if self.detector.check_dt_compatible_value("rockchip,rk3588"):
             return chips.RK3588
 
