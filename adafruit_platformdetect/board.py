@@ -485,6 +485,8 @@ class Board:
             board = boards.LUBANCAT_ZERO
         if board_value and "LubanCat1" in board_value:
             board = boards.LUBANCAT1
+        if board_value and "Radxa CM3 IO" in board_value:
+            board = boards.RADXA_CM3
         return board
 
     def _rk3568_id(self) -> Optional[str]:
