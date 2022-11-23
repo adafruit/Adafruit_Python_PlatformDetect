@@ -95,6 +95,8 @@ class Board:
             board_id = boards.RASPBERRY_PI_PICO
         elif chip_id == chips.S805:
             board_id = boards.ODROID_C1
+        elif chip_id == chips.RK3568B2:
+            board_id = boards.ODROID_M1
         elif chip_id == chips.S905:
             board_id = boards.ODROID_C2
         elif chip_id == chips.S905X3:
