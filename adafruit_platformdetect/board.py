@@ -534,8 +534,9 @@ class Board:
     def _j4105_id(self) -> Optional[str]:
         """Try to detect the id of J4105 board."""
         try:
-            with open("/sys/devices/virtual/dmi/id/board_name",
-                "r", encoding="utf-8") as board_name:
+            with open(
+                "/sys/devices/virtual/dmi/id/board_name", "r", encoding="utf-8"
+            ) as board_name:
                 board_value = board_name.read().rstrip()
             if board_value == "ODYSSEY-X86J4105":
                 return boards.ODYSSEY_X86J4105
