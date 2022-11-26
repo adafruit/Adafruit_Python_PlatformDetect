@@ -533,12 +533,14 @@ class Board:
 
     def _j4105_id(self) -> Optional[str]:
         """Try to detect the id of J4105 board."""
-        with open('/sys/devices/virtual/dmi/id/board_name', 'r') as file:
-            board_value = file.read().rstrip()
-        board = None
-        if board_value == "ODYSSEY-X86J4105":
-           board = boards.ODYSSEY_X86J4105
-        return board
+        try:
+            with open('/sys/devices/virtual/dmi/id/board_name', 'r', encoding="utf-8") as board_name:
+                board_value = board_name.read().rstrip()
+            if board_value == "ODYSSEY-X86J4105":
+                return boards.ODYSSEY_X86J4105
+            return None
+        except FileNotFoundError:
+            return None
 
     def _asus_tinker_board_id(self) -> Optional[str]:
         """Check what type of Tinker Board."""
