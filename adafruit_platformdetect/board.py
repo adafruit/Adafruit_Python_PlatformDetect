@@ -154,7 +154,7 @@ class Board:
         elif chip_id == chips.ATOM_X5_Z8350:
             board_id = self._rock_pi_id()
         elif chip_id == chips.ATOM_J4105:
-            board_id = self._odyssey_id()
+            board_id = self._j4105_id()
         elif chip_id == chips.RK3288:
             board_id = self._asus_tinker_board_id()
         elif chip_id == chips.RK3328:
@@ -531,9 +531,13 @@ class Board:
 
         return None
 
-    def _odyssey_id(self) -> Optional[str]:
-        """Try to detect the id of Seeed board."""
-        board = boards.ODYSSEY_X86J4105
+    def _j4105_id(self) -> Optional[str]:
+        """Try to detect the id of J4105 board."""
+        with open('/sys/devices/virtual/dmi/id/board_name', 'r') as file:
+            board_value = file.read().rstrip()
+        board = None
+        if board_value == "ODYSSEY-X86J4105":
+           board = boards.ODYSSEY_X86J4105
         return board
 
     def _asus_tinker_board_id(self) -> Optional[str]:
