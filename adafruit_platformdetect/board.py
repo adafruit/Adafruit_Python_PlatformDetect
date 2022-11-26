@@ -720,6 +720,11 @@ class Board:
         return self.id in boards._UDOO_BOARD_IDS
 
     @property
+    def any_seeed_board(self) -> bool:
+        """Check to see if the current board is an SEEED board"""
+        return self.id in boards._SEEED_BOARD_IDS
+
+    @property
     def any_asus_tinker_board(self) -> bool:
         """Check to see if the current board is an ASUS Tinker Board"""
         return self.id in boards._ASUS_TINKER_BOARD_IDS
@@ -782,6 +787,7 @@ class Board:
             yield self.any_rock_pi_board
             yield self.any_clockwork_pi_board
             yield self.any_udoo_board
+            yield self.any_seeed_board
             yield self.any_asus_tinker_board
             yield self.any_stm32mp1
             yield self.any_lubancat
