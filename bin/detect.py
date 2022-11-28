@@ -25,9 +25,16 @@ import adafruit_platformdetect
 
 detector = adafruit_platformdetect.Detector()
 
+print("Board Detection Test")
+print()
+print("Check that the Chip and Board IDs match your board and that this it is")
+print("correctly detecting whether or not it is a Linux board.")
+print()
 print("Chip id: ", detector.chip.id)
 print("Board id: ", detector.board.id)
 print()
+print("Linux Detection")
+print("---------------")
 print("Is this an embedded Linux system?", detector.board.any_embedded_linux)
 print()
 print("Raspberry Pi Boards")
