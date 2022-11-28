@@ -153,6 +153,8 @@ class Board:
             board_id = self._rock_pi_id() or self._armbian_id()
         elif chip_id == chips.ATOM_X5_Z8350:
             board_id = self._rock_pi_id()
+        elif chip_id == chips.ATOM_J4105:
+            board_id = self._j4105_id()
         elif chip_id == chips.RK3288:
             board_id = self._asus_tinker_board_id()
         elif chip_id == chips.RK3328:
@@ -529,6 +531,19 @@ class Board:
 
         return None
 
+    def _j4105_id(self) -> Optional[str]:
+        """Try to detect the id of J4105 board."""
+        try:
+            with open(
+                "/sys/devices/virtual/dmi/id/board_name", "r", encoding="utf-8"
+            ) as board_name:
+                board_value = board_name.read().rstrip()
+            if board_value == "ODYSSEY-X86J4105":
+                return boards.ODYSSEY_X86J4105
+            return None
+        except FileNotFoundError:
+            return None
+
     def _asus_tinker_board_id(self) -> Optional[str]:
         """Check what type of Tinker Board."""
         board_value = self.detector.get_device_model()
@@ -713,6 +728,11 @@ class Board:
         return self.id in boards._UDOO_BOARD_IDS
 
     @property
+    def any_seeed_board(self) -> bool:
+        """Check to see if the current board is an SEEED board"""
+        return self.id in boards._SEEED_BOARD_IDS
+
+    @property
     def any_asus_tinker_board(self) -> bool:
         """Check to see if the current board is an ASUS Tinker Board"""
         return self.id in boards._ASUS_TINKER_BOARD_IDS
@@ -775,6 +795,7 @@ class Board:
             yield self.any_rock_pi_board
             yield self.any_clockwork_pi_board
             yield self.any_udoo_board
+            yield self.any_seeed_board
             yield self.any_asus_tinker_board
             yield self.any_stm32mp1
             yield self.any_lubancat
