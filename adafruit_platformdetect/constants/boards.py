@@ -513,6 +513,7 @@ _PI_REV_CODES = {
         "2b03112",
         "1c03112",
         "2c03112",
+        "80c03114",
     ),
     RASPBERRY_PI_400: ("c03130", "c03131"),
     RASPBERRY_PI_CM4: (
