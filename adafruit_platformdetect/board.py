@@ -514,7 +514,7 @@ class Board:
         if board_value and "ROCK 5" in board_value.upper():
             board = boards.ROCK_PI_5
         if board_value and "RADXA ROCK 4C+" in board_value.upper():
-            board = boards.ROCK_PI_4_C
+            board = boards.ROCK_PI_4_C_PLUS
         return board
 
     def _clockwork_pi_id(self) -> Optional[str]:
@@ -721,7 +721,6 @@ class Board:
     @property
     def any_rock_pi_board(self) -> bool:
         """Check whether the current board is any Rock Pi device."""
-        print(self.id)
         return self.id in boards._ROCK_PI_IDS
 
     @property
