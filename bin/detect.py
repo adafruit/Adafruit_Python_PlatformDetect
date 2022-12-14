@@ -53,7 +53,7 @@ print("Is this a Clockwork Pi board?", detector.board.any_clockwork_pi_board)
 print("Is this an embedded Linux system?", detector.board.any_embedded_linux)
 print("Is this a generic Linux PC?", detector.board.GENERIC_LINUX_PC)
 print("Is this a UDOO Bolt?", detector.board.UDOO_BOLT)
-print("Is this a ODYSSEY X86YJ4105?", detector.board.ODYSSEY_X86J4105)
+print("Is this a ODYSSEY X86J41X5?", detector.board.ODYSSEY_X86J41X5)
 print("Is this an ASUS Tinker Board?", detector.board.ASUS_TINKER_BOARD)
 print("Is this an STM32MP1 Board?", detector.board.any_stm32mp1)
 print(
