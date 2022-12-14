@@ -485,6 +485,8 @@ class Board:
             board = boards.LUBANCAT_ZERO
         if board_value and "LubanCat1" in board_value:
             board = boards.LUBANCAT1
+        if board_value and "Radxa CM3 IO" in board_value:
+            board = boards.RADXA_CM3
         return board
 
     def _rk3568_id(self) -> Optional[str]:
@@ -773,6 +775,25 @@ class Board:
         return self.id in boards._LIBRE_COMPUTER_IDS
 
     @property
+    def os_environ_board(self) -> bool:
+        """Check whether the current board is an OS environment variable special case."""
+
+        def lazily_generate_conditions():
+            yield self.board.FTDI_FT232H
+            yield self.board.FTDI_FT2232H
+            yield self.board.MICROCHIP_MCP2221
+            yield self.board.BINHO_NOVA
+            yield self.board.GREATFET_ONE
+            yield self.board.PICO_U2IF
+            yield self.board.FEATHER_U2IF
+            yield self.board.ITSYBITY_U2IF
+            yield self.board.MACROPAD_U2IF
+            yield self.board.QTPY_U2IF
+            yield self.board.QT2040_TRINKEY_U2IF
+
+        return any(condition for condition in lazily_generate_conditions())
+
+    @property
     def any_embedded_linux(self) -> bool:
         """Check whether the current board is any embedded Linux device."""
 
@@ -806,8 +827,14 @@ class Board:
             yield self.any_lichee_riscv_board
             yield self.any_pcduino_board
             yield self.any_libre_computer_board
+            yield self.generic_linux
 
         return any(condition for condition in lazily_generate_conditions())
+
+    @property
+    def generic_linux(self) -> bool:
+        """Check whether the current board is an Generic Linux System."""
+        return self.id == boards.GENERIC_LINUX_PC
 
     @property
     def ftdi_ft232h(self) -> bool:
