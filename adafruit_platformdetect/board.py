@@ -544,9 +544,7 @@ class Board:
                 "/sys/devices/virtual/dmi/id/board_name", "r", encoding="utf-8"
             ) as board_name:
                 board_value = board_name.read().rstrip()
-            if board_value == "ODYSSEY-X86J41X5":
-                return boards.ODYSSEY_X86J41X5
-            if board_value == "ODYSSEY-X86J41O5":
+            if board_value in ("ODYSSEY-X86J41X5", "ODYSSEY-X86J41O5"):
                 return boards.ODYSSEY_X86J41X5
             return None
         except FileNotFoundError:
