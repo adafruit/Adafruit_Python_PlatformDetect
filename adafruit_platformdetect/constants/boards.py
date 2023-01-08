@@ -220,6 +220,7 @@ _ORANGE_PI_IDS = (
     ORANGE_PI_3_LTS,
     ORANGE_PI_4,
     ORANGE_PI_4_LTS,
+    ORANGE_PI_5,
 )
 
 # NanoPi
