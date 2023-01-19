@@ -10,7 +10,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      run: echo "$GITHUB_CONTEXT"
     - name: Translate Repo Name For Build Tools filename_prefix
       id: repo-name
       run: |
