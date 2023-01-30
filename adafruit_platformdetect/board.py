@@ -369,7 +369,7 @@ class Board:
         elif board_value == "pcduino3":
             board = boards.PCDUINO3
         elif board_value == "rock-3a":
-            board = boards.RADXA_3A
+            board = boards.ROCK_PI_3A
         return board
 
     # pylint: enable=too-many-return-statements
@@ -501,7 +501,7 @@ class Board:
         if board_value and "LubanCat2" in board_value:
             board = boards.LUBANCAT2
         if board_value and "ROCK3 Model A" in board_value:
-            board = boards.RADXA_3A
+            board = boards.ROCK_PI_3A
         return board
 
     def _rock_pi_id(self) -> Optional[str]:
@@ -521,7 +521,7 @@ class Board:
         if board_value and "RADXA ROCK 4C+" in board_value.upper():
             board = boards.ROCK_PI_4_C_PLUS
         if board_value and "ROCK3 Model A" in board_value:
-            board = boards.RADXA_3A
+            board = boards.ROCK_PI_3A
         return board
 
     def _clockwork_pi_id(self) -> Optional[str]:
