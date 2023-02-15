@@ -452,14 +452,14 @@ class Board:
         """Try to detect the id for Pine64 board or device."""
         board_value = self.detector.get_device_model()
         board = None
-        if "pine64" in board_value.lower():
+        if "pinephone" in board_value.lower():
+            board = boards.PINEPHONE
+        elif "pine64" in board_value.lower():
             board = boards.PINE64
         elif "pine h64" in board_value.lower():
             board = boards.PINEH64
         elif "pinebook" in board_value.lower():
             board = boards.PINEBOOK
-        elif "pinephone" in board_value.lower():
-            board = boards.PINEPHONE
         elif "sopine" in board_value.lower():
             board = boards.SOPINE
         return board
