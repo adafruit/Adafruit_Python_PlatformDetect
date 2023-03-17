@@ -269,6 +269,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("sun20i-d1"):
             return chips.D1_RISCV
 
+        if self.detector.check_dt_compatible_value("imx8mp"):
+            return chips.IMX8MP
+
         if self.detector.check_dt_compatible_value("libretech,aml-s905x-cc"):
             return chips.S905X
 
