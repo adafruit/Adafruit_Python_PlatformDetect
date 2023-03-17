@@ -585,3 +585,11 @@ _LIBRE_COMPUTER_IDS = (
     AML_S905X_CC,
     ROC_RK3328_CC,
 )
+
+# NXP System on Module Computer boards
+NXP_IMX8MPLUS_SOM = "NXP_IMX8MPLUS_SOM"
+
+_NXP_SOM_IDS = (
+    NXP_IMX8MPLUS_SOM,
+)
+

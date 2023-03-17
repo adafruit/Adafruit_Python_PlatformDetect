@@ -418,6 +418,8 @@ class Board:
             return boards.MAAXBOARD
         if "Phanbell" in board_value:
             return boards.CORAL_EDGE_TPU_DEV
+        if "NXP i.MX8MPlus SOM " in board_value:
+            return boards.NXP_IMX8MPLUS_SOM
         return None
 
     def _imx6ull_id(self) -> Optional[str]:
@@ -798,6 +800,11 @@ class Board:
         return self.id in boards._LIBRE_COMPUTER_IDS
 
     @property
+    def any_nxp_navq_board(self) -> bool:
+        """Check whether the current board is any NXP NavQ board"""
+        return self.id in boards._NXP_SOM_IDS
+
+    @property
     def os_environ_board(self) -> bool:
         """Check whether the current board is an OS environment variable special case."""
 
@@ -851,7 +858,7 @@ class Board:
             yield self.any_pcduino_board
             yield self.any_libre_computer_board
             yield self.generic_linux
-
+            yield self.any_nxp_navq_board
         return any(condition for condition in lazily_generate_conditions())
 
     @property
