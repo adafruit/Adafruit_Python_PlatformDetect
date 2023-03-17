@@ -311,7 +311,11 @@ class Chip:
                 elif "nvidia,tegra234" in compats:
                     linux_id = chips.T234
             if compatible and "imx8m" in compatible:
-                linux_id = chips.IMX8MX
+                compats = compatible.split("\x00")
+                if "imx8mp" in compats:
+                    linux_id = chips.IMX8MP
+                else:
+                    linux_id = chips.IMX8MX
             if compatible and "odroid-c2" in compatible:
                 linux_id = chips.S905
             if compatible and "amlogic" in compatible:

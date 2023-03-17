@@ -81,6 +81,8 @@ class Board:
             board_id = self._sama5_id()
         elif chip_id == chips.IMX8MX:
             board_id = self._imx8mx_id()
+        elif chip_id == chips.IMX8MP:
+            board_id = self._imx8mp_id()
         elif chip_id == chips.IMX6ULL:
             board_id = self._imx6ull_id()
         elif chip_id == chips.S905Y2:
@@ -418,7 +420,12 @@ class Board:
             return boards.MAAXBOARD
         if "Phanbell" in board_value:
             return boards.CORAL_EDGE_TPU_DEV
-        if "NXP i.MX8MPlus SOM " in board_value:
+        return None
+    
+    def _imx8mp_id(self) -> Optional[str]:
+        """Check what type iMX8M board."""
+        board_value = self.detector.get_device_model()
+        if "NXP i.MX8MPlus SOM" in board_value:
             return boards.NXP_IMX8MPLUS_SOM
         return None
 
