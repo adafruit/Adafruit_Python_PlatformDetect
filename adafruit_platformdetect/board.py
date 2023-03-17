@@ -421,7 +421,7 @@ class Board:
         if "Phanbell" in board_value:
             return boards.CORAL_EDGE_TPU_DEV
         return None
-    
+
     def _imx8mp_id(self) -> Optional[str]:
         """Check what type iMX8M board."""
         board_value = self.detector.get_device_model()

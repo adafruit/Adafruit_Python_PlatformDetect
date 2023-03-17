@@ -269,6 +269,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("sun20i-d1"):
             return chips.D1_RISCV
 
+        if self.detector.check_dt_compatible_value("imx8mp"):
+            return chips.IMX8MP
+
         if self.detector.check_dt_compatible_value("libretech,aml-s905x-cc"):
             return chips.S905X
 
@@ -311,11 +314,7 @@ class Chip:
                 elif "nvidia,tegra234" in compats:
                     linux_id = chips.T234
             if compatible and "imx8m" in compatible:
-                compats = compatible.split("\x00")
-                if "imx8mp" in compats:
-                    linux_id = chips.IMX8MP
-                else:
-                    linux_id = chips.IMX8MX
+                linux_id = chips.IMX8MX
             if compatible and "odroid-c2" in compatible:
                 linux_id = chips.S905
             if compatible and "amlogic" in compatible:
