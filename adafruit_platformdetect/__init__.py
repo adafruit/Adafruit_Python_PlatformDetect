@@ -21,6 +21,7 @@ from adafruit_platformdetect.chip import Chip
 if sys.platform == "darwin":
     os.environ["DYLD_FALLBACK_LIBRARY_PATH"] = "/opt/homebrew/lib/"
 
+
 # Various methods here may retain state in future, so tell pylint not to worry
 # that they don't use self right now:
 # pylint: disable=no-self-use

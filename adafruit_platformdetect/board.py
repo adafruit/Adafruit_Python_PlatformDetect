@@ -859,6 +859,7 @@ class Board:
             yield self.any_libre_computer_board
             yield self.generic_linux
             yield self.any_nxp_navq_board
+
         return any(condition for condition in lazily_generate_conditions())
 
     @property
