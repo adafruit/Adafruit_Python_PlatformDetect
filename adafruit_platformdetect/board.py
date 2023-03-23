@@ -63,6 +63,8 @@ class Board:
 
         if chip_id == chips.H3:
             board_id = self._armbian_id() or self._allwinner_variants_id()
+        elif chip_id == chips.BCM2XXX:
+            board_id = self._pi_id()
         elif chip_id == chips.IMX8MX:
             board_id = boards.NAVQPLUS
         elif chip_id == chips.AM33XX:
