@@ -250,7 +250,6 @@ class Board:
         except FileNotFoundError:
             return None
 
-    # pylint: disable=useless-option-value
     def _beaglebone_id(self) -> Optional[str]:
         """Try to detect id of a Beaglebone."""
         board_value = self.detector.get_device_compatible()
@@ -288,8 +287,6 @@ class Board:
 
         board_value = self.detector.get_armbian_release_field("BOARD")
         return None
-
-    # pylint: enable=useless-option-value
 
     def _bbai_id(self) -> Optional[str]:
         """Try to detect id of a Beaglebone AI related board."""
@@ -477,7 +474,6 @@ class Board:
             board = boards.SOPINE
         return board
 
-    # pylint: disable=useless-option-value
     def _pynq_id(self) -> Optional[str]:
         """Try to detect the id for Xilinx PYNQ boards."""
         try:
