@@ -42,12 +42,11 @@ class Chip:
         self.detector = detector
         self._chip_id = None
 
+    # pylint: disable=invalid-name,too-many-branches,too-many-return-statements
     @property
     def id(
         self,
-    ) -> Optional[
-        str
-    ]:  # pylint: disable=invalid-name,too-many-branches,too-many-return-statements
+    ) -> Optional[str]:
         """Return a unique id for the detected chip, if any."""
         # There are some times we want to trick the platform detection
         # say if a raspberry pi doesn't have the right ID, or for testing
@@ -118,8 +117,9 @@ class Chip:
                         # QT Py RP2040
                         # QT2040 Trinkey
                         # MacroPad RP2040
+                        # Feather RP2040 ThinkInk
                         vendor == 0x239A
-                        and product in (0x00F1, 0x00FD, 0x00F7, 0x0109, 0x0107)
+                        and product in (0x00F1, 0x00FD, 0x00F7, 0x0109, 0x0107, 0x812C)
                     ):
                         self._chip_id = chips.RP2040_U2IF
                         return self._chip_id
