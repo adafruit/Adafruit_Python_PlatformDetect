@@ -74,6 +74,8 @@ JETSON_XAVIER = "JETSON_XAVIER"
 JETSON_AGX_ORIN = "JETSON_ORIN"
 JETSON_NANO = "JETSON_NANO"
 JETSON_NX = "JETSON_NX"
+JETSON_ORIN_NANO = "JETSON_ORIN_NANO"
+JETSON_ORIN_NX = "JETSON_ORIN_NX"
 
 # Texas Instruments SK boards
 TI_J721E_SK = "TI_J721E_SK"
@@ -291,6 +293,26 @@ _JETSON_IDS = (
         (
             "nvidia,p3737-0000+p3701-0000",
             "nvidia,p3737-0000+p3701-0004",
+        ),
+    ),
+    (
+        JETSON_ORIN_NX,
+        (
+            "nvidia,p3509-0000+p3767-0000",
+            "nvidia,p3768-0000+p3767-0000",
+            "nvidia,p3509-0000+p3767-0001",
+            "nvidia,p3768-0000+p3767-0001",
+        ),
+    ),
+    (
+        JETSON_ORIN_NANO,
+        (
+            "nvidia,p3509-0000+p3767-0003",
+            "nvidia,p3768-0000+p3767-0003",
+            "nvidia,p3509-0000+p3767-0004",
+            "nvidia,p3768-0000+p3767-0004",
+            "nvidia,p3509-0000+p3767-0005",
+            "nvidia,p3768-0000+p3767-0005",
         ),
     ),
 )
