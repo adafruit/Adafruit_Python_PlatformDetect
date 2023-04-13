@@ -501,7 +501,7 @@ class Board:
         board = None
         if board_value and "LubanCat-Zero" in board_value:
             board = boards.LUBANCAT_ZERO
-        if board_value and any([x in board_value for x in ("LubanCat1", "LubanCat-1")]):
+        if board_value and any(x in board_value for x in ("LubanCat1", "LubanCat-1")):
             board = boards.LUBANCAT1
         if board_value and "Radxa CM3 IO" in board_value:
             board = boards.RADXA_CM3
@@ -511,7 +511,7 @@ class Board:
         """Check what type of rk3568 board."""
         board_value = self.detector.get_device_model()
         board = None
-        if board_value and any([x in board_value for x in ("LubanCat2", "LubanCat-2")]):
+        if board_value and any(x in board_value for x in ("LubanCat2", "LubanCat-2")):
             board = boards.LUBANCAT2
         if board_value and "ROCK3 Model A" in board_value:
             board = boards.ROCK_PI_3A
