@@ -501,7 +501,7 @@ class Board:
         board = None
         if board_value and "LubanCat-Zero" in board_value:
             board = boards.LUBANCAT_ZERO
-        if board_value and "LubanCat-1" in board_value:
+        if board_value and any([x in board_value for x in ("LubanCat1", "LubanCat-1")]):
             board = boards.LUBANCAT1
         if board_value and "Radxa CM3 IO" in board_value:
             board = boards.RADXA_CM3
