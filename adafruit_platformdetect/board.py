@@ -604,7 +604,7 @@ class Board:
         board_value = self.detector.get_device_model()
         board = None
         if board_value and "ASUS Tinker Board" in board_value:
-            board = boards._ASUS_TINKER_BOARD_IDS
+            board = boards.ASUS_TINKER_BOARD
         return board
 
     def _pcduino_board_id(self) -> Optional[str]:
