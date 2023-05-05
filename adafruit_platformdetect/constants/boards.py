@@ -504,7 +504,7 @@ _PI_REV_CODES = {
         "2a32082",
         "2a52082",  # warranty bit 25
     ),
-    RASPBERRY_PI_3B_PLUS: ("a020d3", "1a020d3", "2a020d3"),  # warranty bits
+    RASPBERRY_PI_3B_PLUS: ("a020d3", "1a020d3", "2a020d3", "a020d4"),  # warranty bits
     RASPBERRY_PI_AVNET_IIOT_GW: ("60a220b0",),
     RASPBERRY_PI_CM3: (
         "a020a0",
