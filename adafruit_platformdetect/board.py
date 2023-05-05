@@ -186,7 +186,7 @@ class Board:
         elif chip_id == chips.GENERIC_X86:
             board_id = boards.GENERIC_LINUX_PC
         elif chip_id == chips.TDA4VM:
-            board_id =  self._beaglebone_id() or self._tisk_id()
+            board_id = self._beaglebone_id() or self._tisk_id()
         elif chip_id == chips.D1_RISCV:
             board_id = self._armbian_id()
         elif chip_id == chips.S905X:
@@ -273,7 +273,7 @@ class Board:
                     eeprom_bytes = eeprom.read(16)
             except FileNotFoundError:
                 try:
-                    #Special Case for AI64
+                    # Special Case for AI64
                     with open("/sys/bus/nvmem/devices/2-00500/nvmem", "rb") as eeprom:
                         eeprom_bytes = eeprom.read(16)
                 except FileNotFoundError:
@@ -286,7 +286,7 @@ class Board:
         # refer to GitHub issue #57 in this repo for more info
         if eeprom_bytes == b"\xaaU3\xeeA335BNLT\x1a\x00\x00\x00":
             return boards.BEAGLEBONE_GREEN
-        
+
         # BeaglePlay Special Condition
         # new Beagle EEPROM IDs are 24 Bit, so we need to verify full range
         if eeprom_bytes == b"\xaaU3\xee\x017\x00\x10.\x00BEAGLE":

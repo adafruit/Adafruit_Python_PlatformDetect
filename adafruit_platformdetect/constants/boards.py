@@ -384,14 +384,8 @@ _SIFIVE_IDS = (SIFIVE_UNLEASHED,)
 #   https://github.com/beagleboard/image-builder
 # Thanks to zmatt on freenode #beagle for pointers.
 _BEAGLEBONE_BOARD_IDS = {
-    BEAGLE_PLAY: 
-    (
-        ("A0", "7.BEAGLE")
-    ),
-    BEAGLEBONE_AI64: 
-    (
-        ("B0", "7.BBONEA")
-    ),
+    BEAGLE_PLAY: (("A0", "7.BEAGLE")),
+    BEAGLEBONE_AI64: (("B0", "7.BBONEA")),
     # Original bone/white:
     BEAGLEBONE: (
         ("A4", "A335BONE00A4"),
