@@ -276,7 +276,7 @@ class Board:
                     #Special Case for AI64
                     with open("/sys/bus/nvmem/devices/2-00500/nvmem", "rb") as eeprom:
                         eeprom_bytes = eeprom.read(16)
-                except:
+                except FileNotFoundError:
                     return None
 
         if eeprom_bytes[:4] != b"\xaaU3\xee":
@@ -294,8 +294,6 @@ class Board:
                 eeprom_bytes = eeprom.read(24)
             if eeprom_bytes == b"\xaaU3\xee\x017\x00\x10.\x00BEAGLEPLAY-A0-":
                 return boards.BEAGLE_PLAY
-            else:
-                return None
 
         id_string = eeprom_bytes[4:].decode("ascii")
         for model, bb_ids in boards._BEAGLEBONE_BOARD_IDS.items():
