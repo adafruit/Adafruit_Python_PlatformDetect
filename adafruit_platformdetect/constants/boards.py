@@ -4,6 +4,8 @@
 
 """Definition of boards and/or ids"""
 # Allow for aligned constant definitions:
+BEAGLE_PLAY = "BEAGLE_PLAY"
+BEAGLEBONE_AI64 = "BEAGLEBONE_AI64"
 BEAGLEBONE = "BEAGLEBONE"
 BEAGLEBONE_BLACK = "BEAGLEBONE_BLACK"
 BEAGLEBONE_BLUE = "BEAGLEBONE_BLUE"
@@ -352,6 +354,8 @@ _ODROID_40_PIN_IDS = (
 )
 
 _BEAGLEBONE_IDS = (
+    BEAGLE_PLAY,
+    BEAGLEBONE_AI64,
     BEAGLEBONE,
     BEAGLEBONE_BLACK,
     BEAGLEBONE_BLUE,
@@ -380,6 +384,8 @@ _SIFIVE_IDS = (SIFIVE_UNLEASHED,)
 #   https://github.com/beagleboard/image-builder
 # Thanks to zmatt on freenode #beagle for pointers.
 _BEAGLEBONE_BOARD_IDS = {
+    BEAGLE_PLAY: (("A0", "7.BEAGLE")),
+    BEAGLEBONE_AI64: (("B0", "7.BBONEA")),
     # Original bone/white:
     BEAGLEBONE: (
         ("A4", "A335BONE00A4"),
