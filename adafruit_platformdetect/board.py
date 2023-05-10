@@ -622,8 +622,7 @@ class Board:
         if "nanopi" in board_value:
             if "neo" in board_value and "SUN8I" in chip_id:
                 board = boards.NANOPI_NEO_AIR
-            # TODO: Add other specifc board contexts here
-        elif "orange pi" in board_value:
+        elif any(x in board_value for x in ("orange pi", "orangepi")):
             if "zero" in board_value:
                 if "H5" in chip_id:
                     board = boards.ORANGE_PI_ZERO_PLUS_2H5
