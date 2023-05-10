@@ -5,6 +5,7 @@
 """Definition of chips."""
 A311D = "A311D"
 AM33XX = "AM33XX"
+AM625X = "AM625X"
 AM65XX = "AM65XX"
 DRA74X = "DRA74X"
 TDA4VM = "TDA4VM"

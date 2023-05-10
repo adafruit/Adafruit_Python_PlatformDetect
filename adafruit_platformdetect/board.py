@@ -65,6 +65,8 @@ class Board:
             board_id = self._armbian_id() or self._allwinner_variants_id()
         elif chip_id == chips.BCM2XXX:
             board_id = self._pi_id()
+        elif chip_id == chips.AM625X:
+            board_id = self._beaglebone_id()
         elif chip_id == chips.AM33XX:
             board_id = self._beaglebone_id()
         elif chip_id == chips.AM65XX:
@@ -184,7 +186,7 @@ class Board:
         elif chip_id == chips.GENERIC_X86:
             board_id = boards.GENERIC_LINUX_PC
         elif chip_id == chips.TDA4VM:
-            board_id = self._tisk_id()
+            board_id = self._beaglebone_id() or self._tisk_id()
         elif chip_id == chips.D1_RISCV:
             board_id = self._armbian_id()
         elif chip_id == chips.S905X:
@@ -270,7 +272,12 @@ class Board:
                 with open("/sys/bus/nvmem/devices/0-00501/nvmem", "rb") as eeprom:
                     eeprom_bytes = eeprom.read(16)
             except FileNotFoundError:
-                return None
+                try:
+                    # Special Case for AI64
+                    with open("/sys/bus/nvmem/devices/2-00500/nvmem", "rb") as eeprom:
+                        eeprom_bytes = eeprom.read(16)
+                except FileNotFoundError:
+                    return None
 
         if eeprom_bytes[:4] != b"\xaaU3\xee":
             return None
@@ -279,6 +286,14 @@ class Board:
         # refer to GitHub issue #57 in this repo for more info
         if eeprom_bytes == b"\xaaU3\xeeA335BNLT\x1a\x00\x00\x00":
             return boards.BEAGLEBONE_GREEN
+
+        # BeaglePlay Special Condition
+        # new Beagle EEPROM IDs are 24 Bit, so we need to verify full range
+        if eeprom_bytes == b"\xaaU3\xee\x017\x00\x10.\x00BEAGLE":
+            with open("/sys/bus/nvmem/devices/0-00500/nvmem", "rb") as eeprom:
+                eeprom_bytes = eeprom.read(24)
+            if eeprom_bytes == b"\xaaU3\xee\x017\x00\x10.\x00BEAGLEPLAY-A0-":
+                return boards.BEAGLE_PLAY
 
         id_string = eeprom_bytes[4:].decode("ascii")
         for model, bb_ids in boards._BEAGLEBONE_BOARD_IDS.items():
