@@ -201,10 +201,16 @@ class Board:
         # Check for Pi boards:
         pi_rev_code = self._pi_rev_code()
         if pi_rev_code:
-            for model, codes in boards._PI_REV_CODES.items():
-                if pi_rev_code in codes:
-                    return model
+            from adafruit_platformdetect.revcodes import PiDecoder
 
+            try:
+                decoder = PiDecoder(pi_rev_code)
+                model = boards._PI_MODELS[decoder.type_raw]
+                if isinstance(model, dict):
+                    model = model[decoder.revision]
+                return model
+            except ValueError:
+                pass
         # We may be on a non-Raspbian OS, so try to lazily determine
         # the version based on `get_device_model`
         else:
