@@ -2,11 +2,25 @@
 #
 # SPDX-License-Identifier: MIT
 
-# Class to help with Raspberry Pi Rev Codes
-# Written by Melissa LeBlanc-Williams for Adafruit Industries
-#
-# Data values from https://github.com/raspberrypi/documentation/blob/develop/
-# documentation/asciidoc/computers/raspberry-pi/revision-codes.adoc#new-style-revision-codes
+"""
+`adafruit_platformdetect.revcodes`
+================================================================================
+
+Class to help with Raspberry Pi Rev Codes
+
+* Author(s): Melissa LeBlanc-Williams
+
+Implementation Notes
+--------------------
+
+**Software and Dependencies:**
+
+* Linux and Python 3.7 or Higher
+
+Data values from https://github.com/raspberrypi/documentation/blob/develop/
+documentation/asciidoc/computers/raspberry-pi/revision-codes.adoc#new-style-revision-codes
+
+"""
 
 NEW_OVERVOLTAGE = (
     "Overvoltage allowed",
@@ -135,7 +149,10 @@ OLD_REV_LUT = {
     0x15: (2, 1.1, 2, 2),
 }
 
+
 class PiDecoder:
+    """Raspberry Pi Revision Code Decoder"""
+
     def __init__(self, rev_code):
         try:
             self.rev_code = int(rev_code, 16) & 0xFFFFFFFF
@@ -143,26 +160,28 @@ class PiDecoder:
             print("Invalid revision code. It should be a hexadecimal value.")
 
     def is_valid_code(self):
-        # This is a check intended to quickly check the validity of a code
+        """Quickly check the validity of a code"""
         if self.is_new_format():
-            for format in NEW_REV_STRUCTURE.values():
-                lower_bit, bit_size, values = format
+            for code_format in NEW_REV_STRUCTURE.values():
+                lower_bit, bit_size, values = code_format
                 prop_value = (self.rev_code >> lower_bit) & ((1 << bit_size) - 1)
                 if not self._valid_value(prop_value, values):
                     return False
         else:
             if (self.rev_code & 0xFFFF) not in OLD_REV_LUT.keys():
                 return False
-            for format in OLD_REV_STRUCTURE.values():
-                index, values = format
-                format = OLD_REV_LUT[self.rev_code & 0xFFFF]
-                if index >= len(format):
+            for code_format in OLD_REV_STRUCTURE.values():
+                index, values = code_format
+                code_format = OLD_REV_LUT[self.rev_code & 0xFFFF]
+                if index >= len(code_format):
                     return False
-                if not self._valid_value(format[index], values):
+                if not self._valid_value(code_format[index], values):
                     return False
         return True
 
-    def _get_rev_prop_value(self, name, structure=NEW_REV_STRUCTURE, raw=False):
+    def _get_rev_prop_value(self, name, structure=None, raw=False):
+        if structure is None:
+            structure = NEW_REV_STRUCTURE
         if name not in structure.keys():
             raise ValueError(f"Unknown property {name}")
         lower_bit, bit_size, values = structure[name]
@@ -189,12 +208,14 @@ class PiDecoder:
             return data[index]
         return self._format_value(data[index], values)
 
-    def _format_value(self, value, valid_values):
+    @staticmethod
+    def _format_value(value, valid_values):
         if valid_values is float or valid_values is int:
             return valid_values(value)
         return valid_values[value]
 
-    def _valid_value(self, value, valid_values):
+    @staticmethod
+    def _valid_value(value, valid_values):
         if valid_values is float or valid_values is int:
             return isinstance(value, valid_values)
         if isinstance(valid_values, (tuple, list)) and 0 <= value < len(valid_values):
@@ -208,57 +229,68 @@ class PiDecoder:
             raise ValueError(f"Unknown property {name}")
         if self.is_new_format():
             return self._get_rev_prop_value(name, raw=raw)
-        elif name in OLD_REV_EXTRA_PROPS:
+        if name in OLD_REV_EXTRA_PROPS:
             return self._get_rev_prop_value(
                 name, structure=OLD_REV_EXTRA_PROPS, raw=raw
             )
-        else:
-            return self._get_old_rev_prop_value(name, raw=raw)
+        return self._get_old_rev_prop_value(name, raw=raw)
 
     def is_new_format(self):
+        """Check if the code is in the new format"""
         return self._get_rev_prop_value("rev_style", raw=True) == 1
 
     @property
     def overvoltage(self):
+        """Overvoltage allowed/disallowed"""
         return self._get_property("overvoltage")
 
     @property
     def warranty_bit(self):
+        """Warranty bit"""
         return self._get_property("warranty")
 
     @property
     def otp_program(self):
+        """OTP programming allowed/disallowed"""
         return self._get_property("otp_program")
 
     @property
     def otp_read(self):
+        """OTP reading allowed/disallowed"""
         return self._get_property("otp_read")
 
     @property
     def rev_style(self):
+        """Revision Code style"""
         # Force new style for Rev Style
         return self._get_rev_prop_value("rev_style")
 
     @property
     def memory_size(self):
+        """Memory size"""
         return self._get_property("memory_size")
 
     @property
     def manufacturer(self):
+        """Manufacturer"""
         return self._get_property("manufacturer")
 
     @property
     def processor(self):
+        """Processor"""
         return self._get_property("processor")
 
     @property
     def type(self):
+        """Specific Model"""
         return self._get_property("type")
 
     @property
     def type_raw(self):
-        return self._get_property("type", raw = True)
+        """Raw Value of Specific Model"""
+        return self._get_property("type", raw=True)
 
     @property
     def revision(self):
+        """Revision Number"""
         return self._get_property("revision")

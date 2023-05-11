@@ -4,8 +4,23 @@
 #
 # SPDX-License-Identifier: MIT
 
-# Interactive mode will prompt for the revision code
-# Otherwise it will be detected automatically
+"""
+`bin.rpi_info`
+================================================================================
+
+Interactive mode will prompt for the revision code
+Otherwise it will be detected automatically
+
+* Author(s): Melissa LeBlanc-Williams
+
+Implementation Notes
+--------------------
+
+**Software and Dependencies:**
+
+* Linux and Python 3.7 or Higher
+
+"""
 
 import sys
 import adafruit_platformdetect
@@ -14,7 +29,7 @@ from adafruit_platformdetect.revcodes import PiDecoder
 pi_rev_code = None
 
 detector = adafruit_platformdetect.Detector()
-pi_rev_code = detector.board._pi_rev_code()
+pi_rev_code = detector.board._pi_rev_code()  # pylint: disable=protected-access
 
 if pi_rev_code is None:
     print("Raspberry Pi not detected. Using interactive mode")
@@ -26,12 +41,16 @@ except ValueError as e:
     print("Invalid revision code. It should be a hexadecimal value.")
     sys.exit(1)
 
-# if not decoder.is_valid_code():
-#    print("Code is invalid. This rev code includes at least one value that is outside of the expected range.")
-#    sys.exit(1)
+if not decoder.is_valid_code():
+    print(
+        "Code is invalid. This rev code includes at least one "
+        "value that is outside of the expected range."
+    )
+    sys.exit(1)
 
 
 def print_property(label, value):
+    "Format and print a property"
     print(f"{label}: {value}")
 
 
