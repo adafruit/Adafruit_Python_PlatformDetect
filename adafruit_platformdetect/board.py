@@ -175,6 +175,8 @@ class Board:
             board_id = self._udoo_id()
         elif chip_id == chips.PENTIUM_N3710:
             board_id = self._udoo_id()
+        elif chip_id == chips.CELERON_N5105:
+            board_id = self._intel_n_series_id()
         elif chip_id == chips.STM32MP157:
             board_id = self._stm32mp1_id()
         elif chip_id == chips.STM32MP157DAA1:
@@ -586,6 +588,13 @@ class Board:
 
         return None
 
+    def _intel_n_series_id(self) -> Optional[str]:
+        """Try to detect the id of an Intel N-Series board."""
+        if self.detector.check_board_name_value() == "ODROID-H3":
+            return boards.ODROID_H3
+
+        return None
+
     def _j4105_id(self) -> Optional[str]:
         """Try to detect the id of J4105 board."""
         try:
@@ -604,7 +613,7 @@ class Board:
         board_value = self.detector.get_device_model()
         board = None
         if board_value and "ASUS Tinker Board" in board_value:
-            board = boards._ASUS_TINKER_BOARD_IDS
+            board = boards.ASUS_TINKER_BOARD
         return board
 
     def _pcduino_board_id(self) -> Optional[str]:
@@ -755,6 +764,11 @@ class Board:
         return self.id in boards._ODROID_40_PIN_IDS
 
     @property
+    def any_odroid_mini_pc(self) -> bool:
+        """Check whether the current board is any defined Odroid Mini PC."""
+        return self.id in boards._ODROID_MINI_PC_IDS
+
+    @property
     def khadas_vim3_40_pin(self) -> bool:
         """Check whether the current board is any defined 40-pin Khadas VIM3."""
         return self.id in boards._KHADAS_40_PIN_IDS
@@ -880,6 +894,7 @@ class Board:
             yield self.any_jetson_board
             yield self.any_coral_board
             yield self.any_odroid_40_pin
+            yield self.any_odroid_mini_pc
             yield self.khadas_vim3_40_pin
             yield self.any_96boards
             yield self.any_sifive_board
