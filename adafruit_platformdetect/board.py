@@ -29,7 +29,7 @@ except ImportError:
     pass
 
 from adafruit_platformdetect.constants import boards, chips
-
+import adafruit_platformdetect.boards.raspberrypi as raspberrypi
 
 __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
@@ -64,7 +64,9 @@ class Board:
         if chip_id == chips.H3:
             board_id = self._armbian_id() or self._allwinner_variants_id()
         elif chip_id == chips.BCM2XXX:
-            board_id = self._pi_id()
+            from adafruit_platformdetect.boards.raspberrypi import determine_board_id
+
+            board_id = determine_board_id(self.detector)
         elif chip_id == chips.AM625X:
             board_id = self._beaglebone_id()
         elif chip_id == chips.AM33XX:
@@ -198,67 +200,9 @@ class Board:
 
     # pylint: enable=invalid-name
 
-    def _pi_id(self) -> Optional[str]:
-        """Try to detect id of a Raspberry Pi."""
-        # Check for Pi boards:
-        pi_rev_code = self._pi_rev_code()
-        if pi_rev_code:
-            from adafruit_platformdetect.revcodes import PiDecoder
-
-            try:
-                decoder = PiDecoder(pi_rev_code)
-                model = boards._PI_MODELS[decoder.type_raw]
-                if isinstance(model, dict):
-                    model = model[decoder.revision]
-                return model
-            except ValueError:
-                pass
-        # We may be on a non-Raspbian OS, so try to lazily determine
-        # the version based on `get_device_model`
-        else:
-            pi_model = self.detector.get_device_model()
-            if pi_model:
-                pi_model = pi_model.upper().replace(" ", "_")
-                if "PLUS" in pi_model:
-                    re_model = re.search(r"(RASPBERRY_PI_\d).*([AB]_*)(PLUS)", pi_model)
-                elif "CM" in pi_model:  # untested for Compute Module
-                    re_model = re.search(r"(RASPBERRY_PI_CM)(\d)", pi_model)
-                else:  # untested for non-plus models
-                    re_model = re.search(r"(RASPBERRY_PI_\d).*([AB])", pi_model)
-
-                if re_model:
-                    pi_model = "".join(re_model.groups())
-                    available_models = boards._PI_REV_CODES.keys()
-                    for model in available_models:
-                        if model == pi_model:
-                            return model
-
-        return None
-
     def _pi_rev_code(self) -> Optional[str]:
         """Attempt to find a Raspberry Pi revision code for this board."""
-        # 2708 is Pi 1
-        # 2709 is Pi 2
-        # 2835 is Pi 3 (or greater) on 4.9.x kernel
-        # Anything else is not a Pi.
-        if self.detector.chip.id != chips.BCM2XXX:
-            # Something else, not a Pi.
-            return None
-        rev = self.detector.get_cpuinfo_field("Revision")
-
-        if rev is not None:
-            return rev
-
-        try:
-            with open("/proc/device-tree/system/linux,revision", "rb") as revision:
-                rev_bytes = revision.read()
-
-                if rev_bytes[:1] == b"\x00":
-                    rev_bytes = rev_bytes[1:]
-
-                return rev_bytes.hex()
-        except FileNotFoundError:
-            return None
+        return raspberrypi.determine_rev_code(self.detector)
 
     # pylint: disable=no-self-use
     def _beaglebone_id(self) -> Optional[str]:
@@ -588,12 +532,12 @@ class Board:
 
         return None
 
-    def _intel_n_series_id(self) -> Optional[str]:
-        """Try to detect the id of an Intel N-Series board."""
-        if self.detector.check_board_name_value() == "ODROID-H3":
-            return boards.ODROID_H3
+    # def _intel_n_series_id(self) -> Optional[str]:
+    #     """Try to detect the id of an Intel N-Series board."""
+    #     if self.detector.check_board_name_value() == "ODROID-H3":
+    #         return boards.ODROID_H3
 
-        return None
+    #     return None
 
     def _j4105_id(self) -> Optional[str]:
         """Try to detect the id of J4105 board."""
@@ -716,7 +660,10 @@ class Board:
     @property
     def any_raspberry_pi(self) -> bool:
         """Check whether the current board is any Raspberry Pi."""
-        return self._pi_rev_code() is not None
+        return (
+            self.id in boards._RASPBERRY_PI_40_PIN_IDS
+            or self.id in boards._RASPBERRY_PI_CM_IDS
+        )
 
     @property
     def any_raspberry_pi_40_pin(self) -> bool:
