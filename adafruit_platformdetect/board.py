@@ -660,10 +660,7 @@ class Board:
     @property
     def any_raspberry_pi(self) -> bool:
         """Check whether the current board is any Raspberry Pi."""
-        return (
-            self.id in boards._RASPBERRY_PI_40_PIN_IDS
-            or self.id in boards._RASPBERRY_PI_CM_IDS
-        )
+        return self._pi_rev_code() is not None
 
     @property
     def any_raspberry_pi_40_pin(self) -> bool:
