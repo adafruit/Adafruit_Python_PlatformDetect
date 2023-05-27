@@ -21,7 +21,6 @@ Implementation Notes
 """
 
 import os
-import re
 
 try:
     from typing import Optional
@@ -29,7 +28,7 @@ except ImportError:
     pass
 
 from adafruit_platformdetect.constants import boards, chips
-import adafruit_platformdetect.boards.raspberrypi as raspberrypi
+from adafruit_platformdetect.boards import raspberrypi
 
 __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
