@@ -532,12 +532,12 @@ class Board:
 
         return None
 
-    # def _intel_n_series_id(self) -> Optional[str]:
-    #     """Try to detect the id of an Intel N-Series board."""
-    #     if self.detector.check_board_name_value() == "ODROID-H3":
-    #         return boards.ODROID_H3
+    def _intel_n_series_id(self) -> Optional[str]:
+        """Try to detect the id of an Intel N-Series board."""
+        if self.detector.check_board_name_value() == "ODROID-H3":
+            return boards.ODROID_H3
 
-    #     return None
+        return None
 
     def _j4105_id(self) -> Optional[str]:
         """Try to detect the id of J4105 board."""
