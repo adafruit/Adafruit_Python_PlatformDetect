@@ -17,6 +17,7 @@ except ImportError:
     pass
 
 
+# pylint: disable=protected-access
 def determine_board_id(detector: "Detector") -> Optional[str]:
     """Try to detect id of a Raspberry Pi."""
     # Check for Pi boards:
@@ -53,6 +54,9 @@ def determine_board_id(detector: "Detector") -> Optional[str]:
                         return model
 
     return None
+
+
+# pylint: enable=protected-access
 
 
 def determine_rev_code(detector: "Detector") -> Optional[str]:
