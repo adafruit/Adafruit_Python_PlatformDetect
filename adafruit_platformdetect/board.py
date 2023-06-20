@@ -614,6 +614,12 @@ class Board:
         board = None
         if board_value and "ASUS Tinker Board" in board_value:
             board = boards.ASUS_TINKER_BOARD
+        if board_value and "ASUS TINKER BOARD 2" in board_value:
+            board = boards.ASUS_TINKER_BOARD_2
+        if board_value and "ASUS_TINKER_EDGE_R" in board_value:
+            board = boards.ASUS_TINKER_EDGE_R
+
+        print("board: {}".format(board))
         return board
 
     def _pcduino_board_id(self) -> Optional[str]:
