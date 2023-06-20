@@ -154,7 +154,8 @@ class Board:
         elif chip_id == chips.RK3308:
             board_id = self._rock_pi_id()
         elif chip_id == chips.RK3399:
-            board_id = self._rock_pi_id() or self._armbian_id() or self._diet_pi_id() or self._asus_tinker_board_id()
+            board_id = self._rock_pi_id() or self._armbian_id() or self._diet_pi_id() \
+            or self._asus_tinker_board_id()
         elif chip_id == chips.RK3399PRO:
             board_id = self._asus_tinker_board_id()
         elif chip_id == chips.RK3399_T:
