@@ -374,7 +374,7 @@ class Board:
         elif board_value == "bananapim2plus":
             board = boards.BANANA_PI_M2_PLUS
         elif board_value == "bananapim2berry":
-            board = boards.BANANA_PI_M2_BERRY        
+            board = boards.BANANA_PI_M2_BERRY
         elif board_value == "bananapim5":
             board = boards.BANANA_PI_M5
         elif board_value == "orangepizeroplus2-h5":
