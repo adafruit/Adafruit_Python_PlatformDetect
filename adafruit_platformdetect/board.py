@@ -337,7 +337,6 @@ class Board:
     def _armbian_id(self) -> Optional[str]:
         """Check whether the current board is an OrangePi board."""
         board_value = self.detector.get_armbian_release_field("BOARD")
-        print(self.detector.get_device_model())
         board = None
 
         if board_value == "orangepipc":
@@ -637,6 +636,10 @@ class Board:
             return board
         board_value = board_value.lower()
         chip_id = self.detector.chip.id
+
+        if "banana pi m2 berry" in board_value:
+            board = boards.BANANA_PI_M2_BERRY
+
         if "nanopi" in board_value:
             if "neo" in board_value and "SUN8I" in chip_id:
                 board = boards.NANOPI_NEO_AIR
