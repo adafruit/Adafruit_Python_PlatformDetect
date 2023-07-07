@@ -695,6 +695,9 @@ class Board:
                 # Feather RP2040 CAN
                 if product == 0x8130:
                     return boards.FEATHER_CAN_U2IF
+                # KB2040 Kee Board
+                if product == 0x0105:
+                    return boards.KB2040_U2IF
         # Will only reach here if a device was added in chip.py but here.
         raise RuntimeError("RP2040_U2IF device was added to chip but not board.")
 
@@ -889,6 +892,7 @@ class Board:
             yield self.board.MACROPAD_U2IF
             yield self.board.QTPY_U2IF
             yield self.board.QT2040_TRINKEY_U2IF
+            yield self.board.KB2040_U2IF
 
         return any(condition for condition in lazily_generate_conditions())
 
@@ -996,6 +1000,11 @@ class Board:
     def qt2040_trinkey_u2if(self) -> bool:
         """Check whether the current board is a QT Py w/ u2if."""
         return self.id == boards.QT2040_TRINKEY_U2IF
+
+    @property
+    def kb2040_u2if(self) -> bool:
+        """Check whether the current board is a KB2040 w/ u2if."""
+        return self.id == boards.KB2040_U2IF
 
     @property
     def binho_nova(self) -> bool:
