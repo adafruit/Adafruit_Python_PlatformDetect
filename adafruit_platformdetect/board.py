@@ -380,6 +380,8 @@ class Board:
             board = boards.BANANA_PI_M2_ZERO
         elif board_value == "bananapim2plus":
             board = boards.BANANA_PI_M2_PLUS
+        elif board_value == "bananapim2berry":
+            board = boards.BANANA_PI_M2_BERRY
         elif board_value == "bananapim5":
             board = boards.BANANA_PI_M5
         elif board_value == "orangepizeroplus2-h5":
@@ -646,6 +648,10 @@ class Board:
             return board
         board_value = board_value.lower()
         chip_id = self.detector.chip.id
+
+        if "banana pi m2 berry" in board_value:
+            board = boards.BANANA_PI_M2_BERRY
+
         if "nanopi" in board_value:
             if "neo" in board_value and "SUN8I" in chip_id:
                 board = boards.NANOPI_NEO_AIR
