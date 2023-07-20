@@ -938,6 +938,7 @@ class Board:
             yield self.any_stm32mp1
             yield self.any_lubancat
             yield self.any_bananapi
+            yield self.any_lemaker
             yield self.any_maaxboard
             yield self.any_tisk_board
             yield self.any_siemens_simatic_iot2000
