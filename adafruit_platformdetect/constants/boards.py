@@ -247,8 +247,8 @@ _ORANGE_PI_IDS = (
 
 # NanoPi
 _NANOPI_IDS = (
-    NANOPI_NEO_AIR, 
-    NANOPI_DUO2, 
+    NANOPI_NEO_AIR,
+    NANOPI_DUO2,
     NANOPI_NEO,
 )
 
@@ -261,9 +261,7 @@ _BANANA_PI_IDS = (
 )
 
 # LeMaker
-_LEMAKER_IDS = (
-    LEMAKER_BANANA_PRO,
-)
+_LEMAKER_IDS = (LEMAKER_BANANA_PRO,)
 
 # LubanCat
 _LUBANCAT_IDS = (
