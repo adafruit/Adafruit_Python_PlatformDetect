@@ -177,7 +177,7 @@ class Board:
         elif chip_id == chips.RK3568:
             board_id = self._rk3568_id()
         elif chip_id == chips.RK3588:
-            board_id = self._rock_pi_id() or self._armbian_id()
+            board_id = self._rock_pi_id() or self._orange_pi_id() or self._armbian_id()
         elif chip_id == chips.RYZEN_V1605B:
             board_id = self._udoo_id()
         elif chip_id == chips.PENTIUM_N3710:
@@ -412,6 +412,12 @@ class Board:
         board_value = self.detector.get_device_model()
         if "OrangePi 4" in board_value:
             return boards.ORANGE_PI_4
+        return None
+
+    def _orange_pi_id(self) -> Optional[str]:
+        board_value = self.detector.get_device_model()
+        if "Orange Pi 5" in board_value:
+            return boards.ORANGE_PI_5
         return None
 
     def _sama5_id(self) -> Optional[str]:
