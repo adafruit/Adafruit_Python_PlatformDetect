@@ -342,7 +342,7 @@ class Board:
 
     # pylint: disable=too-many-return-statements
     def _armbian_id(self) -> Optional[str]:
-        """Check whether the current board is an OrangePi board."""
+        """Get the current board via the ARMBIAN release field."""
         board_value = self.detector.get_armbian_release_field("BOARD")
         board = None
 
@@ -384,6 +384,8 @@ class Board:
             board = boards.BANANA_PI_M2_BERRY
         elif board_value == "bananapim5":
             board = boards.BANANA_PI_M5
+        elif board_value == "bananapipro":
+            board = boards.LEMAKER_BANANA_PRO
         elif board_value == "orangepizeroplus2-h5":
             board = boards.ORANGE_PI_ZERO_PLUS_2H5
         elif board_value == "orangepizeroplus":
@@ -861,6 +863,11 @@ class Board:
         return self.id in boards._BANANA_PI_IDS
 
     @property
+    def any_lemaker(self) -> bool:
+        """Check whether the current board is any LeMaker board."""
+        return self.id in boards._LEMAKER_IDS
+
+    @property
     def any_maaxboard(self) -> bool:
         """Check whether the current board is any BananaPi-family system."""
         return self.id in boards._MAAXBOARD_IDS
@@ -937,6 +944,7 @@ class Board:
             yield self.any_stm32mp1
             yield self.any_lubancat
             yield self.any_bananapi
+            yield self.any_lemaker
             yield self.any_maaxboard
             yield self.any_tisk_board
             yield self.any_siemens_simatic_iot2000
