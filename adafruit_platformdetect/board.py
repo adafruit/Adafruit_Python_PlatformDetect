@@ -398,6 +398,8 @@ class Board:
             board = boards.NANOPI_DUO2
         elif board_value == "nanopineo":
             board = boards.NANOPI_NEO
+        elif board_value == "nanopineo2":
+            board = boards.NANOPI_NEO_2    
         elif board_value == "nezha":
             board = boards.LICHEE_RV
         elif board_value == "pcduino2":
@@ -663,6 +665,8 @@ class Board:
         if "nanopi" in board_value:
             if "neo" in board_value and "SUN8I" in chip_id:
                 board = boards.NANOPI_NEO_AIR
+            elif "neo2" in board_value and "H5" in chip_id:
+                board = boards.NANOPI_NEO_2    
         elif any(x in board_value for x in ("orange pi", "orangepi")):
             if "zero" in board_value:
                 if "H5" in chip_id:
