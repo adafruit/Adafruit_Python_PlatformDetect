@@ -42,7 +42,7 @@ class Board:
         self.detector = detector
         self._board_id = None
 
-    # pylint: disable=invalid-name, protected-access, too-many-return-statements
+    # pylint: disable=invalid-name, protected-access, too-many-return-statements, too-many-lines
     @property
     def id(self) -> Optional[str]:
         """Return a unique id for the detected board, if any."""
@@ -177,7 +177,12 @@ class Board:
         elif chip_id == chips.RK3568:
             board_id = self._rk3568_id()
         elif chip_id == chips.RK3588:
-            board_id = self._rock_pi_id() or self._orange_pi_id() or self._armbian_id()
+            board_id = (
+                self._rock_pi_id()
+                or self._orange_pi_id()
+                or self._armbian_id()
+                or self._rk3588_id()
+            )
         elif chip_id == chips.RYZEN_V1605B:
             board_id = self._udoo_id()
         elif chip_id == chips.PENTIUM_N3710:
@@ -557,6 +562,14 @@ class Board:
             board = boards.LUBANCAT2
         if board_value and "ROCK3 Model A" in board_value:
             board = boards.ROCK_PI_3A
+        return board
+
+    def _rk3588_id(self) -> Optional[str]:
+        """Check what type of rk3588 board."""
+        board_value = self.detector.get_device_model()
+        board = None
+        if board_value and "LubanCat-4" in board_value:
+            board = boards.LUBANCAT4
         return board
 
     def _rock_pi_id(self) -> Optional[str]:
