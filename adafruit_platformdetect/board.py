@@ -686,6 +686,8 @@ class Board:
                     board = boards.ORANGE_PI_ZERO_PLUS_2H5
                 elif "H616" in chip_id:
                     board = boards.ORANGE_PI_ZERO_2
+        elif "walnutpi-1b" in board_value:
+            board = boards.WALNUT_PI_1B
             # TODO: Add other specifc board contexts here
         return board
 
@@ -748,6 +750,11 @@ class Board:
     def any_siemens_simatic_iot2000(self) -> bool:
         """Check whether the current board is a SIEMENS SIMATIC IOT2000 Gateway."""
         return self.id in boards._SIEMENS_SIMATIC_IOT2000_IDS
+
+    @property
+    def any_walnutpi(self) -> bool:
+        """Check whether the current board is any defined Walnut Pi."""
+        return self.id in boards._WALNUT_PI_IDS
 
     @property
     def any_nanopi(self) -> bool:
@@ -970,6 +977,7 @@ class Board:
             yield self.any_libre_computer_board
             yield self.generic_linux
             yield self.any_nxp_navq_board
+            yield self.any_walnutpi
 
         return any(condition for condition in lazily_generate_conditions())
 
