@@ -1,7 +1,4 @@
 categories:
-  - title: "Breaking Changes"
-    labels:
-      - "breaking change"
   - title: "New Boards"
     collapse-after: 1
     labels:
