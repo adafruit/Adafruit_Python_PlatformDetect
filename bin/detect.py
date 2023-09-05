@@ -117,3 +117,6 @@ if detector.board.any_siemens_simatic_iot2000:
 
 if detector.board.any_nxp_navq_board:
     print("NXP NavQ board detected.")
+
+if detector.board.any_walnutpi:
+    print("Walnut Pi detected.")
