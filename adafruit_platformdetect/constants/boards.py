@@ -427,6 +427,7 @@ _BEAGLEBONE_BOARD_IDS = {
     BEAGLEBONE_AI64: (("B0", "7.BBONEA")),
     # Original bone/white:
     BEAGLEBONE: (
+        ("A3", "A335BONE00A3"),
         ("A4", "A335BONE00A4"),
         ("A5", "A335BONE00A5"),
         ("A6", "A335BONE00A6"),
