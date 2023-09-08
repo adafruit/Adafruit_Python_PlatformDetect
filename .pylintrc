@@ -7,7 +7,7 @@
 # A comma-separated list of package or module names from where C extensions may
 # be loaded. Extensions are loading into the active Python interpreter and may
 # run arbitrary code
-extension-pkg-whitelist=
+extension-pkg-whitelist=hid
 
 # Add files or directories to the ignore-list. They should be base names, not
 # paths.
@@ -55,7 +55,7 @@ confidence=
 # no Warning level messages displayed, use"--disable=all --enable=classes
 # --disable=W"
 # disable=import-error,raw-checker-failed,bad-inline-option,locally-disabled,file-ignored,suppressed-message,useless-suppression,deprecated-pragma,deprecated-str-translate-call
-disable=raw-checker-failed,bad-inline-option,locally-disabled,file-ignored,suppressed-message,useless-suppression,deprecated-pragma,import-error,pointless-string-statement,unspecified-encoding
+disable=raw-checker-failed,bad-inline-option,locally-disabled,file-ignored,suppressed-message,useless-suppression,deprecated-pragma,import-error,pointless-string-statement,unspecified-encoding,import-outside-toplevel,too-many-branches,too-many-statements,too-many-public-methods
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
@@ -159,7 +159,7 @@ ignored-classes=optparse.Values,thread._local,_thread._local
 # (useful for modules/projects where namespaces are manipulated during runtime
 # and thus existing member attributes cannot be deduced by static analysis. It
 # supports qualified module names, as well as Unix pattern matching.
-ignored-modules=board
+ignored-modules=
 
 # Show a hint with possible names when a member name was not found. The aspect
 # of finding the hint is based on edit distance.

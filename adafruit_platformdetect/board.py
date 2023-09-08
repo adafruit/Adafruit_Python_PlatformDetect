@@ -35,7 +35,6 @@ __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
 
 
-# pylint: disable= too-many-public-methods
 class Board:
     """Attempt to detect specific boards."""
 
@@ -43,7 +42,7 @@ class Board:
         self.detector = detector
         self._board_id = None
 
-    # pylint: disable=invalid-name, protected-access, too-many-return-statements, too-many-lines, too-many-statements, too-many-branches
+    # pylint: disable=invalid-name, protected-access, too-many-return-statements, too-many-lines
     @property
     def id(self) -> Optional[str]:
         """Return a unique id for the detected board, if any."""
@@ -216,7 +215,7 @@ class Board:
         # Check for Pi boards:
         pi_rev_code = self._pi_rev_code()
         if pi_rev_code:
-            from adafruit_platformdetect.revcodes import (  # pylint: disable=import-outside-toplevel
+            from adafruit_platformdetect.revcodes import (
                 PiDecoder,
             )
 
@@ -697,7 +696,7 @@ class Board:
     # pylint: disable=too-many-return-statements
 
     def _rp2040_u2if_id(self) -> Optional[str]:
-        import hid  # pylint: disable=import-outside-toplevel
+        import hid
 
         # look for it based on PID/VID
         for dev in hid.enumerate():

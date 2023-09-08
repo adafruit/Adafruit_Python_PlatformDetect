@@ -63,7 +63,7 @@ class Chip:
 
             # Special cases controlled by environment var
             if os.environ.get("BLINKA_FT232H"):
-                from pyftdi.usbtools import (  # pylint: disable=import-outside-toplevel
+                from pyftdi.usbtools import (
                     UsbTools,
                 )
 
@@ -77,7 +77,7 @@ class Chip:
                 self._chip_id = chips.FT232H
                 return self._chip_id
             if os.environ.get("BLINKA_FT2232H"):
-                from pyftdi.usbtools import (  # pylint: disable=import-outside-toplevel
+                from pyftdi.usbtools import (
                     UsbTools,
                 )
 
@@ -91,7 +91,7 @@ class Chip:
                 self._chip_id = chips.FT2232H
                 return self._chip_id
             if os.environ.get("BLINKA_MCP2221"):
-                import hid  # pylint: disable=import-outside-toplevel
+                import hid
 
                 # look for it based on PID/VID
                 for dev in hid.enumerate():
@@ -103,7 +103,7 @@ class Chip:
                     + "set, but no MCP2221 device found"
                 )
             if os.environ.get("BLINKA_U2IF"):
-                import hid  # pylint: disable=import-outside-toplevel
+                import hid
 
                 # look for it based on PID/VID
                 for dev in hid.enumerate():
@@ -145,7 +145,7 @@ class Chip:
                     + "set, but no compatible device found"
                 )
             if os.environ.get("BLINKA_GREATFET"):
-                import usb  # pylint: disable=import-outside-toplevel
+                import usb
 
                 if usb.core.find(idVendor=0x1D50, idProduct=0x60E6) is not None:
                     self._chip_id = chips.LPC4330
