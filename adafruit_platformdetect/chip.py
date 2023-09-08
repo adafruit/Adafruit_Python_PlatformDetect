@@ -212,11 +212,11 @@ class Chip:
 
         # Older Builds
         if self.detector.check_dt_compatible_value("sifive"):
-            return chips.JH71x0
+            return chips.JH71X0
 
         # Newer Builds
         if self.detector.check_dt_compatible_value("jh7100"):
-            return chips.JH71x0
+            return chips.JH71X0
 
         if self.detector.check_dt_compatible_value("sun8i-a33"):
             return chips.A33

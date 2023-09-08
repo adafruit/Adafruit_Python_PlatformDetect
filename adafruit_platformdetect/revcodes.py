@@ -168,7 +168,9 @@ class PiDecoder:
                 if not self._valid_value(prop_value, values):
                     return False
         else:
-            if (self.rev_code & 0xFFFF) not in OLD_REV_LUT.keys():
+            if (
+                self.rev_code & 0xFFFF
+            ) not in OLD_REV_LUT.keys():  # pylint: disable=consider-iterating-dictionary
                 return False
             for code_format in OLD_REV_STRUCTURE.values():
                 index, values = code_format
@@ -196,7 +198,10 @@ class PiDecoder:
         return (self.rev_code >> lower_bit) & ((1 << bit_size) - 1)
 
     def _get_old_rev_prop_value(self, name, raw=False):
-        if name not in OLD_REV_STRUCTURE.keys():
+        if (
+            name
+            not in OLD_REV_STRUCTURE.keys()  # pylint: disable=consider-iterating-dictionary
+        ):
             raise ValueError(f"Unknown property {name}")
         index, values = OLD_REV_STRUCTURE[name]
         data = OLD_REV_LUT[self.rev_code & 0xFFFF]

@@ -123,7 +123,7 @@ class Board:
             board_id = self._sifive_id()
         elif chip_id == chips.C906:
             board_id = self._allwinner_id()
-        elif chip_id == chips.JH71x0:
+        elif chip_id == chips.JH71X0:
             board_id = self._beaglebone_id()
         elif chip_id == chips.MCP2221:
             board_id = boards.MICROCHIP_MCP2221
