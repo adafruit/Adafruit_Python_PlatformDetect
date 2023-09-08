@@ -35,6 +35,7 @@ __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
 
 
+# pylint: disable= too-many-public-methods
 class Board:
     """Attempt to detect specific boards."""
 
@@ -42,7 +43,7 @@ class Board:
         self.detector = detector
         self._board_id = None
 
-    # pylint: disable=invalid-name, protected-access, too-many-return-statements, too-many-lines
+    # pylint: disable=invalid-name, protected-access, too-many-return-statements, too-many-lines, too-many-statements, too-many-branches
     @property
     def id(self) -> Optional[str]:
         """Return a unique id for the detected board, if any."""
@@ -123,7 +124,7 @@ class Board:
             board_id = self._sifive_id()
         elif chip_id == chips.C906:
             board_id = self._allwinner_id()
-        elif chip_id == chips.JH71x0:
+        elif chip_id == chips.JH71X0:
             board_id = self._beaglebone_id()
         elif chip_id == chips.MCP2221:
             board_id = boards.MICROCHIP_MCP2221
@@ -215,7 +216,9 @@ class Board:
         # Check for Pi boards:
         pi_rev_code = self._pi_rev_code()
         if pi_rev_code:
-            from adafruit_platformdetect.revcodes import PiDecoder
+            from adafruit_platformdetect.revcodes import (  # pylint: disable=import-outside-toplevel
+                PiDecoder,
+            )
 
             try:
                 decoder = PiDecoder(pi_rev_code)
@@ -694,7 +697,7 @@ class Board:
     # pylint: disable=too-many-return-statements
 
     def _rp2040_u2if_id(self) -> Optional[str]:
-        import hid
+        import hid  # pylint: disable=import-outside-toplevel
 
         # look for it based on PID/VID
         for dev in hid.enumerate():

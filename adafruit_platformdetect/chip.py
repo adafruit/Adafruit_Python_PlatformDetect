@@ -63,7 +63,9 @@ class Chip:
 
             # Special cases controlled by environment var
             if os.environ.get("BLINKA_FT232H"):
-                from pyftdi.usbtools import UsbTools
+                from pyftdi.usbtools import (  # pylint: disable=import-outside-toplevel
+                    UsbTools,
+                )
 
                 # look for it based on PID/VID
                 count = len(UsbTools.find_all([(0x0403, 0x6014)]))
@@ -75,7 +77,9 @@ class Chip:
                 self._chip_id = chips.FT232H
                 return self._chip_id
             if os.environ.get("BLINKA_FT2232H"):
-                from pyftdi.usbtools import UsbTools
+                from pyftdi.usbtools import (  # pylint: disable=import-outside-toplevel
+                    UsbTools,
+                )
 
                 # look for it based on PID/VID
                 count = len(UsbTools.find_all([(0x0403, 0x6010)]))
@@ -87,7 +91,7 @@ class Chip:
                 self._chip_id = chips.FT2232H
                 return self._chip_id
             if os.environ.get("BLINKA_MCP2221"):
-                import hid
+                import hid  # pylint: disable=import-outside-toplevel
 
                 # look for it based on PID/VID
                 for dev in hid.enumerate():
@@ -99,7 +103,7 @@ class Chip:
                     + "set, but no MCP2221 device found"
                 )
             if os.environ.get("BLINKA_U2IF"):
-                import hid
+                import hid  # pylint: disable=import-outside-toplevel
 
                 # look for it based on PID/VID
                 for dev in hid.enumerate():
@@ -141,7 +145,7 @@ class Chip:
                     + "set, but no compatible device found"
                 )
             if os.environ.get("BLINKA_GREATFET"):
-                import usb
+                import usb  # pylint: disable=import-outside-toplevel
 
                 if usb.core.find(idVendor=0x1D50, idProduct=0x60E6) is not None:
                     self._chip_id = chips.LPC4330
@@ -212,11 +216,11 @@ class Chip:
 
         # Older Builds
         if self.detector.check_dt_compatible_value("sifive"):
-            return chips.JH71x0
+            return chips.JH71X0
 
         # Newer Builds
         if self.detector.check_dt_compatible_value("jh7100"):
-            return chips.JH71x0
+            return chips.JH71X0
 
         if self.detector.check_dt_compatible_value("sun8i-a33"):
             return chips.A33

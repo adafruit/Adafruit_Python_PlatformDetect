@@ -26,8 +26,6 @@ import sys
 import adafruit_platformdetect
 from adafruit_platformdetect.revcodes import PiDecoder
 
-pi_rev_code = None
-
 detector = adafruit_platformdetect.Detector()
 pi_rev_code = detector.board._pi_rev_code()  # pylint: disable=protected-access
 
