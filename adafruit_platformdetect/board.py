@@ -215,9 +215,7 @@ class Board:
         # Check for Pi boards:
         pi_rev_code = self._pi_rev_code()
         if pi_rev_code:
-            from adafruit_platformdetect.revcodes import (
-                PiDecoder,
-            )
+            from adafruit_platformdetect.revcodes import PiDecoder
 
             try:
                 decoder = PiDecoder(pi_rev_code)
