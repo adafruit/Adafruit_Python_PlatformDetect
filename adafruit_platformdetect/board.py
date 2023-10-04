@@ -373,6 +373,8 @@ class Board:
             board = boards.ORANGE_PI_2
         elif board_value == "orangepi3":
             board = boards.ORANGE_PI_3
+        elif board_value == "orangepi3b":
+            board = boards.ORANGE_PI_3B
         elif board_value == "orangepi3-lts":
             board = boards.ORANGE_PI_3_LTS
         elif board_value == "orangepi4":
@@ -427,6 +429,8 @@ class Board:
         board_value = self.detector.get_device_model()
         if "Orange Pi 5" in board_value:
             return boards.ORANGE_PI_5
+        if "Orange Pi 3B" in board_value:
+            return boards.ORANGE_PI_3B
         return None
 
     def _sama5_id(self) -> Optional[str]:
@@ -552,6 +556,8 @@ class Board:
             board = boards.LUBANCAT1
         if board_value and "Radxa CM3 IO" in board_value:
             board = boards.RADXA_CM3
+        if board_value and "Rockchip RK3566 OPi 3B" in board_value:
+            board = boards.ORANGE_PI_3B
         return board
 
     def _rk3568_id(self) -> Optional[str]:
