@@ -70,6 +70,7 @@ NEW_PROCESSOR = (
     "BCM2836",
     "BCM2837",
     "BCM2711",
+    "BCM2712",
 )
 
 PI_TYPE = {
@@ -94,6 +95,7 @@ PI_TYPE = {
     0x13: "400",
     0x14: "CM4",
     0x15: "CM4S",
+    0x17: "5",
 }
 
 OLD_MANUFACTURER = (
