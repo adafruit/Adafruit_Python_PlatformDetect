@@ -137,6 +137,7 @@ RASPBERRY_PI_AVNET_IIOT_GW = "RASPBERY_PI_AVNET_IIOT_GW"
 RASPBERRY_PI_400 = "RASPBERRY_PI_400"
 RASPBERRY_PI_CM4 = "RASPBERRY_PI_CM4"
 RASPBERRY_PI_CM4S = "RASPBERRY_PI_CM4S"
+RASPBERRY_PI_5 = "RASPBERRY_PI_5"
 
 ODROID_C1 = "ODROID_C1"
 ODROID_C1_PLUS = "ODROID_C1_PLUS"
@@ -375,6 +376,7 @@ _RASPBERRY_PI_40_PIN_IDS = (
     RASPBERRY_PI_4B,
     RASPBERRY_PI_AVNET_IIOT_GW,
     RASPBERRY_PI_400,
+    RASPBERRY_PI_5,
 )
 
 _RASPBERRY_PI_CM_IDS = (
@@ -471,7 +473,7 @@ _BEAGLEBONE_BOARD_IDS = {
 }
 
 # Pi revision codes from:
-#   https://www.raspberrypi.org/documentation/hardware/raspberrypi/revision-codes/README.md
+#  https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#raspberry-pi-revision-codes
 
 # Each tuple here contains both the base codes, and the versions that indicate
 # the Pi is overvolted / overclocked - for 4-digit codes, this will be prefixed
@@ -607,6 +609,10 @@ _PI_REV_CODES = {
         "d03141",
     ),
     RASPBERRY_PI_ZERO_2_W: ("902120", "2902120"),
+    RASPBERRY_PI_5: (
+        "d04170",
+        "c04170",
+    ),
 }
 
 _PI_MODELS = {
@@ -632,6 +638,7 @@ _PI_MODELS = {
     0x13: RASPBERRY_PI_400,
     0x14: RASPBERRY_PI_CM4,
     0x15: RASPBERRY_PI_CM4S,
+    0x17: RASPBERRY_PI_5,
 }
 
 # Onion omega boards
