@@ -473,7 +473,7 @@ _BEAGLEBONE_BOARD_IDS = {
 }
 
 # Pi revision codes from:
-#   https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#raspberry-pi-revision-codes
+#  https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#raspberry-pi-revision-codes
 
 # Each tuple here contains both the base codes, and the versions that indicate
 # the Pi is overvolted / overclocked - for 4-digit codes, this will be prefixed
