@@ -240,8 +240,11 @@ class Board:
 
                 if re_model:
                     pi_model = "".join(re_model.groups())
-                    available_models = boards._PI_REV_CODES.keys()
+                    available_models = boards._PI_MODELS.values()
                     for model in available_models:
+                        # Account for the PI_B_REV1/2 case
+                        if isinstance(model, dict) and pi_model in model:
+                            return model[pi_model]
                         if model == pi_model:
                             return model
 
