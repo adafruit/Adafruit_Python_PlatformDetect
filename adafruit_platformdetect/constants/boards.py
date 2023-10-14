@@ -6,7 +6,7 @@
 # Allow for aligned constant definitions:
 
 # Olimex boards
-A20_OLINUXINO_LIME2 = "A20_OLINUXINO_LIME2"
+OLIMEX A20-OLINUXINO-LIME2-EMMC = "OLIMEX A20-OLINUXINO-LIME2-EMMC"
 
 # Beaglebone boards
 
