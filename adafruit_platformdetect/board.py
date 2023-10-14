@@ -140,7 +140,7 @@ class Board:
         elif chip_id == chips.A10:
             board_id = self._armbian_id()
         elif chip_id == chips.A20:
-            board_id = self._armbian_id()
+            board_id = self.detector.get_device_model() or self._armbian_id()
         elif chip_id == chips.A64:
             board_id = self._pine64_id()
         elif chip_id == chips.H6:

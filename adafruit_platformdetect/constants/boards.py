@@ -4,6 +4,12 @@
 
 """Definition of boards and/or ids"""
 # Allow for aligned constant definitions:
+
+# Olimex boards
+A20_OLINUXINO_LIME2 = "A20_OLINUXINO_LIME2"
+
+# Beaglebone boards
+
 BEAGLE_PLAY = "BEAGLE_PLAY"
 BEAGLEBONE_AI64 = "BEAGLEBONE_AI64"
 BEAGLEBONE = "BEAGLEBONE"
