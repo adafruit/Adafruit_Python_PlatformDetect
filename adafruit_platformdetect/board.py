@@ -561,6 +561,8 @@ class Board:
             board = boards.RADXA_CM3
         if board_value and "Rockchip RK3566 OPi 3B" in board_value:
             board = boards.ORANGE_PI_3B
+        if board_value and "Hardkernel ODROID-M1S" in board_value:
+            board = boards.ODROID_M1S
         return board
 
     def _rk3568_id(self) -> Optional[str]:
