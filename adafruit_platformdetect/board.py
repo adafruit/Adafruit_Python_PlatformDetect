@@ -127,6 +127,8 @@ class Board:
             board_id = self._beaglebone_id()
         elif chip_id == chips.MCP2221:
             board_id = boards.MICROCHIP_MCP2221
+        elif chip_id == chips.USB_ISS:
+            board_id = boards.MICROCHIP_USB_ISS
         elif chip_id == chips.BINHO:
             board_id = boards.BINHO_NOVA
         elif chip_id == chips.LPC4330:
@@ -945,6 +947,7 @@ class Board:
             yield self.board.QTPY_U2IF
             yield self.board.QT2040_TRINKEY_U2IF
             yield self.board.KB2040_U2IF
+            yield self.board.MICROCHIP_USB_ISS
 
         return any(condition for condition in lazily_generate_conditions())
 
@@ -1009,6 +1012,11 @@ class Board:
     def microchip_mcp2221(self) -> bool:
         """Check whether the current board is a Microchip MCP2221."""
         return self.id == boards.MICROCHIP_MCP2221
+
+    @property
+    def microchip_usb_iss(self) -> bool:
+        """Check whether the current board is a Microchip USB_ISS."""
+        return self.id == boards.MICROCHIP_USB_ISS
 
     @property
     def pico_u2if(self) -> bool:
