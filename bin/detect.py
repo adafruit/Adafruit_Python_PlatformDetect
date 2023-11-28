@@ -88,7 +88,13 @@ if detector.board.any_orange_pi:
 if detector.board.any_lemaker:
     print("LeMaker board detected.")
 
-if detector.board.any_odroid_40_pin:
+if detector.board.odroid_amlogic_40_pin:
+    print("Odroid detected.")
+
+if detector.board.odroid_rockchip_40_pin:
+    print("Odroid detected.")
+
+if detector.board.odroid_samsung_40_pin:
     print("Odroid detected.")
 
 if detector.board.any_onion_omega_board:

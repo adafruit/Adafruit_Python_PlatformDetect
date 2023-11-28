@@ -831,8 +831,28 @@ class Board:
 
     @property
     def any_odroid_40_pin(self) -> bool:
-        """Check whether the current board is any defined 40-pin Odroid."""
-        return self.id in boards._ODROID_40_PIN_IDS
+        """Check whether the current board is any defined Odroid Board."""
+        if self.id in boards._ODROID_AMLOGIC_40_PIN_IDS:
+            return self.odroid_amlogic_40_pin
+        elif self.id in boards._ODROID_ROCKCHIP_40_PIN_IDS:
+            return self.odroid_rockchip_40_pin
+        elif self.id in boards._ODROID_SAMSUNG_40_PIN_IDS:
+            return self.odroid_samsung_40_pin
+
+    @property
+    def odroid_amlogic_40_pin(self) -> bool:
+        """Check whether the current board is defined Odroid amlogic chip Board."""
+        return self.id in boards._ODROID_AMLOGIC_40_PIN_IDS
+
+    @property
+    def odroid_rockchip_40_pin(self) -> bool:
+        """Check whether the current board is defined Odroid rockchip Board."""
+        return self.id in boards._ODROID_ROCKCHIP_40_PIN_IDS
+
+    @property
+    def odroid_samsung_40_pin(self) -> bool:
+        """Check whether the current board is defined Odroid samsung chip Board."""
+        return self.id in boards._ODROID_SAMSUNG_40_PIN_IDS
 
     @property
     def any_odroid_mini_pc(self) -> bool:
