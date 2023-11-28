@@ -935,7 +935,6 @@ class Board:
         """Check whether the current board is any Pine64 device."""
         return self.id in boards.LIME2
 
-
     @property
     def os_environ_board(self) -> bool:
         """Check whether the current board is an OS environment variable special case."""
