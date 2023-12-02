@@ -702,7 +702,7 @@ class Board:
             # TODO: Add other specifc board contexts here
 
         elif "lime2" in board_value:
-            board = boards.LIME2
+            board = boards.OLIMEX_LIME2
         return board
 
     # pylint: disable=too-many-return-statements
@@ -931,9 +931,9 @@ class Board:
         return self.id in boards._NXP_SOM_IDS
 
     @property
-    def any_lime2_board(self):
+    def any_olimex_lime2_board(self):
         """Check whether the current board is any Pine64 device."""
-        return self.id in boards.LIME2
+        return self.id in boards.OLIMEX_LIME2
 
     @property
     def os_environ_board(self) -> bool:
@@ -955,7 +955,6 @@ class Board:
             yield self.board.QTPY_U2IF
             yield self.board.QT2040_TRINKEY_U2IF
             yield self.board.KB2040_U2IF
-            yield self.board.lime2
 
         return any(condition for condition in lazily_generate_conditions())
 
@@ -998,7 +997,7 @@ class Board:
             yield self.generic_linux
             yield self.any_nxp_navq_board
             yield self.any_walnutpi
-            yield self.any_lime2_board
+            yield self.any_olimex_lime2_board
 
         return any(condition for condition in lazily_generate_conditions())
 
