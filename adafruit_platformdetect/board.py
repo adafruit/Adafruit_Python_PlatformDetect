@@ -142,9 +142,15 @@ class Board:
         elif chip_id == chips.A64:
             board_id = self._pine64_id()
         elif chip_id == chips.H6:
-            board_id = self._pine64_id() or self._armbian_id()
+            board_id = (
+                self._pine64_id() or self._armbian_id() or self._repka_variants_id()
+            )
         elif chip_id == chips.H5:
-            board_id = self._armbian_id() or self._allwinner_variants_id()
+            board_id = (
+                self._armbian_id()
+                or self._allwinner_variants_id()
+                or self._repka_variants_id()
+            )
         elif chip_id == chips.H616:
             board_id = self._armbian_id() or self._allwinner_variants_id()
         elif chip_id == chips.A33:
@@ -418,6 +424,10 @@ class Board:
             board = boards.PCDUINO3
         elif board_value == "rock-3a":
             board = boards.ROCK_PI_3A
+        elif board_value == "repka-pi3-h5":
+            board = boards.REPKA_PI_3_H5
+        elif board_value == "repka-pi4-h6":
+            board = boards.REPKA_PI_4_H6
         return board
 
     # pylint: enable=too-many-return-statements
@@ -709,6 +719,19 @@ class Board:
             board = boards.OLIMEX_LIME2
         return board
 
+    def _repka_variants_id(self) -> Optional[str]:
+        board_value = self.detector.get_device_model()
+        board = None
+        if not board_value:
+            return board
+        board_value = board_value.lower()
+        if "repka-pi3-h5" in board_value:
+            board = boards.REPKA_PI_3_H5
+        if "repka-pi4-h6" in board_value:
+            board = boards.REPKA_PI_4_H6
+
+        return board
+
     # pylint: disable=too-many-return-statements
 
     def _rp2040_u2if_id(self) -> Optional[str]:
@@ -940,6 +963,11 @@ class Board:
         return self.id in boards.OLIMEX_LIME2
 
     @property
+    def any_repka_board(self):
+        """Check whether the current board is any Repka device."""
+        return self.id in boards._REPKA_PI_IDS
+
+    @property
     def os_environ_board(self) -> bool:
         """Check whether the current board is an OS environment variable special case."""
 
@@ -1002,6 +1030,7 @@ class Board:
             yield self.any_nxp_navq_board
             yield self.any_walnutpi
             yield self.any_olimex_lime2_board
+            yield self.any_repka_board
 
         return any(condition for condition in lazily_generate_conditions())
 
