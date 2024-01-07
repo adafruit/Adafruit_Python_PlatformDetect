@@ -68,6 +68,7 @@ print("Is this a Seeed Board?", detector.board.any_seeed_board)
 print("Is this a UDOO board?", detector.board.any_udoo_board)
 print("Is this an ASUS Tinker board?", detector.board.any_asus_tinker_board)
 print("Is this an STM32MP1 board?", detector.board.any_stm32mp1)
+print("Is this a MilkV board?", detector.board.any_milkv_board)
 print("Is this a generic Linux PC?", detector.board.generic_linux)
 print(
     "Is this an OS environment variable special case?", detector.board.os_environ_board
