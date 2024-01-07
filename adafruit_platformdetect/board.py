@@ -867,7 +867,7 @@ class Board:
     def any_pine64_board(self) -> bool:
         """Check whether the current board is any Pine64 device."""
         return self.id in boards._PINE64_DEV_IDS
-    
+
     @property
     def any_milkv_board(self) -> bool:
         """Check whether the current board is any MilkV device."""
