@@ -209,6 +209,8 @@ class Board:
             board_id = self._armbian_id()
         elif chip_id == chips.S905X:
             board_id = boards.AML_S905X_CC
+        elif chip_id == chips.CV1800B:
+            board_id = boards.MILKV_DUO
         self._board_id = board_id
         return board_id
 
@@ -428,6 +430,8 @@ class Board:
             board = boards.REPKA_PI_3_H5
         elif board_value == "repka-pi4-h6":
             board = boards.REPKA_PI_4_H6
+        elif board_value == "milkv_duo":
+            board = boards.MILKV_DUO
         return board
 
     # pylint: enable=too-many-return-statements
@@ -888,6 +892,11 @@ class Board:
         return self.id in boards._PINE64_DEV_IDS
 
     @property
+    def any_milkv_board(self) -> bool:
+        """Check whether the current board is any MilkV device."""
+        return self.id in boards._MILKV_IDS_
+
+    @property
     def any_rock_pi_board(self) -> bool:
         """Check whether the current board is any Rock Pi device."""
         return self.id in boards._ROCK_PI_IDS
@@ -1031,6 +1040,7 @@ class Board:
             yield self.any_walnutpi
             yield self.any_olimex_lime2_board
             yield self.any_repka_board
+            yield self.any_milkv_board
 
         return any(condition for condition in lazily_generate_conditions())
 
