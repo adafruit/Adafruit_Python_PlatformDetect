@@ -98,6 +98,11 @@ class Chip:
                     "BLINKA_MCP2221 environment variable "
                     + "set, but no MCP2221 device found"
                 )
+            if os.environ.get("BLINKA_USB_ISS"):
+                from usb_iss import UsbIss, defs
+
+                self._chip_id = chips.USB_ISS
+                return self._chip_id
             if os.environ.get("BLINKA_U2IF"):
                 import hid
 
