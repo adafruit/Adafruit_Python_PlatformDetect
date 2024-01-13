@@ -211,6 +211,8 @@ class Board:
             board_id = boards.AML_S905X_CC
         elif chip_id == chips.CV1800B:
             board_id = boards.MILKV_DUO
+        elif chip_id == chips.TH1520:
+            board_id = boards.LICHEEPI_4A
         self._board_id = board_id
         return board_id
 
