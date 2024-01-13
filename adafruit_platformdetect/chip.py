@@ -290,6 +290,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("libretech,aml-s905x-cc"):
             return chips.S905X
 
+        if self.detector.check_dt_compatible_value("light-lpi4a"):
+            return chips.TH1520
+
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
 
