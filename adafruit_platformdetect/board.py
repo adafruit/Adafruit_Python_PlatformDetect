@@ -703,6 +703,9 @@ class Board:
         board_value = board_value.lower()
         chip_id = self.detector.chip.id
 
+        if "banana pro" in board_value:
+            board = boards.LEMAKER_BANANA_PRO
+
         if "banana pi m2 berry" in board_value:
             board = boards.BANANA_PI_M2_BERRY
 
