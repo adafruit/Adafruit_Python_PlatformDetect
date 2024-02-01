@@ -404,8 +404,6 @@ class Board:
             board = boards.BANANA_PI_M2_BERRY
         elif board_value == "bananapim5":
             board = boards.BANANA_PI_M5
-        elif board_value == "bananapipro":
-            board = boards.LEMAKER_BANANA_PRO
         elif board_value == "orangepizeroplus2-h5":
             board = boards.ORANGE_PI_ZERO_PLUS_2H5
         elif board_value == "orangepizeroplus":
