@@ -404,8 +404,6 @@ class Board:
             board = boards.BANANA_PI_M2_BERRY
         elif board_value == "bananapim5":
             board = boards.BANANA_PI_M5
-        elif board_value == "bananapipro":
-            board = boards.LEMAKER_BANANA_PRO
         elif board_value == "orangepizeroplus2-h5":
             board = boards.ORANGE_PI_ZERO_PLUS_2H5
         elif board_value == "orangepizeroplus":
@@ -702,6 +700,9 @@ class Board:
             return board
         board_value = board_value.lower()
         chip_id = self.detector.chip.id
+
+        if "banana pro" in board_value:
+            board = boards.LEMAKER_BANANA_PRO
 
         if "banana pi m2 berry" in board_value:
             board = boards.BANANA_PI_M2_BERRY
