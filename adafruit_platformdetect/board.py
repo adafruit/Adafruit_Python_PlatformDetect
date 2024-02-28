@@ -617,6 +617,8 @@ class Board:
             board = boards.ROCK_PI_5
         if board_value and "RADXA ROCK 4C+" in board_value.upper():
             board = boards.ROCK_PI_4_C_PLUS
+        if board_value and "RADXA ROCK 4SE" in board_value.upper():
+            board = boards.ROCK_PI_4_SE
         if board_value and "ROCK3 Model A" in board_value:
             board = boards.ROCK_PI_3A
         return board
