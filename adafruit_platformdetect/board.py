@@ -579,6 +579,8 @@ class Board:
             board = boards.ORANGE_PI_3B
         if board_value and "Hardkernel ODROID-M1S" in board_value:
             board = boards.ODROID_M1S
+        elif "quartz64-a" in board_value.lower():
+            board = boards.QUARTZ64_A
         return board
 
     def _rk3568_id(self) -> Optional[str]:
