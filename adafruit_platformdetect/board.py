@@ -575,6 +575,8 @@ class Board:
             board = boards.LUBANCAT1
         if board_value and "Radxa CM3 IO" in board_value:
             board = boards.RADXA_CM3
+        if board_value and "Radxa ROCK3 Model C" in board_value:
+            board = boards.ROCK_PI_3C
         if board_value and "Rockchip RK3566 OPi 3B" in board_value:
             board = boards.ORANGE_PI_3B
         if board_value and "Hardkernel ODROID-M1S" in board_value:
