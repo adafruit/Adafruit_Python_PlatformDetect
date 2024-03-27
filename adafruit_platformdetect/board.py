@@ -995,6 +995,7 @@ class Board:
             yield self.board.FTDI_FT232H
             yield self.board.FTDI_FT2232H
             yield self.board.MICROCHIP_MCP2221
+            yield self.board.FAKE_MICROCHIP_MCP2221
             yield self.board.BINHO_NOVA
             yield self.board.GREATFET_ONE
             yield self.board.PICO_U2IF
