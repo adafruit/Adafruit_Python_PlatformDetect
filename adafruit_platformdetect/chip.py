@@ -98,6 +98,11 @@ class Chip:
                     "BLINKA_MCP2221 environment variable "
                     + "set, but no MCP2221 device found"
                 )
+            if os.environ.get("BLINKA_FAKE_MCP2221"):
+                # We aren't looking for an attached MCP2221,
+                # so we just return the chip_id
+                self._chip_id = chips.FAKE_MCP2221
+                return self._chip_id
             if os.environ.get("BLINKA_U2IF"):
                 import hid
 

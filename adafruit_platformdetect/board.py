@@ -125,6 +125,8 @@ class Board:
             board_id = self._beaglebone_id()
         elif chip_id == chips.MCP2221:
             board_id = boards.MICROCHIP_MCP2221
+        elif chip_id == chips.FAKE_MCP2221:
+            board_id = boards.FAKE_MICROCHIP_MCP2221
         elif chip_id == chips.BINHO:
             board_id = boards.BINHO_NOVA
         elif chip_id == chips.LPC4330:
