@@ -1077,6 +1077,11 @@ class Board:
         return self.id == boards.MICROCHIP_MCP2221
 
     @property
+    def fake_microchip_mcp2221(self) -> bool:
+        """Check whether the current board is a Microchip MCP2221."""
+        return self.id == boards.FAKE_MICROCHIP_MCP2221
+
+    @property
     def pico_u2if(self) -> bool:
         """Check whether the current board is a RPi Pico w/ u2if."""
         return self.id == boards.PICO_U2IF
