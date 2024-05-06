@@ -187,6 +187,8 @@ class Board:
                 or self._armbian_id()
                 or self._rk3588_id()
             )
+        elif chip_id == chips.RV1106:
+            board_id = self._rv1106_id()
         elif chip_id == chips.RYZEN_V1605B:
             board_id = self._udoo_id()
         elif chip_id == chips.PENTIUM_N3710:
@@ -605,6 +607,14 @@ class Board:
             board = boards.LUBANCAT4
         return board
 
+    def _rv1106_id(self) -> Optional[str]:
+        """Check what type of rv1106 board."""
+        board_value = self.detector.get_device_model()
+        board = None
+        if board_value and "Luckfox Pico Max" in board_value:
+            board = boards.LUCKFOX_PICO_MAX
+        return board
+
     def _rock_pi_id(self) -> Optional[str]:
         """Check what type of Rock Pi board."""
         board_value = self.detector.get_device_model()
@@ -984,6 +994,11 @@ class Board:
     def any_repka_board(self):
         """Check whether the current board is any Repka device."""
         return self.id in boards._REPKA_PI_IDS
+    
+    @property
+    def any_luckfox_pico_board(self):
+        """Check whether the current board is any Luckfox Pico device."""
+        return self.id in boards._LUCKFOX_IDS
 
     @property
     def os_environ_board(self) -> bool:
@@ -1050,6 +1065,7 @@ class Board:
             yield self.any_olimex_lime2_board
             yield self.any_repka_board
             yield self.any_milkv_board
+            yield self.any_luckfox_pico_board
 
         return any(condition for condition in lazily_generate_conditions())
 
