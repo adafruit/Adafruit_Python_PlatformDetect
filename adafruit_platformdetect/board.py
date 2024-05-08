@@ -187,8 +187,6 @@ class Board:
                 or self._armbian_id()
                 or self._rk3588_id()
             )
-        elif chip_id == chips.RV1106:
-            board_id = self._rv1106_id()
         elif chip_id == chips.RYZEN_V1605B:
             board_id = self._udoo_id()
         elif chip_id == chips.PENTIUM_N3710:
@@ -215,6 +213,8 @@ class Board:
             board_id = boards.MILKV_DUO
         elif chip_id == chips.TH1520:
             board_id = boards.LICHEEPI_4A
+        elif chip_id == chips.RV1106:
+            board_id = self._rv1106_id()
         self._board_id = board_id
         return board_id
 
@@ -607,14 +607,6 @@ class Board:
             board = boards.LUBANCAT4
         return board
 
-    def _rv1106_id(self) -> Optional[str]:
-        """Check what type of rv1106 board."""
-        board_value = self.detector.get_device_model()
-        board = None
-        if board_value and "Luckfox Pico Max" in board_value:
-            board = boards.LUCKFOX_PICO_MAX
-        return board
-
     def _rock_pi_id(self) -> Optional[str]:
         """Check what type of Rock Pi board."""
         board_value = self.detector.get_device_model()
@@ -810,6 +802,14 @@ class Board:
             board = boards.SIEMENS_SIMATIC_IOT2050_BASIC
         return board
 
+    def _rv1106_id(self) -> Optional[str]:
+        """Check what type of rv1106 board."""
+        board_value = self.detector.get_device_model()
+        board = None
+        if board_value and "Luckfox Pico Max" in board_value:
+            board = boards.LUCKFOX_PICO_MAX
+        return board
+
     @property
     def any_siemens_simatic_iot2000(self) -> bool:
         """Check whether the current board is a SIEMENS SIMATIC IOT2000 Gateway."""
@@ -994,7 +994,7 @@ class Board:
     def any_repka_board(self):
         """Check whether the current board is any Repka device."""
         return self.id in boards._REPKA_PI_IDS
-    
+
     @property
     def any_luckfox_pico_board(self):
         """Check whether the current board is any Luckfox Pico device."""
