@@ -428,6 +428,8 @@ class Board:
             board = boards.PCDUINO3
         elif board_value == "rock-3a":
             board = boards.ROCK_PI_3A
+        elif board_value == "radxa-zero3":
+            board = boards.RADXA_ZERO3
         elif board_value == "repka-pi3-h5":
             board = boards.REPKA_PI_3_H5
         elif board_value == "repka-pi4-h6":
@@ -577,6 +579,8 @@ class Board:
             board = boards.LUBANCAT1
         if board_value and "Radxa CM3 IO" in board_value:
             board = boards.RADXA_CM3
+        if board_value and "Radxa ZERO 3" in board_value:
+            board = boards.RADXA_ZERO3
         if board_value and "Radxa ROCK3 Model C" in board_value:
             board = boards.ROCK_PI_3C
         if board_value and "Rockchip RK3566 OPi 3B" in board_value:
