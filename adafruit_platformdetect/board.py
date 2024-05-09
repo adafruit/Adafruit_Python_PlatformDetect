@@ -213,6 +213,8 @@ class Board:
             board_id = boards.MILKV_DUO
         elif chip_id == chips.TH1520:
             board_id = boards.LICHEEPI_4A
+        elif chip_id == chips.RV1106:
+            board_id = self._rv1106_id()
         self._board_id = board_id
         return board_id
 
@@ -804,6 +806,14 @@ class Board:
             board = boards.SIEMENS_SIMATIC_IOT2050_BASIC
         return board
 
+    def _rv1106_id(self) -> Optional[str]:
+        """Check what type of rv1106 board."""
+        board_value = self.detector.get_device_model()
+        board = None
+        if board_value and "Luckfox Pico Max" in board_value:
+            board = boards.LUCKFOX_PICO_MAX
+        return board
+
     @property
     def any_siemens_simatic_iot2000(self) -> bool:
         """Check whether the current board is a SIEMENS SIMATIC IOT2000 Gateway."""
@@ -990,6 +1000,11 @@ class Board:
         return self.id in boards._REPKA_PI_IDS
 
     @property
+    def any_luckfox_pico_board(self):
+        """Check whether the current board is any Luckfox Pico device."""
+        return self.id in boards._LUCKFOX_IDS
+
+    @property
     def os_environ_board(self) -> bool:
         """Check whether the current board is an OS environment variable special case."""
 
@@ -1054,6 +1069,7 @@ class Board:
             yield self.any_olimex_lime2_board
             yield self.any_repka_board
             yield self.any_milkv_board
+            yield self.any_luckfox_pico_board
 
         return any(condition for condition in lazily_generate_conditions())
 
