@@ -65,6 +65,8 @@ class Board:
             board_id = self._armbian_id() or self._allwinner_variants_id()
         elif chip_id == chips.BCM2XXX:
             board_id = self._pi_id()
+        elif chip_id == chips.OS_AGNOSTIC:
+            board_id = boards.OS_AGNOSTIC_BOARD
         elif chip_id == chips.AM625X:
             board_id = self._beaglebone_id()
         elif chip_id == chips.AM33XX:
