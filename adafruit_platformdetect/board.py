@@ -1024,6 +1024,7 @@ class Board:
             yield self.board.QTPY_U2IF
             yield self.board.QT2040_TRINKEY_U2IF
             yield self.board.KB2040_U2IF
+            yield self.board.OS_AGNOSTIC_BOARD
 
         return any(condition for condition in lazily_generate_conditions())
 
@@ -1092,6 +1093,11 @@ class Board:
     def microchip_mcp2221(self) -> bool:
         """Check whether the current board is a Microchip MCP2221."""
         return self.id == boards.MICROCHIP_MCP2221
+
+    @property
+    def os_agnostic_board(self) -> bool:
+        """Check whether the current board is an OS agnostic special case."""
+        return self.id == boards.OS_AGNOSTIC_BOARD
 
     @property
     def pico_u2if(self) -> bool:
