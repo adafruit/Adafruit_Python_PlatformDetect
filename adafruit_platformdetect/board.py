@@ -71,6 +71,8 @@ class Board:
             board_id = self._beaglebone_id()
         elif chip_id == chips.AM65XX:
             board_id = self._siemens_simatic_iot2000_id()
+        elif chip_id == chips.AM67A:
+            board_id = self._beagleyai_id()
         elif chip_id == chips.DRA74X:
             board_id = self._bbai_id()
         elif chip_id == chips.SUN4I:
@@ -340,6 +342,12 @@ class Board:
         return None
 
     # pylint: enable=no-self-use
+    def _beagleyai_id(self) -> Optional[str]:
+        """Try to detect id of a BeagleY-AI board."""
+        board_value = self.detector.get_device_model()
+        if "BeagleY-AI" in board_value:
+            return boards.BEAGLEY_AI
+        return None
 
     def _bbai_id(self) -> Optional[str]:
         """Try to detect id of a Beaglebone AI related board."""
