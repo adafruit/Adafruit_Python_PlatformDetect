@@ -215,6 +215,8 @@ class Board:
             board_id = boards.MILKV_DUO
         elif chip_id == chips.TH1520:
             board_id = boards.LICHEEPI_4A
+        elif chip_id == chips.RV1103:
+            board_id = self._rv1103_id()
         elif chip_id == chips.RV1106:
             board_id = self._rv1106_id()
         self._board_id = board_id
@@ -732,6 +734,8 @@ class Board:
                     board = boards.ORANGE_PI_ZERO_PLUS_2H5
                 elif "H616" in chip_id:
                     board = boards.ORANGE_PI_ZERO_2
+        elif "walnutpi-1b-emmc" in board_value:
+            board = boards.WALNUT_PI_1B_EMMC
         elif "walnutpi-1b" in board_value:
             board = boards.WALNUT_PI_1B
             # TODO: Add other specifc board contexts here
@@ -806,6 +810,14 @@ class Board:
             board = boards.SIEMENS_SIMATIC_IOT2050_ADV
         elif board_value and "SIMATIC IOT2050 Basic" in board_value:
             board = boards.SIEMENS_SIMATIC_IOT2050_BASIC
+        return board
+
+    def _rv1103_id(self) -> Optional[str]:
+        """Check what type of rv1103 board."""
+        board_value = self.detector.get_device_model()
+        board = None
+        if board_value and "Luckfox Pico Mini" in board_value:
+            board = boards.LUCKFOX_PICO_MINI
         return board
 
     def _rv1106_id(self) -> Optional[str]:
