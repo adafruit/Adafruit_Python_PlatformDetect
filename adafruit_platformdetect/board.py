@@ -994,7 +994,7 @@ class Board:
     @property
     def any_olimex_lime2_board(self):
         """Check whether the current board is any Pine64 device."""
-        return self.id in boards._OLIMEX_LIME2
+        return self.id in boards.OLIMEX_LIME2
 
     @property
     def any_repka_board(self):
