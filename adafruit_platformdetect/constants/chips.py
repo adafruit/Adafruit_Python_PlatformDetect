@@ -4,6 +4,7 @@
 
 """Definition of chips."""
 A311D = "A311D"
+OS_AGNOSTIC = "OS_AGNOSTIC"
 AM33XX = "AM33XX"
 AM625X = "AM625X"
 AM65XX = "AM65XX"
