@@ -636,7 +636,11 @@ class Board:
         if self.detector.check_board_name_value() == "ROCK Pi X":
             board = boards.ROCK_PI_X
         if board_value and "ROCK 5" in board_value.upper():
-            board = boards.ROCK_PI_5
+            rock_board_value = board_value.upper()
+            if "ROCK 5C" in rock_board_value:
+                board = boards.ROCK_PI_5C
+            else:
+                board = boards.ROCK_PI_5
         if board_value and "RADXA ROCK 4C+" in board_value.upper():
             board = boards.ROCK_PI_4_C_PLUS
         if board_value and "RADXA ROCK 4SE" in board_value.upper():
