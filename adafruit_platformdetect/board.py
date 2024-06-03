@@ -828,6 +828,10 @@ class Board:
         board = None
         if board_value and "Luckfox Pico Mini" in board_value:
             board = boards.LUCKFOX_PICO_MINI
+        elif board_value and "Luckfox Pico Plus" in board_value:
+            board = boards.LUCKFOX_PICO_PLUS
+        elif board_value and "Luckfox Pico" in board_value:
+            board = boards.LUCKFOX_PICO
         return board
 
     def _rv1106_id(self) -> Optional[str]:
