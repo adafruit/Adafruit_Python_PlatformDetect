@@ -65,12 +65,16 @@ class Board:
             board_id = self._armbian_id() or self._allwinner_variants_id()
         elif chip_id == chips.BCM2XXX:
             board_id = self._pi_id()
+        elif chip_id == chips.OS_AGNOSTIC:
+            board_id = boards.OS_AGNOSTIC_BOARD
         elif chip_id == chips.AM625X:
             board_id = self._beaglebone_id()
         elif chip_id == chips.AM33XX:
             board_id = self._beaglebone_id()
         elif chip_id == chips.AM65XX:
             board_id = self._siemens_simatic_iot2000_id()
+        elif chip_id == chips.AM67A:
+            board_id = self._beagleyai_id()
         elif chip_id == chips.DRA74X:
             board_id = self._bbai_id()
         elif chip_id == chips.SUN4I:
@@ -340,6 +344,12 @@ class Board:
         return None
 
     # pylint: enable=no-self-use
+    def _beagleyai_id(self) -> Optional[str]:
+        """Try to detect id of a BeagleY-AI board."""
+        board_value = self.detector.get_device_model()
+        if "BeagleY-AI" in board_value:
+            return boards.BEAGLEY_AI
+        return None
 
     def _bbai_id(self) -> Optional[str]:
         """Try to detect id of a Beaglebone AI related board."""
@@ -734,6 +744,8 @@ class Board:
                     board = boards.ORANGE_PI_ZERO_PLUS_2H5
                 elif "H616" in chip_id:
                     board = boards.ORANGE_PI_ZERO_2
+        elif "walnutpi-1b-emmc" in board_value:
+            board = boards.WALNUT_PI_1B_EMMC
         elif "walnutpi-1b" in board_value:
             board = boards.WALNUT_PI_1B
             # TODO: Add other specifc board contexts here
@@ -1036,6 +1048,7 @@ class Board:
             yield self.board.QTPY_U2IF
             yield self.board.QT2040_TRINKEY_U2IF
             yield self.board.KB2040_U2IF
+            yield self.board.OS_AGNOSTIC_BOARD
 
         return any(condition for condition in lazily_generate_conditions())
 
@@ -1104,6 +1117,11 @@ class Board:
     def microchip_mcp2221(self) -> bool:
         """Check whether the current board is a Microchip MCP2221."""
         return self.id == boards.MICROCHIP_MCP2221
+
+    @property
+    def os_agnostic_board(self) -> bool:
+        """Check whether the current board is an OS agnostic special case."""
+        return self.id == boards.OS_AGNOSTIC_BOARD
 
     @property
     def pico_u2if(self) -> bool:

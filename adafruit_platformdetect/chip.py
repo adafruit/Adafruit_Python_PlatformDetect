@@ -98,6 +98,10 @@ class Chip:
                     "BLINKA_MCP2221 environment variable "
                     + "set, but no MCP2221 device found"
                 )
+            if os.environ.get("BLINKA_OS_AGNOSTIC"):
+                # we don't need to look for this chip, it's just a flag
+                self._chip_id = chips.OS_AGNOSTIC
+                return self._chip_id
             if os.environ.get("BLINKA_U2IF"):
                 import hid
 
@@ -179,6 +183,8 @@ class Chip:
         # pylint: disable=too-many-branches,too-many-statements
         # pylint: disable=too-many-return-statements
         """Attempt to detect the CPU on a computer running the Linux kernel."""
+        if self.detector.check_dt_compatible_value("beagle,am67a-beagley-ai"):
+            return chips.AM67A
         if self.detector.check_dt_compatible_value("ti,am625"):
             return chips.AM625X
         if self.detector.check_dt_compatible_value("ti,am654"):
