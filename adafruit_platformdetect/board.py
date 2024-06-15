@@ -623,6 +623,8 @@ class Board:
         board = None
         if board_value and "LubanCat-4" in board_value:
             board = boards.LUBANCAT4
+        if board_value and "LubanCat-5" in board_value:
+            board = boards.LUBANCAT5
         return board
 
     def _rock_pi_id(self) -> Optional[str]:
