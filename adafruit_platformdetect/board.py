@@ -1022,9 +1022,9 @@ class Board:
         return self.id in boards._NXP_SOM_IDS
 
     @property
-    def any_olimex_lime2_board(self):
+    def any_olimex_board(self):
         """Check whether the current board is any Pine64 device."""
-        return self.id in boards.OLIMEX_LIME2
+        return self.id in boards._OLIMEX_IDS
 
     @property
     def any_repka_board(self):
@@ -1099,7 +1099,7 @@ class Board:
             yield self.generic_linux
             yield self.any_nxp_navq_board
             yield self.any_walnutpi
-            yield self.any_olimex_lime2_board
+            yield self.any_olimex_board
             yield self.any_repka_board
             yield self.any_milkv_board
             yield self.any_luckfox_pico_board
