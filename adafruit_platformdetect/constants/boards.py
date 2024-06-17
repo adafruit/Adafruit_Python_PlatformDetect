@@ -455,6 +455,8 @@ _LINARO_96BOARDS_IDS = (DRAGONBOARD_410C,)
 
 _SIFIVE_IDS = (SIFIVE_UNLEASHED,)
 
+_OLIMEX_IDS = (OLIMEX_LIME2,)
+
 # BeagleBone eeprom board ids from:
 #   https://github.com/beagleboard/image-builder
 # Thanks to zmatt on freenode #beagle for pointers.
