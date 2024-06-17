@@ -167,6 +167,7 @@ class Board:
                 or self._armbian_id()
                 or self._diet_pi_id()
                 or self._asus_tinker_board_id()
+                or self._vivid_unit_id()
             )
         elif chip_id == chips.RK3399PRO:
             board_id = self._asus_tinker_board_id()
@@ -712,6 +713,14 @@ class Board:
 
         return board
 
+    def _vivid_unit_id(self) -> Optional[str]:
+        """Check what type of vivid unit."""
+        board_value = self.detector.get_device_model()
+        board = None
+        if board_value and "RK3399 VIVID" in board_value:
+            board = boards.VIVID_UNIT
+        return board
+
     def _pcduino_board_id(self) -> Optional[str]:
         """Check on the type of Pcduino"""
         board_value = self.detector.get_device_model()
@@ -1023,7 +1032,7 @@ class Board:
 
     @property
     def any_olimex_board(self):
-        """Check whether the current board is any Pine64 device."""
+        """Check whether the current board is any Olimex device."""
         return self.id in boards._OLIMEX_IDS
 
     @property
@@ -1035,6 +1044,11 @@ class Board:
     def any_luckfox_pico_board(self):
         """Check whether the current board is any Luckfox Pico device."""
         return self.id in boards._LUCKFOX_IDS
+
+    @property
+    def any_vivid_unit(self):
+        """Check whether the current board is any Vivid Unit device."""
+        return self.id in boards._VIVID_UNIT_IDS
 
     @property
     def os_environ_board(self) -> bool:
@@ -1103,6 +1117,7 @@ class Board:
             yield self.any_repka_board
             yield self.any_milkv_board
             yield self.any_luckfox_pico_board
+            yield self.any_vivid_unit
 
         return any(condition for condition in lazily_generate_conditions())
 
