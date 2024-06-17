@@ -102,6 +102,11 @@ class Chip:
                 from usb_iss import UsbIss, defs
 
                 self._chip_id = chips.USB_ISS
+
+        if os.environ.get("BLINKA_OS_AGNOSTIC"):
+                # we don't need to look for this chip, it's just a flag
+                self._chip_id = chips.OS_AGNOSTIC
+
                 return self._chip_id
             if os.environ.get("BLINKA_U2IF"):
                 import hid
@@ -184,6 +189,8 @@ class Chip:
         # pylint: disable=too-many-branches,too-many-statements
         # pylint: disable=too-many-return-statements
         """Attempt to detect the CPU on a computer running the Linux kernel."""
+        if self.detector.check_dt_compatible_value("beagle,am67a-beagley-ai"):
+            return chips.AM67A
         if self.detector.check_dt_compatible_value("ti,am625"):
             return chips.AM625X
         if self.detector.check_dt_compatible_value("ti,am654"):
@@ -250,11 +257,14 @@ class Chip:
         if self.detector.check_dt_compatible_value("rockchip,rk3568"):
             return chips.RK3568
 
-        if self.detector.check_dt_compatible_value("rockchip,rk3568b2"):
-            return chips.RK3568B2
-
         if self.detector.check_dt_compatible_value("rockchip,rk3588"):
             return chips.RK3588
+
+        if self.detector.check_dt_compatible_value("rockchip,rv1106"):
+            return chips.RV1106
+
+        if self.detector.check_dt_compatible_value("rockchip,rv1103"):
+            return chips.RV1103
 
         if self.detector.check_dt_compatible_value("amlogic,a311d"):
             return chips.A311D
@@ -297,6 +307,9 @@ class Chip:
 
         if self.detector.check_dt_compatible_value("libretech,aml-s905x-cc"):
             return chips.S905X
+
+        if self.detector.check_dt_compatible_value("light-lpi4a"):
+            return chips.TH1520
 
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
@@ -363,6 +376,8 @@ class Chip:
                 linux_id = chips.H5
             if compatible and "odroid-xu4" in compatible:
                 linux_id = chips.EXYNOS5422
+            if compatible and "cvitek,cv180x" in compatible:
+                linux_id = chips.CV1800B
             cpu_model = self.detector.get_cpuinfo_field("cpu model")
 
             if cpu_model is not None:
