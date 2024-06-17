@@ -99,70 +99,68 @@ class Chip:
                     + "set, but no MCP2221 device found"
                 )
             if os.environ.get("BLINKA_USB_ISS"):
-                from usb_iss import UsbIss, defs
-
                 self._chip_id = chips.USB_ISS
 
         if os.environ.get("BLINKA_OS_AGNOSTIC"):
-                # we don't need to look for this chip, it's just a flag
-                self._chip_id = chips.OS_AGNOSTIC
+            # we don't need to look for this chip, it's just a flag
+            self._chip_id = chips.OS_AGNOSTIC
 
-                return self._chip_id
-            if os.environ.get("BLINKA_U2IF"):
-                import hid
+            return self._chip_id
+        if os.environ.get("BLINKA_U2IF"):
+            import hid
 
-                # look for it based on PID/VID
-                for dev in hid.enumerate():
-                    vendor = dev["vendor_id"]
-                    product = dev["product_id"]
-                    # NOTE: If any products are added here, they need added
-                    # to _rp2040_u2if_id() in board.py as well.
-                    if (
-                        # Raspberry Pi Pico
-                        vendor == 0xCAFE
-                        and product == 0x4005
-                    ) or (
-                        # Feather RP2040
-                        # Itsy Bitsy RP2040
-                        # QT Py RP2040
-                        # QT2040 Trinkey
-                        # MacroPad RP2040
-                        # Feather RP2040 ThinkInk
-                        # Feather RP2040 RFM
-                        # Feather RP2040 CAN Bus
-                        vendor == 0x239A
-                        and product
-                        in (
-                            0x00F1,
-                            0x00FD,
-                            0x00F7,
-                            0x0109,
-                            0x0107,
-                            0x812C,
-                            0x812E,
-                            0x8130,
-                            0x0105,
-                        )
-                    ):
-                        self._chip_id = chips.RP2040_U2IF
-                        return self._chip_id
-                raise RuntimeError(
-                    "BLINKA_U2IF environment variable "
-                    + "set, but no compatible device found"
-                )
-            if os.environ.get("BLINKA_GREATFET"):
-                import usb
-
-                if usb.core.find(idVendor=0x1D50, idProduct=0x60E6) is not None:
-                    self._chip_id = chips.LPC4330
+            # look for it based on PID/VID
+            for dev in hid.enumerate():
+                vendor = dev["vendor_id"]
+                product = dev["product_id"]
+                # NOTE: If any products are added here, they need added
+                # to _rp2040_u2if_id() in board.py as well.
+                if (
+                    # Raspberry Pi Pico
+                    vendor == 0xCAFE
+                    and product == 0x4005
+                ) or (
+                    # Feather RP2040
+                    # Itsy Bitsy RP2040
+                    # QT Py RP2040
+                    # QT2040 Trinkey
+                    # MacroPad RP2040
+                    # Feather RP2040 ThinkInk
+                    # Feather RP2040 RFM
+                    # Feather RP2040 CAN Bus
+                    vendor == 0x239A
+                    and product
+                    in (
+                        0x00F1,
+                        0x00FD,
+                        0x00F7,
+                        0x0109,
+                        0x0107,
+                        0x812C,
+                        0x812E,
+                        0x8130,
+                        0x0105,
+                    )
+                ):
+                    self._chip_id = chips.RP2040_U2IF
                     return self._chip_id
-                raise RuntimeError(
-                    "BLINKA_GREATFET environment variable "
-                    + "set, but no GreatFET device found"
-                )
-            if os.environ.get("BLINKA_NOVA"):
-                self._chip_id = chips.BINHO
+            raise RuntimeError(
+                "BLINKA_U2IF environment variable "
+                + "set, but no compatible device found"
+            )
+        if os.environ.get("BLINKA_GREATFET"):
+            import usb
+
+            if usb.core.find(idVendor=0x1D50, idProduct=0x60E6) is not None:
+                self._chip_id = chips.LPC4330
                 return self._chip_id
+            raise RuntimeError(
+                "BLINKA_GREATFET environment variable "
+                + "set, but no GreatFET device found"
+            )
+        if os.environ.get("BLINKA_NOVA"):
+            self._chip_id = chips.BINHO
+            return self._chip_id
 
         platform = sys.platform
         if platform in ("linux", "linux2"):
