@@ -64,7 +64,6 @@ class Board:
         if chip_id == chips.H3:
             board_id = self._armbian_id() or self._allwinner_variants_id()
         elif chip_id == chips.JH7110:
-            print('aaaaaa')
             board_id = self._starfive_id()
         elif chip_id == chips.BCM2XXX:
             board_id = self._pi_id()
@@ -232,10 +231,13 @@ class Board:
     def _starfive_id(self) -> Optional[str]:
         model = None
         board_value = self.detector.get_device_compatible()
-        if board_value == "starfive,visionfive-v2starfive,jh7110":
+        if board_value == 'starfive,visionfive-v2starfive,jh7110':
+            print('it is')
             model = boards.VISIONFIVE2
-        print(model)
-        print(board_value)
+        else:
+            print(board_value)
+            print('is not')
+            print('starfive,visionfive-v2starfive,jh7110')
         return model
     def _pi_id(self) -> Optional[str]:
         """Try to detect id of a Raspberry Pi."""
