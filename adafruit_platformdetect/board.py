@@ -229,8 +229,8 @@ class Board:
     # pylint: enable=invalid-name
     def _starfive_id(self) -> Optional[str]:
         model = None
-        board_value = self.detector.get_device_compatible()
-        if 'visionfive-v2starfive' in str(board_value):
+        model_value = self.detector.get_device_model()
+        if model_value == "StarFive VisionFive V2":
             model = boards.VISIONFIVE2
         return model
 
