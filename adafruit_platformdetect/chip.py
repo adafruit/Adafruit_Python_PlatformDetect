@@ -19,7 +19,6 @@ Implementation Notes
 
 """
 
-
 import os
 import sys
 
@@ -29,7 +28,6 @@ except ImportError:
     pass
 
 from adafruit_platformdetect.constants import chips
-
 
 __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
@@ -223,6 +221,9 @@ class Chip:
         # Newer Builds
         if self.detector.check_dt_compatible_value("jh7100"):
             return chips.JH71X0
+
+        if self.detector.check_dt_compatible_value("jh7110"):
+            return chips.JH7110
 
         if self.detector.check_dt_compatible_value("sun8i-a33"):
             return chips.A33
