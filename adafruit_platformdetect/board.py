@@ -63,6 +63,8 @@ class Board:
 
         if chip_id == chips.H3:
             board_id = self._armbian_id() or self._allwinner_variants_id()
+        elif chip_id == chips.JH7110:
+            board_id = self._starfive_id()
         elif chip_id == chips.BCM2XXX:
             board_id = self._pi_id()
         elif chip_id == chips.OS_AGNOSTIC:
@@ -226,7 +228,12 @@ class Board:
         return board_id
 
     # pylint: enable=invalid-name
-
+    def _starfive_id(self) -> Optional[str]:
+        model = None
+        board_value = self.detector.get_device_compatible()
+        if "visionfive-v2starfive" in board_value:
+            model = boards.VISIONFIVE2
+        return model
     def _pi_id(self) -> Optional[str]:
         """Try to detect id of a Raspberry Pi."""
         # Check for Pi boards:

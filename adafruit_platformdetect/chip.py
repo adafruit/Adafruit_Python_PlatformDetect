@@ -223,7 +223,8 @@ class Chip:
         # Newer Builds
         if self.detector.check_dt_compatible_value("jh7100"):
             return chips.JH71X0
-
+        if self.detector.check_dt_compatible_value("jh7110"):
+            return chips.JH7110
         if self.detector.check_dt_compatible_value("sun8i-a33"):
             return chips.A33
 
