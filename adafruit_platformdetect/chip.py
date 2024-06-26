@@ -19,7 +19,6 @@ Implementation Notes
 
 """
 
-
 import os
 import sys
 
@@ -29,7 +28,6 @@ except ImportError:
     pass
 
 from adafruit_platformdetect.constants import chips
-
 
 __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
@@ -45,7 +43,7 @@ class Chip:
     # pylint: disable=invalid-name,too-many-branches,too-many-return-statements
     @property
     def id(
-        self,
+            self,
     ) -> Optional[str]:
         """Return a unique id for the detected chip, if any."""
         # There are some times we want to trick the platform detection
@@ -112,31 +110,31 @@ class Chip:
                     # NOTE: If any products are added here, they need added
                     # to _rp2040_u2if_id() in board.py as well.
                     if (
-                        # Raspberry Pi Pico
-                        vendor == 0xCAFE
-                        and product == 0x4005
+                            # Raspberry Pi Pico
+                            vendor == 0xCAFE
+                            and product == 0x4005
                     ) or (
-                        # Feather RP2040
-                        # Itsy Bitsy RP2040
-                        # QT Py RP2040
-                        # QT2040 Trinkey
-                        # MacroPad RP2040
-                        # Feather RP2040 ThinkInk
-                        # Feather RP2040 RFM
-                        # Feather RP2040 CAN Bus
-                        vendor == 0x239A
-                        and product
-                        in (
-                            0x00F1,
-                            0x00FD,
-                            0x00F7,
-                            0x0109,
-                            0x0107,
-                            0x812C,
-                            0x812E,
-                            0x8130,
-                            0x0105,
-                        )
+                            # Feather RP2040
+                            # Itsy Bitsy RP2040
+                            # QT Py RP2040
+                            # QT2040 Trinkey
+                            # MacroPad RP2040
+                            # Feather RP2040 ThinkInk
+                            # Feather RP2040 RFM
+                            # Feather RP2040 CAN Bus
+                            vendor == 0x239A
+                            and product
+                            in (
+                                    0x00F1,
+                                    0x00FD,
+                                    0x00F7,
+                                    0x0109,
+                                    0x0107,
+                                    0x812C,
+                                    0x812E,
+                                    0x8130,
+                                    0x0105,
+                            )
                     ):
                         self._chip_id = chips.RP2040_U2IF
                         return self._chip_id
