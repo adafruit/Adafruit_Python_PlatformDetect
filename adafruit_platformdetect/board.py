@@ -234,6 +234,8 @@ class Board:
         board_value = self.detector.get_device_compatible()
         if "visionfive-v2starfive" in board_value:
             model = boards.VISIONFIVE2
+        print(model)
+        print(board_value)
         return model
     def _pi_id(self) -> Optional[str]:
         """Try to detect id of a Raspberry Pi."""
