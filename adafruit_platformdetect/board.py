@@ -30,7 +30,6 @@ except ImportError:
 
 from adafruit_platformdetect.constants import boards, chips
 
-
 __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
 
@@ -149,13 +148,13 @@ class Board:
             board_id = self._pine64_id()
         elif chip_id == chips.H6:
             board_id = (
-                self._pine64_id() or self._armbian_id() or self._repka_variants_id()
+                    self._pine64_id() or self._armbian_id() or self._repka_variants_id()
             )
         elif chip_id == chips.H5:
             board_id = (
-                self._armbian_id()
-                or self._allwinner_variants_id()
-                or self._repka_variants_id()
+                    self._armbian_id()
+                    or self._allwinner_variants_id()
+                    or self._repka_variants_id()
             )
         elif chip_id == chips.H616:
             board_id = self._armbian_id() or self._allwinner_variants_id()
@@ -165,11 +164,11 @@ class Board:
             board_id = self._rock_pi_id()
         elif chip_id == chips.RK3399:
             board_id = (
-                self._rock_pi_id()
-                or self._armbian_id()
-                or self._diet_pi_id()
-                or self._asus_tinker_board_id()
-                or self._vivid_unit_id()
+                    self._rock_pi_id()
+                    or self._armbian_id()
+                    or self._diet_pi_id()
+                    or self._asus_tinker_board_id()
+                    or self._vivid_unit_id()
             )
         elif chip_id == chips.RK3399PRO:
             board_id = self._asus_tinker_board_id()
@@ -189,10 +188,10 @@ class Board:
             board_id = self._rk3568_id()
         elif chip_id == chips.RK3588:
             board_id = (
-                self._rock_pi_id()
-                or self._orange_pi_id()
-                or self._armbian_id()
-                or self._rk3588_id()
+                    self._rock_pi_id()
+                    or self._orange_pi_id()
+                    or self._armbian_id()
+                    or self._rk3588_id()
             )
         elif chip_id == chips.RYZEN_V1605B:
             board_id = self._udoo_id()
@@ -231,9 +230,10 @@ class Board:
     def _starfive_id(self) -> Optional[str]:
         model = None
         board_value = self.detector.get_device_compatible()
-        if board_value == "starfive,visionfive-v2starfive,jh7110":
+        if 'visionfive-v2starfive' in str(board_value):
             model = boards.VISIONFIVE2
         return model
+
     def _pi_id(self) -> Optional[str]:
         """Try to detect id of a Raspberry Pi."""
         # Check for Pi boards:
@@ -578,7 +578,7 @@ class Board:
         """Try to detect the id for Xilinx PYNQ boards."""
         try:
             with open(
-                "/proc/device-tree/chosen/pynq_board", "r", encoding="utf-8"
+                    "/proc/device-tree/chosen/pynq_board", "r", encoding="utf-8"
             ) as board_file:
                 board_model = board_file.read()
                 match = board_model.upper().replace("-", "_").rstrip("\x00")
@@ -698,7 +698,7 @@ class Board:
         """Try to detect the id of J4105 board."""
         try:
             with open(
-                "/sys/devices/virtual/dmi/id/board_name", "r", encoding="utf-8"
+                    "/sys/devices/virtual/dmi/id/board_name", "r", encoding="utf-8"
             ) as board_name:
                 board_value = board_name.read().rstrip()
             if board_value in ("ODYSSEY-X86J41X5", "ODYSSEY-X86J41O5"):
