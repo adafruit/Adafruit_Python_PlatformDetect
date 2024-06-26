@@ -230,7 +230,6 @@ class Board:
     def _starfive_id(self) -> Optional[str]:
         model = None
         model_value = self.detector.get_device_model()
-        print(model_value)
         if "VisionFive" in model_value and "V2" in model_value:
             model = boards.VISIONFIVE2
         return model
