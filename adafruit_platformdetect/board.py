@@ -231,9 +231,8 @@ class Board:
     def _starfive_id(self) -> Optional[str]:
         model = None
         board_value = self.detector.get_device_compatible()
-        if "starfive,visionfive-v2starfive,jh7110".casefold() == board_value.casefold():
+        if "starfive,visionfive-v2starfive,jh7110".casefold().strip() == board_value.casefold().strip():
             model = boards.VISIONFIVE2
-        print(type(board_value))
         return model
     def _pi_id(self) -> Optional[str]:
         """Try to detect id of a Raspberry Pi."""
