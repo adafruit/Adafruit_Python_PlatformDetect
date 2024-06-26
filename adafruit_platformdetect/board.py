@@ -232,7 +232,7 @@ class Board:
     def _starfive_id(self) -> Optional[str]:
         model = None
         board_value = self.detector.get_device_compatible()
-        if "visionfive-v2starfive" in board_value:
+        if board_value == "starfive,visionfive-v2starfive,jh7110":
             model = boards.VISIONFIVE2
         print(model)
         print(board_value)
