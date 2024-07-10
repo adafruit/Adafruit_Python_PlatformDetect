@@ -30,7 +30,6 @@ except ImportError:
 
 from adafruit_platformdetect.constants import boards, chips
 
-
 __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
 
@@ -63,6 +62,8 @@ class Board:
 
         if chip_id == chips.H3:
             board_id = self._armbian_id() or self._allwinner_variants_id()
+        elif chip_id == chips.JH7110:
+            board_id = self._starfive_id()
         elif chip_id == chips.BCM2XXX:
             board_id = self._pi_id()
         elif chip_id == chips.OS_AGNOSTIC:
@@ -226,6 +227,12 @@ class Board:
         return board_id
 
     # pylint: enable=invalid-name
+    def _starfive_id(self) -> Optional[str]:
+        model = None
+        model_value = self.detector.get_device_model()
+        if "VisionFive" in model_value and "V2" in model_value:
+            model = boards.VISIONFIVE2
+        return model
 
     def _pi_id(self) -> Optional[str]:
         """Try to detect id of a Raspberry Pi."""
