@@ -234,6 +234,11 @@ class Board:
             model = boards.VISIONFIVE2
         return model
 
+    @property
+    def any_starfive_id(self):
+        """Check whether the current board is any Pine64 device."""
+        return self.id in boards._STARFIVE_BOARD_IDS
+
     def _pi_id(self) -> Optional[str]:
         """Try to detect id of a Raspberry Pi."""
         # Check for Pi boards:
@@ -1125,6 +1130,7 @@ class Board:
             yield self.any_milkv_board
             yield self.any_luckfox_pico_board
             yield self.any_vivid_unit
+            yield self.any_starfive_id
 
         return any(condition for condition in lazily_generate_conditions())
 
