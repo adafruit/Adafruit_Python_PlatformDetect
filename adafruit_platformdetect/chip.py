@@ -29,7 +29,7 @@ except ImportError:
 
 from adafruit_platformdetect.constants import chips
 
-__version__ = "0.0.0+auto.0"
+__version__ = "3.72.1"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
 
 
@@ -113,6 +113,10 @@ class Chip:
                         # Raspberry Pi Pico
                         vendor == 0xCAFE
                         and product == 0x4005
+                    ) or (
+                        # Waveshare RP2040 One
+                        vendor == 0x2E8A
+                        and product == 0x111F
                     ) or (
                         # Feather RP2040
                         # Itsy Bitsy RP2040

@@ -30,7 +30,7 @@ except ImportError:
 
 from adafruit_platformdetect.constants import boards, chips
 
-__version__ = "0.0.0+auto.0"
+__version__ = "3.72.1"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
 
 
@@ -832,6 +832,8 @@ class Board:
                 # KB2040 Kee Board
                 if product == 0x0105:
                     return boards.KB2040_U2IF
+            if vendor == 0x2E8A and product == 0x111F:
+                return boards.WAVESHARE_RP2040_ONE_U2IF
         # Will only reach here if a device was added in chip.py but here.
         raise RuntimeError("RP2040_U2IF device was added to chip but not board.")
 
