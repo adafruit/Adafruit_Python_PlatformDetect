@@ -1216,6 +1216,7 @@ class Board:
     def rp2040_one_u2if(self) -> bool:
         """Check whether the current board is an RP2040 One w/ u2if."""
         return self.id == boards.RP2040_ONE_U2IF
+
     @property
     def binho_nova(self) -> bool:
         """Check whether the current board is an BINHO NOVA."""
