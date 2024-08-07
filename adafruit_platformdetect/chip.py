@@ -116,7 +116,7 @@ class Chip:
                     ) or (
                         # Waveshare RP2040 One
                         vendor == 0x2E8A
-                        and product == 0x111F
+                        and product == 0x103A
                     ) or (
                         # Feather RP2040
                         # Itsy Bitsy RP2040
