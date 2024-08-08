@@ -29,7 +29,7 @@ except ImportError:
 
 from adafruit_platformdetect.constants import chips
 
-__version__ = "3.72.1"
+__version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PlatformDetect.git"
 
 
@@ -143,8 +143,7 @@ class Chip:
                                 0x8130,
                                 0x0105,
                             )
-                        )
-                    ):
+                        ):
                         self._chip_id = chips.RP2040_U2IF
                         return self._chip_id
                 raise RuntimeError(
