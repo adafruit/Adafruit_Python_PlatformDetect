@@ -109,35 +109,40 @@ class Chip:
                     product = dev["product_id"]
                     # NOTE: If any products are added here, they need added
                     # to _rp2040_u2if_id() in board.py as well.
+                    # pylint: disable=too-many-boolean-expressions
                     if (
-                        # Raspberry Pi Pico
-                        vendor == 0xCAFE
-                        and product == 0x4005
-                    ) or (
-                        # Waveshare RP2040 One
-                        vendor == 0x2E8A
-                        and product == 0x103A
-                    ) or (
-                        # Feather RP2040
-                        # Itsy Bitsy RP2040
-                        # QT Py RP2040
-                        # QT2040 Trinkey
-                        # MacroPad RP2040
-                        # Feather RP2040 ThinkInk
-                        # Feather RP2040 RFM
-                        # Feather RP2040 CAN Bus
-                        vendor == 0x239A
-                        and product
-                        in (
-                            0x00F1,
-                            0x00FD,
-                            0x00F7,
-                            0x0109,
-                            0x0107,
-                            0x812C,
-                            0x812E,
-                            0x8130,
-                            0x0105,
+                        (
+                            # Raspberry Pi Pico
+                            vendor == 0xCAFE
+                            and product == 0x4005
+                        )
+                        or (
+                            # Waveshare RP2040 One
+                            vendor == 0x2E8A
+                            and product == 0x103A
+                        )
+                        or (
+                            # Feather RP2040
+                            # Itsy Bitsy RP2040
+                            # QT Py RP2040
+                            # QT2040 Trinkey
+                            # MacroPad RP2040
+                            # Feather RP2040 ThinkInk
+                            # Feather RP2040 RFM
+                            # Feather RP2040 CAN Bus
+                            vendor == 0x239A
+                            and product
+                            in (
+                                0x00F1,
+                                0x00FD,
+                                0x00F7,
+                                0x0109,
+                                0x0107,
+                                0x812C,
+                                0x812E,
+                                0x8130,
+                                0x0105,
+                            )
                         )
                     ):
                         self._chip_id = chips.RP2040_U2IF
