@@ -142,8 +142,8 @@ class Chip:
                                 0x812E,
                                 0x8130,
                                 0x0105,
-                            )
-                        ):
+                                )
+                            ):
                         self._chip_id = chips.RP2040_U2IF
                         return self._chip_id
                 raise RuntimeError(
