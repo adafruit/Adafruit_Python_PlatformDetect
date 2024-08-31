@@ -156,6 +156,8 @@ class Board:
                 or self._allwinner_variants_id()
                 or self._repka_variants_id()
             )
+        elif chip_id == chips.H618:
+            board_id = self._armbian_id() or self._allwinner_variants_id()
         elif chip_id == chips.H616:
             board_id = self._armbian_id() or self._allwinner_variants_id()
         elif chip_id == chips.A33:
@@ -431,6 +433,10 @@ class Board:
             board = boards.BANANA_PI_M2_PLUS
         elif board_value == "bananapim2berry":
             board = boards.BANANA_PI_M2_BERRY
+        elif board_value == "bananapim4berry":
+            board = boards.BANANA_PI_M4_BERRY
+        elif board_value == "bananapim4zero":
+            board = boards.BANANA_PI_M4_ZERO
         elif board_value == "bananapim5":
             board = boards.BANANA_PI_M5
         elif board_value == "orangepizeroplus2-h5":
@@ -757,6 +763,14 @@ class Board:
 
         if "banana pi m2 berry" in board_value:
             board = boards.BANANA_PI_M2_BERRY
+
+        if any(x in board_value for x in ("banana pi", "bananapi"));
+            if "m2 berry" in board_value:
+                board = boards.BANANA_PI_M2_BERRY
+            elif "m4berry" in board_value or "m4 berry" in board_value:
+                board = boards.BANANA_PI_M4_BERRY
+            elif "m4zero" in board_value or "m4 zero" in board_value:
+                board = boards.BANANA_PI_M4_ZERO
 
         if "nanopi" in board_value:
             if "neo" in board_value and "SUN8I" in chip_id:

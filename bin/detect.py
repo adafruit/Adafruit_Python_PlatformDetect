@@ -75,6 +75,9 @@ print(
     "Is this an OS environment variable special case?", detector.board.os_environ_board
 )
 
+if detector.board.any_bananapi:
+    print("Bananapi board detected.")
+
 if detector.board.any_jetson_board:
     print("Jetson platform detected.")
 
