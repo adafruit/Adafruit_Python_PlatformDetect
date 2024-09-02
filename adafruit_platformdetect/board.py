@@ -761,10 +761,7 @@ class Board:
         if "banana pro" in board_value:
             board = boards.LEMAKER_BANANA_PRO
 
-        if "banana pi m2 berry" in board_value:
-            board = boards.BANANA_PI_M2_BERRY
-
-        if any(x in board_value for x in ("banana pi", "bananapi"));
+        if any(x in board_value for x in ("banana pi", "bananapi")):
             if "m2 berry" in board_value:
                 board = boards.BANANA_PI_M2_BERRY
             elif "m4berry" in board_value or "m4 berry" in board_value:
