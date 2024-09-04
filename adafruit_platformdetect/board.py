@@ -801,7 +801,6 @@ class Board:
         if not board_value:
             return board
         board_value = board_value.lower()
-        chip_id = self.detector.chip.id
 
         if any(x in board_value for x in ("banana pi", "bananapi")):
             if "bpi-f3" in board_value:
