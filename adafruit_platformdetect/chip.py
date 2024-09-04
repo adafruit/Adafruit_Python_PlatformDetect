@@ -285,6 +285,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("sun50i-h5"):
             return chips.H5
 
+        if self.detector.check_dt_compatible_value("sun50i-h618"):
+            return chips.H618
+
         if self.detector.check_dt_compatible_value("sun50i-h616"):
             return chips.H616
 
@@ -293,6 +296,9 @@ class Chip:
 
         if self.detector.check_dt_compatible_value("sun50i-h6"):
             return chips.H6
+
+        if self.detector.check_dt_compatible_value("spacemit,k1-x"):
+            return chips.K1
 
         if self.detector.check_dt_compatible_value("mediatek,mt8167"):
             return chips.MT8167

@@ -156,10 +156,14 @@ class Board:
                 or self._allwinner_variants_id()
                 or self._repka_variants_id()
             )
+        elif chip_id == chips.H618:
+            board_id = self._armbian_id() or self._allwinner_variants_id()
         elif chip_id == chips.H616:
             board_id = self._armbian_id() or self._allwinner_variants_id()
         elif chip_id == chips.A33:
             board_id = self._clockwork_pi_id()
+        elif chip_id == chips.K1:
+            board_id = self._armbian_id() or self._spacemit_variants_id()
         elif chip_id == chips.RK3308:
             board_id = self._rock_pi_id()
         elif chip_id == chips.RK3399:
@@ -431,8 +435,14 @@ class Board:
             board = boards.BANANA_PI_M2_PLUS
         elif board_value == "bananapim2berry":
             board = boards.BANANA_PI_M2_BERRY
+        elif board_value == "bananapim4berry":
+            board = boards.BANANA_PI_M4_BERRY
+        elif board_value == "bananapim4zero":
+            board = boards.BANANA_PI_M4_ZERO
         elif board_value == "bananapim5":
             board = boards.BANANA_PI_M5
+        elif board_value == "bananapif3":
+            board = boards.BANANA_PI_F3
         elif board_value == "orangepizeroplus2-h5":
             board = boards.ORANGE_PI_ZERO_PLUS_2H5
         elif board_value == "orangepizeroplus":
@@ -755,8 +765,13 @@ class Board:
         if "banana pro" in board_value:
             board = boards.LEMAKER_BANANA_PRO
 
-        if "banana pi m2 berry" in board_value:
-            board = boards.BANANA_PI_M2_BERRY
+        if any(x in board_value for x in ("banana pi", "bananapi")):
+            if "m2 berry" in board_value:
+                board = boards.BANANA_PI_M2_BERRY
+            elif "m4berry" in board_value or "m4 berry" in board_value:
+                board = boards.BANANA_PI_M4_BERRY
+            elif "m4zero" in board_value or "m4 zero" in board_value:
+                board = boards.BANANA_PI_M4_ZERO
 
         if "nanopi" in board_value:
             if "neo" in board_value and "SUN8I" in chip_id:
@@ -777,6 +792,24 @@ class Board:
 
         elif "lime2" in board_value:
             board = boards.OLIMEX_LIME2
+        return board
+
+    def _spacemit_variants_id(self) -> Optional[str]:
+        """Try to detect the id of spacemit based board. (bananapi)"""
+        board_value = self.detector.get_device_model()
+        board = None
+        if not board_value:
+            return board
+        board_value = board_value.lower()
+
+        if any(x in board_value for x in ("banana pi", "bananapi")):
+            if "bpi-f3" in board_value:
+                board = boards.BANANA_PI_F3
+
+        if "spacemit" in board_value:
+            if "deb1" in board_value:
+                board = boards.BANANA_PI_F3
+
         return board
 
     def _repka_variants_id(self) -> Optional[str]:
