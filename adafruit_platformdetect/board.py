@@ -196,6 +196,7 @@ class Board:
                 or self._orange_pi_id()
                 or self._armbian_id()
                 or self._rk3588_id()
+                or self._ameridroid_id()
             )
         elif chip_id == chips.RYZEN_V1605B:
             board_id = self._udoo_id()
@@ -482,6 +483,11 @@ class Board:
         if "OrangePi 4" in board_value:
             return boards.ORANGE_PI_4
         return None
+    
+    def _ameridroid_id(self) -> Optional[str]:
+        board_value = self.detector.get_device_model().upper()
+        if "INDIEDROID NOVA" in board_value:
+            return boards.INDIEDROID_NOVA
 
     def _orange_pi_id(self) -> Optional[str]:
         board_value = self.detector.get_device_model()
@@ -941,6 +947,11 @@ class Board:
     def any_beaglebone(self) -> bool:
         """Check whether the current board is any Beaglebone-family system."""
         return self.id in boards._BEAGLEBONE_IDS
+    
+    @property
+    def any_ameridroid(self) -> bool:
+        """Check whether the current board is any Ameridroid device."""
+        return self.id in boards._AMERIDROID_IDS
 
     @property
     def any_orange_pi(self) -> bool:
@@ -1130,6 +1141,7 @@ class Board:
             yield self.any_raspberry_pi_40_pin
             yield self.any_raspberry_pi
             yield self.any_beaglebone
+            yield self.any_ameridroid
             yield self.any_orange_pi
             yield self.any_nanopi
             yield self.any_giant_board
