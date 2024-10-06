@@ -483,11 +483,12 @@ class Board:
         if "OrangePi 4" in board_value:
             return boards.ORANGE_PI_4
         return None
-    
+
     def _ameridroid_id(self) -> Optional[str]:
         board_value = self.detector.get_device_model().upper()
         if "INDIEDROID NOVA" in board_value:
             return boards.INDIEDROID_NOVA
+        return None
 
     def _orange_pi_id(self) -> Optional[str]:
         board_value = self.detector.get_device_model()
@@ -947,7 +948,7 @@ class Board:
     def any_beaglebone(self) -> bool:
         """Check whether the current board is any Beaglebone-family system."""
         return self.id in boards._BEAGLEBONE_IDS
-    
+
     @property
     def any_ameridroid(self) -> bool:
         """Check whether the current board is any Ameridroid device."""
