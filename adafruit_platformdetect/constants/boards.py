@@ -633,9 +633,7 @@ _LUCKFOX_IDS = (
 )
 
 # Horizon
-_HORIZON_IDS = (
-    RDK_X3,
-)
+_HORIZON_IDS = (RDK_X3,)
 
 _AMERIDROID_IDS = (INDIEDROID_NOVA,)
 
