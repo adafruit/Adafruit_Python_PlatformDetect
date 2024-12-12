@@ -324,8 +324,8 @@ class Board:
 
         # find device alias at i2c address 0x50 (0-00500, 0-00501, etc)
         nvmem_devices = glob.glob('/sys/bus/nvmem/devices/0-0050*')
-        # do not expect there to be more than one eeprom
-        if len(nvmem_devices) > 1:
+        # do not expect there to be anything but one eeprom
+        if len(nvmem_devices) != 1:
             return None
 
         eeprom_dir = nvmem_devices[0]
