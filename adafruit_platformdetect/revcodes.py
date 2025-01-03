@@ -96,6 +96,7 @@ PI_TYPE = {
     0x14: "CM4",
     0x15: "CM4S",
     0x17: "5",
+    0x18: "CM5",
 }
 
 OLD_MANUFACTURER = (
