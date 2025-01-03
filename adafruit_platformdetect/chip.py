@@ -321,6 +321,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("light-lpi4a"):
             return chips.TH1520
 
+        if self.detector.check_dt_compatible_value("hobot,x3"):
+            return chips.SUNRISE_X3
+
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
 
