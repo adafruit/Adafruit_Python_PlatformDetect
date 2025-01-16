@@ -947,6 +947,16 @@ class Board:
         return self.id in boards._RASPBERRY_PI_CM_IDS
 
     @property
+    def any_raspberry_pi_4_board(self) -> bool:
+        """Check whether the current board is any Raspberry Pi 4."""
+        return self.id in boards._RASPBERRY_PI_4_IDS
+
+    @property
+    def any_raspberry_pi_5_board(self) -> bool:
+        """Check whether the current board is any Raspberry Pi 5."""
+        return self.id in boards._RASPBERRY_PI_5_IDS
+
+    @property
     def any_beaglebone(self) -> bool:
         """Check whether the current board is any Beaglebone-family system."""
         return self.id in boards._BEAGLEBONE_IDS
