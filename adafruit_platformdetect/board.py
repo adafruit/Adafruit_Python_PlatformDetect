@@ -468,8 +468,6 @@ class Board:
             board = boards.PCDUINO3
         elif board_value == "rock-3a":
             board = boards.ROCK_PI_3A
-        elif board_value == "rock-3b":
-            board = boards.ROCK_PI_3B
         elif board_value == "radxa-zero3":
             board = boards.RADXA_ZERO3
         elif board_value == "repka-pi3-h5":
@@ -685,8 +683,6 @@ class Board:
             board = boards.ROCK_PI_4_SE
         if board_value and "ROCK3 Model A" in board_value:
             board = boards.ROCK_PI_3A
-        if board_value and "ROCK 3 Model B" in board_value:
-            board = boards.ROCK_PI_3B
         return board
 
     def _libre_id(self) -> Optional[str]:
