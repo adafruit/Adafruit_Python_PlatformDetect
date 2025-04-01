@@ -173,6 +173,7 @@ class Board:
                 or self._diet_pi_id()
                 or self._asus_tinker_board_id()
                 or self._vivid_unit_id()
+                or self._vicharak_id()
             )
         elif chip_id == chips.RK3399PRO:
             board_id = self._asus_tinker_board_id()
@@ -197,6 +198,7 @@ class Board:
                 or self._armbian_id()
                 or self._rk3588_id()
                 or self._ameridroid_id()
+                or self._vicharak_id()
             )
         elif chip_id == chips.RYZEN_V1605B:
             board_id = self._udoo_id()
@@ -683,6 +685,16 @@ class Board:
             board = boards.ROCK_PI_3A
         return board
 
+    def _vicharak_id(self) -> Optional[str]:
+        """Check what type of Vicharak Board."""
+        board_value = self.detector.get_device_model()
+        board = None
+        if board_value and "VAAMAN" in board_value.upper():
+            board = boards.VAAMAN
+        if board_value and "AXON" in board_value.upper():
+            board = boards.AXON
+        return board
+
     def _libre_id(self) -> Optional[str]:
         """Check what type of Libre Computer board."""
         board_value = self.detector.get_device_model()
@@ -1035,6 +1047,11 @@ class Board:
     def any_rock_pi_board(self) -> bool:
         """Check whether the current board is any Rock Pi device."""
         return self.id in boards._ROCK_PI_IDS
+
+    @property
+    def any_vicharak_board(self) -> bool:
+        """Check whether the current board is any vicharak device."""
+        return self.id in boards._VICHARAK_BOARD_IDS
 
     @property
     def any_clockwork_pi_board(self) -> bool:
