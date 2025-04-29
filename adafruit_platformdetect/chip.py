@@ -349,6 +349,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("hobot,x3"):
             return chips.SUNRISE_X3
 
+        if self.detector.check_dt_compatible_value("particle,tachyon"):
+            return chips.QCM6490
+
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
 
