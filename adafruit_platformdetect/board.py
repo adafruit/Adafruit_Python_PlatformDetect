@@ -655,6 +655,8 @@ class Board:
             board = boards.LUBANCAT2
         if board_value and "ROCK3 Model A" in board_value:
             board = boards.ROCK_PI_3A
+        if board_value and "ROCK 3 Model B" in board_value:
+            board = boards.ROCK_3B
         if board_value and "Hardkernel ODROID-M1" in board_value:
             board = boards.ODROID_M1
         return board
