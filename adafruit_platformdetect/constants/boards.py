@@ -218,6 +218,10 @@ ROCK_PI_E = "ROCK_PI_E"
 ROCK_PI_5 = "ROCK_PI_5"
 ROCK_PI_5C = "ROCK_PI_5C"
 
+# Vicharak Boards
+VAAMAN = "VAAMAN"
+AXON = "AXON"
+
 GREATFET_ONE = "GREATFET_ONE"
 
 # SeeedStudio boards
@@ -603,6 +607,9 @@ _ROCK_PI_IDS = (
     ROCK_PI_3A,
     ROCK_PI_3C,
 )
+
+# Vicharak Boards
+_VICHARAK_BOARD_IDS = (VAAMAN, AXON)
 
 # UDOO
 _UDOO_BOARD_IDS = {UDOO_BOLT_V8: ("SC40-2000-0000-C0|C",), UDOO_X86: ("dummy",)}
