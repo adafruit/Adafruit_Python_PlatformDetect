@@ -118,6 +118,8 @@ class Board:
             board_id = boards.FTDI_FT232H
         elif chip_id == chips.FT2232H:
             board_id = boards.FTDI_FT2232H
+        elif chip_id == chips.FT4232H:
+            board_id = boards.FTDI_FT4232H
         elif chip_id == chips.APQ8016:
             board_id = boards.DRAGONBOARD_410C
         elif chip_id in (chips.T210, chips.T186, chips.T194, chips.T234):
@@ -1162,6 +1164,7 @@ class Board:
         def lazily_generate_conditions():
             yield self.board.FTDI_FT232H
             yield self.board.FTDI_FT2232H
+            yield self.board.FTDI_FT4232H
             yield self.board.MICROCHIP_MCP2221
             yield self.board.BINHO_NOVA
             yield self.board.GREATFET_ONE
@@ -1244,6 +1247,11 @@ class Board:
     def ftdi_ft2232h(self) -> bool:
         """Check whether the current board is an FTDI FT2232H."""
         return self.id == boards.FTDI_FT2232H
+
+    @property
+    def ftdi_ft4232h(self) -> bool:
+        """Check whether the current board is an FTDI FT4232H."""
+        return self.id == boards.FTDI_FT4232H
 
     @property
     def microchip_mcp2221(self) -> bool:

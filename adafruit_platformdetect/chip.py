@@ -84,6 +84,18 @@ class Chip:
                     )
                 self._chip_id = chips.FT2232H
                 return self._chip_id
+            if os.environ.get("BLINKA_FT4232H"):
+                from pyftdi.usbtools import UsbTools
+
+                # look for it based on PID/VID
+                count = len(UsbTools.find_all([(0x0403, 0x6011)]))
+                if count == 0:
+                    raise RuntimeError(
+                        "BLINKA_FT4232H environment variable "
+                        + "set, but no FT4232H device found"
+                    )
+                self._chip_id = chips.FT4232H
+                return self._chip_id
             if os.environ.get("BLINKA_MCP2221"):
                 import hid
 
