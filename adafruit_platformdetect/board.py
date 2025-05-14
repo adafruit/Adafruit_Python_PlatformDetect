@@ -168,6 +168,10 @@ class Board:
             board_id = self._clockwork_pi_id()
         elif chip_id == chips.K1:
             board_id = self._armbian_id() or self._spacemit_variants_id()
+        elif chip_id == chips.RZV2N:
+            board_id = self._armbian_id() or self._renesas_variants_id()
+        elif chip_id == chips.RZV2H:
+            board_id = self._armbian_id() or self._renesas_variants_id()
         elif chip_id == chips.RK3308:
             board_id = self._rock_pi_id()
         elif chip_id == chips.RK3399:
@@ -454,6 +458,10 @@ class Board:
             board = boards.BANANA_PI_F3
         elif board_value == "bananapif5":
             board = boards.BANANA_PI_F5
+        elif board_value == "bananapiai2n":
+            board = boards.BANANA_PI_AI2N
+        elif board_value == "bananapiai2h":
+            board = boards.BANANA_PI_AI2H
         elif board_value == "orangepizeroplus2-h5":
             board = boards.ORANGE_PI_ZERO_PLUS_2H5
         elif board_value == "orangepizeroplus":
@@ -844,6 +852,22 @@ class Board:
         if "spacemit" in board_value:
             if "deb1" in board_value:
                 board = boards.BANANA_PI_F3
+
+        return board
+
+    def _renesas_variants_id(self) -> Optional[str]:
+        """Try to detect the id of renesas based board. (bananapi)"""
+        board_value = self.detector.get_device_model()
+        board = None
+        if not board_value:
+            return board
+        board_value = board_value.lower()
+
+        if any(x in board_value for x in ("banana pi", "bananapi")):
+            if "bpi-ai2n" in board_value:
+                board = boards.BANANA_PI_AI2N
+            if "bpi-ai2h" in board_value:
+                board = boards.BANANA_PI_AI2H
 
         return board
 

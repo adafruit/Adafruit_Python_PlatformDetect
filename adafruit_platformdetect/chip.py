@@ -315,6 +315,12 @@ class Chip:
         if self.detector.check_dt_compatible_value("spacemit,k1-x"):
             return chips.K1
 
+        if self.detector.check_dt_compatible_value("renesas,r9a09g056"):
+            return chips.RZV2N
+
+        if self.detector.check_dt_compatible_value("renesas,r9a09g057"):
+            return chips.RZV2H
+
         if self.detector.check_dt_compatible_value("mediatek,mt8167"):
             return chips.MT8167
 
