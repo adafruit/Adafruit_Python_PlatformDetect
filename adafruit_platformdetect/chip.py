@@ -125,7 +125,7 @@ class Chip:
                     if (
                         (
                             # Raspberry Pi Pico
-                            vendor == 0xCAFE
+                            vendor in (0xCAFE, 0xCAFF)
                             and product == 0x4005
                         )
                         or (
