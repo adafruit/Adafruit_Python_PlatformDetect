@@ -125,7 +125,8 @@ class Chip:
                     if (
                         (
                             # Raspberry Pi Pico
-                            vendor == 0xCAFE
+                            # Radxa X4
+                            vendor in (0xCAFE, 0xCAFF)
                             and product == 0x4005
                         )
                         or (

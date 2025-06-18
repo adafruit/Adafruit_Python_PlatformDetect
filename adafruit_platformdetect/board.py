@@ -896,6 +896,8 @@ class Board:
             product = dev["product_id"]
             if vendor == 0xCAFE and product == 0x4005:
                 return boards.PICO_U2IF
+            if vendor == 0xCAFF and product == 0x4005:
+                return boards.RADXA_X4_U2IF
             if vendor == 0x239A:
                 # Feather RP2040
                 if product == 0x00F1:
@@ -1203,6 +1205,7 @@ class Board:
             yield self.board.QT2040_TRINKEY_U2IF
             yield self.board.KB2040_U2IF
             yield self.board.RP2040_ONE_U2IF
+            yield self.board.RADXA_X4_U2IF
             yield self.board.OS_AGNOSTIC_BOARD
 
         return any(condition for condition in lazily_generate_conditions())
@@ -1341,6 +1344,11 @@ class Board:
     def rp2040_one_u2if(self) -> bool:
         """Check whether the current board is an RP2040 One w/ u2if."""
         return self.id == boards.RP2040_ONE_U2IF
+
+    @property
+    def radxa_x4_u2if(self) -> bool:
+        """Check whether the current board is an RP2040 One w/ u2if."""
+        return self.id == boards.RADXA_X4_U2IF
 
     @property
     def binho_nova(self) -> bool:
