@@ -20,6 +20,7 @@ Implementation Notes
 
 """
 
+import glob
 import os
 import re
 
@@ -333,20 +334,23 @@ class Board:
         if "beaglev-starlight" in board_value:
             return boards.BEAGLEV_STARLIGHT
 
+        # find device alias at i2c address 0x50 (0-00500, 0-00501, etc)
+        nvmem_devices = glob.glob('/sys/bus/nvmem/devices/0-0050*')
+        # do not expect there to be anything but one eeprom
+        if len(nvmem_devices) != 1:
+            return None
+
+        eeprom_dir = nvmem_devices[0]
         try:
-            with open("/sys/bus/nvmem/devices/0-00500/nvmem", "rb") as eeprom:
+            with open(f"{eeprom_dir}/nvmem", "rb") as eeprom:
                 eeprom_bytes = eeprom.read(16)
         except FileNotFoundError:
             try:
-                with open("/sys/bus/nvmem/devices/0-00501/nvmem", "rb") as eeprom:
+                # Special Case for AI64
+                with open("/sys/bus/nvmem/devices/2-00500/nvmem", "rb") as eeprom:
                     eeprom_bytes = eeprom.read(16)
             except FileNotFoundError:
-                try:
-                    # Special Case for AI64
-                    with open("/sys/bus/nvmem/devices/2-00500/nvmem", "rb") as eeprom:
-                        eeprom_bytes = eeprom.read(16)
-                except FileNotFoundError:
-                    return None
+                return None
 
         if eeprom_bytes[:4] != b"\xaaU3\xee":
             return None
