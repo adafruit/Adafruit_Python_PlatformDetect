@@ -448,6 +448,8 @@ class Board:
             board = boards.ORANGE_PI_5_PLUS
         elif board_value == "orangepi5":
             board = boards.ORANGE_PI_5
+        elif board_value == "orangepi5-pro":
+            board = boards.ORANGE_PI_5_PRO
         elif board_value == "bananapim2zero":
             board = boards.BANANA_PI_M2_ZERO
         elif board_value == "bananapim2plus":
@@ -518,6 +520,8 @@ class Board:
         board_value = self.detector.get_device_model()
         if "OPi 5 Max" in board_value:
             return boards.ORANGE_PI_5_MAX
+        if "OPi 5 Pro" in board_value:
+            return boards.ORANGE_PI_5_PRO
         if "Orange Pi 5 Max" in board_value:
             return boards.ORANGE_PI_5_MAX
         if "Orange Pi 5 Plus" in board_value:
