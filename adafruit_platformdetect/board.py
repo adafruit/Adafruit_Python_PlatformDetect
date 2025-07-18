@@ -517,6 +517,7 @@ class Board:
         return None
 
     def _orange_pi_id(self) -> Optional[str]:
+        # pylint: disable=too-many-return-statements
         board_value = self.detector.get_device_model()
         if "OPi 5 Max" in board_value:
             return boards.ORANGE_PI_5_MAX
