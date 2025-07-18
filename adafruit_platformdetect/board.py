@@ -532,6 +532,8 @@ class Board:
             return boards.ORANGE_PI_3B
         return None
 
+    # pylint: enable=too-many-return-statements
+
     def _sama5_id(self) -> Optional[str]:
         """Check what type sama5 board."""
         board_value = self.detector.get_device_model()
