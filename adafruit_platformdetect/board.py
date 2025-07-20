@@ -209,6 +209,11 @@ class Board:
                 or self._ameridroid_id()
                 or self._vicharak_id()
             )
+        elif chip_id == chips.RK3588S:
+            board_id = (
+                self._orange_pi_id()
+                or self._armbian_id()
+            )
         elif chip_id == chips.RYZEN_V1605B:
             board_id = self._udoo_id()
         elif chip_id == chips.PENTIUM_N3710:
