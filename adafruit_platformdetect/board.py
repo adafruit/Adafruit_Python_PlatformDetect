@@ -209,6 +209,8 @@ class Board:
                 or self._ameridroid_id()
                 or self._vicharak_id()
             )
+        elif chip_id == chips.RK3588S:
+            board_id = self._orange_pi_id() or self._armbian_id()
         elif chip_id == chips.RYZEN_V1605B:
             board_id = self._udoo_id()
         elif chip_id == chips.PENTIUM_N3710:
@@ -448,6 +450,8 @@ class Board:
             board = boards.ORANGE_PI_5_PLUS
         elif board_value == "orangepi5":
             board = boards.ORANGE_PI_5
+        elif board_value == "orangepi5-pro":
+            board = boards.ORANGE_PI_5_PRO
         elif board_value == "bananapim2zero":
             board = boards.BANANA_PI_M2_ZERO
         elif board_value == "bananapim2plus":
@@ -515,9 +519,12 @@ class Board:
         return None
 
     def _orange_pi_id(self) -> Optional[str]:
+        # pylint: disable=too-many-return-statements
         board_value = self.detector.get_device_model()
         if "OPi 5 Max" in board_value:
             return boards.ORANGE_PI_5_MAX
+        if "OPi 5 Pro" in board_value:
+            return boards.ORANGE_PI_5_PRO
         if "Orange Pi 5 Max" in board_value:
             return boards.ORANGE_PI_5_MAX
         if "Orange Pi 5 Plus" in board_value:
@@ -527,6 +534,8 @@ class Board:
         if "Orange Pi 3B" in board_value:
             return boards.ORANGE_PI_3B
         return None
+
+    # pylint: enable=too-many-return-statements
 
     def _sama5_id(self) -> Optional[str]:
         """Check what type sama5 board."""

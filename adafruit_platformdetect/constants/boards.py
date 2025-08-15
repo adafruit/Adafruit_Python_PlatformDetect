@@ -69,6 +69,7 @@ ORANGE_PI_4_LTS = "ORANGE_PI_4_LTS"
 ORANGE_PI_5 = "ORANGE_PI_5"
 ORANGE_PI_5_MAX = "ORANGE_PI_5_MAX"
 ORANGE_PI_5_PLUS = "ORANGE_PI_5_PLUS"
+ORANGE_PI_5_PRO = "ORANGE_PI_5_PRO"
 
 # Nano Pi boards
 NANOPI_NEO_AIR = "NANOPI_NEO_AIR"
@@ -314,6 +315,7 @@ _ORANGE_PI_IDS = (
     ORANGE_PI_4_LTS,
     ORANGE_PI_5,
     ORANGE_PI_5_PLUS,
+    ORANGE_PI_5_PRO,
 )
 
 # NanoPi
@@ -553,8 +555,8 @@ _OLIMEX_IDS = (OLIMEX_LIME2,)
 #   https://github.com/beagleboard/image-builder
 # Thanks to zmatt on freenode #beagle for pointers.
 _BEAGLEBONE_BOARD_IDS = {
-    BEAGLE_PLAY: (("A0", "7.BEAGLE")),
-    BEAGLEBONE_AI64: (("B0", "7.BBONEA")),
+    BEAGLE_PLAY: ("A0", "7.BEAGLE"),
+    BEAGLEBONE_AI64: ("B0", "7.BBONEA"),
     # Original bone/white:
     BEAGLEBONE: (
         ("A3", "A335BONE00A3"),
