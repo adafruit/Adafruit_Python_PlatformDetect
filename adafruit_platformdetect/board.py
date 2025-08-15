@@ -243,6 +243,8 @@ class Board:
             board_id = self._rv1106_id()
         elif chip_id == chips.SUNRISE_X3:
             board_id = boards.RDK_X3
+        elif chip_id == chips.QCM6490:
+            board_id = boards.PARTICLE_TACHYON
         self._board_id = board_id
         return board_id
 
@@ -1199,6 +1201,11 @@ class Board:
         return self.id in boards._HORIZON_IDS
 
     @property
+    def any_particle_board(self):
+        """Check whether the current board is any Particle device."""
+        return self.id in boards._PARTICLE_IDS
+
+    @property
     def os_environ_board(self) -> bool:
         """Check whether the current board is an OS environment variable special case."""
 
@@ -1272,6 +1279,7 @@ class Board:
             yield self.any_vivid_unit
             yield self.any_starfive_id
             yield self.any_horizon_board
+            yield self.any_particle_board
 
         return any(condition for condition in lazily_generate_conditions())
 
