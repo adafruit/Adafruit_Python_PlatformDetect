@@ -243,6 +243,8 @@ class Board:
             board_id = self._rv1106_id()
         elif chip_id == chips.SUNRISE_X3:
             board_id = boards.RDK_X3
+        elif chip_id == chips.SUNRISE_X5:
+            board_id = boards.RDK_X5
         elif chip_id == chips.QCM6490:
             board_id = boards.PARTICLE_TACHYON
         self._board_id = board_id

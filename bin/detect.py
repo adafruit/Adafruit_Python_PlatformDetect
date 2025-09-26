@@ -125,3 +125,6 @@ if detector.board.any_nxp_navq_board:
 
 if detector.board.any_walnutpi:
     print("Walnut Pi detected.")
+
+if detector.board.any_horizon_board:
+    print("Horizon detected.")

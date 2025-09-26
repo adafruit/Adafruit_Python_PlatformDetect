@@ -349,6 +349,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("hobot,x3"):
             return chips.SUNRISE_X3
 
+        if self.detector.check_dt_compatible_value("Horizon, x5"):
+            return chips.SUNRISE_X5
+
         if self.detector.check_dt_compatible_value("particle,tachyon"):
             return chips.QCM6490
 
