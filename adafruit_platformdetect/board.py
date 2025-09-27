@@ -121,6 +121,8 @@ class Board:
             board_id = boards.FTDI_FT2232H
         elif chip_id == chips.FT4232H:
             board_id = boards.FTDI_FT4232H
+        elif chip_id == chips.SPIDRIVER:
+            board_id = boards.EXCAMERA_SPIDRIVER
         elif chip_id == chips.APQ8016:
             board_id = boards.DRAGONBOARD_410C
         elif chip_id in (chips.T210, chips.T186, chips.T194, chips.T234, chips.T264):
@@ -1297,6 +1299,11 @@ class Board:
     def ftdi_ft2232h(self) -> bool:
         """Check whether the current board is an FTDI FT2232H."""
         return self.id == boards.FTDI_FT2232H
+
+    @property
+    def excamera_spidriver(self) -> bool:
+        """Check whether the current board is an Excamera SPIDriver."""
+        return self.id == boards.EXCAMERA_SPIDRIVER
 
     @property
     def ftdi_ft4232h(self) -> bool:

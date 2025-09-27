@@ -108,6 +108,9 @@ class Chip:
                     "BLINKA_MCP2221 environment variable "
                     + "set, but no MCP2221 device found"
                 )
+            if os.environ.get("BLINKA_SPIDRIVER"):
+                self._chip_id = chips.SPIDRIVER
+                return self._chip_id
             if os.environ.get("BLINKA_OS_AGNOSTIC"):
                 # we don't need to look for this chip, it's just a flag
                 self._chip_id = chips.OS_AGNOSTIC
