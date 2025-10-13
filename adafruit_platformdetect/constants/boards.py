@@ -599,6 +599,7 @@ _BEAGLEBONE_BOARD_IDS = {
         ("B", "A335BNLT000B"),
         ("C", "A335BNLT000C"),
         ("C", "A335BNLT00C0"),
+        ("D", "A335BNLT00D0"),
     ),
     BEAGLEBONE_BLUE: (("A2", "A335BNLTBLA2"),),
     BEAGLEBONE_BLACK_WIRELESS: (("A5", "A335BNLTBWA5"),),
