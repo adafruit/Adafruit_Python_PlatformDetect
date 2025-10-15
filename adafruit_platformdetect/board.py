@@ -984,6 +984,8 @@ class Board:
         board = None
         if board_value and "Luckfox Pico Max" in board_value:
             board = boards.LUCKFOX_PICO_MAX
+        elif board_value and "Luckfox Pico Ultra" in board_value:
+            board = boards.LUCKFOX_PICO_ULTRA
         return board
 
     @property
