@@ -427,6 +427,8 @@ class Chip:
                 linux_id = chips.EXYNOS5422
             if compatible and "cvitek,cv180x" in compatible:
                 linux_id = chips.CV1800B
+            if compatible and "xlnx,zynqmp" in compatible:
+                linux_id = chips.ZYNQMP
             cpu_model = self.detector.get_cpuinfo_field("cpu model")
 
             if cpu_model is not None:
