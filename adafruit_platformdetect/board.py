@@ -164,7 +164,11 @@ class Board:
         elif chip_id == chips.T527:
             board_id = self._armbian_id() or self._allwinner_variants_id()
         elif chip_id == chips.H618:
-            board_id = self._armbian_id() or self._allwinner_variants_id()
+            board_id = (
+                self._armbian_id()
+                or self._allwinner_variants_id()
+                or self._orange_pi_id()
+            )
         elif chip_id == chips.H616:
             board_id = self._armbian_id() or self._allwinner_variants_id()
         elif chip_id == chips.A33:
@@ -541,6 +545,8 @@ class Board:
             return boards.ORANGE_PI_5
         if "Orange Pi 3B" in board_value:
             return boards.ORANGE_PI_3B
+        if "OrangePi Zero 2W" in board_value:
+            return boards.ORANGE_PI_ZERO_2W
         return None
 
     # pylint: enable=too-many-return-statements
