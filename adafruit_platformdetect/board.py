@@ -180,10 +180,7 @@ class Board:
         elif chip_id == chips.RZV2H:
             board_id = self._armbian_id() or self._renesas_variants_id()
         elif chip_id == chips.RK3308:
-            board_id = (
-                self._rock_pi_id()
-                or self._banana_pi_id()
-            )
+            board_id = self._rock_pi_id() or self._banana_pi_id()
         elif chip_id == chips.RK3399:
             board_id = (
                 self._rock_pi_id()
