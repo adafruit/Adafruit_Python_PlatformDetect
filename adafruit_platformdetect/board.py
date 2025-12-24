@@ -556,7 +556,7 @@ class Board:
     def _banana_pi_id(self) -> Optional[str]:
         """Check what type of Banana Pi board."""
         board_value = self.detector.get_device_model()
-        if "bpi-p2-pro" in board_value:
+        if "bpi-p2pro" in board_value:
             return boards.BANANA_PI_P2_PRO
         return None
 
