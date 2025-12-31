@@ -180,7 +180,7 @@ class Board:
         elif chip_id == chips.RZV2H:
             board_id = self._armbian_id() or self._renesas_variants_id()
         elif chip_id == chips.RK3308:
-            board_id = self._rock_pi_id()
+            board_id = self._rock_pi_id() or self._banana_pi_id()
         elif chip_id == chips.RK3399:
             board_id = (
                 self._rock_pi_id()
@@ -550,6 +550,13 @@ class Board:
         return None
 
     # pylint: enable=too-many-return-statements
+
+    def _banana_pi_id(self) -> Optional[str]:
+        """Check what type of Banana Pi board."""
+        board_value = self.detector.get_device_model()
+        if "bpi-p2pro" in board_value:
+            return boards.BANANA_PI_P2_PRO
+        return None
 
     def _sama5_id(self) -> Optional[str]:
         """Check what type sama5 board."""
