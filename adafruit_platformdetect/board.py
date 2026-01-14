@@ -535,6 +535,8 @@ class Board:
         board_value = self.detector.get_device_model()
         if "OPi 5 Max" in board_value:
             return boards.ORANGE_PI_5_MAX
+        if "OPi 5 Ultra" in board_value:
+            return boards.ORANGE_PI_5_ULTRA
         if "OPi 5 Pro" in board_value:
             return boards.ORANGE_PI_5_PRO
         if "Orange Pi 5 Max" in board_value:
