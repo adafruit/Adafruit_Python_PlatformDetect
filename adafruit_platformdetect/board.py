@@ -157,7 +157,10 @@ class Board:
             board_id = self._pine64_id()
         elif chip_id == chips.H6:
             board_id = (
-                self._pine64_id() or self._armbian_id() or self._repka_variants_id()
+                self._pine64_id()
+                or self._armbian_id()
+                or self._orange_pi_id()
+                or self._repka_variants_id()
             )
         elif chip_id == chips.H5:
             board_id = (
@@ -174,7 +177,11 @@ class Board:
                 or self._orange_pi_id()
             )
         elif chip_id == chips.H616:
-            board_id = self._armbian_id() or self._allwinner_variants_id()
+            board_id = (
+                self._armbian_id()
+                or self._allwinner_variants_id()
+                or self._orange_pi_id()
+            )
         elif chip_id == chips.A33:
             board_id = self._clockwork_pi_id()
         elif chip_id == chips.K1:
@@ -569,8 +576,14 @@ class Board:
             return boards.ORANGE_PI_5
         if "Orange Pi 3B" in board_value:
             return boards.ORANGE_PI_3B
-        if "OrangePi Zero 2W" in board_value:
+        if "OrangePi Zero 2W" in board_value or "Orange Pi Zero 2W" in board_value:
             return boards.ORANGE_PI_ZERO_2W
+        if "OrangePi Zero2" in board_value or "Orange Pi Zero 2" in board_value:
+            return boards.ORANGE_PI_ZERO_2
+        if "OrangePi Zero3" in board_value or "Orange Pi Zero 3" in board_value:
+            return boards.ORANGE_PI_ZERO_3
+        if "Orange Pi 3 LTS" in board_value or "OrangePi 3 LTS" in board_value:
+            return boards.ORANGE_PI_3_LTS
         return None
 
     # pylint: enable=too-many-return-statements
