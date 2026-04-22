@@ -369,8 +369,7 @@ class Board:
         if eeprom_bytes[:4] != b"\xaaU3\xee":
             return None
 
-        # add support for PocketBeagle 2
-        # should be caught in the else clause at the bottom but I couldn't figure it out
+        # PocketBeagle 2 uses the new Beagle EEPROM format
         if eeprom_bytes == b"\xaaU3\xee\x017\x00\x10.\x00POCKET":
             return boards.BEAGLEBONE_POCKETBEAGLE_2
 
