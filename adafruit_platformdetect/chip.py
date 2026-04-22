@@ -363,6 +363,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("particle,tachyon"):
             return chips.QCM6490
 
+        if self.detector.check_dt_compatible_value("brcm,bcm2"):
+            return chips.BCM2XXX
+
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
 
@@ -446,9 +449,12 @@ class Chip:
             # convert it to a list and let the remaining
             # conditions attempt.
             if not linux_id:
-                hardware = [
-                    entry.replace("\x00", "") for entry in compatible.split(",")
-                ]
+                if compatible:
+                    hardware = [
+                        entry.replace("\x00", "") for entry in compatible.split(",")
+                    ]
+                else:
+                    hardware = []
 
         if not linux_id:
             if "AM33XX" in hardware:
@@ -499,7 +505,7 @@ class Chip:
         list of constants at the top of this module for available options.
         """
         if attr == "id":
-            raise AttributeError()  # Avoid infinite recursion
+            raise AttributeError("id")  # Avoid infinite recursion
         if self.id == attr:
             return True
         return False
