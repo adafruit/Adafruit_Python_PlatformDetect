@@ -366,6 +366,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("brcm,bcm2"):
             return chips.BCM2XXX
 
+        if self.detector.check_dt_compatible_value("hardkernel,odroid-xu4"):
+            return chips.EXYNOS5422
+
         linux_id = None
         hardware = self.detector.get_cpuinfo_field("Hardware")
 
@@ -431,14 +434,12 @@ class Chip:
                 linux_id = chips.H6
             if compatible and "sun50i-h5" in compatible:
                 linux_id = chips.H5
-            if compatible and "odroid-xu4" in compatible:
-                linux_id = chips.EXYNOS5422
             if compatible and "cvitek,cv180x" in compatible:
                 linux_id = chips.CV1800B
             if compatible and "xlnx,zynqmp" in compatible:
                 linux_id = chips.ZYNQMP
-            cpu_model = self.detector.get_cpuinfo_field("cpu model")
 
+            cpu_model = self.detector.get_cpuinfo_field("cpu model")
             if cpu_model is not None:
                 if "MIPS 24Kc" in cpu_model:
                     linux_id = chips.MIPS24KC
