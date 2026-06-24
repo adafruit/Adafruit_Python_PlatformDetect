@@ -392,7 +392,7 @@ class Board:
         # BeaglePlay Special Condition
         # new Beagle EEPROM IDs are 24 Bit, so we need to verify full range
         if eeprom_bytes == b"\xaaU3\xee\x017\x00\x10.\x00BEAGLE":
-            with open("/sys/bus/nvmem/devices/0-00500/nvmem", "rb") as eeprom:
+            with open(f"{eeprom_dir}/nvmem", "rb") as eeprom:
                 eeprom_bytes = eeprom.read(24)
             if eeprom_bytes == b"\xaaU3\xee\x017\x00\x10.\x00BEAGLEPLAY-A0-":
                 return boards.BEAGLE_PLAY
