@@ -27,6 +27,7 @@ except ImportError:
     pass
 import os
 import re
+import sys
 
 try:
     from typing import Optional
@@ -61,6 +62,12 @@ class Board:
             return os.environ["BLINKA_FORCEBOARD"]
         except (AttributeError, KeyError):  # no forced board, continue with testing!
             pass
+
+        if sys.platform in ("linux", "linux2"):
+            board_id = self._configured_board_id()
+            if board_id:
+                self._board_id = board_id
+                return board_id
 
         chip_id = self.detector.chip.id
         board_id = None
@@ -281,6 +288,23 @@ class Board:
     def any_starfive_id(self):
         """Check whether the current board is any Pine64 device."""
         return self.id in boards._STARFIVE_BOARD_IDS
+
+    @staticmethod
+    def _configured_board_id() -> Optional[str]:
+        """Read an optional, explicitly configured Linux board constant."""
+        try:
+            with open("/etc/blinka-board", "r", encoding="utf-8") as board_file:
+                board_name = board_file.read().strip()
+        except (OSError, UnicodeError):
+            return None
+
+        # Only public board constants are selectable, not module metadata or
+        # family lookup tables. Like BLINKA_FORCEBOARD, compatibility of the
+        # selected definition with the carrier is the administrator's choice.
+        if not board_name or board_name.startswith("_"):
+            return None
+        board_id = getattr(boards, board_name, None)
+        return board_id if isinstance(board_id, str) else None
 
     def _pi_id(self) -> Optional[str]:
         """Try to detect id of a Raspberry Pi."""
