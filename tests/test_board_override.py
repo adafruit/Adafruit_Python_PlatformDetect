@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-"""CM4 carrier selection without reading host files or detecting hardware."""
+"""Explicit board selection without host-file or hardware access."""
 
 import io
 import os
@@ -14,13 +14,27 @@ from adafruit_platformdetect.board import Board
 from adafruit_platformdetect.constants import boards, chips
 
 
-class CM4CarrierTests(unittest.TestCase):
+COMPUTE_MODULE_REVISIONS = (
+    ("0011", boards.RASPBERRY_PI_CM1),
+    ("a020a0", boards.RASPBERRY_PI_CM3),
+    ("a02100", boards.RASPBERRY_PI_CM3_PLUS),
+    ("a03140", boards.RASPBERRY_PI_CM4),
+    ("a03150", boards.RASPBERRY_PI_CM4S),
+    ("a04180", boards.RASPBERRY_PI_CM5),
+    ("a041a0", boards.RASPBERRY_PI_CM5_LITE),
+)
+
+
+class BoardOverrideTests(unittest.TestCase):
     """Exercise the real revision decoder and Board.id selection path."""
 
     def setUp(self):
         self.environment = patch.dict(os.environ, {}, clear=True)
         self.environment.start()
         self.addCleanup(self.environment.stop)
+        self.platform = patch("adafruit_platformdetect.board.sys.platform", "linux")
+        self.platform.start()
+        self.addCleanup(self.platform.stop)
         self.opened = []
         self.contents = "RASPBERRY_PI_4B\n"
         self.file_error = None
@@ -35,7 +49,7 @@ class CM4CarrierTests(unittest.TestCase):
         if filename == "/proc/device-tree/system/linux,revision":
             self.assertEqual(mode, "rb")
             raise FileNotFoundError(filename)
-        self.assertEqual(filename, "/etc/cm4-board")
+        self.assertEqual(filename, "/etc/blinka-board")
         self.assertEqual((mode, encoding), ("r", "utf-8"))
         if self.file_error is not None:
             raise self.file_error
@@ -50,8 +64,8 @@ class CM4CarrierTests(unittest.TestCase):
         )
         return Board(detector)
 
-    def test_cm4_and_cm4s_override(self):
-        for revision in ("a03140", "a03150"):
+    def test_all_cm_overrides(self):
+        for revision, _ in COMPUTE_MODULE_REVISIONS:
             for contents in ("RASPBERRY_PI_4B", " \tRASPBERRY_PI_4B\r\n"):
                 with self.subTest(revision=revision, contents=contents):
                     self.contents = contents
@@ -59,12 +73,29 @@ class CM4CarrierTests(unittest.TestCase):
                         self.make_board(revision).id, boards.RASPBERRY_PI_4B
                     )
 
+    def test_all_cm_fixtures(self):
+        # Cover every currently supported Raspberry Pi Compute Module.
+        self.assertCountEqual(
+            [board_id for _, board_id in COMPUTE_MODULE_REVISIONS],
+            boards._RASPBERRY_PI_CM_IDS,  # pylint: disable=protected-access
+        )
+
+    def test_each_module_fallback(self):
+        for revision, expected in COMPUTE_MODULE_REVISIONS:
+            for error in (None, FileNotFoundError(), PermissionError()):
+                with self.subTest(revision=revision, error=error):
+                    self.contents = "UNKNOWN_CM_CARRIER"
+                    self.file_error = error
+                    self.assertEqual(self.make_board(revision).id, expected)
+
     def test_registered_carrier(self):
         # New carriers still require registration and Blinka routing; no actual
         # carrier support is invented by this selection mechanism.
-        self.contents = "EXAMPLE_CM4_CARRIER\n"
-        with patch.object(boards, "EXAMPLE_CM4_CARRIER", "CARRIER_ID", create=True):
-            self.assertEqual(self.make_board().id, "CARRIER_ID")
+        self.contents = "EXAMPLE_CM_CARRIER\n"
+        with patch.object(boards, "EXAMPLE_CM_CARRIER", "CARRIER_ID", create=True):
+            for revision, _ in COMPUTE_MODULE_REVISIONS:
+                with self.subTest(revision=revision):
+                    self.assertEqual(self.make_board(revision).id, "CARRIER_ID")
 
     def test_constant_value(self):
         self.contents = "RASPBERRY_PI_AVNET_IIOT_GW"
@@ -74,7 +105,7 @@ class CM4CarrierTests(unittest.TestCase):
         for contents in (
             "",
             " \t\r\n",
-            "UNKNOWN_CM4_CARRIER",
+            "UNKNOWN_CM_CARRIER",
             "raspberry_pi_4b",
             "RASPBERRY_PI_4B\nRASPBERRY_PI_CM4",
             "board=RASPBERRY_PI_4B",
@@ -107,35 +138,81 @@ class CM4CarrierTests(unittest.TestCase):
             self.assertEqual(self.make_board().id, boards.RASPBERRY_PI_CM4)
 
     def test_model_fallback(self):
-        board = self.make_board(revision=None, model="Raspberry Pi CM4")
-        self.assertEqual(board.id, boards.RASPBERRY_PI_4B)
-        self.assertEqual(
-            self.opened,
-            ["/proc/device-tree/system/linux,revision", "/etc/cm4-board"],
-        )
+        self.contents = "UNKNOWN"
+        for model, expected in (
+            ("CM1", boards.RASPBERRY_PI_CM1),
+            ("CM3", boards.RASPBERRY_PI_CM3),
+            ("CM4", boards.RASPBERRY_PI_CM4),
+            ("CM5", boards.RASPBERRY_PI_CM5),
+        ):
+            with self.subTest(model=model):
+                self.opened.clear()
+                board = self.make_board(revision=None, model="Raspberry Pi " + model)
+                self.assertEqual(board.id, expected)
+                self.assertEqual(
+                    self.opened,
+                    [
+                        "/etc/blinka-board",
+                        "/proc/device-tree/system/linux,revision",
+                    ],
+                )
 
     def test_other_pi_models(self):
+        self.file_error = FileNotFoundError()
         for revision, expected in (
             ("000e", boards.RASPBERRY_PI_B_REV2),
             ("a02082", boards.RASPBERRY_PI_3B),
-            ("a020a0", boards.RASPBERRY_PI_CM3),
             ("a03111", boards.RASPBERRY_PI_4B),
             ("d04170", boards.RASPBERRY_PI_5),
-            ("a04180", boards.RASPBERRY_PI_CM5),
         ):
             with self.subTest(revision=revision):
                 self.assertEqual(self.make_board(revision).id, expected)
-        self.assertEqual(self.opened, [])
+        self.assertEqual(self.opened, ["/etc/blinka-board"] * 4)
 
     def test_unidentified_pi(self):
+        self.contents = "UNKNOWN"
         self.assertIsNone(self.make_board(revision=None).id)
-        self.assertEqual(self.opened, ["/proc/device-tree/system/linux,revision"])
+        self.assertEqual(
+            self.opened,
+            ["/etc/blinka-board", "/proc/device-tree/system/linux,revision"],
+        )
 
-    def test_other_platform(self):
+    def test_non_pi_override(self):
+        for chip_id, selected in (
+            (chips.RK3566, boards.RADXA_CM3),
+            (chips.A311D, boards.KHADAS_VIM3),
+            (chips.AM33XX, boards.BEAGLEBONE_BLACK),
+        ):
+            with self.subTest(chip_id=chip_id):
+                self.contents = selected
+                board = self.make_board(chip_id=chip_id)
+                self.assertEqual(board.id, selected)
+                self.assertEqual(board.detector.chip.id, chip_id)
+                board.detector.get_device_model.assert_not_called()
+
+    def test_non_linux_platforms(self):
+        for platform in ("darwin", "win32", "esp8266", "rp2"):
+            with self.subTest(platform=platform):
+                with patch("adafruit_platformdetect.board.sys.platform", platform):
+                    board = self.make_board(chip_id=chips.OS_AGNOSTIC)
+                    self.assertEqual(board.id, boards.OS_AGNOSTIC_BOARD)
+        self.assertEqual(self.opened, [])
+
+    def test_linux2_override(self):
+        with patch("adafruit_platformdetect.board.sys.platform", "linux2"):
+            self.assertEqual(self.make_board().id, boards.RASPBERRY_PI_4B)
+
+    def test_unknown_chip_unchanged(self):
+        board = self.make_board(chip_id=None)
+        self.assertEqual(board.id, boards.RASPBERRY_PI_4B)
+        self.assertIsNone(board.detector.chip.id)
+
+    def test_non_pi_fallback(self):
+        self.contents = "UNKNOWN"
         board = self.make_board(chip_id=chips.OS_AGNOSTIC)
         self.assertEqual(board.id, boards.OS_AGNOSTIC_BOARD)
         board.detector.get_cpuinfo_field.assert_not_called()
-        self.assertEqual(self.opened, [])
+        self.assertEqual(self.opened, ["/etc/blinka-board"])
 
     def test_environment_precedence(self):
         with patch.dict(os.environ, {"BLINKA_FORCEBOARD": "EXPLICIT_BOARD"}):
@@ -153,7 +230,7 @@ class CM4CarrierTests(unittest.TestCase):
         self.assertEqual(board.id, boards.RASPBERRY_PI_4B)
         self.contents = "RASPBERRY_PI_CM4"
         self.assertEqual(board.id, boards.RASPBERRY_PI_4B)
-        self.assertEqual(self.opened, ["/etc/cm4-board"])
+        self.assertEqual(self.opened, ["/etc/blinka-board"])
 
     def test_fallback_cached(self):
         self.contents = "UNKNOWN"
@@ -161,7 +238,7 @@ class CM4CarrierTests(unittest.TestCase):
         self.assertEqual(board.id, boards.RASPBERRY_PI_CM4)
         self.contents = "RASPBERRY_PI_4B"
         self.assertEqual(board.id, boards.RASPBERRY_PI_CM4)
-        self.assertEqual(self.opened, ["/etc/cm4-board"])
+        self.assertEqual(self.opened, ["/etc/blinka-board"])
 
     def test_new_detector(self):
         self.assertEqual(self.make_board().id, boards.RASPBERRY_PI_4B)

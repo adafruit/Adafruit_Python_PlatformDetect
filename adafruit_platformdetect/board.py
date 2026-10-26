@@ -27,6 +27,7 @@ except ImportError:
     pass
 import os
 import re
+import sys
 
 try:
     from typing import Optional
@@ -62,6 +63,12 @@ class Board:
         except (AttributeError, KeyError):  # no forced board, continue with testing!
             pass
 
+        if sys.platform in ("linux", "linux2"):
+            board_id = self._configured_board_id()
+            if board_id:
+                self._board_id = board_id
+                return board_id
+
         chip_id = self.detector.chip.id
         board_id = None
 
@@ -71,8 +78,6 @@ class Board:
             board_id = self._starfive_id()
         elif chip_id == chips.BCM2XXX:
             board_id = self._pi_id()
-            if board_id in (boards.RASPBERRY_PI_CM4, boards.RASPBERRY_PI_CM4S):
-                board_id = self._cm4_carrier_id() or board_id
         elif chip_id == chips.OS_AGNOSTIC:
             board_id = boards.OS_AGNOSTIC_BOARD
         elif chip_id == chips.AM625X:
@@ -285,10 +290,10 @@ class Board:
         return self.id in boards._STARFIVE_BOARD_IDS
 
     @staticmethod
-    def _cm4_carrier_id() -> Optional[str]:
-        """Read an optional, explicitly configured CM4 carrier board constant."""
+    def _configured_board_id() -> Optional[str]:
+        """Read an optional, explicitly configured Linux board constant."""
         try:
-            with open("/etc/cm4-board", "r", encoding="utf-8") as board_file:
+            with open("/etc/blinka-board", "r", encoding="utf-8") as board_file:
                 board_name = board_file.read().strip()
         except (OSError, UnicodeError):
             return None
