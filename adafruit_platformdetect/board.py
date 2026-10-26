@@ -71,6 +71,8 @@ class Board:
             board_id = self._starfive_id()
         elif chip_id == chips.BCM2XXX:
             board_id = self._pi_id()
+            if board_id in (boards.RASPBERRY_PI_CM4, boards.RASPBERRY_PI_CM4S):
+                board_id = self._cm4_carrier_id() or board_id
         elif chip_id == chips.OS_AGNOSTIC:
             board_id = boards.OS_AGNOSTIC_BOARD
         elif chip_id == chips.AM625X:
@@ -281,6 +283,23 @@ class Board:
     def any_starfive_id(self):
         """Check whether the current board is any Pine64 device."""
         return self.id in boards._STARFIVE_BOARD_IDS
+
+    @staticmethod
+    def _cm4_carrier_id() -> Optional[str]:
+        """Read an optional, explicitly configured CM4 carrier board constant."""
+        try:
+            with open("/etc/cm4-board", "r", encoding="utf-8") as board_file:
+                board_name = board_file.read().strip()
+        except (OSError, UnicodeError):
+            return None
+
+        # Only public board constants are selectable, not module metadata or
+        # family lookup tables. Like BLINKA_FORCEBOARD, compatibility of the
+        # selected definition with the carrier is the administrator's choice.
+        if not board_name or board_name.startswith("_"):
+            return None
+        board_id = getattr(boards, board_name, None)
+        return board_id if isinstance(board_id, str) else None
 
     def _pi_id(self) -> Optional[str]:
         """Try to detect id of a Raspberry Pi."""

@@ -84,6 +84,36 @@ Usage Example
   print("Orange Pi PC? ", detector.board.ORANGE_PI_PC)
   print("generic Linux PC? ", detector.board.GENERIC_LINUX_PC)
 
+Custom Compute Module 4 carriers
+================================
+
+On a detected Raspberry Pi Compute Module 4 or CM4S, an administrator can select
+a different board definition by creating ``/etc/cm4-board``. The file must contain
+one public constant name from ``adafruit_platformdetect.constants.boards``, with
+optional surrounding whitespace. For example, a carrier that matches the Pi 4B
+pin mapping can use:
+
+.. code-block:: text
+
+  RASPBERRY_PI_4B
+
+This is an explicit board override, like ``BLINKA_FORCEBOARD``: choose only a
+definition compatible with the carrier. It does not validate electrical
+compatibility, change chip detection, configure peripherals, or load device-tree
+overlays. ``BLINKA_FORCEBOARD`` takes precedence during initial detection. Other
+Pi models and other platforms do not consult this file.
+
+If the file is missing, unreadable, empty, or does not name a known public board
+constant, normal CM4/CM4S detection is retained. Detection is cached on each
+``Detector`` instance; restart the application after changing the file.
+
+This mechanism does not add support for new carrier boards by itself. A carrier
+with a new pin mapping still needs a board constant and appropriate family
+memberships in PlatformDetect, plus a board definition and routing in Blinka.
+Carrier-specific Blinka routing must precede matching generic board-family
+entries. Do not put a Python module path or an unregistered carrier name in the
+file.
+
 Contributing
 ============
 
