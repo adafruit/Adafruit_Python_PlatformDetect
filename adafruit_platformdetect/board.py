@@ -1297,25 +1297,25 @@ class Board:
         """Check whether the current board is an OS environment variable special case."""
 
         def lazily_generate_conditions():
-            yield self.board.FTDI_FT232H
-            yield self.board.FTDI_FT2232H
-            yield self.board.FTDI_FT4232H
-            yield self.board.MICROCHIP_MCP2221
-            yield self.board.BINHO_NOVA
-            yield self.board.GREATFET_ONE
-            yield self.board.PICO_U2IF
-            yield self.board.FEATHER_U2IF
-            yield self.board.FEATHER_CAN_U2IF
-            yield self.board.FEATHER_EPD_U2IF
-            yield self.board.FEATHER_RFM_U2IF
-            yield self.board.ITSYBITY_U2IF
-            yield self.board.MACROPAD_U2IF
-            yield self.board.QTPY_U2IF
-            yield self.board.QT2040_TRINKEY_U2IF
-            yield self.board.KB2040_U2IF
-            yield self.board.RP2040_ONE_U2IF
-            yield self.board.RADXA_X4_U2IF
-            yield self.board.OS_AGNOSTIC_BOARD
+            yield self.FTDI_FT232H
+            yield self.FTDI_FT2232H
+            yield self.FTDI_FT4232H
+            yield self.MICROCHIP_MCP2221
+            yield self.BINHO_NOVA
+            yield self.GREATFET_ONE
+            yield self.PICO_U2IF
+            yield self.FEATHER_U2IF
+            yield self.FEATHER_CAN_U2IF
+            yield self.FEATHER_EPD_U2IF
+            yield self.FEATHER_RFM_U2IF
+            yield self.ITSYBITSY_U2IF
+            yield self.MACROPAD_U2IF
+            yield self.QTPY_U2IF
+            yield self.QT2040_TRINKEY_U2IF
+            yield self.KB2040_U2IF
+            yield self.RP2040_ONE_U2IF
+            yield self.RADXA_X4_U2IF
+            yield self.OS_AGNOSTIC_BOARD
 
         return any(condition for condition in lazily_generate_conditions())
 
