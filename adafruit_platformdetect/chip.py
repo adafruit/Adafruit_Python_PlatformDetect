@@ -96,6 +96,16 @@ class Chip:
                     )
                 self._chip_id = chips.FT4232H
                 return self._chip_id
+            if os.environ.get("BLINKA_MCP2222"):
+                import libusb_package
+
+                if libusb_package.find(idVendor=0x04D8, idProduct=0x0B15) is not None:
+                    self._chip_id = chips.MCP2222
+                    return self._chip_id
+                raise RuntimeError(
+                    "BLINKA_MCP2222 environment variable "
+                    + "set, but no MCP2222 device found"
+                )
             if os.environ.get("BLINKA_MCP2221"):
                 import hid
 
