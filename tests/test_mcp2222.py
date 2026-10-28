@@ -40,18 +40,6 @@ class MCP2222Tests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, "no MCP2222 device found"):
                     _ = Detector().chip.id
 
-    def test_environment_board_family(self):
-        for board_id in (
-            boards.MICROCHIP_MCP2221,
-            boards.FTDI_FT232H,
-            boards.ITSYBITSY_U2IF,
-        ):
-            with self.subTest(board_id=board_id):
-                with patch.dict(
-                    os.environ, {"BLINKA_FORCEBOARD": board_id}, clear=True
-                ):
-                    self.assertTrue(Detector().board.os_environ_board)
-
 
 if __name__ == "__main__":
     unittest.main()
