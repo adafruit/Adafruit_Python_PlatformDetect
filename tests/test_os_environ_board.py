@@ -18,6 +18,7 @@ class EnvironmentBoardTests(unittest.TestCase):
     def test_environment_board_family(self):
         for board_id in (
             boards.MICROCHIP_MCP2221,
+            boards.MICROCHIP_MCP2222,
             boards.FTDI_FT232H,
             boards.ITSYBITSY_U2IF,
         ):

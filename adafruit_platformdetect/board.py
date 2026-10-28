@@ -146,6 +146,8 @@ class Board:
             board_id = self._beaglebone_id()
         elif chip_id == chips.MCP2221:
             board_id = boards.MICROCHIP_MCP2221
+        elif chip_id == chips.MCP2222:
+            board_id = boards.MICROCHIP_MCP2222
         elif chip_id == chips.BINHO:
             board_id = boards.BINHO_NOVA
         elif chip_id == chips.LPC4330:
@@ -1301,6 +1303,7 @@ class Board:
             yield self.FTDI_FT2232H
             yield self.FTDI_FT4232H
             yield self.MICROCHIP_MCP2221
+            yield self.MICROCHIP_MCP2222
             yield self.BINHO_NOVA
             yield self.GREATFET_ONE
             yield self.PICO_U2IF
@@ -1399,6 +1402,11 @@ class Board:
     def microchip_mcp2221(self) -> bool:
         """Check whether the current board is a Microchip MCP2221."""
         return self.id == boards.MICROCHIP_MCP2221
+
+    @property
+    def microchip_mcp2222(self) -> bool:
+        """Check whether the current board is a Microchip MCP2222."""
+        return self.id == boards.MICROCHIP_MCP2222
 
     @property
     def os_agnostic_board(self) -> bool:
