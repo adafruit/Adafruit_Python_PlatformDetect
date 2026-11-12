@@ -64,6 +64,7 @@ print("Is this a Rock Pi board?", detector.board.any_rock_pi_board)
 print("Is this a NanoPi board?", detector.board.any_nanopi)
 print("Is this a Khadas VIM3 board?", detector.board.khadas_vim3_40_pin)
 print("Is this a Clockwork Pi board?", detector.board.any_clockwork_pi_board)
+print("Is this a Phyx board?", detector.board.any_phyx_board)
 print("Is this a Seeed Board?", detector.board.any_seeed_board)
 print("Is this a UDOO board?", detector.board.any_udoo_board)
 print("Is this an ASUS Tinker board?", detector.board.any_asus_tinker_board)
@@ -107,6 +108,9 @@ if detector.board.any_rock_pi_board:
 
 if detector.board.any_clockwork_pi_board:
     print("Clockwork Pi device detected.")
+
+if detector.board.any_phyx_board:
+    print("Phyx device detected.")
 
 if detector.board.any_asus_tinker_board:
     print("ASUS Tinker Board device detected.")

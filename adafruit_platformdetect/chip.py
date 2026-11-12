@@ -268,6 +268,9 @@ class Chip:
         if self.detector.check_dt_compatible_value("sun8i-a33"):
             return chips.A33
 
+        if self.detector.check_dt_compatible_value("sun8i-t113s"):
+            return chips.T113
+
         if self.detector.check_dt_compatible_value("rockchip,rk3308"):
             return chips.RK3308
 
