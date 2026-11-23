@@ -193,6 +193,8 @@ class Board:
             )
         elif chip_id == chips.A33:
             board_id = self._clockwork_pi_id()
+        elif chip_id == chips.T113:
+            board_id = self._phyx_id()
         elif chip_id == chips.K1:
             board_id = self._armbian_id() or self._spacemit_variants_id()
         elif chip_id == chips.RZV2N:
@@ -830,6 +832,12 @@ class Board:
             board = boards.CLOCKWORK_CPI3
         return board
 
+    def _phyx_id(self) -> Optional[str]:
+        """Check what type of Phyx board."""
+        if self.detector.check_dt_compatible_value("phyx,tess-t113"):
+            return boards.PHYX_TESS
+        return None
+
     def _udoo_id(self) -> Optional[str]:
         """Try to detect the id of udoo board."""
         board_asset_tag = self.detector.check_board_asset_tag_value()
@@ -1200,6 +1208,11 @@ class Board:
         return self.CLOCKWORK_CPI3
 
     @property
+    def any_phyx_board(self) -> bool:
+        """Check whether the current board is any Phyx board."""
+        return self.PHYX_TESS
+
+    @property
     def any_udoo_board(self) -> bool:
         """Check to see if the current board is an UDOO board"""
         return self.id in boards._UDOO_BOARD_IDS
@@ -1346,6 +1359,7 @@ class Board:
             yield self.any_pynq_board
             yield self.any_rock_pi_board
             yield self.any_clockwork_pi_board
+            yield self.any_phyx_board
             yield self.any_udoo_board
             yield self.any_seeed_board
             yield self.any_asus_tinker_board

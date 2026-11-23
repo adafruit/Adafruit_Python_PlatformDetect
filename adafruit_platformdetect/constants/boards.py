@@ -51,6 +51,9 @@ WALNUT_PI_1B_EMMC = "WALNUT_PI_1B_EMMC"
 # Clockwork Pi boards
 CLOCKWORK_CPI3 = "CLOCKWORK_CPI3"
 
+# Phyx boards
+PHYX_TESS = "PHYX_TESS"
+
 # Orange Pi boards
 ORANGE_PI_PC = "ORANGE_PI_PC"
 ORANGE_PI_R1 = "ORANGE_PI_R1"
